@@ -2,9 +2,9 @@
 
 #include "Noeuds/Interfaces/IExpression.h"
 #include "Noeuds/Operande/RegistreSymbole.h"
-#include "Noeuds/Interfaces/INoeud.h"
 #include "Parsing/Equation/ChaineResponsabilite.h"
 #include "Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
+#include <llvm/IR/LLVMContext.h>
 #include <memory>
 #include <string>
 
@@ -18,6 +18,7 @@ private:
     ChaineResponsabilite* _chaineResponsabilite;
     std::shared_ptr<RegistreSymbole> _registreSymbole;
     IGestionnaireParenthese* _gestionnaireParenthese;
+    llvm::LLVMContext& _context;
 
 public:
     /**
@@ -25,11 +26,13 @@ public:
      * @param chaineResponsabilite Chaîne de responsabilité des opérateurs
      * @param registreSymbole Registre des symboles opérateurs
      * @param gestionnaireParenthese Gestionnaire de gestion des parenthèses
+     * @param context Le contexte LLVM pour créer les valeurs
      */
     ConstructeurArbreEquation(
         ChaineResponsabilite* chaineResponsabilite,
         std::shared_ptr<RegistreSymbole> registreSymbole,
-        IGestionnaireParenthese* gestionnaireParenthese
+        IGestionnaireParenthese* gestionnaireParenthese,
+        llvm::LLVMContext& context
     );
     
     /**

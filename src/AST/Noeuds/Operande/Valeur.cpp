@@ -1,7 +1,7 @@
 #include "AST/Noeuds/Operande/Valeur.h"
 
-Valeur::Valeur(double valeur) : _valeur(valeur) {}
+Valeur::Valeur(llvm::Value* valeur) : _valeur(valeur) {}
 
-double Valeur::resoudre() {
+llvm::Value* Valeur::resoudre() {
     return _valeur;
 }

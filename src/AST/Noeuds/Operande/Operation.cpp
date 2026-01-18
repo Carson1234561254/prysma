@@ -1,7 +1,9 @@
 #include "AST/Noeuds/Operande/Operation.h"
+#include <llvm-18/llvm/IR/Value.h>
 #include <stdexcept>
+#include <functional>
 
-Operation::Operation(std::function<double(double, double)> operateur) 
+Operation::Operation(const std::function<llvm::Value*(llvm::Value*, llvm::Value*)>& operateur)
     : _droite(nullptr), _gauche(nullptr), _operateur(operateur) {}
 
 std::shared_ptr<INoeud> Operation::ajouterExpression(
@@ -22,6 +24,6 @@ std::shared_ptr<INoeud> Operation::ajouterExpression(
     return std::make_shared<Operation>(*this);
 }
 
-double Operation::resoudre() {
+llvm::Value* Operation::resoudre() {
     return _operateur(_gauche->resoudre(), _droite->resoudre());
 }

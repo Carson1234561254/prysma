@@ -8,18 +8,18 @@
  */
 class Valeur : public IExpression {
 private:
-    double _valeur;
+    llvm::Value* _valeur;
 
 public:
     /**
      * @brief Constructeur
      * @param valeur La valeur numérique
      */
-    explicit Valeur(double valeur);
+    explicit Valeur(llvm::Value* valeur);
     
     /**
      * @brief Retourne la valeur stockée
      * @return La valeur
      */
-    double resoudre() override;
+    llvm::Value* resoudre() override;
 };

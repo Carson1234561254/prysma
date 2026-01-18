@@ -4,6 +4,7 @@
  * @interface IExpression
  * @brief Interface pour toute expression mathématique pouvant être résolue
  */
+#include <llvm-18/llvm/IR/Value.h>
 class IExpression {
 public:
     virtual ~IExpression() = default;
@@ -12,5 +13,5 @@ public:
      * @brief Résout l'expression et retourne le résultat
      * @return La valeur numérique de l'expression
      */
-    virtual double resoudre() = 0;
+    virtual llvm::Value* resoudre() = 0;
 };

@@ -2,6 +2,7 @@
 
 #include "AST/Noeuds/Interfaces/INoeud.h"
 #include <functional>
+#include <llvm-18/llvm/IR/Value.h>
 #include <memory>
 
 /**
@@ -13,15 +14,16 @@ class Operation : public INoeud {
 private:
     std::shared_ptr<IExpression> _droite;
     std::shared_ptr<IExpression> _gauche;
-    std::function<double(double, double)> _operateur;
+    std::function<llvm::Value*(llvm::Value*, llvm::Value*)> _operateur;
 
 public:
     /**
      * @brief Constructeur
      * @param operateur Fonction binaire pour effectuer l'opération
      */
-    explicit Operation(std::function<double(double, double)> operateur);
-    
+    explicit Operation(
+        const std::function<llvm::Value*(llvm::Value*, llvm::Value*)>& operateur
+    );
     /**
      * @brief Ajoute deux expressions comme opérandes
      * @param gauche Opérande gauche
@@ -37,5 +39,5 @@ public:
      * @brief Résout l'opération
      * @return Résultat de l'application de l'opérateur
      */
-    double resoudre() override;
+    llvm::Value* resoudre() override;
 };

@@ -16,10 +16,6 @@
 
 #include <iostream>
 
-
-
-// Dans le future il faut encapsuler LLVM dans une classe avec que les méthodes nécessaires 
-// pour éviter la fuite de détails d'implémentation dans le main.
 int main() {
     try {
         // ===== Initialisation LLVM =====
@@ -28,12 +24,10 @@ int main() {
         llvm::IRBuilder<llvm::NoFolder> builder(context);
     
         // Création fonction main qui retourne un double
-        llvm::FunctionType *funcType = llvm::FunctionType::get(builder.getDoubleTy(), false);
+        llvm::FunctionType *funcType = llvm::FunctionType::get(builder.getInt32Ty(), false);
         llvm::Function *mainFunc = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "main", &module);
         llvm::BasicBlock *entry = llvm::BasicBlock::Create(context, "entry", mainFunc);
         builder.SetInsertPoint(entry);
-        
-        llvm::Value* resultLLVM = nullptr;
 
         // ===== Configuration du registre =====
         std::string equation = "3 + 5 * (2 - 8) / 4";
@@ -41,40 +35,35 @@ int main() {
 
         // registre de lamda LLVM contenant une map des opérations mathématiques de base 
         registreSymbole->enregistrer('+', [&]() { 
-            return std::make_shared<Operation>([&](double a, double b) { 
-                llvm::Value* valA = llvm::ConstantFP::get(context, llvm::APFloat(a));
-                llvm::Value* valB = llvm::ConstantFP::get(context, llvm::APFloat(b));
-                resultLLVM = builder.CreateFAdd(valA, valB, "addtmp"); 
-                return a + b; 
-            }); 
+            return std::make_shared<Operation>(
+                std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([&](llvm::Value* lhs, llvm::Value* rhs) { 
+                    return builder.CreateFAdd(lhs, rhs, "addtmp"); 
+                })
+            ); 
         });
         
         registreSymbole->enregistrer('-', [&]() { 
-            return std::make_shared<Operation>([&](double a, double b) { 
-                llvm::Value* valA = llvm::ConstantFP::get(context, llvm::APFloat(a));
-                llvm::Value* valB = llvm::ConstantFP::get(context, llvm::APFloat(b));
-                resultLLVM = builder.CreateFSub(valA, valB, "subtmp"); 
-                return a - b; 
-            }); 
+            return std::make_shared<Operation>(
+                std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([&](llvm::Value* lhs, llvm::Value* rhs) { 
+                    return builder.CreateFSub(lhs, rhs, "subtmp"); 
+                })
+            ); 
         });
         
         registreSymbole->enregistrer('*', [&]() { 
-            return std::make_shared<Operation>([&](double a, double b) { 
-                llvm::Value* valA = llvm::ConstantFP::get(context, llvm::APFloat(a));
-                llvm::Value* valB = llvm::ConstantFP::get(context, llvm::APFloat(b));
-                resultLLVM = builder.CreateFMul(valA, valB, "multmp"); 
-                return a * b; 
-            }); 
+            return std::make_shared<Operation>(
+                std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([&](llvm::Value* lhs, llvm::Value* rhs) { 
+                    return builder.CreateFMul(lhs, rhs, "multmp"); 
+                })
+            ); 
         });
         
         registreSymbole->enregistrer('/', [&]() { 
-            return std::make_shared<Operation>([&](double a, double b) { 
-                if (b == 0) throw std::runtime_error("Division par zéro");
-                llvm::Value* valA = llvm::ConstantFP::get(context, llvm::APFloat(a));
-                llvm::Value* valB = llvm::ConstantFP::get(context, llvm::APFloat(b));
-                resultLLVM = builder.CreateFDiv(valA, valB, "divtmp"); 
-                return a / b; 
-            }); 
+            return std::make_shared<Operation>(
+                std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([&](llvm::Value* lhs, llvm::Value* rhs) { 
+                    return builder.CreateFDiv(lhs, rhs, "divtmp"); 
+                })
+            ); 
         });
         
         // ===== Chaîne de responsabilité =====
@@ -94,20 +83,16 @@ int main() {
                         
         // ===== Construction de l'AST et Résolution =====
         ConstructeurArbreEquation* constructeurArbreEquation = new ConstructeurArbreEquation(
-            chaineResponsabilite, registreSymbole, serviceParenthese
+            chaineResponsabilite, registreSymbole, serviceParenthese, context
         );
 
         std::shared_ptr<IExpression> expression = constructeurArbreEquation->construire(equation);
         
         // Résoudre l'expression (cela appelle aussi les lambdas LLVM)
-        double resultatNumerique = expression->resoudre();
+        llvm::Value* resultatNumerique = expression->resoudre();
         std::cout << "Résultat numérique: " << resultatNumerique << std::endl;
         
-        // Le dernier resultLLVM contient le résultat final
-        if (resultLLVM == nullptr) {
-            resultLLVM = llvm::ConstantFP::get(context, llvm::APFloat(resultatNumerique));
-        }
-        
+     
         // ===== Affichage du résultat avec printf =====
         // Déclaration de la fonction printf
         llvm::FunctionType *printfType = llvm::FunctionType::get(
@@ -137,15 +122,16 @@ int main() {
         );
         
         // Appel à printf avec le résultat
-        std::vector<llvm::Value*> printfArgs = {formatPtr, resultLLVM};
+        std::vector<llvm::Value*> printfArgs = {formatPtr, resultatNumerique};
         builder.CreateCall(printfFunc, printfArgs);
         
-        // Retourner le résultat
-        builder.CreateRet(resultLLVM);
+        // Retourner le résultat converti en int32
+        llvm::Value* resultInt = builder.CreateFPToSI(resultatNumerique, builder.getInt32Ty(), "resultInt");
+        builder.CreateRet(resultInt);
 
         // ===== Sauvegarde du code LLVM =====
-        std::error_code EC;
-        llvm::raw_fd_ostream out("build/output.ll", EC);
+        std::error_code errorCode;
+        llvm::raw_fd_ostream out("build/output.ll", errorCode);
         module.print(out, nullptr);
         out.close();
         std::cout << "Code LLVM sauvegardé dans build/output.ll" << std::endl;
