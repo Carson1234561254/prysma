@@ -5,6 +5,12 @@ project(Prysma)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Par défaut, si aucun type de build n'est fourni, utiliser Debug
+if(NOT CMAKE_BUILD_TYPE)
+    message(STATUS "CMAKE_BUILD_TYPE non défini -> configuration par défaut: Debug")
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
+endif()
+
 # --- BLOC LLVM AJOUTÉ ---
 # 1. Localisation du paquet LLVM
 find_package(LLVM REQUIRED CONFIG)
@@ -44,9 +50,11 @@ target_link_libraries(Prysma PRIVATE ${llvm_libs})
 if(MSVC)
     target_compile_options(Prysma PRIVATE /W4)
 else()
-    target_compile_options(Prysma PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
-# Options de débogage
-set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+# Options de compilation par configuration (ajout des symboles de debug en Debug)
+target_compile_options(Prysma PRIVATE
+    $<$<CONFIG:Debug>:-g;-O0>
+    $<$<NOT:$<CONFIG:Debug>>:-O2>
+    -Wall -Wextra -Wpedantic
+)

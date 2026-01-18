@@ -21,6 +21,9 @@
 #include <fstream>
 #include <map>
 
+
+// Dans le future il faut encapsuler LLVM dans une classe avec que les méthodes nécessaires 
+// pour éviter la fuite de détails d'implémentation dans le main.
 int main() {
     try {
         // ===== Initialisation LLVM =====
@@ -144,18 +147,12 @@ int main() {
         // Retourner le résultat
         builder.CreateRet(resultLLVM);
 
-        // ===== Affichage et Sauvegarde =====
-        std::string str;
-        llvm::raw_string_ostream os(str);
-        module.print(os, nullptr);
-        std::cout << "\n--- Code LLVM IR ---" << std::endl;
-        std::cout << os.str() << std::endl;
-        
-        // Sauvegarder le code IR dans un fichier
-        std::ofstream irFile("code.ll");
-        irFile << os.str();
-        irFile.close();
-        std::cout << "\n=== Code IR sauvegardé dans code.ll ===" << std::endl;
+        // ===== Sauvegarde du code LLVM =====
+        std::error_code EC;
+        llvm::raw_fd_ostream out("build/output.ll", EC);
+        module.print(out, nullptr);
+        out.close();
+        std::cout << "Code LLVM sauvegardé dans build/output.ll" << std::endl;
 
         // Nettoyage
         delete constructeurArbreEquation;
