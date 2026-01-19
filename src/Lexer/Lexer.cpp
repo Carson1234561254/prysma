@@ -1,7 +1,97 @@
 #include "Lexer/Lexer.h"
 #include <cctype>
 
-// Fonction privée pour ajouter un mot courant à la liste de tokens
+void Lexer::traiterCommentaires(const string& sourceCode, size_t& pos) {
+    if (pos + 1 < sourceCode.length() && sourceCode[pos] == '/' && sourceCode[pos + 1] == '/') {
+        while (pos < sourceCode.length() && sourceCode[pos] != '\n') {
+            pos++;
+        }
+        return;
+    }
+    
+    if (pos + 1 < sourceCode.length() && sourceCode[pos] == '/' && sourceCode[pos + 1] == '*') {
+        pos += 2;
+        while (pos + 1 < sourceCode.length()) {
+            if (sourceCode[pos] == '*' && sourceCode[pos + 1] == '/') {
+                pos += 2;
+                return;
+            }
+            pos++;
+        }
+        pos++;
+    }
+}
+
+void Lexer::traiterChaine(const string& sourceCode, size_t& pos, vector<Token>& tokens) {
+    if (sourceCode[pos] != '"') {
+        return;
+    }
+    
+    string valeur;
+    valeur += sourceCode[pos];
+    pos++;
+    
+    while (pos < sourceCode.length() && sourceCode[pos] != '"') {
+        if (sourceCode[pos] == '\\' && pos + 1 < sourceCode.length()) {
+            valeur += sourceCode[pos];
+            pos++;
+            valeur += sourceCode[pos];
+            pos++;
+        } else {
+            valeur += sourceCode[pos];
+            pos++;
+        }
+    }
+    
+    if (pos < sourceCode.length()) {
+        valeur += sourceCode[pos];
+        pos++;
+    }
+    
+    tokens.push_back({TOKEN_LIT_CHAINE, valeur});
+}
+
+void Lexer::traiterNombre(const string& sourceCode, size_t& pos, vector<Token>& tokens) {
+    string nombre;
+    bool estFlottant = false;
+    
+    if ((sourceCode[pos] == '-' || sourceCode[pos] == '+') && 
+        pos + 1 < sourceCode.length() && isdigit(sourceCode[pos + 1]) != 0) {
+        nombre += sourceCode[pos];
+        pos++;
+    }
+    
+    while (pos < sourceCode.length() && isdigit(sourceCode[pos]) != 0) {
+        nombre += sourceCode[pos];
+        pos++;
+    }
+    
+    if (pos < sourceCode.length() && sourceCode[pos] == '.') {
+        estFlottant = true;
+        nombre += sourceCode[pos];
+        pos++;
+        
+        while (pos < sourceCode.length() && isdigit(sourceCode[pos]) != 0) {
+            nombre += sourceCode[pos];
+            pos++;
+        }
+    }
+    
+    if (estFlottant) {
+        tokens.push_back({TOKEN_LIT_FLOAT, nombre});
+    } else {
+        tokens.push_back({TOKEN_LIT_INT, nombre});
+    }
+}
+
+void Lexer::traiterLitteraux(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens) {
+    if (current == '"') {
+        traiterChaine(sourceCode, pos, tokens);
+    } else if (isdigit(current) != 0) {
+        traiterNombre(sourceCode, pos, tokens);
+    }
+}
+
 void Lexer::ajouterMotCourant(const string& motCourant, vector<Token>& tokens) {
     if (motCourant.empty()) {
         return;
@@ -14,7 +104,6 @@ void Lexer::ajouterMotCourant(const string& motCourant, vector<Token>& tokens) {
     tokens.push_back(token);
 }
 
-// Fonction privée pour traiter les opérateurs mathématiques simples
 void Lexer::traiterOperateursMathematiques(char current, vector<Token>& tokens) {
     switch (current) {
         case '+': 
@@ -29,10 +118,12 @@ void Lexer::traiterOperateursMathematiques(char current, vector<Token>& tokens) 
         case '/': 
             tokens.push_back({TOKEN_SLASH, "/"}); 
             break;
+        case '%':
+            tokens.push_back({TOKEN_MODULO, "%"});
+            break;
     }
 }
 
-// Fonction privée pour traiter les délimiteurs et ponctuation
 void Lexer::traiterDelimiteurs(char current, vector<Token>& tokens) {
     switch (current) {
         case '(': 
@@ -62,13 +153,12 @@ void Lexer::traiterDelimiteurs(char current, vector<Token>& tokens) {
     }
 }
 
-// Fonction privée pour traiter les opérateurs complexes
 void Lexer::traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens) {
     switch (current) {
         case '=': 
             if (pos + 1 < sourceCode.length() && sourceCode[pos + 1] == '=') {
                 tokens.push_back({TOKEN_EGAL_EGAL, "=="});
-                pos++; // IMPORTANT : On consomme le 2ème '=' pour ne pas le relire
+                pos++;
             } else {
                 tokens.push_back({TOKEN_EGAL, "="});
             }
@@ -102,22 +192,18 @@ void Lexer::traiterOperateursComplexes(char current, const string& sourceCode, s
 }
 
 void Lexer::traiterOperateursEtDelimiteurs(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens) {
-    // Vérifier si c'est un opérateur mathématique
-    if (current == '+' || current == '-' || current == '*' || current == '/') {
+    if (current == '+' || current == '-' || current == '*' || current == '/' || current == '%') {
         traiterOperateursMathematiques(current, tokens);
     }
-    // Vérifier si c'est un délimiteur
     else if (current == '(' || current == ')' || current == '{' || current == '}' || 
              current == '[' || current == ']' || current == ';' || current == ',') {
         traiterDelimiteurs(current, tokens);
     }
-    // Vérifier si c'est un opérateur complexe
     else if (current == '=' || current == '<' || current == '>' || current == '!') {
         traiterOperateursComplexes(current, sourceCode, pos, tokens);
     }
 }
 
-// Fonction principale de tokenization
 vector<Token> Lexer::tokenizer(const string& sourceCode) {
     vector<Token> tokens;
     string motCourant;
@@ -127,7 +213,28 @@ vector<Token> Lexer::tokenizer(const string& sourceCode) {
     while (pos < sourceCode.length()) {
         char current = sourceCode[pos];
 
-        // Ignorer les espaces, tabulations, et nouvelles lignes
+        if (current == '/' && pos + 1 < sourceCode.length() && 
+            (sourceCode[pos + 1] == '/' || sourceCode[pos + 1] == '*')) {
+            ajouterMotCourant(motCourant, tokens);
+            motCourant = "";
+            traiterCommentaires(sourceCode, pos);
+            continue;
+        }
+
+        if (current == '"') {
+            ajouterMotCourant(motCourant, tokens);
+            motCourant = "";
+            traiterChaine(sourceCode, pos, tokens);
+            continue;
+        }
+
+        if (isdigit(current) != 0) {
+            ajouterMotCourant(motCourant, tokens);
+            motCourant = "";
+            traiterNombre(sourceCode, pos, tokens);
+            continue;
+        }
+
         if (isspace(current) != 0) {
             ajouterMotCourant(motCourant, tokens);
             motCourant = "";
@@ -135,30 +242,23 @@ vector<Token> Lexer::tokenizer(const string& sourceCode) {
             continue;
         }
 
-        // Si nous avons un mot courant et le caractère n'est pas alphanumérique, 
-        // nous devons finir le mot
         if (!motCourant.empty() && isalnum(current) == 0 && current != '_') {
             ajouterMotCourant(motCourant, tokens);
             motCourant = "";
         }
 
-        // Si c'est un caractère alphanumérique ou underscore, ajouter au mot courant
         if (isalnum(current) != 0 || current == '_') {
             motCourant += current;
             pos++;
             continue;
         }
 
-        // Traiter les opérateurs et délimiteurs
         traiterOperateursEtDelimiteurs(current, sourceCode, pos, tokens);
 
         pos++;
     }
 
-    // Ajouter le dernier mot s'il existe
     ajouterMotCourant(motCourant, tokens);
-
-    // Ajouter le token EOF
     tokens.push_back({TOKEN_EOF, ""});
 
     return tokens;

@@ -22,7 +22,8 @@ enum TokenType {
     TOKEN_PLUS,         
     TOKEN_MOINS,        
     TOKEN_ETOILE,       
-    TOKEN_SLASH,  
+    TOKEN_SLASH,
+    TOKEN_MODULO,
     TOKEN_PLUS_PETIT,
     TOKEN_PLUS_GRAND,
     TOKEN_PLUS_PETIT_EGAL,
@@ -46,8 +47,12 @@ enum TokenType {
     TOKEN_FONCTION,    
     TOKEN_SI,          
     TOKEN_SINON,       
-    TOKEN_TANT_QUE,     
-    TOKEN_RETOUR,    
+    TOKEN_TANT_QUE,
+    TOKEN_POUR,
+    TOKEN_RETOUR,
+    TOKEN_VRAI,
+    TOKEN_FAUX,
+    TOKEN_PRINT,
 
     // variable 
     TOKEN_TYPE_INT,
@@ -72,7 +77,11 @@ class Lexer {
         {"if", TOKEN_SI},
         {"else", TOKEN_SINON},
         {"while", TOKEN_TANT_QUE},
+        {"for", TOKEN_POUR},
         {"return", TOKEN_RETOUR},
+        {"true", TOKEN_VRAI},
+        {"false", TOKEN_FAUX},
+        {"print", TOKEN_PRINT},
         {"int", TOKEN_TYPE_INT},
         {"float", TOKEN_TYPE_FLOAT},
         {"string", TOKEN_TYPE_STRING},
@@ -87,6 +96,10 @@ class Lexer {
     void traiterOperateursMathematiques(char current, vector<Token>& tokens);
     void traiterDelimiteurs(char current, vector<Token>& tokens);
     void traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    void traiterLitteraux(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    void traiterCommentaires(const string& sourceCode, size_t& pos);
+    void traiterChaine(const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    void traiterNombre(const string& sourceCode, size_t& pos, vector<Token>& tokens);
     
     public: 
         Lexer() {}
