@@ -13,6 +13,7 @@
 #include <llvm/IR/NoFolder.h>
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Constants.h>
+#include "LLVM/LLVMSerializer.h"
 
 #include <iostream>
 
@@ -90,9 +91,7 @@ int main() {
         
         // Résoudre l'expression (cela appelle aussi les lambdas LLVM)
         llvm::Value* resultatNumerique = expression->resoudre();
-        std::cout << "Résultat numérique: " << resultatNumerique << std::endl;
-        
-     
+             
         // ===== Affichage du résultat avec printf =====
         // Déclaration de la fonction printf
         llvm::FunctionType *printfType = llvm::FunctionType::get(
@@ -130,11 +129,8 @@ int main() {
         builder.CreateRet(resultInt);
 
         // ===== Sauvegarde du code LLVM =====
-        std::error_code errorCode;
-        llvm::raw_fd_ostream out("build/output.ll", errorCode);
-        module.print(out, nullptr);
-        out.close();
-        std::cout << "Code LLVM sauvegardé dans build/output.ll" << std::endl;
+        LLVMSerializer traitementFichier(context, module);
+        traitementFichier.SauvegarderCodeLLVM("build/output.ll");
 
         // Nettoyage
         delete constructeurArbreEquation;

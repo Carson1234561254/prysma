@@ -36,9 +36,11 @@ set(SOURCES
     src/AST/Noeuds/Operande/Operation.cpp
     src/AST/Noeuds/Operande/RegistreSymbole.cpp
     src/AST/Noeuds/Operande/Valeur.cpp
+    src/LLVM/LLVMSerializer.cpp
     src/Parsing/Equation/ChaineResponsabilite.cpp
     src/Parsing/Equation/GestionnaireOperateur.cpp
     src/Parsing/Equation/ServiceParenthese.cpp
+    src/Lexer/Lexer.cpp
 )
 
 # Créer l'exécutable
