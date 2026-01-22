@@ -3,7 +3,6 @@
 
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireOperateur.h"
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
-#include <memory>
 #include <string>
 
 /**

@@ -4,7 +4,6 @@
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireOperateur.h"
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
 #include <vector>
-#include <memory>
 #include <string>
 
 // Forward declaration

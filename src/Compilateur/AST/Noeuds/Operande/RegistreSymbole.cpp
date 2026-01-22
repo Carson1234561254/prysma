@@ -8,11 +8,11 @@ void RegistreSymbole::enregistrer(
 }
 
 std::shared_ptr<INoeud> RegistreSymbole::recupererNoeud(char symbole) {
-    auto it = _carteSymboles.find(symbole);
-    if (it == _carteSymboles.end()) {
+    auto iterator = _carteSymboles.find(symbole);
+    if (iterator == _carteSymboles.end()) {
         throw std::invalid_argument(std::string("Symbole inconnu: ") + symbole);
     }
-    return it->second();
+    return iterator->second();
 }
 
 bool RegistreSymbole::estOperateur(char symbole) const {

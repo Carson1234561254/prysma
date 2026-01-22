@@ -12,7 +12,10 @@ void GestionnaireOperateur::definirSuivant(IGestionnaireOperateur* suivant) {
 }
 
 int GestionnaireOperateur::chercherOperateur(const std::string& equation) const {
-    if (_gestionnaireParenthese == nullptr) return -1;
+    if (_gestionnaireParenthese == nullptr) 
+    { 
+        return -1;
+    }
     return _gestionnaireParenthese->trouverDernierAuNiveauZero(equation, _symbole);
 }
 

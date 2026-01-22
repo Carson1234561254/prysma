@@ -17,7 +17,6 @@ CompileFlags:
     - "-Wpedantic"
     - "-O0"
     - "-g"
-    - "-I${workspaceFolder}/include"
   # Database de compilation
   CompilationDatabase: "build"
 

@@ -1,9 +1,9 @@
 #include "Compilateur/Parsing/Equation/ServiceParenthese.h"
-#include <algorithm>
 #include <cctype>
+#include <utility>
 
 ServiceParenthese::ServiceParenthese(std::shared_ptr<RegistreSymbole> registreSymbole)
-    : _registreSymbole(registreSymbole) {}
+    : _registreSymbole(std::move(registreSymbole)) {}
 
 std::string ServiceParenthese::enleverParenthesesEnglobantes(std::string equation) {
     // Trimmer les espaces
@@ -21,12 +21,15 @@ std::string ServiceParenthese::enleverParenthesesEnglobantes(std::string equatio
     return equation;
 }
 
-bool ServiceParenthese::estEnglobante(const std::string& equation) const {
+bool ServiceParenthese::estEnglobante(const std::string& equation)  {
     int profondeur = 0;
     for (size_t i = 0; i < equation.length() - 1; i++) {
-        char c = equation[i];
-        profondeur += (c == '(' ? 1 : c == ')' ? -1 : 0);
-        if (profondeur == 0) return false;
+        char caractere = equation[i];
+        profondeur += (caractere == '(' ? 1 : caractere == ')' ? -1 : 0);
+        if (profondeur == 0) 
+        {
+            return false;
+        }
     }
     return true;
 }
@@ -34,10 +37,10 @@ bool ServiceParenthese::estEnglobante(const std::string& equation) const {
 int ServiceParenthese::trouverDernierAuNiveauZero(const std::string& equation, char operateur) {
     int profondeur = 0;
     for (int i = equation.length() - 1; i >= 0; i--) {
-        char c = equation[i];
-        profondeur += (c == ')' ? 1 : c == '(' ? -1 : 0);
+        char caractere = equation[i];
+        profondeur += (caractere == ')' ? 1 : caractere == '(' ? -1 : 0);
         
-        if (c == operateur && profondeur == 0 && !estSigneUnaire(equation, i)) {
+        if (caractere == operateur && profondeur == 0 && !estSigneUnaire(equation, i)) {
             // Vérifier pour les opérateurs doubles (comme --)
             if (i > 0 && operateur == equation[i - 1]) {
                 return i - 1;
@@ -49,7 +52,10 @@ int ServiceParenthese::trouverDernierAuNiveauZero(const std::string& equation, c
 }
 
 bool ServiceParenthese::estSigneUnaire(const std::string& equation, int indice) const {
-    if (indice == 0) return true;
+    if (indice == 0)
+    {
+        return true;
+    }
     char precedent = equation[indice - 1];
     return _registreSymbole->estOperateur(precedent) || precedent == '(';
 }

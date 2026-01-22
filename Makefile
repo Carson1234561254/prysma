@@ -36,4 +36,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 clean:
 	rm -rf $(BIN_DIR)
 
-.PHONY: all clean
+# Générer compile_commands.json pour clangd/bear
+compile_commands: clean
+	@echo "Génération de compile_commands.json avec bear..."
+	bear --output build/compile_commands.json -- make
+
+.PHONY: all clean compile_commands

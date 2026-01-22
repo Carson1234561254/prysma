@@ -44,3 +44,8 @@
 
 /build/
 /build-*/ 
+
+# Cache clangd 
+
+.cache
+/.cache-*/

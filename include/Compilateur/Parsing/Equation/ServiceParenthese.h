@@ -15,7 +15,7 @@ private:
      * @param equation L'équation à vérifier
      * @return true si les parenthèses englobent toute l'expression
      */
-    bool estEnglobante(const std::string& equation) const;
+    static bool estEnglobante(const std::string& equation);
     
     /**
      * @brief Vérifie si un opérateur à une position donnée est unaire
@@ -23,7 +23,7 @@ private:
      * @param indice L'indice de l'opérateur
      * @return true si c'est un signe unaire
      */
-    bool estSigneUnaire(const std::string& equation, int indice) const;
+    [[nodiscard]] bool estSigneUnaire(const std::string& equation, int indice) const;
 
 public:
     /**
