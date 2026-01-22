@@ -55,7 +55,7 @@ Prysma est un langage de programmation qui inclura des fonctionnalités de base 
 | Aspect technologique | Explication (si nécessaire) |
 | -------------------- | --------------------------- |
 | Algorithmique        |                             |
-|                      |                             |
+| Outils de compilation|                             |
 
 ### Préciser l'apprentissage technique qui se fera pendant le projet
 

@@ -31,7 +31,7 @@ int main() {
         builder.SetInsertPoint(entry);
 
         // ===== Configuration du registre =====
-        std::string equation = "3 + 5 * (2 - 8) / 4";
+        std::string equation = "2*3-(20+3)";
         std::shared_ptr<RegistreSymbole> registreSymbole = std::make_shared<RegistreSymbole>();
 
         // registre de lamda LLVM contenant une map des opérations mathématiques de base 
@@ -129,8 +129,9 @@ int main() {
         builder.CreateRet(resultInt);
 
         // ===== Sauvegarde du code LLVM =====
+
         LLVMSerializer traitementFichier(context, module);
-        traitementFichier.SauvegarderCodeLLVM("build/output.ll");
+        traitementFichier.SauvegarderCodeLLVM("output.ll");
 
         // Nettoyage
         delete constructeurArbreEquation;

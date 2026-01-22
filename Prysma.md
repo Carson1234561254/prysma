@@ -1,4 +1,4 @@
-# 📘 Documentation officielle du langage de programmation Prysma
+# Documentation officielle du langage de programmation Prysma
 
 ## Table des matières
 1. [Introduction](#introduction)
@@ -174,6 +174,26 @@ for (int i = 0; i < 10; i = i + 1) {
         print("Impair: " + i);
     }
 }
+```
+
+```pryma
+
+def bool determiner_nombre_pair(int nombre) {
+    int result = false; 
+    for (int i = 0; i < nombre; i = i + 1) {
+        if (i % 2 == 0) {
+            result = true;
+            print("Pair: " + i);
+        }
+        else 
+        {
+            result = false;
+            print("Impair: " + i);
+        }
+    }
+    return result;
+}
+
 ```
 
 ---
