@@ -17,7 +17,7 @@ LLVM résout plusieurs problématiques liées au langage de bas niveau, comme l'
 
 En somme, le LLVM est un outil qui génère du code intermédiaire avec une syntaxe proche de l'assembleur, mais avec des fonctionnalités avancées qui facilitent la création du compilateur. 
 
-Prysma est un langage de programmation qui inclura des fonctionnalités de base comme les variables, les fonctions, les conditions, les boucles, etc. Le compilateur devra être capable de gérer ces fonctionnalités et de générer du code LLVM correspondant. L'objectif est de créer un langage turing-complet, il y aura donc l'écriture de bibliothèques standard comme la gestion de la mémoire, arbre binaire, liste chaînée, pile, file, graphe, dictionnaire, bibliothèque de manipulation de chaîne de caractères, etc. C'est un projet évolutif, donc les fonctionnalités ne sont pas en manque, nous pouvons toujours ajouter des fonctionnalités supplémentaires au langage et au compilateur, exemple : l'orienté objet, faire un garbage collector, des lambdas, etc.
+Prysma est un langage de programmation qui inclura des fonctionnalités de base comme les variables, les fonctions, les conditions, les boucles, etc. Le compilateur devra être capable de gérer ces fonctionnalités et de générer du code LLVM correspondant. L'objectif est de créer un langage Turing-complet, il y aura donc l'écriture de bibliothèques standard comme la gestion de la mémoire, arbre binaire, liste chaînée, pile, file, graphe, dictionnaire, bibliothèque de manipulation de chaîne de caractères, etc. C'est un projet évolutif, donc les fonctionnalités ne sont pas en manque, nous pouvons toujours ajouter des fonctionnalités supplémentaires au langage et au compilateur, exemple : l'orienté objet, faire un garbage collector, des lambdas, etc.
 
 
 ## Si possible, nommer 3 projets/produits similaires qui vous inspirent
@@ -79,10 +79,10 @@ Cette technologie s'intègre au projet en tant que composant central, c'est le b
 > * Où pourriez-vous bloquer?
 > * Quels sont les défis techniques pour mener à terme la réalisation?
 
-- Le débogage n'est pas seulement fait dans le langage C++ mais aussi dans le langage généré par le framework LLVM. Ce qui nous donne 2 dimensions de débogage. Si vous écrivez un algorithme dans le langage Prysma tel que une liste doublement chaînée, vous ne pouvez pas savoir si c'est l'algorithme qui n'est pas correct, si un pointeur a été mal assigné, ou si le problème vient du code C++ ou encore de la génération du code LLVM dans le fichier .ll. Ça fait beaucoup d'états de débogage où peut se trouver un problème. 
+- Le débogage n'est pas seulement fait dans le langage C++ mais aussi dans le langage généré par le framework LLVM. Ce qui nous donne deux dimensions de débogage. Si vous écrivez un algorithme dans le langage Prysma tel que une liste doublement chaînée, vous ne pouvez pas savoir si c'est l'algorithme qui n'est pas correct, si un pointeur a été mal assigné, ou si le problème vient du code C++ ou encore de la génération du code LLVM dans le fichier .ll. Ça fait beaucoup d'états de débogage où peut se trouver un problème. 
 - La complexité de la génération du code par le framework LLVM peut être importante. 
 - La récursivité peut être un défi, visualiser l'état d'exécution du code n'est pas aussi simple qu'avec un code non récursif. 
-- La gestion de la mémoire peut être un défi, surtout dans le langage C++. Et Prysma.
+- La gestion de la mémoire peut être un défi, surtout dans le langage C++ et Prysma.
 - La création du garbage collector peut être un défi technique intéressant à relever. 
 - La création des bibliothèques du langage Prysma.
 
@@ -92,22 +92,31 @@ Cette technologie s'intègre au projet en tant que composant central, c'est le b
 > Il est aussi possible d'inclure plus de matériel dans votre projet GitHub.
 
 
-
 ## Contenu de vos sprints
 
-Le temps de travail pour ce projet inclut 3 sprints de 2 semaines chacun.
+Le temps de travail pour ce projet inclut trois sprints de deux semaines chacun.
 
-### Que voyez vous dans l'itération 1 du projet ?
+### Que voyez-vous dans l'itération 1 du projet ?
+
+> Listez les fonctionnalités visées à l'intérieur de 2 semaines et les technologies qui seront utilisées
+- Écrire une partie de l'arbre syntaxique abstrait, elle contiendra la logique pour construire le code LLVM qui sera généré ensuite. 
+- Boucle while, if, variables (int, float, bool)
+- Comprendre en profondeur les méthodes de LLVM qui permettent de générer le code source intermédiaire. 
+- Écrire le curseur qui orchestre la création des nœuds, les nœuds (while, if, variables (int, float, bool)) serviront pour la génération du code de façon récursive. 
+
+
+### Que voyez-vous dans l'itération 2 du projet ?
+
+> Listez les fonctionnalités visées à l'intérieur de 2 semaines et les technologies qui seront utilisées
+- Logique d'erreur de syntaxe gérée dans le parsing, le curseur de token utilisera la classe d'erreur pour déterminer si la syntaxe est correcte avant de construire l'arbre syntaxique. 
+- Implémenter un système de débogage contrôlé qui permet à l'éditeur de code VSCode de placer des breakpoints lors de l'exécution. 
+
+
+### Que voyez-vous dans l'itération 3 du projet ?
 
 > Listez les fonctionnalités visées à l'intérieur de 2 semaines et les technologies qui seront utilisées
 
-### Que voyez vous dans l'itération 2 du projet ?
-
-> Listez les fonctionnalités visées à l'intérieur de 2 semaines et les technologies qui seront utilisées
-
-### Que voyez vous dans l'itération 3 du projet ?
-
-> Listez les fonctionnalités visées à l'intérieur de 2 semaines et les technologies qui seront utilisées
-
-
-
+- Écrire des librairies fonctionnelles pour le langage de programmation (liste chaînée, arbre binaire, pile, file, etc.)
+- Correction des bugs, d'ailleurs la programmation de librairies servira de test afin de déterminer si le langage Prysma ne contient pas de problème de logique. 
+- Coloriage syntaxique dans VSCode pour le langage Prysma. 
+- Implémentation du type string et des tableaux dans le langage Prysma. 
