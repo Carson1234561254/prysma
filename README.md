@@ -109,11 +109,12 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
 ### Itération 2 du projet fonctionnalité à réaliser en 2 semaines ?
 
 - Logique d'erreur de syntaxe gérée dans le parsing, le curseur de token utilisera la classe d'erreur pour déterminer si la syntaxe est correcte avant de construire l'arbre syntaxique. 
-- Implémenter un système de débogage contrôlé qui permet à l'éditeur de code VSCode de placer des breakpoints lors de l'exécution. 
+- Implémenter un système d'affichage (dump) de l'AST et du code IR dans la console pour débogage manuel 
+- Coloriage syntaxique dans VSCode pour le langage Prysma. 
+- Implémentation du type string et des tableaux dans le langage Prysma.
 
 ### Itération 3 du projet fonctionnalité à réaliser en 2 semaines ?
 
 - Écrire des librairies fonctionnelles pour le langage de programmation (liste chaînée, arbre binaire, pile, file, etc.)
 - Correction des bugs, d'ailleurs la programmation de librairies servira de test afin de déterminer si le langage Prysma ne contient pas de problème de logique. 
-- Coloriage syntaxique dans VSCode pour le langage Prysma. 
-- Implémentation du type string et des tableaux dans le langage Prysma.
+
