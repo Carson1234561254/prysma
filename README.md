@@ -71,11 +71,13 @@ C'est la représentation d'un arbre syntaxique abstrait pour le langage Prysma. 
 def void afficher_nombre_pair(int limite) {
     for (int i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
-            print(i, "pair")
+            // Est un nombre pair
+            print(i)
         }
         else 
         {
-            print(i, "impair")
+            // Est un nombre impair
+            print(i)
         }
     }
 }
