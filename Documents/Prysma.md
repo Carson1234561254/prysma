@@ -180,14 +180,13 @@ for (int i = 0; i < 10; i = i + 1) {
 
 ```
 def void afficher_nombre_pair(int limite) {
-    int result = false; 
     for (int i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
-            print(i + "paire")
+            print(i, "paire")
         }
         else 
         {
-            print(i + "impaire")
+            print(i, "impaire")
         }
     }
 }

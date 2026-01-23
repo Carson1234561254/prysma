@@ -71,11 +71,11 @@ C'est la représentation d'un arbre syntaxique abstrait pour le langage Prysma. 
 def void afficher_nombre_pair(int limite) {
     for (int i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
-            print(i + "paire")
+            print(i, "paire")
         }
         else 
         {
-            print(i + "impaire")
+            print(i, "impaire")
         }
     }
 }
@@ -115,6 +115,8 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
 
 ### Itération 3 du projet fonctionnalité à réaliser en 2 semaines ?
 
-- Écrire des librairies fonctionnelles pour le langage de programmation (liste chaînée, arbre binaire, pile, file, etc.)
-- Correction des bugs, d'ailleurs la programmation de librairies servira de test afin de déterminer si le langage Prysma ne contient pas de problème de logique. 
+- Écrire une librairie mathématique pour le langage Prysma (factorielle, suite de Fibonacci, puissance, PGCD, vérification de nombre premier, etc.).
 
+- Correction des bugs, d'ailleurs la programmation de cette librairie servira de test pour valider la gestion de la récursivité (stack frames) et des boucles imbriquées sans avoir à gérer l'allocation dynamique complexe.
+
+- Consolider la logique des opérateurs arithmétiques et des conditions pour s'assurer que le code généré est fiable avant d'aller plus loin.
