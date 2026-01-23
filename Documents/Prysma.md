@@ -178,20 +178,18 @@ for (int i = 0; i < 10; i = i + 1) {
 
 ```pryma
 
-def bool determiner_nombre_pair(int nombre) {
+```
+def void afficher_nombre_pair(int limite) {
     int result = false; 
-    for (int i = 0; i < nombre; i = i + 1) {
+    for (int i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
-            result = true;
-            print("Pair: " + i);
+            print(i + "paire")
         }
         else 
         {
-            result = false;
-            print("Impair: " + i);
+            print(i + "impaire")
         }
     }
-    return result;
 }
 
 ```

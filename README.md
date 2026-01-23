@@ -68,31 +68,27 @@ défis technique pour mener à terme la réalisation :
 C'est la représentation d'un arbre syntaxique abstrait pour le langage Prysma. Pour le code suivant :
 
 ```
-def bool determiner_nombre_pair(int nombre) {
-    int result = false; 
-    for (int i = 0; i < nombre; i = i + 1) {
+def void afficher_nombre_pair(int limite) {
+    for (int i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
-            result = true;
-            print("Pair: " + i);
+            print(i + "paire")
         }
         else 
         {
-            result = false;
-            print("Impair: " + i);
+            print(i + "impaire")
         }
     }
-    return result;
 }
 ```
 
 ![AST arbre syntaxique abstrait](Images/AST.png)
 
 
-Représentation de la génération du code intermédiaire LLVM IR pour une résolution d'équation simple : 2*3-(20+3). Cet algorithme sera utilisé dans les variables ou tout endroit où j'ai besoin de faire un calcul arithmétique. 
+Représentation de la génération du code intermédiaire LLVM IR pour une résolution d'équation simple : 2.0*3.0-(20.0+3.0). Cet algorithme sera utilisé dans les variables ou tout endroit où j'ai besoin de faire un calcul arithmétique. 
 
 ![LLVM IR arbre de résolution d'équation](Images/Arbre_resolution_equation.png)
 
-code généré en sortie du compilateur Prysma pour cette équation : 2*3-(20+3)
+code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(20.0+3.0)
 
 ```
  %addtmp = fadd double 2.000000e+01, 3.000000e+00
