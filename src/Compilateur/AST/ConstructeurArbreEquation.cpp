@@ -16,6 +16,7 @@ ConstructeurArbreEquation::ConstructeurArbreEquation(
       _gestionnaireParenthese(gestionnaireParenthese),
       _context(context) {}
 
+// "Pile d'Appels" (Call Stack) 
 std::shared_ptr<IExpression> ConstructeurArbreEquation::construire(std::string equation) {
     equation = _gestionnaireParenthese->enleverParenthesesEnglobantes(equation);
     

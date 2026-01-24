@@ -89,7 +89,7 @@ int main() {
 
         std::shared_ptr<IExpression> expression = constructeurArbreEquation->construire(equation);
         
-        // Résoudre l'expression (cela appelle aussi les lambdas LLVM)
+        // Résoudre l'expression (cela appelle aussi les lambdas LLVM) / Parcours en Profondeur Postfixe
         llvm::Value* resultatNumerique = expression->resoudre();
              
         // ===== Affichage du résultat avec printf =====
@@ -139,7 +139,7 @@ int main() {
         delete gestionnaireAddition; delete gestionnaireSoustraction;
         delete gestionnaireMultiplication; delete gestionnaireDivision;
         delete serviceParenthese;
-        
+       
         return 0;
         
     } catch (const std::exception& e) {
