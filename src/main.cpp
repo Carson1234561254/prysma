@@ -101,7 +101,7 @@ int main() {
         traitementFichier.SauvegarderCodeLLVM("output.ll");
 
         // Nettoyage
-      
+     
         return 0;
         
     } catch (const std::exception& e) {
