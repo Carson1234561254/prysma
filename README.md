@@ -1,5 +1,8 @@
 # Prysma
 
+## APPROUVÉ PAR LES PROFS
+#### PROF RESPONSABLE: MARCEL
+
 ## Description du projet 
 
 C'est un projet de développement d'un compilateur dont l'objectif sera de traduire un langage de programmation de haut niveau vers un langage intermédiaire LLVM. Le framework LLVM est largement utilisé dans l'industrie pour la compilation de code, notamment pour les langages comme le C et le C++ incluant Rust. LLVM sera la partie backend du compilateur, tandis que le frontend sera développé par moi. 
