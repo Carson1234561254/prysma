@@ -43,7 +43,8 @@ set(SOURCES
     src/Compilateur/Lexer/Lexer.cpp
     src/Compilateur/Builder/Equation/FloatEquationBuilder.cpp
     src/Compilateur/Builder/Equation/IntEquationBuilder.cpp
-    src/Compilateur/Lecture/FichierLecture.cpp
+    src/Compilateur/TraitementFichier/FichierLecture.cpp
+    src/Compilateur/TraitementFichier/FichierEcriture.cpp
 )
 
 # Créer l'exécutable

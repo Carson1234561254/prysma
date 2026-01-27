@@ -14,12 +14,10 @@
 #include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
 
 #include <iostream>
-#include "Compilateur/Lecture/FichierLecture.h"
+#include "Compilateur/TraitementFichier/FichierLecture.h"
 int main() {
     try {
-
         // Utilisation de shared_ptr 
-
         // Instruction
 
         // Faire un registre de lamda qui contient un dictionnaire mapé construit dynamiquement pour L'AST contenant un dictionnaire de noeud relier à des lamdas
@@ -67,17 +65,9 @@ int main() {
 
         // ===== Configuration du registre =====
         std::string document;
-        try 
-        {
-          FichierLecture fichierLecture("srcs/PrysmaCodeTests/main.prysma");
-          document = fichierLecture.entrer();
-
-        }catch(const std::exception& e)
-        {
-            std :: cerr << "Impossible d'ouvrir le fichier !";
-            return -1;
-        }
-     
+        FichierLecture fichierLecture("../src/PrysmaCodeTests/main.prysma");
+        document = fichierLecture.entrer();
+  
         Lexer lexer; 
         
         vector<Token> tokens = lexer.tokenizer(document);

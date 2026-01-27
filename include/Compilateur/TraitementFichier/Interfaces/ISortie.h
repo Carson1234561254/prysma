@@ -1,0 +1,12 @@
+#ifndef BB599809_0BCB_4424_9F67_25155C176A5E
+#define BB599809_0BCB_4424_9F67_25155C176A5E
+
+#include <string>
+
+class ISortie
+{
+    public : 
+        virtual void sort(const std::string& data) = 0;
+};
+
+#endif /* BB599809_0BCB_4424_9F67_25155C176A5E */

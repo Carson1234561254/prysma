@@ -1,15 +1,15 @@
-#include "Compilateur/Lecture/FichierLecture.h"
+#include "Compilateur/TraitementFichier/FichierLecture.h"
 
-std :: string FichierLecture :: entrer()
+std::string FichierLecture :: entrer()
 {
-    std :: string ligne; 
-    std :: string document; 
+    std::string ligne; 
+    std::string document; 
 
     std::ifstream fichier(_path, std::ios::in); 
 
     if(fichier.is_open())
     {
-        while(std :: getline(fichier,ligne))
+        while(std::getline(fichier,ligne))
         {
             document += ligne; 
         }
