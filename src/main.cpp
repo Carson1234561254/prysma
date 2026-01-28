@@ -1,6 +1,6 @@
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
 #include "Compilateur/AST/Noeuds/Operande/RegistreSymbole.h"
-#include "Compilateur/Variable/registreVariable.h"
+ #include "Compilateur/AST/Variable/registreVariable.h"
 
 // Inclusions LLVM
 #include <llvm-18/llvm/IR/Instructions.h>
@@ -26,9 +26,6 @@
 #include <llvm/Target/TargetMachine.h>
 #include <llvm/Target/TargetOptions.h>
 #include <memory>
-
-
-
 
 int main() {
     try {

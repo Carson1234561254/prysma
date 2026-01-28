@@ -1,1 +1,1 @@
-float variable = 5+5+3
+var float variable = 5+5+3
