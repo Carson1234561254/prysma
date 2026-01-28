@@ -6,7 +6,6 @@
 #include "Compilateur/AST/Noeuds/Operande/Operation.h"
 #include <llvm-18/llvm/IR/IRBuilder.h>
 
-
 class FloatEquationBuilder
 {
     private:
@@ -77,10 +76,7 @@ class FloatEquationBuilder
         delete gestionnaireMultiplication; 
         delete gestionnaireDivision;
         delete serviceParenthese;
-       
     }
     
     shared_ptr<IExpression> builderArbreEquationFloat(vector<Token> &tokens);
-   
-
 };

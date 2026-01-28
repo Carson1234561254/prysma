@@ -22,8 +22,14 @@ find_package(LLVM REQUIRED CONFIG)
 add_definitions(${LLVM_DEFINITIONS})
 
 # 3. Sélection des composants (Core et Support sont le minimum)
-# Ajoutez 'native' ou 'executionengine' si vous faites du JIT plus tard
-llvm_map_components_to_libnames(llvm_libs core support irreader bitwriter)
+# Ajoutez les architectures cibles pour InitializeAllTargets()
+llvm_map_components_to_libnames(llvm_libs 
+    core 
+    support 
+    irreader 
+    bitwriter 
+    ${LLVM_TARGETS_TO_BUILD}
+)
 # ------------------------
 
 # Dossiers include (Ajout de ${LLVM_INCLUDE_DIRS})
@@ -45,6 +51,7 @@ set(SOURCES
     src/Compilateur/Builder/Equation/IntEquationBuilder.cpp
     src/Compilateur/TraitementFichier/FichierLecture.cpp
     src/Compilateur/TraitementFichier/FichierEcriture.cpp
+    src/Compilateur/Variable/RegistreVariable.cpp
 )
 
 # Créer l'exécutable

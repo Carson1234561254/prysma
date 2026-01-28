@@ -1,6 +1,9 @@
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
+#include "Compilateur/AST/Noeuds/Operande/RegistreSymbole.h"
+#include "Compilateur/Variable/registreVariable.h"
 
 // Inclusions LLVM
+#include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Module.h>
 #include <llvm/IR/IRBuilder.h>
@@ -15,6 +18,18 @@
 
 #include <iostream>
 #include "Compilateur/TraitementFichier/FichierLecture.h"
+
+// Target machine cible
+#include <llvm/TargetParser/Host.h>
+#include <llvm/Support/TargetSelect.h>
+#include <llvm/MC/TargetRegistry.h>
+#include <llvm/Target/TargetMachine.h>
+#include <llvm/Target/TargetOptions.h>
+#include <memory>
+
+
+
+
 int main() {
     try {
         // Utilisation de shared_ptr 
@@ -51,17 +66,52 @@ int main() {
                 }
         };
         */
-        
-        // ===== Initialisation LLVM =====
+
+          // ===== Initialisation LLVM =====
         llvm::LLVMContext context;
         llvm::Module module("PrysmaModule", context);
         llvm::IRBuilder<llvm::NoFolder> builder(context);
     
+
+        // ===== Configuration de la cible, évite d'avoir des adresses mémoire aléatoire, ce qui cause des crashs aléatoire. =====
+        InitializeAllTargetInfos();
+        InitializeAllTargets();
+        InitializeAllTargetMCs();
+        InitializeAllAsmPrinters();
+
+        std::string targetTriple = sys::getDefaultTargetTriple();
+        module.setTargetTriple(targetTriple);
+
+        std::string error;
+        auto target = TargetRegistry::lookupTarget(targetTriple, error);
+        if (!target) {
+            errs() << error;
+            return 1;
+        }
+
+        TargetOptions opt;
+        auto targetMachine = target->createTargetMachine(targetTriple, "generic", "", opt, Reloc::Model::PIC_);
+        
+        // == teste du registre == 
+
+        std::shared_ptr<RegistreVariable> registreVariable = std::make_shared<RegistreVariable>();
+
+        
         // Création fonction main qui retourne un double
         llvm::FunctionType *funcType = llvm::FunctionType::get(builder.getInt32Ty(), false);
         llvm::Function *mainFunc = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "main", &module);
         llvm::BasicBlock *entry = llvm::BasicBlock::Create(context, "entry", mainFunc);
         builder.SetInsertPoint(entry);
+
+        // Test simple du registre - créer une allocation avec IRBuilder
+        Token testToken{TOKEN_IDENTIFIANT, "testVar"};
+        llvm::AllocaInst* allocaRaw = builder.CreateAlloca(builder.getDoubleTy(), nullptr, "test");
+        std::shared_ptr<llvm::AllocaInst> allocaPtr = std::shared_ptr<llvm::AllocaInst>(allocaRaw, [](llvm::AllocaInst*){});
+        registreVariable->enregistrer(testToken, allocaPtr);
+        std::shared_ptr<llvm::AllocaInst> resultTest = registreVariable->recupererVariables(testToken);
+
+        // rechercher dans le dictionnaire 
+        std::shared_ptr<llvm::AllocaInst> allocation = registreVariable->recupererVariables(testToken);
 
         // ===== Configuration du registre =====
         std::string document;
