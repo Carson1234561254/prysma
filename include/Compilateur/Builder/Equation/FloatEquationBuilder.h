@@ -10,25 +10,19 @@ class FloatEquationBuilder
 {
     private:
 
-    // === LLVM Builder ===
     llvm::IRBuilder<> builder;
 
-    // === registre de symbole ===
     std::shared_ptr<RegistreSymbole> registreSymboleFloat;
 
-    // ==== Chaine de responsabilité ====
     ChaineResponsabilite* chaineResponsabilite;
  
-    // ==== Gestionnaire operateur =====
     GestionnaireOperateur* gestionnaireAddition;
     GestionnaireOperateur* gestionnaireSoustraction;
     GestionnaireOperateur* gestionnaireMultiplication;
     GestionnaireOperateur* gestionnaireDivision;
-    
-    // ===== Chaîne de responsabilité =====
-     ServiceParenthese* serviceParenthese;
+
+    ServiceParenthese* serviceParenthese;
         
-    // ===== Construction de l'AST et Résolution =====
     ConstructeurArbreEquation* constructeurArbreEquation;
     
     void construireRegistreSymboleFloat();
@@ -38,13 +32,11 @@ class FloatEquationBuilder
     FloatEquationBuilder(llvm::LLVMContext &context) : builder(context)
     {
 
-        // === registre de symbole ===
+       
         registreSymboleFloat = std::make_shared<RegistreSymbole>();
 
-        // ===== Chaîne de responsabilité =====
         serviceParenthese = new ServiceParenthese(registreSymboleFloat);
 
-        // ==== Gestionnaire operateur =====
         gestionnaireAddition = new GestionnaireOperateur(TOKEN_PLUS);
         gestionnaireSoustraction = new GestionnaireOperateur(TOKEN_MOINS);
         gestionnaireMultiplication = new GestionnaireOperateur(TOKEN_ETOILE);
@@ -63,7 +55,6 @@ class FloatEquationBuilder
             chaineResponsabilite, registreSymboleFloat, serviceParenthese, context
         );
 
-        // ===== Enregistrement des opérateurs =====
         construireRegistreSymboleFloat();
     }
     
