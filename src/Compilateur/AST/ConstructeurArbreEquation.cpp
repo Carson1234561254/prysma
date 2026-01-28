@@ -3,9 +3,8 @@
 #include <utility>
 #include <llvm/IR/Constants.h>
 #include <vector>
-#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/AST/Noeuds/Operande/Valeur.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
+#include "Compilateur/AST/Noeuds/Operande/Valeur.h"
 #include "Compilateur/Lexer/Lexer.h"
 
 ConstructeurArbreEquation::ConstructeurArbreEquation(
@@ -19,7 +18,7 @@ ConstructeurArbreEquation::ConstructeurArbreEquation(
       _context(context) {}
 
 // "Pile d'Appels" (Call Stack) 
-std::shared_ptr<IExpression> ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
+std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
     // Enlever les parenthèses englobantes
     std::vector<Token> equationSansParentheses = _gestionnaireParenthese->enleverParenthesesEnglobantes(equation);
     equation = equationSansParentheses;
@@ -40,12 +39,12 @@ std::shared_ptr<IExpression> ConstructeurArbreEquation::construire(std::vector<T
         }
     }
     
-    std::shared_ptr<INoeud> noeud = _registreSymbole->recupererNoeud(equation[indice].type);
+    std::shared_ptr<IExpression> noeud = _registreSymbole->recupererNoeud(equation[indice].type);
     std::vector<Token> gauche(equation.begin(), equation.begin() + indice);
     std::vector<Token> droite(equation.begin() + indice + 1, equation.end());
     
-    std::shared_ptr<IExpression> exprGauche = construire(gauche);
-    std::shared_ptr<IExpression> exprDroite = construire(droite);
+    std::shared_ptr<INoeud> exprGauche = construire(gauche);
+    std::shared_ptr<INoeud> exprDroite = construire(droite);
     
     noeud->ajouterExpression(exprGauche, exprDroite);
     return noeud;

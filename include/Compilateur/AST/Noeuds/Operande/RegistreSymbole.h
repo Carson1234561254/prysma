@@ -12,7 +12,7 @@
 class RegistreSymbole : public IRegistreSymbole {
 private:
     // LinkedMap conserve l'ordre d'insertion
-    std::map<TokenType, std::function<std::shared_ptr<INoeud>()>> _carteSymboles;
+    std::map<TokenType, std::function<std::shared_ptr<IExpression>()>> _carteSymboles;
 
 public:
     /**
@@ -22,7 +22,7 @@ public:
      */
     void enregistrer(
         TokenType symbole, 
-        std::function<std::shared_ptr<INoeud>()> fournisseur
+        std::function<std::shared_ptr<IExpression>()> fournisseur
     ) override;
     
     /**
@@ -30,7 +30,7 @@ public:
      * @param symbole Le caractère de l'opérateur
      * @return Un nouveau nœud d'opération
      */
-    std::shared_ptr<INoeud> recupererNoeud(TokenType symbole) override;
+    std::shared_ptr<IExpression> recupererNoeud(TokenType symbole) override;
     
     /**
      * @brief Vérifie si un caractère est un opérateur connu

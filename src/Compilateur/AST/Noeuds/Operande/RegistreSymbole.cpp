@@ -4,11 +4,11 @@
 
 void RegistreSymbole::enregistrer(
     TokenType symbole, 
-    std::function<std::shared_ptr<INoeud>()> fournisseur) {
+    std::function<std::shared_ptr<IExpression>()> fournisseur) {
     _carteSymboles[symbole] = fournisseur;
 }
 
-std::shared_ptr<INoeud> RegistreSymbole::recupererNoeud(TokenType symbole) {
+std::shared_ptr<IExpression> RegistreSymbole::recupererNoeud(TokenType symbole) {
     auto iterator = _carteSymboles.find(symbole);
     if (iterator == _carteSymboles.end()) {
         throw std::invalid_argument(std::string("Symbole inconnu: ") + std::to_string(symbole));

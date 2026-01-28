@@ -1,17 +1,25 @@
 #pragma once
 
+#include "INoeud.h"
+#include <memory>
+
 /**
  * @interface IExpression
- * @brief Interface pour toute expression mathématique pouvant être résolue
+ * @brief Interface pour les nœuds d'une arbre d'expression
+ * Hérite de INoeud
  */
-#include <llvm-18/llvm/IR/Value.h>
-class IExpression {
+class IExpression : public INoeud {
 public:
     virtual ~IExpression() = default;
     
     /**
-     * @brief Résout l'expression et retourne le résultat
-     * @return La valeur numérique de l'expression
+     * @brief Ajoute deux expressions comme enfants gauche et droit
+     * @param gauche Expression enfant gauche
+     * @param droite Expression enfant droit
+     * @return Référence au nœud courant
      */
-    virtual llvm::Value* resoudre() = 0;
+    virtual std::shared_ptr<IExpression> ajouterExpression(
+        std::shared_ptr<INoeud> gauche, 
+        std::shared_ptr<INoeud> droite
+    ) = 0;
 };

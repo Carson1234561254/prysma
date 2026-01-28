@@ -1,6 +1,4 @@
-#include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
-#include "Compilateur/AST/Noeuds/Operande/RegistreSymbole.h"
- #include "Compilateur/AST/Variable/registreVariable.h"
+#include "Compilateur/AST/Noeuds/Variable/registreVariable.h"
 
 // Inclusions LLVM
 #include <llvm-18/llvm/IR/Instructions.h>
@@ -37,16 +35,16 @@ int main() {
         // Utilisation d'un système Table de Dispatch, rend le code ultra extensible pour toute nouveauté future
 
         /*
-            INoeud.h
-            class INoeud {
+            IExpression.h
+            class IExpression {
             public:
-                virtual ~INoeud() = default;
+                virtual ~IExpression() = default;
                 // La méthode (Génération de code)
                 virtual llvm::Value* codeGen(Context& ctx) = 0; 
             };
 
                         // NoeudInstruction.h
-            class NoeudInstruction : public INoeud {
+            class NoeudInstruction : public IExpression {
             private:
                 // La "recette" pour générer le code LLVM de cette istd :: cerr << "Impossible d'ouvrir le fichier !";
     return "";nstruction spécifique
@@ -121,10 +119,10 @@ int main() {
 
         FloatEquationBuilder* floatEquationBuilder = new FloatEquationBuilder(context);
         
-        shared_ptr<IExpression> expression = floatEquationBuilder->builderArbreEquationFloat(tokens);
+        shared_ptr<INoeud> expression = floatEquationBuilder->builderArbreEquationFloat(tokens);
         
         // Résoudre l'expression (cela appelle aussi les lambdas LLVM) / Parcours en Profondeur Postfixe
-        llvm::Value* resultatNumerique = expression->resoudre();
+        llvm::Value* resultatNumerique = expression->genCode();
              
         // ===== Affichage du résultat avec printf =====
         // Déclaration de la fonction printf

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
+#include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
 #include <functional>
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
@@ -10,10 +10,10 @@
  * @brief Représente une opération binaire entre deux expressions
  * Implémente le pattern Composite
  */
-class Operation : public INoeud {
+class Operation : public IExpression {
 private:
-    std::shared_ptr<IExpression> _droite;
-    std::shared_ptr<IExpression> _gauche;
+    std::shared_ptr<INoeud> _droite;
+    std::shared_ptr<INoeud> _gauche;
     std::function<llvm::Value*(llvm::Value*, llvm::Value*)> _operateur;
 
 public:
@@ -30,14 +30,14 @@ public:
      * @param droite Opérande droit
      * @return Référence au nœud courant
      */
-    std::shared_ptr<INoeud> ajouterExpression(
-        std::shared_ptr<IExpression> gauche, 
-        std::shared_ptr<IExpression> droite
+    std::shared_ptr<IExpression> ajouterExpression(
+        std::shared_ptr<INoeud> gauche, 
+        std::shared_ptr<INoeud> droite
     ) override;
     
     /**
      * @brief Résout l'opération
      * @return Résultat de l'application de l'opérateur
      */
-    llvm::Value* resoudre() override;
+    llvm::Value* genCode() override;
 };

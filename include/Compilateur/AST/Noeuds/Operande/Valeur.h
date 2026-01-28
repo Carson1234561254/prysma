@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
+#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 
 /**
  * @class Valeur
  * @brief Représente une valeur numérique constante
  */
-class Valeur : public IExpression {
+class Valeur : public INoeud {
 private:
     llvm::Value* _valeur;
 
@@ -21,5 +21,5 @@ public:
      * @brief Retourne la valeur stockée
      * @return La valeur
      */
-    llvm::Value* resoudre() override;
+    llvm::Value* genCode() override;
 };

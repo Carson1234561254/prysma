@@ -6,7 +6,7 @@
 #include "Compilateur/Lexer/TokenType.h"
 
 // Forward declaration
-class INoeud;
+class IExpression;
 
 /**
  * @interface IRegistreSymbole
@@ -26,7 +26,7 @@ public:
      */
     virtual void enregistrer(
         TokenType symbole, 
-        std::function<std::shared_ptr<INoeud>()> supplier
+        std::function<std::shared_ptr<IExpression>()> supplier
     ) = 0;
     
     /**
@@ -34,7 +34,7 @@ public:
      * @param symbole Le caractère de l'opérateur
      * @return Un nouveau nœud d'opération
      */
-    virtual std::shared_ptr<INoeud> recupererNoeud(TokenType symbole) = 0;
+    virtual std::shared_ptr<IExpression> recupererNoeud(TokenType symbole) = 0;
     
     /**
      * @brief Vérifie si un caractère est un opérateur connu

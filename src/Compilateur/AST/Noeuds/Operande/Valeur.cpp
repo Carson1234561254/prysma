@@ -2,6 +2,6 @@
 
 Valeur::Valeur(llvm::Value* valeur) : _valeur(valeur) {}
 
-llvm::Value* Valeur::resoudre() {
+llvm::Value* Valeur::genCode() {
     return _valeur;
 }

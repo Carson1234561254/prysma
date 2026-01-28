@@ -6,9 +6,9 @@
 Operation::Operation(const std::function<llvm::Value*(llvm::Value*, llvm::Value*)>& operateur)
     : _droite(nullptr), _gauche(nullptr), _operateur(operateur) {}
 
-std::shared_ptr<INoeud> Operation::ajouterExpression(
-    std::shared_ptr<IExpression> gauche, 
-    std::shared_ptr<IExpression> droite) {
+std::shared_ptr<IExpression> Operation::ajouterExpression(
+    std::shared_ptr<INoeud> gauche, 
+    std::shared_ptr<INoeud> droite) {
     
     if (!droite || !gauche) {
         throw std::invalid_argument("Les noeuds fournis sont nuls");
@@ -24,6 +24,6 @@ std::shared_ptr<INoeud> Operation::ajouterExpression(
     return std::make_shared<Operation>(*this);
 }
 
-llvm::Value* Operation::resoudre() {
-    return _operateur(_gauche->resoudre(), _droite->resoudre());
+llvm::Value* Operation::genCode() {
+    return _operateur(_gauche->genCode(), _droite->genCode());
 }

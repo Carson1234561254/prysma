@@ -1,5 +1,5 @@
 #include "Compilateur/AST/ConstructeurArbreEquation.h"
-#include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
+#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Parsing/Equation/ChaineResponsabilite.h"
 #include "Compilateur/Parsing/Equation/ServiceParenthese.h"
 #include "Compilateur/Parsing/Equation/GestionnaireOperateur.h"
@@ -78,5 +78,5 @@ class FloatEquationBuilder
         delete serviceParenthese;
     }
     
-    shared_ptr<IExpression> builderArbreEquationFloat(vector<Token> &tokens);
+    shared_ptr<INoeud> builderArbreEquationFloat(vector<Token> &tokens);
 };
