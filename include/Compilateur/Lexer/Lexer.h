@@ -6,8 +6,8 @@
 #include <vector>
 
 using namespace std;
-// lexer utilisée pour la tokenization du code source prysma
-// filtre le code source en une liste de tokens identifier 
+// lexer utilisé pour la tokenization du code source prysma
+// filtre le code source en une liste de tokens identifiés 
 
 struct Token {
 TokenType type;
@@ -17,7 +17,7 @@ string value;
 class Lexer {
     private: 
 
-    // Dictionnaire pour les mots réservé du langage de programmation prysma
+    // Dictionnaire pour les mots réservés du langage de programmation prysma
     // Permet de différencier les identifiants des mots-clés
     map<string, TokenType> motsCles = {
         {"def", TOKEN_FONCTION},

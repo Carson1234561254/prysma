@@ -47,7 +47,7 @@ void LireUneValeurEtAjouter5(AllocaInst* allocaX)
     Type * typeInt = builder.getInt32Ty();
     const Twine NameTmp = "loadtmp"; 
     
-    // On utilise les instruction comme CreateAdd pour creer une instruction assembleur intermédiaire pour effectuer 
+    // On utilise les instructions comme CreateAdd pour créer une instruction assembleur intermédiaire pour effectuer 
     // une addition, multiplication, division, soustraction. 
     Value *loaded = builder.CreateLoad(typeInt, allocaX, NameTmp);
     Value *added = builder.CreateAdd(loaded, ConstantInt::get(typeInt, 5), NameTmp);
@@ -62,7 +62,7 @@ void sauvegarderCode()
 
 int main()
 {
-    // Configuration de la cible, évite d'avoir des adresses mémoire aléatoire, ce qui cause des crashs aléatoire. 
+    // Configuration de la cible, évite d'avoir des adresses mémoire aléatoires, ce qui cause des crashs aléatoires. 
     InitializeAllTargetInfos();
     InitializeAllTargets();
     InitializeAllTargetMCs();
@@ -85,7 +85,7 @@ int main()
     module.setDataLayout(targetMachine->createDataLayout());
     // ------------------------------------------------------------------
 
-    // Tout dois ce trouver dans une fonction avant l'execution. 
+    // Tout doit se trouver dans une fonction avant l'exécution. 
     // 1. Définir le type de la fonction (void func())
     FunctionType *ftype = FunctionType::get(Type::getVoidTy(context), false);
     

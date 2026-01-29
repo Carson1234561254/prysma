@@ -3,7 +3,7 @@
        
 void FloatEquationBuilder::construireRegistreSymboleFloat()
  {
-           // registre de lamda LLVM contenant une map des opérations mathématiques de base 
+           // registre de lambda LLVM contenant une map des opérations mathématiques de base 
         registreSymboleFloat->enregistrer(TOKEN_PLUS, [&]() -> std::shared_ptr<IExpression> { 
             return std::make_shared<Operation>(
                 std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([&](llvm::Value* lhs, llvm::Value* rhs) { 

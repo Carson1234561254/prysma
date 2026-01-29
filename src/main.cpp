@@ -30,8 +30,8 @@ int main() {
         // Utilisation de shared_ptr 
         // Instruction
 
-        // Faire un registre de lamda qui contient un dictionnaire mapé construit dynamiquement pour L'AST contenant un dictionnaire de noeud relier à des lamdas
-        // But encapsuler la logique de récursivité similaire pour l'arbre syntaxique abstrait, plus besoins de ce concentrer sur la récursivité car elle est similaire pour tout les cas
+        // Faire un registre de lambda qui contient un dictionnaire mappé construit dynamiquement pour L'AST contenant un dictionnaire de noeuds reliés à des lambdas
+        // But encapsuler la logique de récursivité similaire pour l'arbre syntaxique abstrait, plus besoin de se concentrer sur la récursivité car elle est similaire pour tous les cas
         // Utilisation d'un système Table de Dispatch, rend le code ultra extensible pour toute nouveauté future
 
         /*
@@ -46,8 +46,7 @@ int main() {
                         // NoeudInstruction.h
             class NoeudInstruction : public IExpression {
             private:
-                // La "recette" pour générer le code LLVM de cette istd :: cerr << "Impossible d'ouvrir le fichier !";
-    return "";nstruction spécifique
+                // La "recette" pour générer le code LLVM de cette instruction spécifique
                 // Elle capture tout ce dont elle a besoin (condition, corps...)
                 std::function<llvm::Value*()> _generateurCode;
 
@@ -68,7 +67,7 @@ int main() {
         llvm::IRBuilder<llvm::NoFolder> builder(context);
     
 
-        // ===== Configuration de la cible, évite d'avoir des adresses mémoire aléatoire, ce qui cause des crashs aléatoire. =====
+        // ===== Configuration de la cible, évite d'avoir des adresses mémoire aléatoires, ce qui cause des crashs aléatoires. =====
         InitializeAllTargetInfos();
         InitializeAllTargets();
         InitializeAllTargetMCs();
@@ -87,7 +86,7 @@ int main() {
         TargetOptions opt;
         auto targetMachine = target->createTargetMachine(targetTriple, "generic", "", opt, Reloc::Model::PIC_);
         
-        // == teste du registre == 
+        // == test du registre == 
 
         std::shared_ptr<RegistreVariable> registreVariable = std::make_shared<RegistreVariable>();
 
