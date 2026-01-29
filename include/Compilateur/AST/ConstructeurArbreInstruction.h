@@ -4,16 +4,19 @@
 #include "Compilateur/AST/Interfaces/IConstructeurArbre.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/Lexer.h"
+#include "Compilateur/AST/Registre/RegistreInstruction.h"
 
 class ConstructeurArbreInstruction : public IConstructeurArbre
 {
 private: 
+    std::shared_ptr<RegistreInstruction> _registreInstructions;
     int avancerFinInstruction(const std::vector<Token>& tokens, int indexActuel);
-    std::shared_ptr<std::vector<std::shared_ptr<INoeud>>> obtenirTouteInstructionEnfant(const std::vector<Token>& tokensIntervalle);
+    std::vector<std::shared_ptr<INoeud>> obtenirTouteInstructionEnfant(const std::vector<Token>& tokensIntervalle);
+
     
 public: 
 
-    ConstructeurArbreInstruction();
+    ConstructeurArbreInstruction(const std::shared_ptr<RegistreInstruction> registreInstructions);
     ~ConstructeurArbreInstruction();
 
     std::shared_ptr<INoeud> construire(std::vector<Token>& tokens);

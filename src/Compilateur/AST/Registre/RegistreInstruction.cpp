@@ -1,14 +1,15 @@
 #include "Compilateur/AST/Registre/RegistreInstruction.h"
+#include "Compilateur/AST/Noeuds/Interfaces/IInstruction.h"
 #include <stdexcept>
 #include <string>
 
 void RegistreInstruction::enregistrer(
     TokenType typeToken,
-    std::function<std::shared_ptr<INoeud>()> fournisseur) {
+    std::function<std::shared_ptr<IInstruction>()> fournisseur) {
     _instructions[typeToken] = std::move(fournisseur);
 }
 
-std::shared_ptr<INoeud> RegistreInstruction::recuperer(TokenType typeToken) {
+std::shared_ptr<IInstruction> RegistreInstruction::recuperer(TokenType typeToken) {
     auto iterator = _instructions.find(typeToken);
     if (iterator == _instructions.end()) {
         throw std::invalid_argument(std::string("Type de token inconnu: ") + std::to_string(typeToken));
