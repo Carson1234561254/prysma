@@ -8,14 +8,9 @@
 
 using namespace std;
 
-
-void parse()
-{
-    
-}
 int main() {
     try {
-        LLVMBackend backend;
+        shared_ptr<LLVMBackend> backend = std::make_shared<LLVMBackend>();
 
         std::string document;
         FichierLecture fichierLecture("../src/PrysmaCodeTests/main.prysma");
@@ -25,23 +20,23 @@ int main() {
         vector<Token> tokens = lexer.tokenizer(document);
 
         // ===== Construction de l'arbre d'expression =====
-        std::unique_ptr<FloatEquationBuilder> floatEquationBuilder = std::make_unique<FloatEquationBuilder>(backend.getContext());
+        std::unique_ptr<FloatEquationBuilder> floatEquationBuilder = std::make_unique<FloatEquationBuilder>(backend->getContext());
         shared_ptr<INoeud> expression = floatEquationBuilder->builderArbreEquationFloat(tokens);
         
         // ===== Création de la fonction main LLVM =====
-        backend.creationFonctionMain();
+        backend->creationFonctionMain();
 
         // ===== Résolution de l'expression =====
         llvm::Value* resultatNumerique = expression->genCode();
         
         // ===== Affichage du résultat avec printf =====
-        backend.print(resultatNumerique);
+        backend->print(resultatNumerique);
 
         // ===== Retour du résultat =====
-        llvm::Value* resultInt = backend.getBuilder().CreateFPToSI(resultatNumerique, backend.getBuilder().getInt32Ty(), "resultInt");
-        backend.getBuilder().CreateRet(resultInt);
+        llvm::Value* resultInt = backend->getBuilder().CreateFPToSI(resultatNumerique, backend->getBuilder().getInt32Ty(), "resultInt");
+        backend->getBuilder().CreateRet(resultInt);
 
-        backend.sauvegarderCodeLLVM("output.ll");
+        backend->sauvegarderCodeLLVM("output.ll");
 
         return 0;
         

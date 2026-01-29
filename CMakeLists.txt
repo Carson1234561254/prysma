@@ -42,6 +42,7 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Operande/Operation.cpp
     src/Compilateur/AST/Noeuds/Operande/Valeur.cpp
     src/Compilateur/LLVM/LLVMSerializer.cpp
+    src/Compilateur/LLVM/LLVMBackend.cpp
     src/Compilateur/Parsing/Equation/ChaineResponsabilite.cpp
     src/Compilateur/Parsing/Equation/GestionnaireOperateur.cpp
     src/Compilateur/Parsing/Equation/ServiceParenthese.cpp
