@@ -1,3 +1,4 @@
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
@@ -31,6 +32,9 @@ int main() {
         // ===== Résolution de l'expression =====
 
         NoeudDeclaration noeudDeclaration(backend,"teste",backend->getBuilder().getFloatTy(), expression->genCode()); 
+        RegistreVariable registreVariable;
+
+
         llvm::Value* testePtr =  noeudDeclaration.genCode();
         
         // Charger la valeur depuis le pointeur

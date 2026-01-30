@@ -8,25 +8,25 @@
 RegistreVariable::RegistreVariable()
 {
     // Initialiser avec un contexte global vide
-    _variables.push(std::map<std::string, shared_ptr<llvm::AllocaInst>>());
+    _variables.push(std::map<std::string, llvm::Value*>());
 }
 
 RegistreVariable::~RegistreVariable()
 {
 }
 
-void RegistreVariable::enregistrer(const Token& token, shared_ptr<llvm::AllocaInst> instance )
+void RegistreVariable::enregistrer(const Token& token, llvm::Value* instance )
 {
     auto iterateur = _variables.top().find(token.value);
     if (iterateur != _variables.top().end())
     {
         throw std::runtime_error("La variable que vous essayer d'enregistrer existe déjà !");
     }
-    _variables.top()[token.value] = std::move(instance);
+    _variables.top()[token.value] = instance;
 }
 
 
-std::shared_ptr<llvm::AllocaInst> RegistreVariable::recupererVariables(const Token& token)
+llvm::Value* RegistreVariable::recupererVariables(const Token& token)
 {
     auto iterateur = _variables.top().find(token.value);
     if (iterateur != _variables.top().end())
@@ -39,7 +39,7 @@ std::shared_ptr<llvm::AllocaInst> RegistreVariable::recupererVariables(const Tok
 
 void RegistreVariable::piler()
 {
-    _variables.push(std::map<std::string, shared_ptr<llvm::AllocaInst>>());
+    _variables.push(std::map<std::string, llvm::Value*>());
 }
 
 void RegistreVariable::depiler()
