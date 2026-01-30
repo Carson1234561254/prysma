@@ -57,6 +57,7 @@ set(SOURCES
     src/Compilateur/AST/Registre/RegistreSymbole.cpp
     src/Compilateur/AST/Registre/RegistreInstruction.cpp
     src/Compilateur/AST/ConstructeurArbreInstruction.cpp
+    src/Compilateur/Parsing/Instruction/ParseurMain.cpp
 )
 
 # Créer l'exécutable

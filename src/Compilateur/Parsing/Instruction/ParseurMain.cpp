@@ -1,0 +1,21 @@
+#include "Compilateur/Lexer/TokenType.h"
+#include "Compilateur/Parsing/Instruction/ParserMain.h"
+#include "Compilateur/AST/ConstructeurArbreInstruction.h"
+#include "Compilateur/AST/Noeuds/NoeudMain.h"
+
+std::shared_ptr<INoeud> ParserMain::parser(std::vector<Token>& tokens, int& index, std::shared_ptr<ConstructeurArbreInstruction> constructeurArbreInstruction)
+{
+    std::shared_ptr<NoeudMain> noeudMain = std::make_shared<NoeudMain>();
+
+    // faire un throw exception : || index == (int)tokens.size() cela veux dire qu'il n'y a pas de valeur 
+    
+    while(tokens[index].type != TOKEN_PAREN_FERMEE)
+    {
+        std::shared_ptr<INoeud> enfant = constructeurArbreInstruction->construire(tokens, index);
+        std::vector<std::shared_ptr<INoeud>> enfants;
+        enfants.push_back(enfant);
+        noeudMain->ajouterInstruction(enfants);
+    }
+    
+    return noeudMain;
+}

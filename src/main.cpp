@@ -1,10 +1,8 @@
-#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
 #include "Compilateur/Parsing/Instruction/Variable/ParseurVariableFloat.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclaration.h"
 #include <iostream>
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
