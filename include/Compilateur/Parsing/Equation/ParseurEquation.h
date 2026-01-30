@@ -1,0 +1,29 @@
+#ifndef F3A7B8C9_D4E2_4F6A_B1C3_E5G7H9I2J4K6
+#define F3A7B8C9_D4E2_4F6A_B1C3_E5G7H9I2J4K6
+
+#include "Compilateur/Lexer/Lexer.h"
+#include "Compilateur/Lexer/TokenCategories.h"
+#include "Compilateur/Parsing/Interfaces/IParser.h"
+#include "Compilateur/Parsing/ParserBase.h"
+#include "Compilateur/LLVM/LLVMBackend.h"
+#include <vector>
+#include <memory>
+
+class ParseurEquation : public IParser, public ParserBase
+{
+private:
+    std::shared_ptr<LLVMBackend> _backend;
+
+public:
+    ParseurEquation(std::shared_ptr<LLVMBackend> backend);
+    ~ParseurEquation();
+
+    std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, std::shared_ptr<ConstructeurArbreInstruction> constructeurArbreInstruction) override;
+
+private:
+    void validerEquation(const std::vector<Token>& tokensEquation) const;
+    bool estOperateur(TokenType tokenType) const;
+    bool estOperande(TokenType tokenType) const;
+};
+
+#endif /* F3A7B8C9_D4E2_4F6A_B1C3_E5G7H9I2J4K6 */

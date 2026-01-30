@@ -1,8 +1,9 @@
+#include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurVariableFloat.h"
+#include "Compilateur/Parsing/Instruction/Variable/ParseurVariable.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include <iostream>
 #include <llvm-18/llvm/IR/Instructions.h>
@@ -24,22 +25,12 @@ int main() {
         Lexer lexer;
         vector<Token> tokens = lexer.tokenizer(document);
 
-     
         // ===== Création de la fonction main LLVM =====
         backend->creationFonctionMain();
 
         // ===== Résolution de l'expression =====
 
         int index = 0; 
-
-        ParseurVariableFloat parseurVariableFloat(backend);
-
-        shared_ptr<INoeud> noeud = parseurVariableFloat.parser(tokens, index, nullptr);
-
-        llvm::Value* valeur = noeud->genCode();
-        
-        // Charger la valeur depuis le pointeur
-        llvm::Value* teste = backend->getBuilder().CreateLoad(backend->getBuilder().getFloatTy(), valeur, "teste_value");
         
         // llvm::Value* resultatNumerique = expression->genCode();
 
@@ -48,13 +39,16 @@ int main() {
         std::shared_ptr<RegistreInstruction> registreInstruction = std::make_shared<RegistreInstruction>();
         
         registreInstruction->enregistrer(TOKEN_MAIN, std::make_shared<ParserMain>());
-        registreInstruction->enregistrer(TOKEN_VAR, std::make_shared<ParseurVariableFloat>(backend));
+        registreInstruction->enregistrer(TOKEN_VAR, std::make_shared<ParseurVariable>(backend));
 
-        // ===== Affichage du résultat avec printf =====
-        backend->print(teste);
+        ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
+
+        std::shared_ptr<INoeud> arbre = constructeurArbreInstruction.construire(tokens,index);
+
+        arbre->genCode();
 
         // ===== Retour du résultat =====
-        llvm::Value* resultInt = backend->getBuilder().CreateFPToSI(teste, backend->getBuilder().getInt32Ty(), "resultInt");
+        llvm::Value* resultInt = backend->getBuilder().getInt32(1);
         backend->getBuilder().CreateRet(resultInt);
 
         backend->sauvegarderCodeLLVM("output.ll");
