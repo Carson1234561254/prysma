@@ -53,3 +53,8 @@
 
 .cache
 /.cache-*/
+
+# Tools 
+
+/Tools-*/
+/Tools/

@@ -8,7 +8,7 @@
 class IConstructeurArbre
 {
 public: 
-     std::shared_ptr<INoeud> construire(std::vector<Token>& tokens);
+     virtual std::shared_ptr<INoeud> construire(std::vector<Token>& tokens) = 0;
 };
 
 #endif /* EEA73704_BBAE_43AD_9799_F1F919E04250 */

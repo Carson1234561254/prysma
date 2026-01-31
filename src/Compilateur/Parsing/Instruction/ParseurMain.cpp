@@ -6,7 +6,8 @@
 std::shared_ptr<INoeud> ParserMain::parser(std::vector<Token>& tokens, int& index, std::shared_ptr<ConstructeurArbreInstruction> constructeurArbreInstruction)
 {
     std::shared_ptr<NoeudMain> noeudMain = std::make_shared<NoeudMain>();
-    index += 2; 
+    consommer(tokens, index, TOKEN_MAIN, "Erreur : 'main' attendu");
+    consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Erreur : '{' attendu après 'main'");
 
     // faire un throw exception : || index == (int)tokens.size() cela veux dire qu'il n'y a pas de valeur 
     
