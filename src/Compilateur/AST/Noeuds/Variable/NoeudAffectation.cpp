@@ -4,6 +4,7 @@
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
+#include <stdexcept>
 
 NoeudAffectation::NoeudAffectation(std::shared_ptr<LLVMBackend> backend, const std::string& nom, llvm::AllocaInst* variableAssigner, llvm::Value* valeur)
     : _backend(backend), _nom(nom), _variableAssigner(variableAssigner), _valeur(valeur)

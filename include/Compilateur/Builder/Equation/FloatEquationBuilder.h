@@ -1,3 +1,6 @@
+#ifndef FLOATEQUATIONBUILDER_H
+#define FLOATEQUATIONBUILDER_H
+
 #include "Compilateur/AST/ConstructeurArbreEquation.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Parsing/Equation/ChaineResponsabilite.h"
@@ -60,3 +63,5 @@ class FloatEquationBuilder
     
     shared_ptr<INoeud> builderArbreEquationFloat(vector<Token> &tokens);
 };
+
+#endif /* FLOATEQUATIONBUILDER_H */

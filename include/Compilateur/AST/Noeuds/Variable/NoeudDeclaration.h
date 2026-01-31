@@ -6,10 +6,13 @@
 #include <llvm/IR/Instructions.h>
 #include <memory>
 
+class RegistreVariable;
+
 class NoeudDeclaration : public INoeud
 {
 private:
     std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<RegistreVariable> _registreVariable;
     std::string _nom;
     llvm::Type* _type;
     llvm::Value* _arraySize;
@@ -19,7 +22,7 @@ private:
     llvm::AllocaInst* initialisation(llvm::AllocaInst* allocaInst);
 
 public:
-    NoeudDeclaration(std::shared_ptr<LLVMBackend> backend, const std::string& nom, llvm::Type* type, llvm::Value* valeur);
+    NoeudDeclaration(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, llvm::Type* type, llvm::Value* valeur);
     ~NoeudDeclaration();
 
     llvm::Value* genCode() override;

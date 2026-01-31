@@ -8,13 +8,17 @@
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include <memory>
 
+class RegistreVariable;
+
 class ParseurAffectation : public IParser, public ParserBase
 {
 private:
     std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<RegistreVariable> _registreVariable;
+    TokenType _typeVariable;
 
 public:
-    ParseurAffectation(std::shared_ptr<LLVMBackend> backend);
+    ParseurAffectation(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, TokenType typeVariable);
     ~ParseurAffectation();
 
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, std::shared_ptr<ConstructeurArbreInstruction> constructeurArbreInstruction) override;

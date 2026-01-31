@@ -1,12 +1,17 @@
 #include "Compilateur/Parsing/Equation/ParseurEquation.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
 #include <stdexcept>
 #include <memory>
 
-ParseurEquation::ParseurEquation(std::shared_ptr<LLVMBackend> backend)
-    : _backend(std::move(backend))
+ParseurEquation::ParseurEquation(std::shared_ptr<LLVMBackend> backend, TokenType typeVariable)
+    : _backend(std::move(backend)), 
+      _equationBuilder(std::make_unique<FloatEquationBuilder>(_backend->getContext())),
+      _type(nullptr),
+      _typeVariable(typeVariable)
 {
+    if (typeVariable == TOKEN_TYPE_FLOAT) {
+        _type = _backend->getBuilder().getFloatTy();
+    }
 }
 
 ParseurEquation::~ParseurEquation()
@@ -33,9 +38,7 @@ std::shared_ptr<INoeud> ParseurEquation::parser(std::vector<Token>& tokens, int&
     index = finEquation;
     consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur : ';' attendu");
 
-    std::unique_ptr<FloatEquationBuilder> floatEquationBuilder = std::make_unique<FloatEquationBuilder>(_backend->getContext());
-    
-    return floatEquationBuilder->builderArbreEquationFloat(tokensEquation);
+    return _equationBuilder->builderArbreEquationFloat(tokensEquation);
 }
 
 void ParseurEquation::validerEquation(const std::vector<Token>& tokensEquation) const

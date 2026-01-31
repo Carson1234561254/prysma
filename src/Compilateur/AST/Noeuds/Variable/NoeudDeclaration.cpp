@@ -1,12 +1,13 @@
 #include "Compilateur/AST/Noeuds/Variable/NoeudDeclaration.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
 
-NoeudDeclaration::NoeudDeclaration(std::shared_ptr<LLVMBackend> backend, const std::string& nom, llvm::Type* type, llvm::Value* valeur)
-    : _backend(backend), _nom(nom), _type(type), _arraySize(nullptr), _valeur(valeur)
+NoeudDeclaration::NoeudDeclaration(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, llvm::Type* type, llvm::Value* valeur)
+    : _backend(std::move(backend)), _registreVariable(std::move(registreVariable)), _nom(nom), _type(type), _arraySize(nullptr), _valeur(valeur)
 {
 }
 
@@ -18,6 +19,15 @@ llvm::Value* NoeudDeclaration::genCode()
 {
     llvm::AllocaInst* allocaInst = allocation();
     initialisation(allocaInst);
+    
+    // Enregistrer la variable dans le registre
+    if (_registreVariable != nullptr) {
+        Token nomToken;
+        nomToken.value = _nom;
+        nomToken.type = TOKEN_IDENTIFIANT;
+        _registreVariable->enregistrer(nomToken, allocaInst);
+    }
+    
     return allocaInst;
 }
 

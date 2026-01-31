@@ -1,10 +1,10 @@
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Parsing/Instruction/Variable/ParseurVariable.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include <iostream>
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
@@ -37,9 +37,10 @@ int main() {
         // Construction du registre d'instruction 
         
         std::shared_ptr<RegistreInstruction> registreInstruction = std::make_shared<RegistreInstruction>();
+        std::shared_ptr<RegistreVariable> registreVariable = std::make_shared<RegistreVariable>();
         
         registreInstruction->enregistrer(TOKEN_MAIN, std::make_shared<ParserMain>());
-        registreInstruction->enregistrer(TOKEN_VAR, std::make_shared<ParseurVariable>(backend));
+        registreInstruction->enregistrer(TOKEN_VAR, std::make_shared<ParseurVariable>(backend, registreVariable));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
 

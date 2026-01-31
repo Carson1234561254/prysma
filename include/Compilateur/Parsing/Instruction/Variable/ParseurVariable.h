@@ -8,13 +8,16 @@
 #include "Compilateur/Parsing/Interfaces/IParser.h"
 #include "Compilateur/Parsing/ParserBase.h"
 
+class RegistreVariable;
+
 class ParseurVariable : public IParser, public ParserBase
 {
 private: 
-    std::shared_ptr<LLVMBackend> _backend; 
+    std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<RegistreVariable> _registreVariable;
 
 public: 
-    ParseurVariable(std::shared_ptr<LLVMBackend> backend);
+    ParseurVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable);
     ~ParseurVariable();
 
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, std::shared_ptr<ConstructeurArbreInstruction> constructeurArbreInstruction) override; 
