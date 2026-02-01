@@ -3,6 +3,7 @@
 #include "Compilateur/AST/Interfaces/IConstructeurArbre.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/RegistreSymbole.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Parsing/Equation/ChaineResponsabilite.h"
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
@@ -23,6 +24,8 @@ private:
     IGestionnaireParenthese* _gestionnaireParenthese;
     llvm::LLVMContext& _context;
 
+    shared_ptr<RegistreVariable> _registreVariable; 
+
 public:
     /**
      * @brief Constructeur
@@ -35,7 +38,8 @@ public:
         ChaineResponsabilite* chaineResponsabilite,
         std::shared_ptr<RegistreSymbole> registreSymbole,
         IGestionnaireParenthese* gestionnaireParenthese,
-        llvm::LLVMContext& context
+        llvm::LLVMContext& context, 
+        shared_ptr<RegistreVariable> registreVariable
     );
     
     /**

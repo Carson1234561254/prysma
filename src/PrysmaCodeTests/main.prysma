@@ -3,4 +3,5 @@ main
     var float a = 5+5+3;
     var a = 10; 
     var float b = 40*42*4;
+    var float c = a; 
 }

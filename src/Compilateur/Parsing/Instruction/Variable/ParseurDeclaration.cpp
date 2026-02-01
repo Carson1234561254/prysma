@@ -23,7 +23,7 @@ std::shared_ptr<INoeud> ParseurDeclaration::parser(std::vector<Token>& tokens, i
     
     consommer(tokens, index, TOKEN_EGAL, "Erreur : '=' attendu après le nom de variable");
     
-    ParseurEquation parseurEquation(_backend, _typeVariable);
+    ParseurEquation parseurEquation(_backend, _typeVariable, _registreVariable);
     std::shared_ptr<INoeud> expression = parseurEquation.parser(tokens, index, constructeurArbreInstruction);
 
     // Permet aux assignations suivantes de trouver la variable

@@ -7,6 +7,7 @@
 #include "Compilateur/Parsing/ParserBase.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include <vector>
 #include <memory>
 
@@ -14,12 +15,13 @@ class ParseurEquation : public IParser, public ParserBase
 {
 private:
     std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<RegistreVariable> _registreVariable;
     std::unique_ptr<FloatEquationBuilder> _equationBuilder;
     llvm::Type* _type;
     TokenType _typeVariable;
 
 public:
-    ParseurEquation(std::shared_ptr<LLVMBackend> backend, TokenType typeVariable);
+    ParseurEquation(std::shared_ptr<LLVMBackend> backend, TokenType typeVariable, std::shared_ptr<RegistreVariable> registreVariable);
     ~ParseurEquation();
 
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) override;

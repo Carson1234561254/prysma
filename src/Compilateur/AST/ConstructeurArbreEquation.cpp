@@ -6,16 +6,19 @@
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
 #include "Compilateur/AST/Noeuds/Operande/Valeur.h"
 #include "Compilateur/Lexer/Lexer.h"
+#include "Compilateur/Lexer/TokenType.h"
 
 ConstructeurArbreEquation::ConstructeurArbreEquation(
     ChaineResponsabilite* chaineResponsabilite,
     std::shared_ptr<RegistreSymbole> registreSymbole,
     IGestionnaireParenthese* gestionnaireParenthese,
-    llvm::LLVMContext& context)
+    llvm::LLVMContext& context,
+    std::shared_ptr<RegistreVariable> registreVariable)
     : _chaineResponsabilite(chaineResponsabilite), 
       _registreSymbole(std::move(registreSymbole)), 
       _gestionnaireParenthese(gestionnaireParenthese),
-      _context(context) {}
+      _context(context),
+      _registreVariable(std::move(registreVariable)){}
 
 // "Pile d'Appels" (Call Stack) 
 std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
@@ -30,13 +33,20 @@ std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>
     int indice = _chaineResponsabilite->trouverOperateur(equation);
     
     if (indice == -1) {
+        // Déterminer si c'est une variable
+        if(equation[0].type == TOKEN_IDENTIFIANT)
+        {
+            
+           llvm::Value* valeur =  _registreVariable->recupererVariables(equation[0]);
+           return std::make_shared<Valeur>(valeur);
+        }
         try {
             float valeurFloat = std::stof(equation[0].value);
             llvm::Value* valeurLLVM = llvm::ConstantFP::get(llvm::Type::getFloatTy(_context), valeurFloat);
             return std::make_shared<Valeur>(valeurLLVM);
         } catch (const std::exception& e) {
             throw std::runtime_error("Erreur: impossible de convertir '" + equation[0].value + "' en nombre");
-        }
+        }    
     }
     
     std::shared_ptr<IExpression> noeud = _registreSymbole->recupererNoeud(equation[indice].type);

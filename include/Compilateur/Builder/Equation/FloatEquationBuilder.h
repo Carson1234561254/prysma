@@ -7,6 +7,7 @@
 #include "Compilateur/Parsing/Equation/ServiceParenthese.h"
 #include "Compilateur/Parsing/Equation/GestionnaireOperateur.h"
 #include "Compilateur/AST/Noeuds/Operande/Operation.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include <llvm-18/llvm/IR/IRBuilder.h>
 #include <memory>
 
@@ -17,6 +18,7 @@ class FloatEquationBuilder
     llvm::IRBuilder<> builder;
 
     std::shared_ptr<RegistreSymbole> registreSymboleFloat;
+    std::shared_ptr<RegistreVariable> registreVariable;
 
     std::unique_ptr<ChaineResponsabilite> chaineResponsabilite;
  
@@ -33,9 +35,12 @@ class FloatEquationBuilder
   
     public: 
 
-    FloatEquationBuilder(llvm::LLVMContext &context) : builder(context)
+    FloatEquationBuilder(llvm::LLVMContext &context, std::shared_ptr<RegistreVariable> registreVariableExterne) : builder(context)
     {
         registreSymboleFloat = std::make_shared<RegistreSymbole>();
+        
+        // Utiliser le registre externe fourni
+        registreVariable = registreVariableExterne;
 
         serviceParenthese = std::make_unique<ServiceParenthese>(registreSymboleFloat);
 
@@ -53,7 +58,7 @@ class FloatEquationBuilder
                         
         // ===== Construction de l'AST et Résolution =====
         constructeurArbreEquation = std::make_shared<ConstructeurArbreEquation>(
-            chaineResponsabilite.get(), registreSymboleFloat, serviceParenthese.get(), context
+            chaineResponsabilite.get(), registreSymboleFloat, serviceParenthese.get(), context, registreVariable
         );
 
         construireRegistreSymboleFloat();

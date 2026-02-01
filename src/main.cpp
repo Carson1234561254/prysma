@@ -33,8 +33,6 @@ int main() {
    
         // llvm::Value* resultatNumerique = expression->genCode();
 
-        // Construction du registre d'instruction 
-        
         std::shared_ptr<RegistreInstruction> registreInstruction = std::make_shared<RegistreInstruction>();
         std::shared_ptr<RegistreVariable> registreVariable = std::make_shared<RegistreVariable>();
         

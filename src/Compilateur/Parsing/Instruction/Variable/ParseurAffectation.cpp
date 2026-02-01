@@ -22,7 +22,7 @@ std::shared_ptr<INoeud> ParseurAffectation::parser(std::vector<Token>& tokens, i
     
     consommer(tokens, index, TOKEN_EGAL, "Erreur : '=' attendu");
     
-    ParseurEquation parseurEquation(_backend, _typeVariable);
+    ParseurEquation parseurEquation(_backend, _typeVariable, _registreVariable);
     std::shared_ptr<INoeud> expression = parseurEquation.parser(tokens, index, constructeurArbreInstruction);
 
     // Récupérer la variable existante du registre
