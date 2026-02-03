@@ -4,11 +4,9 @@ Instruction::Instruction()
 {
 }
 
-void Instruction::ajouterInstruction(const std::vector<std::shared_ptr<INoeud>>& enfantsParam)
+void Instruction::ajouterInstruction(std::shared_ptr<INoeud> enfant)
 {
-    for (const auto& enfant : enfantsParam) {
-        enfants.push_back(enfant);
-    }
+    enfants.push_back(enfant);
 }
 
 llvm::Value* Instruction::executerEnfants()

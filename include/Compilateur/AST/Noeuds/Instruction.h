@@ -14,7 +14,7 @@ public:
     Instruction();
     virtual ~Instruction() = default;
 
-    void ajouterInstruction(const std::vector<std::shared_ptr<INoeud>>& enfantsParam) override;
+    void ajouterInstruction(std::shared_ptr<INoeud> enfant) override;
     
     llvm::Value* executerEnfants();
     

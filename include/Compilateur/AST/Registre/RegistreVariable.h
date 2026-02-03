@@ -25,6 +25,7 @@ class RegistreVariable
             const Token& token,
             llvm::Value* instance
         );
+        
         void piler();
         void depiler();
 };

@@ -5,6 +5,7 @@
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/Parsing/Interfaces/IParser.h"
 #include "Compilateur/Parsing/ParserBase.h"
+#include <memory>
 
 class ParsingDeclarationFonction : public IParser, public ParserBase
 {
@@ -14,6 +15,9 @@ private:
     TokenType _typeFonction; 
 
 public:
+    ParsingDeclarationFonction(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreFonction> registreFonction, TokenType typeFonction);
+    ~ParsingDeclarationFonction();
+
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) override;
 };
 

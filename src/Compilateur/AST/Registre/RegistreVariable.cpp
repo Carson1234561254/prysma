@@ -25,7 +25,6 @@ void RegistreVariable::enregistrer(const Token& token, llvm::Value* instance )
     _variables.top()[token.value] = instance;
 }
 
-
 llvm::Value* RegistreVariable::recupererVariables(const Token& token)
 {
     auto iterateur = _variables.top().find(token.value);

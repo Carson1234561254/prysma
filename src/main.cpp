@@ -6,6 +6,7 @@
 #include "Compilateur/Parsing/Instruction/Variable/ParseurDeclaration.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include "Compilateur/AST/Registre/RegistreVariable.h"
+#include "Compilateur/AST/Registre/RegistreFonction.h"
 #include <iostream>
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
@@ -13,6 +14,7 @@
 #include "Compilateur/AST/Registre/RegistreInstruction.h"
 #include "Compilateur/Parsing/Instruction/ParserMain.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParsingDeclarationFonction.h"
+#include "Compilateur/Parsing/Instruction/Return/ParsingReturn.h"
 
 using namespace std;
 
@@ -27,26 +29,21 @@ int main() {
         Lexer lexer;
         vector<Token> tokens = lexer.tokenizer(document);
 
-        // ===== Création de la fonction main LLVM =====
-        backend->creationFonctionMain();
-
         std::shared_ptr<RegistreInstruction> registreInstruction = std::make_shared<RegistreInstruction>();
         std::shared_ptr<RegistreVariable> registreVariable = std::make_shared<RegistreVariable>();
+        std::shared_ptr<RegistreFonction> registreFonction = std::make_shared<RegistreFonction>();
         
-        registreInstruction->enregistrer(TOKEN_MAIN, std::make_shared<ParserMain>());
-        registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>());
+        registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParserMain>());
+        registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(backend, registreFonction, TOKEN_FONCTION));
         registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectation>(backend, registreVariable,TOKEN_TYPE_FLOAT));
         registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,TOKEN_TYPE_FLOAT));
+        registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
 
         std::shared_ptr<INoeud> arbre = constructeurArbreInstruction.construire(tokens);
 
         arbre->genCode();
-
-        // ===== Retour du résultat =====
-        llvm::Value* resultInt = backend->getBuilder().getInt32(1);
-        backend->getBuilder().CreateRet(resultInt);
 
         backend->sauvegarderCodeLLVM("output.ll");
 

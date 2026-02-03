@@ -29,7 +29,7 @@ class Lexer {
         {"true", TOKEN_VRAI},
         {"false", TOKEN_FAUX},
         {"print", TOKEN_PRINT},
-        {"main", TOKEN_MAIN},
+        {"scope", TOKEN_SCOPE},
         {"aff", TOKEN_AFF},
         {"dec", TOKEN_DEC},
         {"int", TOKEN_TYPE_INT},

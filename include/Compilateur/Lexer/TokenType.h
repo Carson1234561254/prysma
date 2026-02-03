@@ -47,7 +47,7 @@ enum TokenType {
     TOKEN_VRAI,
     TOKEN_FAUX,
     TOKEN_PRINT,
-    TOKEN_MAIN,
+    TOKEN_SCOPE,
 
     // variable 
 
