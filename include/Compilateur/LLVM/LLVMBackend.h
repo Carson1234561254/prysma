@@ -12,11 +12,11 @@
 class LLVMBackend {
 private:
     // L'ordre de déclaration est CRUCIAL ici (C++ détruit dans l'ordre inverse)
-    std::unique_ptr<llvm::LLVMContext> context;
+    std::unique_ptr<llvm::LLVMContext> _context;
 
-    std::unique_ptr<llvm::Module> module;
+    std::unique_ptr<llvm::Module> _module;
     
-    std::unique_ptr<llvm::IRBuilder<llvm::NoFolder>> builder;
+    std::unique_ptr<llvm::IRBuilder<llvm::NoFolder>> _builder;
 
 public:
 
@@ -25,9 +25,9 @@ public:
 
     ~LLVMBackend() = default;
 
-    llvm::LLVMContext& getContext() { return *context; }
-    llvm::Module& getModule() { return *module; }
-    llvm::IRBuilder<llvm::NoFolder>& getBuilder() { return *builder; }
+    llvm::LLVMContext& getContext() { return *_context; }
+    llvm::Module& getModule() { return *_module; }
+    llvm::IRBuilder<llvm::NoFolder>& getBuilder() { return *_builder; }
 
     llvm::Value* creerAutoCast(llvm::Value* valeurSource, llvm::Type* typeCible);
 };

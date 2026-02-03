@@ -11,9 +11,9 @@ using namespace llvm;
 
 LLVMBackend::LLVMBackend() {
 
-    context = std::make_unique<LLVMContext>();
-    module = std::make_unique<Module>("output", *context);
-    builder = std::make_unique<IRBuilder<NoFolder>>(*context);
+    _context = std::make_unique<LLVMContext>();
+    _module = std::make_unique<Module>("output", *_context);
+    _builder = std::make_unique<IRBuilder<NoFolder>>(*_context);
 
     // Initialisation de la cible (évite d'avoir des adresses mémoire aléatoires)
     InitializeAllTargetInfos();
@@ -22,7 +22,7 @@ LLVMBackend::LLVMBackend() {
     InitializeAllAsmPrinters();
 
     std::string targetTriple = sys::getDefaultTargetTriple();
-    module->setTargetTriple(targetTriple);
+    _module->setTargetTriple(targetTriple);
     
     std::string error;
     const auto *target = TargetRegistry::lookupTarget(targetTriple, error);
@@ -38,6 +38,14 @@ LLVMBackend::LLVMBackend() {
 
 llvm::Value* LLVMBackend::creerAutoCast(llvm::Value* valeurSource, llvm::Type* typeCible)
 {
+    if (valeurSource->getType() == typeCible) return valeurSource;
 
-    return nullptr;
+    llvm::Instruction::CastOps opcode = llvm::CastInst::getCastOpcode(
+        valeurSource, 
+        true,       
+        typeCible, 
+        true      
+    );
+
+    return _builder->CreateCast(opcode, valeurSource, typeCible, "autocast");
 }

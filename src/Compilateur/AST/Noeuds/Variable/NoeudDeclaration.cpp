@@ -82,7 +82,7 @@ llvm::AllocaInst* NoeudDeclaration::initialisation(llvm::AllocaInst* allocaInst,
 {
     if (valeur != nullptr && allocaInst != nullptr)
     {
-        _backend->getBuilder().CreateStore(valeur, allocaInst);
+        _backend->getBuilder().CreateStore(_backend->creerAutoCast(valeur,_registreType->recuperer(_token)), allocaInst);
     }
     return allocaInst;
 }
