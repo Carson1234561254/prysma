@@ -7,16 +7,18 @@
 #include <memory>
 
 class LLVMBackend;
+class RegistreVariable;
 
 class NoeudDeclarationFonction : public Instruction
 {
 private:
     std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<RegistreVariable> _registreVariable;
     std::string _nom;
     TokenType _typeRetourToken;
 
 public:
-    NoeudDeclarationFonction(std::shared_ptr<LLVMBackend> backend, std::string nom, TokenType typeRetour);
+    NoeudDeclarationFonction(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::string nom, TokenType typeRetour);
     
     ~NoeudDeclarationFonction() = default;
 

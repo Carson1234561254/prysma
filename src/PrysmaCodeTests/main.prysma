@@ -1,18 +1,11 @@
 scope 
 {
-    def int salut()
-    {
-        dec float manger = 10; 
-
-        return 1; 
-    }
 
     def int teste()
     {
-        dec float c = 10; 
-        dec float m = 22; 
+        dec float a = 10*42;
 
-        return 1; 
+        return 1;
     }
 
     def int main()
@@ -20,6 +13,8 @@ scope
         
         dec float a = 10+234;
         dec float b = 10+234-234*432-(342-42);
+        aff a = 10;
+        aff b = 13 +a; 
 
         return 1;
     }

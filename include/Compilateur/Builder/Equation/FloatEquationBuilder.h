@@ -66,7 +66,7 @@ class FloatEquationBuilder
         // ===== Construction de l'AST et Résolution =====
         shared_ptr<GestionnaireChargementVariable> gestionnaireChargement = std::make_shared<GestionnaireChargementVariable>(_backend);
         constructeurArbreEquation = std::make_shared<ConstructeurArbreEquation>(
-            chaineResponsabilite.get(), registreSymboleFloat, serviceParenthese.get(), _backend->getContext(), registreVariable, gestionnaireChargement
+            chaineResponsabilite.get(), registreSymboleFloat, serviceParenthese.get(), _backend, registreVariable, gestionnaireChargement
         );
 
         construireRegistreSymboleFloat();

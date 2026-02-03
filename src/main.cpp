@@ -22,9 +22,8 @@ int main() {
     try {
         shared_ptr<LLVMBackend> backend = std::make_shared<LLVMBackend>();
 
-        std::string document;
         FichierLecture fichierLecture("../src/PrysmaCodeTests/main.prysma");
-        document = fichierLecture.entrer();
+        std::string document = fichierLecture.entrer();
   
         Lexer lexer;
         vector<Token> tokens = lexer.tokenizer(document);
@@ -34,7 +33,7 @@ int main() {
         std::shared_ptr<RegistreFonction> registreFonction = std::make_shared<RegistreFonction>();
         
         registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParserMain>());
-        registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(backend, registreFonction, TOKEN_FONCTION));
+        registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(backend, registreFonction, registreVariable, TOKEN_FONCTION));
         registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectation>(backend, registreVariable,TOKEN_TYPE_FLOAT));
         registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,TOKEN_TYPE_FLOAT));
         registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend));

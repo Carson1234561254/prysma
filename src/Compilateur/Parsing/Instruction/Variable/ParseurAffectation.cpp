@@ -26,17 +26,6 @@ std::shared_ptr<INoeud> ParseurAffectation::parser(std::vector<Token>& tokens, i
     ParseurEquation parseurEquation(_backend, _typeVariable, _registreVariable);
     std::shared_ptr<INoeud> expression = parseurEquation.parser(tokens, index, constructeurArbreInstruction);
 
-    // Récupérer la variable existante du registre
-    llvm::AllocaInst* variableExistante = nullptr;
-    if (_registreVariable != nullptr) {
-        try {
-            llvm::Value* valeur = _registreVariable->recupererVariables(nomToken);
-            variableExistante = llvm::dyn_cast<llvm::AllocaInst>(valeur);
-        } catch (const std::exception& e) {
-            // La variable n'existe pas
-            throw std::runtime_error(std::string("Erreur : la variable '") + nomVariable + "' n'existe pas. Vous devez d'abord la déclarer avec 'var type nom = valeur;'");
-        }
-    }
-
-    return std::make_shared<NoeudAffectation>(_backend, nomVariable, variableExistante, expression);
+ 
+    return std::make_shared<NoeudAffectation>(_backend, nomVariable, expression, _registreVariable, nomToken);
 }

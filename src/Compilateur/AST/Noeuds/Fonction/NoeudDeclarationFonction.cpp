@@ -1,13 +1,14 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <llvm-18/llvm/IR/BasicBlock.h>
 #include <llvm-18/llvm/IR/DerivedTypes.h>
 #include <llvm-18/llvm/IR/Function.h>
 #include <utility>
 
-NoeudDeclarationFonction::NoeudDeclarationFonction(std::shared_ptr<LLVMBackend> backend, std::string nom, TokenType typeRetour)
-    : _backend(std::move(backend)), _nom(std::move(nom)), _typeRetourToken(typeRetour)
+NoeudDeclarationFonction::NoeudDeclarationFonction(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::string nom, TokenType typeRetour)
+    : _backend(std::move(backend)), _registreVariable(std::move(registreVariable)), _nom(std::move(nom)), _typeRetourToken(typeRetour)
 {
 }
 
@@ -40,8 +41,17 @@ llvm::Value* NoeudDeclarationFonction::genCode()
     llvm::BasicBlock* entryBlock = llvm::BasicBlock::Create(_backend->getContext(), "entry", function);
     _backend->getBuilder().SetInsertPoint(entryBlock);
 
+    // Créer une nouvelle portée pour les variables locales de la fonction
+    if (_registreVariable != nullptr) {
+        _registreVariable->piler();
+    }
+
     llvm::Value* resultatCorps = executerEnfants();
 
+    // Restaurer la portée précédente
+    if (_registreVariable != nullptr) {
+        _registreVariable->depiler();
+    }
 
     if (_backend->getBuilder().GetInsertBlock()->getTerminator() == nullptr) {
         if (retType->isVoidTy()) {

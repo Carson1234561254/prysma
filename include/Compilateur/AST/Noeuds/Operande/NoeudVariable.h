@@ -2,23 +2,27 @@
 #define C9126446_60DE_4831_AEE0_655AF47AE40D
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/AST/GestionnaireChargementVariable.h"
+#include "Compilateur/AST/Registre/RegistreVariable.h" // Important
+#include "Compilateur/LLVM/LLVMBackend.h"            // Important
 #include <memory>
 #include <string>
+#include <llvm/IR/Value.h>
 
 class NoeudVariable : public INoeud
 {
 private:
-    llvm::Value* _adresseMemoire;
+
+    std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<RegistreVariable> _registre;
     std::string _nomVariable;
-    std::shared_ptr<GestionnaireChargementVariable> _gestionnaire;
 
 public:
-    NoeudVariable(llvm::Value* adresseMemoire, const std::string& nomVariable, std::shared_ptr<GestionnaireChargementVariable> gestionnaire);
+
+    NoeudVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registre, const std::string& nomVariable);
+    
     ~NoeudVariable();
 
     llvm::Value* genCode() override;
 };
-
 
 #endif /* C9126446_60DE_4831_AEE0_655AF47AE40D */

@@ -13,13 +13,13 @@ ConstructeurArbreEquation::ConstructeurArbreEquation(
     ChaineResponsabilite* chaineResponsabilite,
     std::shared_ptr<RegistreSymbole> registreSymbole,
     IGestionnaireParenthese* gestionnaireParenthese,
-    llvm::LLVMContext& context,
+    std::shared_ptr<LLVMBackend> backend,
     std::shared_ptr<RegistreVariable> registreVariable,
     std::shared_ptr<GestionnaireChargementVariable> gestionnaireChargement)
     : _chaineResponsabilite(chaineResponsabilite), 
       _registreSymbole(std::move(registreSymbole)), 
       _gestionnaireParenthese(gestionnaireParenthese),
-      _context(context),
+      _backend(std::move(backend)),
       _registreVariable(std::move(registreVariable)),
       _gestionnaireChargement(std::move(gestionnaireChargement))
 {
@@ -41,12 +41,11 @@ std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>
         // Déterminer si c'est une variable
         if(equation[0].type == TOKEN_IDENTIFIANT)
         {
-            llvm::Value* adresseMemoire = _registreVariable->recupererVariables(equation[0]);
-                        return std::make_shared<NoeudVariable>(adresseMemoire, equation[0].value, _gestionnaireChargement);
+            return std::make_shared<NoeudVariable>(_backend, _registreVariable, equation[0].value);
         }
         try {
             float valeurFloat = std::stof(equation[0].value);
-            llvm::Value* valeurLLVM = llvm::ConstantFP::get(llvm::Type::getFloatTy(_context), valeurFloat);
+            llvm::Value* valeurLLVM = llvm::ConstantFP::get(llvm::Type::getFloatTy(_backend->getContext()), valeurFloat);
             return std::make_shared<Valeur>(valeurLLVM);
         } catch (const std::exception& e) {
             throw std::runtime_error("Erreur: impossible de convertir '" + equation[0].value + "' en nombre");

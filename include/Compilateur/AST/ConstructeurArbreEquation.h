@@ -8,8 +8,7 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Parsing/Equation/ChaineResponsabilite.h"
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
-#include <llvm/IR/LLVMContext.h>
-#include <llvm/IR/IRBuilder.h>
+#include "Compilateur/LLVM/LLVMBackend.h"
 #include <memory>
 #include <vector>
 
@@ -24,7 +23,7 @@ private:
     ChaineResponsabilite* _chaineResponsabilite;
     std::shared_ptr<RegistreSymbole> _registreSymbole;
     IGestionnaireParenthese* _gestionnaireParenthese;
-    llvm::LLVMContext& _context;
+    std::shared_ptr<LLVMBackend> _backend;
 
     std::shared_ptr<RegistreVariable> _registreVariable;
     std::shared_ptr<GestionnaireChargementVariable> _gestionnaireChargement;
@@ -35,13 +34,13 @@ public:
      * @param chaineResponsabilite Chaîne de responsabilité des opérateurs
      * @param registreSymbole Registre des symboles opérateurs
      * @param gestionnaireParenthese Gestionnaire de gestion des parenthèses
-     * @param context Le contexte LLVM pour créer les valeurs
+     * @param backend Le backend LLVM pour créer les valeurs
      */
     ConstructeurArbreEquation(
         ChaineResponsabilite* chaineResponsabilite,
         std::shared_ptr<RegistreSymbole> registreSymbole,
         IGestionnaireParenthese* gestionnaireParenthese,
-        llvm::LLVMContext& context, 
+        std::shared_ptr<LLVMBackend> backend, 
         std::shared_ptr<RegistreVariable> registreVariable,
         std::shared_ptr<GestionnaireChargementVariable> gestionnaireChargement
     );
