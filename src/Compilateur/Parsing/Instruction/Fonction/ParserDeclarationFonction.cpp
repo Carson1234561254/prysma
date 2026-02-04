@@ -1,5 +1,6 @@
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
+#include "Compilateur/AST/Noeuds/Interfaces/IInstruction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Lexer/TokenCategories.h"
@@ -37,7 +38,7 @@ std::shared_ptr<INoeud> ParsingDeclarationFonction::parser(std::vector<Token>& t
     std::string nomFonction = tokenNomFonction.value;
     consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur: identifiant invalide, ce dois être un nom de fonction ");
 
-    std::shared_ptr<NoeudDeclarationFonction> parent = std::make_shared<NoeudDeclarationFonction>(_backend, _registreVariable, nomFonction, typeRetour);
+    std::shared_ptr<IInstruction> parent = std::make_shared<NoeudDeclarationFonction>(_backend, _registreVariable, nomFonction, typeRetour);
 
     // Manger les parenthèses ouvertes
     consommer(tokens, index, TOKEN_PAREN_OUVERTE, "Erreur: ce n'est pas une parenthèse ouverte '('");
@@ -49,15 +50,9 @@ std::shared_ptr<INoeud> ParsingDeclarationFonction::parser(std::vector<Token>& t
     }
 
     consommer(tokens, index, TOKEN_PAREN_FERMEE, "Erreur: ce n'est pas une parenthèse fermée ')'");
-    
     // Manger tout ce qui ce trouve dans les accolades
     consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Erreur: ce n'est pas une accolade ouverte '{' ");
-    while(index < (int)tokens.size() && tokens[index].type != TOKEN_ACCOLADE_FERMEE)
-    {
-        std::shared_ptr<INoeud> enfant = constructeurArbreInstruction->construire(tokens, index);
-        parent->ajouterInstruction(enfant);
-    }
-    
+    consommerEnfantCorps(tokens,index,parent,constructeurArbreInstruction);
     consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Erreur: ce n'est pas une accolade fermée '}'");
 
     return parent; 
