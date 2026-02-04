@@ -1,8 +1,8 @@
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
-#include "Compilateur/AST/Noeuds/Return/NoeudReturn.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudReturn.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/Parsing/Instruction/Return/ParsingReturn.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParsingReturn.h"
 #include "Compilateur/Parsing/Equation/ParseurEquation.h"
 #include <memory>
 #include <vector>

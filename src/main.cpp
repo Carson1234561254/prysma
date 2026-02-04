@@ -16,7 +16,7 @@
 #include "Compilateur/AST/Registre/RegistreInstruction.h"
 #include "Compilateur/Parsing/Instruction/ParserScope.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParsingDeclarationFonction.h"
-#include "Compilateur/Parsing/Instruction/Return/ParsingReturn.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParsingReturn.h"
 
 using namespace std;
 
