@@ -49,7 +49,7 @@ int main() {
         registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(backend, registreFonction, registreVariable, registreType, TOKEN_FONCTION, returnContextCompilation));
         registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectation>(backend, registreVariable,registreType));
         registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,registreType));
-        registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend, returnContextCompilation, registreType));
+        registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend, registreVariable, returnContextCompilation, registreType));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
 

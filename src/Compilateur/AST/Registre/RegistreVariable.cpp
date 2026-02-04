@@ -7,7 +7,6 @@
 
 RegistreVariable::RegistreVariable()
 {
-    // Initialiser avec un contexte global vide
     _variables.push(std::map<std::string, llvm::Value*>());
 }
 
@@ -17,22 +16,34 @@ RegistreVariable::~RegistreVariable()
 
 void RegistreVariable::enregistrer(const Token& token, llvm::Value* instance )
 {
-    auto iterateur = _variables.top().find(token.value);
-    if (iterateur != _variables.top().end())
+    if(!_variables.empty())
     {
-        throw std::runtime_error("La variable que vous essayer d'enregistrer existe déjà !");
+        auto iterateur = _variables.top().find(token.value);
+        if (iterateur != _variables.top().end())
+        {
+            throw std::runtime_error("La variable que vous essayer d'enregistrer existe déjà !");
+        }
+         _variables.top()[token.value] = instance;
     }
-    _variables.top()[token.value] = instance;
 }
 
 llvm::Value* RegistreVariable::recupererVariables(const Token& token)
 {
-    auto iterateur = _variables.top().find(token.value);
-    if (iterateur != _variables.top().end())
+
+    if(_variables.empty())
     {
-        return iterateur->second;
+        throw std::runtime_error("La pile des variables est VIDE !""Variable non disponible! '" + token.value + "'. ");
     }
-    throw std::runtime_error("Aucune variable de ce nom n'existe ! ");
+
+    if(!_variables.empty())
+    {
+        auto iterateur = _variables.top().find(token.value);
+        if (iterateur != _variables.top().end())
+        {
+            return iterateur->second;
+        }
+    }
+    throw std::runtime_error("Aucune variable de ce nom n'existe ! Variable cherchée : '" + token.value + "'");
     return nullptr;
 }
 

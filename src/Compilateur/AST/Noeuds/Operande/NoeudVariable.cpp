@@ -15,6 +15,9 @@ NoeudVariable::~NoeudVariable()
 
 llvm::Value* NoeudVariable::genCode()
 {
+    if (_registre == nullptr) {
+        throw std::runtime_error("ERREUR: NoeudVariable::genCode() - Le registre de variables est NULL ! ""La variable '" + _nomVariable );
+    }
 
     Token tokenRecherche;
     tokenRecherche.value = _nomVariable;

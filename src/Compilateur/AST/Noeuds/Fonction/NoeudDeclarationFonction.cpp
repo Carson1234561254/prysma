@@ -15,7 +15,6 @@ NoeudDeclarationFonction::NoeudDeclarationFonction(std::shared_ptr<LLVMBackend> 
 
 llvm::Value* NoeudDeclarationFonction::genCode()
 {
-    _returnContextCompilation->piler(_typeRetourToken);
     if (_backend == nullptr) {
         throw std::runtime_error("Erreur : backend LLVM non initialisé dans NoeudDeclarationFonction");
     }
@@ -33,18 +32,12 @@ llvm::Value* NoeudDeclarationFonction::genCode()
     llvm::BasicBlock* entryBlock = llvm::BasicBlock::Create(_backend->getContext(), "entry", function);
     _backend->getBuilder().SetInsertPoint(entryBlock);
 
-    // Créer une nouvelle portée pour les variables locales de la fonction
-    if (_registreVariable != nullptr) {
-        _registreVariable->piler();
-    }
-
+     _returnContextCompilation->piler(_typeRetourToken);
+     _registreVariable->piler();
+    
     executerEnfants();
 
-    // Restaurer la portée précédente
-    if (_registreVariable != nullptr) {
-        _registreVariable->depiler();
-    }
-
+    _registreVariable->depiler();
     _returnContextCompilation->depiler();
 
     return function;
