@@ -68,6 +68,8 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudReturn.cpp
     src/Compilateur/AST/Registre/ReturnContextCompilation.cpp
+    src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
+    src/Compilateur/AST/Parsing/Instruction/ParserArgFonction.cpp
 )
 
 # Créer l'exécutable

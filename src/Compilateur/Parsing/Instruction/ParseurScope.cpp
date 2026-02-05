@@ -9,7 +9,8 @@ std::shared_ptr<INoeud> ParserScope::parser(std::vector<Token>& tokens, int& ind
     std::shared_ptr<IInstruction> noeudScope = std::make_shared<NoeudScope>();
     consommer(tokens, index, TOKEN_SCOPE, "Erreur : 'scope' attendu");
     consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Erreur : '{' attendu après 'scope'");
-    consommerEnfantCorps(tokens,index,noeudScope,constructeurArbreInstruction);
+    consommerEnfantCorps(tokens,index,noeudScope,constructeurArbreInstruction, TOKEN_ACCOLADE_FERMEE);
      
     return noeudScope;
 }
+

@@ -1,6 +1,7 @@
 #include "Compilateur/Parsing/ParserBase.h"
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IInstruction.h"
+#include "Compilateur/Lexer/TokenType.h"
 #include <memory>
 #include <stdexcept>
 
@@ -12,9 +13,9 @@ Token ParserBase::consommer(std::vector<Token>& tokens, int& index, TokenType ty
     return tokens[index++];
 }
 
-void ParserBase::consommerEnfantCorps(std::vector<Token>& tokens, int& index , const std::shared_ptr<IInstruction>& parent, ConstructeurArbreInstruction* constructeurArbreInstruction)
+void ParserBase::consommerEnfantCorps(std::vector<Token>& tokens, int& index , const std::shared_ptr<IInstruction>& parent, ConstructeurArbreInstruction* constructeurArbreInstruction,TokenType fin)
 {
-    while(index < (int)tokens.size() && tokens[index].type != TOKEN_ACCOLADE_FERMEE)
+    while(index < (int)tokens.size() && tokens[index].type != fin)
     {
         std::shared_ptr<INoeud> enfant = constructeurArbreInstruction->construire(tokens, index);
         parent->ajouterInstruction(enfant);

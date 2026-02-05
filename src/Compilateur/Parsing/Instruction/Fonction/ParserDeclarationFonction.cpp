@@ -1,4 +1,5 @@
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IInstruction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
@@ -44,15 +45,12 @@ std::shared_ptr<INoeud> ParsingDeclarationFonction::parser(std::vector<Token>& t
     consommer(tokens, index, TOKEN_PAREN_OUVERTE, "Erreur: ce n'est pas une parenthèse ouverte '('");
     
     // Manger tout les paramètres
-    while(index < (int)tokens.size() && tokens[index].type != TOKEN_PAREN_FERMEE)
-    {
-        index++;
-    }
+    consommerEnfantCorps(tokens,index,parent,constructeurArbreInstruction,TOKEN_PAREN_FERMEE);
 
     consommer(tokens, index, TOKEN_PAREN_FERMEE, "Erreur: ce n'est pas une parenthèse fermée ')'");
     // Manger tout ce qui ce trouve dans les accolades
     consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Erreur: ce n'est pas une accolade ouverte '{' ");
-    consommerEnfantCorps(tokens,index,parent,constructeurArbreInstruction);
+    consommerEnfantCorps(tokens,index,parent,constructeurArbreInstruction,TOKEN_ACCOLADE_FERMEE);
     consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Erreur: ce n'est pas une accolade fermée '}'");
 
     return parent; 

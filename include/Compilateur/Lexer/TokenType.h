@@ -50,7 +50,7 @@ enum TokenType {
     TOKEN_SCOPE,
 
     // variable 
-
+    TOKEN_ARG,
     TOKEN_AFF, 
     TOKEN_DEC,
     TOKEN_TYPE_INT,

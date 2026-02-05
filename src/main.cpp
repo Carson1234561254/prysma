@@ -4,6 +4,7 @@
 #include "Compilateur/LLVM/LLVMSerializer.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.h"
 #include "Compilateur/Parsing/Instruction/Variable/ParseurAffectation.h"
 #include "Compilateur/Parsing/Instruction/Variable/ParseurDeclaration.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
@@ -26,8 +27,7 @@ int main() {
 
         // Faire la réflexion pour récupérer le type du parent fonction
         shared_ptr<LLVMBackend> backend = std::make_shared<LLVMBackend>();
-
-        FichierLecture fichierLecture("../src/PrysmaCodeTests/main.prysma");
+        FichierLecture fichierLecture("../src/PrysmaCodeTests/main.pry");
         std::string document = fichierLecture.entrer();
   
         Lexer lexer;
@@ -50,6 +50,7 @@ int main() {
         registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectation>(backend, registreVariable,registreType));
         registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,registreType));
         registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend, registreVariable, returnContextCompilation, registreType));
+        registreInstruction->enregistrer(TOKEN_ARG,std::make_shared<ParserArgFonction>(registreType));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
 
@@ -59,7 +60,7 @@ int main() {
 
         LLVMSerializer serializer(backend->getContext(), backend->getModule());
         serializer.SauvegarderCodeLLVM("output.ll");
-
+       
         return 0;
         
     } catch (const std::exception& e) {

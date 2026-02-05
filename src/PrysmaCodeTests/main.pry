@@ -1,0 +1,9 @@
+scope 
+{
+    def float main(arg float a, arg int b)
+    {
+        def float teste = 1;
+        aff teste = a+teste;
+        return c;
+    }
+}

@@ -12,7 +12,7 @@ class ParserBase
 {
 protected:
     Token consommer(std::vector<Token>& tokens, int& index, TokenType typeAttendu, const std::string& messageErreur);
-    void consommerEnfantCorps(std::vector<Token>& tokens, int& index, const std::shared_ptr<IInstruction>& parent, ConstructeurArbreInstruction* constructeurArbreInstruction);
+    void consommerEnfantCorps(std::vector<Token>& tokens, int& index, const std::shared_ptr<IInstruction>& parent, ConstructeurArbreInstruction* constructeurArbreInstruction,TokenType fin);
 };
 
 #endif /* DD335087_6EDE_4036_872C_8BD586E26251 */
