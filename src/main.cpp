@@ -4,6 +4,7 @@
 #include "Compilateur/LLVM/LLVMSerializer.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.h"
 #include "Compilateur/Parsing/Instruction/Variable/ParseurAffectation.h"
 #include "Compilateur/Parsing/Instruction/Variable/ParseurDeclaration.h"
@@ -51,6 +52,7 @@ int main() {
         registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,registreType));
         registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend, registreVariable, returnContextCompilation, registreType));
         registreInstruction->enregistrer(TOKEN_ARG,std::make_shared<ParserArgFonction>(registreType));
+        registreInstruction->enregistrer(TOKEN_CALL,std::make_shared<ParserAppelFonction>(registreFonction));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
 

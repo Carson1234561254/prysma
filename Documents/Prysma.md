@@ -21,7 +21,7 @@ Prysma est un langage de programmation moderne dont la syntaxe s'inspire des lan
 - Typage statique fort
 - Syntaxe claire et lisible
 - Support des fonctions et structures de contrôle classiques
-- Mot-clé `def` pour la déclaration des fonctions (choix architectural)
+- Mot-clé `fn` pour la déclaration des fonctions (choix architectural)
 
 ---
 
@@ -70,11 +70,11 @@ bool booleen = true;
 
 ## Fonctions
 
-Les fonctions en Prysma sont définies avec le mot-clé `def`. Ce choix architectural facilite la logique du lexer et améliore la clarté du code.
+Les fonctions en Prysma sont définies avec le mot-clé `fn`. Ce choix architectural facilite la logique du lexer et améliore la clarté du code.
 
 ### Syntaxe:
 ```prysma
-def typeRetour nomFonction(type param1, type param2, ...) {
+fn typeRetour nomFonction(type param1, type param2, ...) {
     // Corps de la fonction
     return valeur;
 }
@@ -84,21 +84,21 @@ def typeRetour nomFonction(type param1, type param2, ...) {
 
 #### Fonction avec paramètres et retour:
 ```prysma
-def int addition(int a, int b) {
+fn int addition(int a, int b) {
     return a + b;
 }
 ```
 
 #### Fonction sans paramètres:
 ```prysma
-def int obtenir_nombre() {
+fn int obtenir_nombre() {
     return 42;
 }
 ```
 
 #### Fonction avec plusieurs paramètres:
 ```prysma
-def float calculer_moyenne(float note1, float note2, float note3) {
+fn float calculer_moyenne(float note1, float note2, float note3) {
     float somme = note1 + note2 + note3;
     return somme / 3;
 }
@@ -106,7 +106,7 @@ def float calculer_moyenne(float note1, float note2, float note3) {
 
 #### Fonction sans retour:
 ```prysma
-def void afficher_message(string message) {
+fn void afficher_message(string message) {
     print(message);
 }
 ```
@@ -179,7 +179,7 @@ for (int i = 0; i < 10; i = i + 1) {
 ```pryma
 
 ```
-def void afficher_nombre_pair(int limite) {
+fn void afficher_nombre_pair(int limite) {
     for (int i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
             print(i, "paire")

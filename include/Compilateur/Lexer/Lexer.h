@@ -21,7 +21,7 @@ class Lexer {
     // Permet de différencier les identifiants des mots-clés
     map<string, TokenType> motsCles = {
         {"arg", TOKEN_ARG},
-        {"def", TOKEN_FONCTION},
+        {"fn", TOKEN_FONCTION},
         {"if", TOKEN_SI},
         {"else", TOKEN_SINON},
         {"while", TOKEN_TANT_QUE},
@@ -38,6 +38,7 @@ class Lexer {
         {"string", TOKEN_TYPE_STRING},
         {"bool", TOKEN_TYPE_BOOL},
         {"void", TOKEN_TYPE_VOID},
+        {"call", TOKEN_CALL}
         
     };
 

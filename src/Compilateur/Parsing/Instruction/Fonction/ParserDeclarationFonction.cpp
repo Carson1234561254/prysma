@@ -24,7 +24,7 @@ std::shared_ptr<INoeud> ParsingDeclarationFonction::parser(std::vector<Token>& t
         throw std::runtime_error("Erreur : ConstructeurArbreInstruction est null dans ParsingDeclarationFonction");
     }
     
-    consommer(tokens, index, TOKEN_FONCTION, "Erreur: ce n'est pas le bon token ! 'def'");
+    consommer(tokens, index, TOKEN_FONCTION, "Erreur: ce n'est pas le bon token ! 'fn'");
 
     Token tokenTypeRetour = tokens[index];
     TokenType typeRetour = tokenTypeRetour.type;

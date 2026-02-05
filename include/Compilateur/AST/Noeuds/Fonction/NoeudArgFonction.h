@@ -8,8 +8,8 @@ class NoeudArgFonction: public INoeud
 {
 private:
      std::shared_ptr<RegistreType> _registreType; 
-     TokenType nom;
-     TokenType type;
+     TokenType _nom;
+     TokenType _type;
 
 public: 
     NoeudArgFonction(std::shared_ptr<RegistreType> registreType, TokenType nom, TokenType type);

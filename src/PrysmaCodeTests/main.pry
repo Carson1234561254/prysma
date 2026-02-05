@@ -1,9 +1,9 @@
 scope 
 {
-    def float main(arg float a, arg int b)
+    fn float main(arg float a arg int b)
     {
-        def float teste = 1;
-        aff teste = a+teste;
-        return c;
+        dec float teste = 1;
+        aff teste = teste;
+        return 1;
     }
 }

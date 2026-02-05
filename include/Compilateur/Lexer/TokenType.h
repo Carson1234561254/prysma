@@ -2,7 +2,7 @@
 #define F738FE90_52E0_4F82_9BB5_5833C5E4D2CB
 
 enum TokenType {
-    // Fin de flux (Obligatoire)
+    // Fin de flux
     TOKEN_EOF,
 
     // Littéraux la valeur directe "string", 123, 12.34, true/false
@@ -37,7 +37,7 @@ enum TokenType {
     TOKEN_POINT_VIRGULE,
     TOKEN_VIRGULE,      
     
-    // Mots-clés (Mieux vaut être spécifique)
+    // Mots-clés 
     TOKEN_FONCTION,    
     TOKEN_SI,          
     TOKEN_SINON,       
@@ -48,6 +48,8 @@ enum TokenType {
     TOKEN_FAUX,
     TOKEN_PRINT,
     TOKEN_SCOPE,
+    TOKEN_CALL,
+    
 
     // variable 
     TOKEN_ARG,

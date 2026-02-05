@@ -63,13 +63,15 @@ set(SOURCES
     src/Compilateur/Parsing/ParserBase.cpp
     src/Compilateur/Parsing/Instruction/Fonction/ParserDeclarationFonction.cpp
     src/Compilateur/Parsing/Instruction/Fonction/ParsingReturn.cpp
+    src/Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.cpp
     src/Compilateur/AST/Noeuds/NoeudScope.cpp
     src/Compilateur/AST/Noeuds/Instruction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudReturn.cpp
     src/Compilateur/AST/Registre/ReturnContextCompilation.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
-    src/Compilateur/AST/Parsing/Instruction/ParserArgFonction.cpp
+    src/Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.cpp
+    src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
 )
 
 # Créer l'exécutable

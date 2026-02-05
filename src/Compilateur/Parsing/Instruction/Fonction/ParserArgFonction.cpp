@@ -15,6 +15,7 @@ ParserArgFonction::~ParserArgFonction()
 
 std::shared_ptr<INoeud> ParserArgFonction::parser(std::vector<Token>& tokens, int& index,[[maybe_unused]] ConstructeurArbreInstruction* constructeurArbreInstruction) 
 {
+
     consommer(tokens,index,TOKEN_ARG,"Erreur: le token n'est pas 'arg' !");
 
     TokenType type; 
