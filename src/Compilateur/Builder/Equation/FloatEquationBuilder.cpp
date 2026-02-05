@@ -12,7 +12,9 @@ void FloatEquationBuilder::construireRegistreSymboleFloat()
         registreSymboleFloat->enregistrer(TOKEN_PLUS, [&]() -> std::shared_ptr<IExpression> { 
             return std::make_shared<Operation>(
                 std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([backend = _backend](llvm::Value* lhs, llvm::Value* rhs) { 
-                    rhs = backend->creerAutoCast(rhs, lhs->getType());
+                    llvm::Type* floatType = llvm::Type::getFloatTy(backend->getContext());
+                    lhs = backend->creerAutoCast(lhs, floatType);
+                    rhs = backend->creerAutoCast(rhs, floatType);
                     return backend->getBuilder().CreateFAdd(lhs, rhs, "addtmp");
                 })
             ); 
@@ -21,7 +23,9 @@ void FloatEquationBuilder::construireRegistreSymboleFloat()
         registreSymboleFloat->enregistrer(TOKEN_MOINS, [&]() -> std::shared_ptr<IExpression> { 
             return std::make_shared<Operation>(
                 std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([backend = _backend](llvm::Value* lhs, llvm::Value* rhs) { 
-                    rhs = backend->creerAutoCast(rhs, lhs->getType());
+                    llvm::Type* floatType = llvm::Type::getFloatTy(backend->getContext());
+                    lhs = backend->creerAutoCast(lhs, floatType);
+                    rhs = backend->creerAutoCast(rhs, floatType);
                     return backend->getBuilder().CreateFSub(lhs, rhs, "subtmp"); 
                 })
             ); 
@@ -30,7 +34,9 @@ void FloatEquationBuilder::construireRegistreSymboleFloat()
         registreSymboleFloat->enregistrer(TOKEN_ETOILE, [&]() -> std::shared_ptr<IExpression> { 
             return std::make_shared<Operation>(
                 std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([backend = _backend](llvm::Value* lhs, llvm::Value* rhs) { 
-                    rhs = backend->creerAutoCast(rhs, lhs->getType());
+                    llvm::Type* floatType = llvm::Type::getFloatTy(backend->getContext());
+                    lhs = backend->creerAutoCast(lhs, floatType);
+                    rhs = backend->creerAutoCast(rhs, floatType);
                     return backend->getBuilder().CreateFMul(lhs, rhs, "multmp"); 
                 })
             ); 
@@ -39,7 +45,9 @@ void FloatEquationBuilder::construireRegistreSymboleFloat()
         registreSymboleFloat->enregistrer(TOKEN_SLASH, [&]() -> std::shared_ptr<IExpression> { 
             return std::make_shared<Operation>(
                 std::function<llvm::Value*(llvm::Value*, llvm::Value*)>([backend = _backend](llvm::Value* lhs, llvm::Value* rhs) { 
-                    rhs = backend->creerAutoCast(rhs, lhs->getType());
+                    llvm::Type* floatType = llvm::Type::getFloatTy(backend->getContext());
+                    lhs = backend->creerAutoCast(lhs, floatType);
+                    rhs = backend->creerAutoCast(rhs, floatType);
                     return backend->getBuilder().CreateFDiv(lhs, rhs, "divtmp"); 
                 })
             ); 
