@@ -1,8 +1,8 @@
 #include <cstdio>
 
 extern "C" {
-    void printInt() {
-        printf("%d\n", 10);
+    void printInt(int x) {
+        printf("%d\n", x);
     }
 
     void printFloat(float x) {

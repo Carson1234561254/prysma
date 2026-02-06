@@ -5,14 +5,17 @@
 class ConstructeurSysteme
 {
 private:
-    std::string _pathLib; 
+    std::string _pathLib;
+    std::string _libObjDir;
+    std::string _outputLL;
+    std::string _executable;
     static std::string parcourirEtCollecterFichiers(const std::string& repertoire, const std::string& extension);
 
 public:
-    explicit ConstructeurSysteme(std::string pathLib);
+    ConstructeurSysteme(std::string pathLib, std::string libObjDir, std::string outputLL, std::string executable);
     ~ConstructeurSysteme();
 
-    static void lierLibExecutable();
+    void lierLibExecutable();
     void compilerLib();
 };
 

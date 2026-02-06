@@ -70,9 +70,9 @@ int main(int argc, char* argv[])
         LLVMSerializer serializer(backend->getContext(), backend->getModule());
         serializer.SauvegarderCodeLLVM("output.ll");
        
-        ConstructeurSysteme constructeur("../src/Lib");
+        ConstructeurSysteme constructeur("../src/Lib", "Lib", "output.ll", "programme");
         constructeur.compilerLib();
-        ConstructeurSysteme::lierLibExecutable();
+        constructeur.lierLibExecutable();
     }
     catch (const std::exception& e) {
         std::cerr << "Erreur: " << e.what() << std::endl;

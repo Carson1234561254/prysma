@@ -6,7 +6,12 @@
 
 namespace fs = std::filesystem;
 
-ConstructeurSysteme::ConstructeurSysteme(std::string pathLib) : _pathLib(std::move(pathLib)) {}
+ConstructeurSysteme::ConstructeurSysteme(std::string pathLib, std::string libObjDir, std::string outputLL, std::string executable) 
+    : _pathLib(std::move(pathLib)), 
+      _libObjDir(std::move(libObjDir)), 
+      _outputLL(std::move(outputLL)), 
+      _executable(std::move(executable)) 
+{}
 
 ConstructeurSysteme::~ConstructeurSysteme() {}
 
@@ -23,10 +28,8 @@ std::string ConstructeurSysteme::parcourirEtCollecterFichiers(const std::string&
 
 void ConstructeurSysteme::compilerLib()
 {
-    std::string libObjDir = "Lib";
-
-    if (!fs::exists(libObjDir)) {
-        fs::create_directory(libObjDir);
+    if (!fs::exists(_libObjDir)) {
+        fs::create_directory(_libObjDir);
     }
 
     std::string fichiersCpp = ConstructeurSysteme::parcourirEtCollecterFichiers(_pathLib, ".cpp");
@@ -34,21 +37,16 @@ void ConstructeurSysteme::compilerLib()
     std::string fichier;
     while (stream >> fichier) {
         const fs::path filePath(fichier);
-        std::string objectFile = (fs::path(libObjDir) / filePath.filename()).replace_extension(".o").string();
+        std::string objectFile = (fs::path(_libObjDir) / filePath.filename()).replace_extension(".o").string();
         std::string command = "clang++ -c " + fichier + " -o " + objectFile;
-        std::cout << "Execution : " << command << std::endl;
         system(command.c_str());
     }
 }
 
 void ConstructeurSysteme::lierLibExecutable()
 {
-    std::string libObjDir = "Lib";
-    std::string objectFiles = ConstructeurSysteme::parcourirEtCollecterFichiers(libObjDir, ".o");
+    std::string objectFiles = ConstructeurSysteme::parcourirEtCollecterFichiers(_libObjDir, ".o");
 
-    std::string outputLL = "output.ll";
-    std::string executable = "programme";
-    std::string command = "clang++ " + outputLL + objectFiles + " -o " + executable;
-    std::cout << "Execution : " << command << std::endl;
+    std::string command = "clang++ " + _outputLL + objectFiles + " -o " + _executable;
     system(command.c_str());
 }

@@ -49,7 +49,7 @@ enum TokenType {
     TOKEN_PRINT,
     TOKEN_SCOPE,
     TOKEN_CALL,
-    
+    TOKEN_PASS,
 
     // variable 
     TOKEN_ARG,
