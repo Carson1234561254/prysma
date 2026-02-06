@@ -12,6 +12,7 @@
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/AST/Registre/RegistreType.h"
+#include "Compilateur/AST/Registre/RegistreArgument.h"
 #include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
 #include <iostream>
 #include <llvm-18/llvm/IR/DerivedTypes.h>
@@ -22,6 +23,7 @@
 #include "Compilateur/Parsing/Instruction/ParserScope.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParsingDeclarationFonction.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParsingReturn.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParserArgPassFonction.h"
 #include <filesystem>
 
 
@@ -41,6 +43,7 @@ int main(int argc, char* argv[])
         std::shared_ptr<RegistreFonction> registreFonction = std::make_shared<RegistreFonction>();
         std::shared_ptr<RegistreType> registreType = std::make_shared<RegistreType>();
         std::shared_ptr<ReturnContextCompilation> returnContextCompilation = std::make_shared<ReturnContextCompilation>();
+        std::shared_ptr<RegistreArgument> registreArgument = std::make_shared<RegistreArgument>();
 
         // Enregistrer des fonctions externe
         IntegerType* intTy = llvm::Type::getInt32Ty(backend->getContext());
@@ -58,9 +61,10 @@ int main(int argc, char* argv[])
         registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(backend, registreFonction, registreVariable, registreType, TOKEN_FONCTION, returnContextCompilation));
         registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectation>(backend, registreVariable,registreType));
         registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,registreType));
-        registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>(registreFonction, backend));
+        registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>(registreFonction, backend, registreArgument));
         registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend, registreVariable, returnContextCompilation, registreType));
         registreInstruction->enregistrer(TOKEN_ARG,std::make_shared<ParserArgFonction>(registreType));
+        registreInstruction->enregistrer(TOKEN_PASS,std::make_shared<ParserArgPassFonction>(registreVariable, registreArgument));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(registreInstruction);
         std::shared_ptr<INoeud> arbre = constructeurArbreInstruction.construire(tokens);

@@ -73,7 +73,9 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
     src/Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
-    src/Compilateur/AST/Noeuds/Fonction/NoeudArgPassFonction.cp
+    src/Compilateur/AST/Noeuds/Fonction/NoeudArgPassFonction.cpp
+    src/Compilateur/AST/Registre/RegistreArgument.cpp
+    src/Compilateur/TraitementFichier/ConstructeurSysteme.cpp
 )
 
 # Créer l'exécutable

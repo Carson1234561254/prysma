@@ -3,13 +3,15 @@
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
+#include "Compilateur/AST/Registre/RegistreArgument.h"
 #include <memory>
 
 
-ParserAppelFonction::ParserAppelFonction(std::shared_ptr<RegistreFonction> registreFonction, std::shared_ptr<LLVMBackend> backend)
+ParserAppelFonction::ParserAppelFonction(std::shared_ptr<RegistreFonction> registreFonction, std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreArgument> registreArgument)
 {
     _registreFonction = std::move(registreFonction);
     _backend = std::move(backend);
+    _registreArgument = std::move(registreArgument);
 }
 
 ParserAppelFonction::~ParserAppelFonction()
@@ -20,9 +22,10 @@ ParserAppelFonction::~ParserAppelFonction()
 //call nomFonction()
 std::shared_ptr<INoeud> ParserAppelFonction::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) 
 {
+    _registreArgument->vider();
     consommer(tokens,index,TOKEN_CALL,"Erreur: ce n'est pas le token call, la fonction est invalid! 'call'");
     Token nomFonction = consommer(tokens,index,TOKEN_IDENTIFIANT,"Erreur: l'identifiant est invalid");
-    std::shared_ptr<IInstruction> parent = make_shared<NoeudAppelFonction>(nomFonction,_registreFonction, _backend);
+    std::shared_ptr<IInstruction> parent = make_shared<NoeudAppelFonction>(nomFonction,_registreFonction, _backend, _registreArgument);
     consommer(tokens,index,TOKEN_PAREN_OUVERTE, "Erreur: le token est invalide!'('");
     consommerEnfantCorps(tokens,index,parent,constructeurArbreInstruction,TOKEN_PAREN_FERMEE);
     consommer(tokens,index,TOKEN_PAREN_FERMEE, "Erreur: le token est invalide!')'");

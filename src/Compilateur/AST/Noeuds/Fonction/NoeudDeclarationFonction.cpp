@@ -35,9 +35,9 @@ llvm::Value* NoeudDeclarationFonction::genCode()
 
     _registreFonction->enregistrer(_nom, function);
 
-     _returnContextCompilation->piler(_typeRetourToken);
-     _registreVariable->piler();
-    
+    _returnContextCompilation->piler(_typeRetourToken);
+    _registreVariable->piler();
+
     executerEnfants();
 
     _registreVariable->depiler();

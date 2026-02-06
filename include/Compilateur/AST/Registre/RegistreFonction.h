@@ -16,7 +16,7 @@ public:
         RegistreGeneric::enregistrer(nom,fonction);
     }
 
-    llvm::Function* obtenir(const std::string& nom){
+    llvm::Function* recuperer(const std::string& nom){
         return  RegistreGeneric::recuperer(nom);
     }
 
