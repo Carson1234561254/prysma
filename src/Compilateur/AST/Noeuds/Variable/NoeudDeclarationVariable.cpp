@@ -1,4 +1,4 @@
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclaration.h"
+#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/Lexer/TokenType.h"
@@ -8,16 +8,16 @@
 #include <memory>
 #include <utility>
 
-NoeudDeclaration::NoeudDeclaration(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreType> registreType, TokenType token)
+NoeudDeclarationVariable::NoeudDeclarationVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreType> registreType, TokenType token)
     : _backend(std::move(backend)), _registreVariable(std::move(registreVariable)), _nom(nom), _arraySize(nullptr), _expression(std::move(expression)), _registreType(std::move(registreType)), _token(token)
 {
 }
 
-NoeudDeclaration::~NoeudDeclaration()
+NoeudDeclarationVariable::~NoeudDeclarationVariable()
 {
 }
 
-llvm::Value* NoeudDeclaration::genCode()
+llvm::Value* NoeudDeclarationVariable::genCode()
 {
     if (_registreVariable == nullptr) {
         throw std::runtime_error("Erreur : registre de variables non initialisé");
@@ -73,12 +73,12 @@ llvm::Value* NoeudDeclaration::genCode()
     return allocaInst;
 }
 
-llvm::AllocaInst* NoeudDeclaration::allocation()
+llvm::AllocaInst* NoeudDeclarationVariable::allocation()
 {
     return _backend->getBuilder().CreateAlloca(_registreType->recuperer(_token), _arraySize, _nom);
 }
 
-llvm::AllocaInst* NoeudDeclaration::initialisation(llvm::AllocaInst* allocaInst, llvm::Value* valeur)
+llvm::AllocaInst* NoeudDeclarationVariable::initialisation(llvm::AllocaInst* allocaInst, llvm::Value* valeur)
 {
     if (valeur != nullptr && allocaInst != nullptr)
     {

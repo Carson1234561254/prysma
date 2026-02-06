@@ -1,4 +1,4 @@
-#include "Compilateur/AST/Noeuds/Variable/NoeudAffectation.h"
+#include "Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/LLVM/LLVMBackend.h"
 
@@ -8,16 +8,16 @@
 #include <stdexcept>
 #include <utility>
 
-NoeudAffectation::NoeudAffectation(std::shared_ptr<LLVMBackend> backend, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreVariable> registreVariable,Token token)
+NoeudAffectationVariable::NoeudAffectationVariable(std::shared_ptr<LLVMBackend> backend, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreVariable> registreVariable,Token token)
     : _backend(std::move(backend)), _nom(nom),  _expression(std::move(expression)), _registreVariable(std::move(registreVariable)), _token(std::move(token))
 {
 }
 
-NoeudAffectation::~NoeudAffectation()
+NoeudAffectationVariable::~NoeudAffectationVariable()
 {
 }
 
-llvm::AllocaInst* NoeudAffectation::recupererVariable()
+llvm::AllocaInst* NoeudAffectationVariable::recupererVariable()
 {
 // Récupérer la variable existante du registre
     llvm::AllocaInst* variableExistante = nullptr;
@@ -33,7 +33,7 @@ llvm::AllocaInst* NoeudAffectation::recupererVariable()
     return variableExistante;
 }
 
-llvm::Value* NoeudAffectation::genCode()
+llvm::Value* NoeudAffectationVariable::genCode()
 {
 
     // Évaluer l'expression et assigner immédiatement
@@ -46,7 +46,7 @@ llvm::Value* NoeudAffectation::genCode()
     return nullptr;
 }
 
-void NoeudAffectation::assignation(llvm::AllocaInst* allocaInst, llvm::Value* valeur)
+void NoeudAffectationVariable::assignation(llvm::AllocaInst* allocaInst, llvm::Value* valeur)
 {
     if (valeur != nullptr && allocaInst != nullptr)
     {

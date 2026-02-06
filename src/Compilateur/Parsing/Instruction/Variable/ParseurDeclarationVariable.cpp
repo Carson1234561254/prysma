@@ -1,5 +1,5 @@
-#include "Compilateur/Parsing/Instruction/Variable/ParseurDeclaration.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclaration.h"
+#include "Compilateur/Parsing/Instruction/Variable/ParseurDeclarationVariable.h"
+#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Parsing/Equation/ParseurEquation.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
@@ -7,16 +7,16 @@
 #include <memory>
 #include <iostream> 
 
-ParseurDeclaration::ParseurDeclaration(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::shared_ptr<RegistreType> registreType)
+ParseurDeclarationVariable::ParseurDeclarationVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::shared_ptr<RegistreType> registreType)
     : _backend(std::move(backend)), _registreVariable(std::move(registreVariable)), _registreType(std::move(registreType))
 {
 }
 
-ParseurDeclaration::~ParseurDeclaration()
+ParseurDeclarationVariable::~ParseurDeclarationVariable()
 {
 }
 
-std::shared_ptr<INoeud> ParseurDeclaration::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction)
+std::shared_ptr<INoeud> ParseurDeclarationVariable::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction)
 {
     consommer(tokens,index,TOKEN_DEC,"Erreur : type attendu 'dec");
     
@@ -35,7 +35,7 @@ std::shared_ptr<INoeud> ParseurDeclaration::parser(std::vector<Token>& tokens, i
     ParseurEquation parseurEquation(_backend, _registreVariable);
     std::shared_ptr<INoeud> expression = parseurEquation.parser(tokens, index, constructeurArbreInstruction);
 
-    return std::make_shared<NoeudDeclaration>(
+    return std::make_shared<NoeudDeclarationVariable>(
         _backend,
         _registreVariable,
         nomVariable,

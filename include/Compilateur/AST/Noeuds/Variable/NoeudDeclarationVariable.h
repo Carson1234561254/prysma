@@ -10,7 +10,7 @@
 
 class RegistreVariable;
 
-class NoeudDeclaration : public INoeud
+class NoeudDeclarationVariable : public INoeud
 {
 private:
     std::shared_ptr<LLVMBackend> _backend;
@@ -25,8 +25,8 @@ private:
     llvm::AllocaInst* initialisation(llvm::AllocaInst* allocaInst, llvm::Value* valeur);
 
 public:
-    NoeudDeclaration(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreType> registreType, TokenType token);
-    ~NoeudDeclaration();
+    NoeudDeclarationVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreType> registreType, TokenType token);
+    ~NoeudDeclarationVariable();
 
     llvm::Value* genCode() override;
 };

@@ -6,8 +6,8 @@
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurAffectation.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurDeclaration.h"
+#include "Compilateur/Parsing/Instruction/Variable/ParseurAffectationVariable.h"
+#include "Compilateur/Parsing/Instruction/Variable/ParseurDeclarationVariable.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
@@ -46,10 +46,19 @@ int main(int argc, char* argv[])
         std::shared_ptr<RegistreArgument> registreArgument = std::make_shared<RegistreArgument>();
 
         // Enregistrer des fonctions externe
+
+        // PrintInt
         IntegerType* intTy = llvm::Type::getInt32Ty(backend->getContext());
         std::vector<llvm::Type*> printIntArgs = {intTy};
         backend->declarerExterne("printInt", intTy, printIntArgs);
         registreFonction->ajouter("printInt", backend->getModule().getFunction("printInt"));
+
+        //PrintFloat 
+
+        IntegerType* floatTy = llvm::Type::getInt32Ty(backend->getContext());
+        std::vector<llvm::Type*> printFloatArgs = {floatTy};
+        backend->declarerExterne("printFloat", floatTy, printFloatArgs);
+        registreFonction->ajouter("printFloat", backend->getModule().getFunction("printFloat"));
         
         // Enregistrer les types de base
         registreType->enregistrer(TOKEN_TYPE_INT, llvm::Type::getInt32Ty(backend->getContext()));
@@ -59,8 +68,8 @@ int main(int argc, char* argv[])
         
         registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParserScope>());
         registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(backend, registreFonction, registreVariable, registreType, TOKEN_FONCTION, returnContextCompilation));
-        registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectation>(backend, registreVariable,registreType));
-        registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclaration>(backend, registreVariable,registreType));
+        registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>(backend, registreVariable,registreType));
+        registreInstruction->enregistrer(TOKEN_DEC,std::make_shared<ParseurDeclarationVariable>(backend, registreVariable,registreType));
         registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>(registreFonction, backend, registreArgument));
         registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>(backend, registreVariable, returnContextCompilation, registreType));
         registreInstruction->enregistrer(TOKEN_ARG,std::make_shared<ParserArgFonction>(registreType));

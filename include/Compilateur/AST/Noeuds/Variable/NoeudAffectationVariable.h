@@ -7,7 +7,7 @@
 #include <llvm/IR/Instructions.h>
 #include <memory>
 
-class NoeudAffectation : public INoeud
+class NoeudAffectationVariable : public INoeud
 {
 private:
     std::shared_ptr<LLVMBackend> _backend;
@@ -20,8 +20,8 @@ private:
     llvm::AllocaInst* recupererVariable();
 
 public:
-    NoeudAffectation(std::shared_ptr<LLVMBackend> backend, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreVariable> registreVariable,Token token);
-    ~NoeudAffectation();
+    NoeudAffectationVariable(std::shared_ptr<LLVMBackend> backend, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreVariable> registreVariable,Token token);
+    ~NoeudAffectationVariable();
 
     llvm::Value* genCode() override;
 };
