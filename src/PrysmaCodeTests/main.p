@@ -2,7 +2,7 @@ scope
 {
     fn int main()
     {
-        dec float a = 10; 
+        dec int a = 1230; 
         call printInt(pass a);
         
         return 1;
