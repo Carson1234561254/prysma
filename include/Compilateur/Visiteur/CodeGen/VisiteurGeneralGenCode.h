@@ -1,6 +1,7 @@
 #ifndef FDDB5968_6DEF_49B0_AD11_8791D523278A
 #define FDDB5968_6DEF_49B0_AD11_8791D523278A
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
+#include "Compilateur/AST/Noeuds/Instruction.h"
 #include <llvm-18/llvm/IR/Value.h>
 
 // Importation des noeuds
@@ -35,7 +36,8 @@ class GenCodeScope;
 class RegistreVariable;
 class LLVMBackend;
 
-class VisiteurGeneralGenCode : public IVisiteur
+
+class VisiteurGeneralGenCode : public IVisiteur, public Instruction
 {
 private:
     llvm::Value* _valeurTemporaire = nullptr;
