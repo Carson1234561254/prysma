@@ -34,10 +34,7 @@ public:
         std::shared_ptr<INoeud> gauche, 
         std::shared_ptr<INoeud> droite
     ) override;
-    
-    /**
-     * @brief Résout l'opération
-     * @return Résultat de l'application de l'opérateur
-     */
+
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };

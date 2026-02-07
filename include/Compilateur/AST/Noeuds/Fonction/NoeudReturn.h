@@ -20,6 +20,7 @@ public:
     NoeudReturn(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<INoeud> valeurRetour, std::shared_ptr<ReturnContextCompilation> returnContextCompilation, std::shared_ptr<RegistreType> registreType);
     ~NoeudReturn() = default;
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

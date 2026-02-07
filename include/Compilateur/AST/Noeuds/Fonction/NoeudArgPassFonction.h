@@ -15,6 +15,7 @@ public:
     NoeudArgPassFonction(std::shared_ptr<RegistreVariable> registreVariable, const Token& token, std::shared_ptr<RegistreArgument> registreArgument);
     ~NoeudArgPassFonction();
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

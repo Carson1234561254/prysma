@@ -8,6 +8,11 @@ NoeudScope::~NoeudScope()
 {
 }
 
+void NoeudScope::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* NoeudScope::genCode()
 {
     llvm::Value* resultat = nullptr;

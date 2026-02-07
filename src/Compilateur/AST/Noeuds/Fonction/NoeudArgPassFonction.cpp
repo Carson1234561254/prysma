@@ -13,6 +13,11 @@ NoeudArgPassFonction::NoeudArgPassFonction(std::shared_ptr<RegistreVariable> reg
 NoeudArgPassFonction::~NoeudArgPassFonction()
 {}
 
+void NoeudArgPassFonction::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
   
 llvm::Value* NoeudArgPassFonction::genCode() 
 {

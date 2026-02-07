@@ -18,6 +18,7 @@ private:
 public:
     NoeudAppelFonction(Token nomFonction, std::shared_ptr<RegistreFonction> registreFonction, std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreArgument> registreArgument);
     ~NoeudAppelFonction();
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

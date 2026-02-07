@@ -8,6 +8,11 @@ NoeudReturn::NoeudReturn(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<I
 {
 }
 
+void NoeudReturn::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* NoeudReturn::genCode()
 {
     llvm::Value* valeur = _valeurRetour->genCode();

@@ -22,6 +22,7 @@ public:
     
     ~NoeudVariable();
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

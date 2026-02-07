@@ -1,17 +1,14 @@
 #pragma once
 
-/**
- * @interface INoeud
- * @brief Interface pour toute expression mathématique pouvant être résolue
- */
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include <llvm/IR/Value.h>
+
 class INoeud {
 public:
     virtual ~INoeud() = default;
+
+    virtual void accept(IVisiteur* visiteur) = 0;
     
-    /**
-     * @brief C'est un noeud qui se charge de la génération du code LLVM 
-     * @return La valeur LLVM 
-     */
-    virtual llvm::Value* genCode() = 0;
+    //Retirer après la transition
+    virtual llvm::Value* genCode() {return nullptr;}
 };

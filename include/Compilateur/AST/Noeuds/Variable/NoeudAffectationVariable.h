@@ -23,6 +23,7 @@ public:
     NoeudAffectationVariable(std::shared_ptr<LLVMBackend> backend, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreVariable> registreVariable,Token token);
     ~NoeudAffectationVariable();
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

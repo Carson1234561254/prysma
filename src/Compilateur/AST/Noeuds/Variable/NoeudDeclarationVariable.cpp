@@ -17,6 +17,11 @@ NoeudDeclarationVariable::~NoeudDeclarationVariable()
 {
 }
 
+void NoeudDeclarationVariable::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* NoeudDeclarationVariable::genCode()
 {
     if (_registreVariable == nullptr) {

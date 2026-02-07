@@ -13,6 +13,11 @@ NoeudVariable::~NoeudVariable()
 {
 }
 
+void NoeudVariable::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* NoeudVariable::genCode()
 {
     if (_registre == nullptr) {

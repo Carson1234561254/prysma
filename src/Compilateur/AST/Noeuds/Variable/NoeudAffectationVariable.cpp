@@ -17,6 +17,11 @@ NoeudAffectationVariable::~NoeudAffectationVariable()
 {
 }
 
+void NoeudAffectationVariable::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::AllocaInst* NoeudAffectationVariable::recupererVariable()
 {
 // Récupérer la variable existante du registre

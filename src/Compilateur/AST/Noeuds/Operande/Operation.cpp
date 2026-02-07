@@ -24,6 +24,11 @@ std::shared_ptr<IExpression> Operation::ajouterExpression(
     return nullptr;
 }
 
+void Operation::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* Operation::genCode() {
     if (!_gauche || !_droite) {
         throw std::runtime_error("Erreur: opérande gauche ou droite manquant dans Operation::genCode()");

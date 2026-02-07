@@ -10,7 +10,7 @@ public:
 
     NoeudScope();
     ~NoeudScope();
-
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

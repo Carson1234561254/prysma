@@ -28,6 +28,7 @@ public:
     
     ~NoeudDeclarationFonction() = default;
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

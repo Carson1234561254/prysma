@@ -28,6 +28,7 @@ public:
     NoeudDeclarationVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, const std::string& nom, std::shared_ptr<INoeud> expression, std::shared_ptr<RegistreType> registreType, TokenType token);
     ~NoeudDeclarationVariable();
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

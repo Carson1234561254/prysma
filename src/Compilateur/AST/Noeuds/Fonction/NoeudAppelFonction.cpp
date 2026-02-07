@@ -15,6 +15,11 @@ NoeudAppelFonction::NoeudAppelFonction(Token nomFonction, std::shared_ptr<Regist
 NoeudAppelFonction::~NoeudAppelFonction()
 {}
 
+void NoeudAppelFonction::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* NoeudAppelFonction::genCode()
 {
     _registreArgument->vider();

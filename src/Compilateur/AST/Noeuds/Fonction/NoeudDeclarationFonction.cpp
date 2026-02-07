@@ -14,6 +14,11 @@ NoeudDeclarationFonction::NoeudDeclarationFonction(std::shared_ptr<LLVMBackend> 
 {
 }
 
+void NoeudDeclarationFonction::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 llvm::Value* NoeudDeclarationFonction::genCode()
 {
     if (_backend == nullptr) {

@@ -15,6 +15,7 @@ public:
     NoeudArgFonction(std::shared_ptr<RegistreType> registreType, TokenType nom, TokenType type);
     ~NoeudArgFonction();
 
+    void accept(IVisiteur* visiteur) override;
     llvm::Value* genCode() override;
 };
 

@@ -4,6 +4,11 @@ Instruction::Instruction()
 {
 }
 
+void Instruction::accept(IVisiteur* visiteur)
+{
+    visiteur->visiter(this);
+}
+
 void Instruction::ajouterInstruction(std::shared_ptr<INoeud> enfant)
 {
     enfants.push_back(enfant);
