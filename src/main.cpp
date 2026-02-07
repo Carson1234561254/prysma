@@ -18,6 +18,11 @@
 #include <memory>
 #include "Compilateur/Parsing/Instruction/ParserScope.h"
 #include "Compilateur/Parsing/Instruction/Fonction/ParsingDeclarationFonction.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParsingReturn.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.h"
+#include "Compilateur/Parsing/Instruction/Fonction/ParserArgPassFonction.h"
+#include "Compilateur/Parsing/Instruction/Variable/ParseurAffectationVariable.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 
 int main(int argc, char* argv[])
@@ -43,7 +48,7 @@ int main(int argc, char* argv[])
             registreArgument,
             valeurTemporaire
         );
-
+      
         FichierLecture fichierLecture("../src/PrysmaCodeTests/main.p");
         std::string document = fichierLecture.entrer();
   
@@ -72,13 +77,13 @@ int main(int argc, char* argv[])
         
         // NoeudInstruction du langage prysma
         context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParserScope>());
-        //context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(TOKEN_FONCTION));
-        //context->registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>());
+        context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(TOKEN_FONCTION));
+        context->registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>(context->backend, context->registreVariable, context->registreType));
         context->registreInstruction->enregistrer(TOKEN_DEC, std::make_shared<ParseurDeclarationVariable>());
-        //context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>());
-        //context->registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>());
-        //context->registreInstruction->enregistrer(TOKEN_ARG, std::make_shared<ParserArgFonction>());
-        //context->registreInstruction->enregistrer(TOKEN_PASS, std::make_shared<ParserArgPassFonction>());
+        context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>());
+        context->registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>());
+        context->registreInstruction->enregistrer(TOKEN_ARG, std::make_shared<ParserArgFonction>());
+        context->registreInstruction->enregistrer(TOKEN_PASS, std::make_shared<ParserArgPassFonction>(context->registreVariable, context->registreArgument));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(context->registreInstruction);
         std::shared_ptr<INoeud> arbre = constructeurArbreInstruction.construire(tokens);
@@ -90,8 +95,8 @@ int main(int argc, char* argv[])
         serializer.SauvegarderCodeLLVM("output.ll");
        
         ConstructeurSysteme constructeur("../src/Lib", "Lib", "output.ll", "programme");
-        constructeur.compilerLib();
-        constructeur.lierLibExecutable();
+        //constructeur.compilerLib();
+        //constructeur.lierLibExecutable();
     }
     catch (const std::exception& e) {
         std::cerr << "Erreur: " << e.what() << std::endl;

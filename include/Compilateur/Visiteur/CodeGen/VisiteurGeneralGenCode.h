@@ -3,6 +3,7 @@
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include <llvm-18/llvm/IR/Value.h>
+#include "Compilateur/AST/Registre/ContextGenCode.h"
 #include <memory>
 
 // Importation des classes 
@@ -23,7 +24,6 @@ class NoeudOperation;
 //Outils 
 class RegistreVariable;
 class LLVMBackend;
-struct ContextGenCode;
 
 class VisiteurGeneralGenCode : public IVisiteur
 {

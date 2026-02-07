@@ -1,4 +1,6 @@
 scope 
 {
-   
+   fn int main()
+   {
+   }
 }
