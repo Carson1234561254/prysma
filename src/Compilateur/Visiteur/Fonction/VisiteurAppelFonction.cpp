@@ -1,16 +1,18 @@
+#include "Compilateur/AST/GestionnaireChargementVariable.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
 
 
 void VisiteurGeneralGenCode::visiter(NoeudAppelFonction* noeudAppelFonction)
 {
-    /*
-     _registreArgument->vider();
-    executerEnfants();
-    llvm::Function* fonction = _registreFonction->recuperer(_nomFonction.value);
-    std::vector<llvm::Value*> args = *_registreArgument->recuperer();
+    
+     _contextGenCode->registreArgument->vider();
+    parcourirEnfant(noeudAppelFonction);
+    llvm::Function* fonction = _contextGenCode->registreFonction->recuperer(noeudAppelFonction->_nomFonction.value);
+    std::vector<llvm::Value*> args = *_contextGenCode->registreArgument->recuperer();
     std::vector<llvm::Value*> argsConvertieLecture; 
 
-    GestionnaireChargementVariable gestionnaireChargementVariable(_backend);
+    GestionnaireChargementVariable gestionnaireChargementVariable(_contextGenCode->backend);
 
     for(size_t i = 0; i < args.size(); i++)
     {
@@ -19,6 +21,6 @@ void VisiteurGeneralGenCode::visiter(NoeudAppelFonction* noeudAppelFonction)
         argsConvertieLecture.push_back(gestionnaireChargementVariable.chargerVariable(args[i], nomConvertieString));
     }
 
-    return _backend->getBuilder().CreateCall(fonction, argsConvertieLecture, "resultat_appel");
-    */
+    _contextGenCode->valeurTemporaire = _contextGenCode->backend->getBuilder().CreateCall(fonction, argsConvertieLecture, "resultat_appel");
+    
 }

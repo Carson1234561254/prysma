@@ -1,6 +1,7 @@
 scope 
 {
-   fn int main()
+   fn float main()
    {
+        call printInt();
    }
 }

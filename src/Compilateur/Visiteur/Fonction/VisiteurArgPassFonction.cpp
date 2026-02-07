@@ -2,10 +2,8 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 
 void VisiteurGeneralGenCode::visiter(NoeudArgPassFonction* noeudArgPassFonction)
-{
-    /*
-     llvm::Value* valeurVariable =  _registreVariable->recupererVariables(_tokenVariable);
-    _registreArgument->ajouter(valeurVariable);
-    return valeurVariable;
-    */
+{ 
+    llvm::Value* valeurVariable =  _contextGenCode->registreVariable->recupererVariables(noeudArgPassFonction->_tokenVariable);
+    _contextGenCode->registreArgument->ajouter(valeurVariable);
+    _contextGenCode->valeurTemporaire = valeurVariable;   
 }
