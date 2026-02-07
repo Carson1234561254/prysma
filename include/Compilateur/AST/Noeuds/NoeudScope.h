@@ -3,9 +3,11 @@
 
 #include "Compilateur/AST/Noeuds/Instruction.h"
 #include <llvm/IR/Value.h>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudScope : public Instruction
 {
+    LISTE_DES_AMIS_VISITEURS
 public: 
 
     NoeudScope();

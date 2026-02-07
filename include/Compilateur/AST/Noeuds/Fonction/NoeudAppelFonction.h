@@ -3,9 +3,11 @@
 #include "Compilateur/AST/Noeuds/Instruction.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include <memory>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudAppelFonction : public Instruction
 {
+    LISTE_DES_AMIS_VISITEURS
 private: 
     Token _nomFonction;
 

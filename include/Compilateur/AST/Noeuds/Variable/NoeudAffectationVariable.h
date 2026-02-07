@@ -5,9 +5,11 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include <llvm/IR/Instructions.h>
 #include <memory>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudAffectationVariable : public INoeud
 {
+    LISTE_DES_AMIS_VISITEURS
 private:
     std::string _nom;
     std::shared_ptr<INoeud> _expression;

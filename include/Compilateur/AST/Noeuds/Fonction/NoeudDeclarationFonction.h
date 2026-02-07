@@ -4,9 +4,11 @@
 #include "Compilateur/AST/Noeuds/Instruction.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <string>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudDeclarationFonction : public Instruction
 {
+    LISTE_DES_AMIS_VISITEURS
 private:
     std::string _nom;
     TokenType _typeRetourToken;

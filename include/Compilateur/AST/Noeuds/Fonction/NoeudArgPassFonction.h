@@ -4,8 +4,11 @@
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/AST/Registre/RegistreArgument.h"
 #include <memory>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
+
 class NoeudArgPassFonction : public INoeud
 {
+    LISTE_DES_AMIS_VISITEURS
 private: 
     std::shared_ptr<RegistreVariable> _registreVariable;
     Token _tokenVariable; 

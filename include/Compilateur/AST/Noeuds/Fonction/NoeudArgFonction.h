@@ -3,9 +3,11 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/RegistreType.h"
 #include <memory>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudArgFonction: public INoeud
 {
+    LISTE_DES_AMIS_VISITEURS
 private:
      std::shared_ptr<RegistreType> _registreType; 
      TokenType _nom;

@@ -5,9 +5,11 @@
 #include <memory>
 #include <string>
 #include <llvm/IR/Value.h>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudVariable : public INoeud
 {
+    LISTE_DES_AMIS_VISITEURS
 private:
     std::string _nomVariable;
 

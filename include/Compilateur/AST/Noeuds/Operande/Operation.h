@@ -4,6 +4,7 @@
 #include <functional>
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 /**
  * @class Operation
@@ -11,6 +12,7 @@
  * Implémente le pattern Composite
  */
 class Operation : public IExpression {
+    LISTE_DES_AMIS_VISITEURS
 private:
     std::shared_ptr<INoeud> _droite;
     std::shared_ptr<INoeud> _gauche;

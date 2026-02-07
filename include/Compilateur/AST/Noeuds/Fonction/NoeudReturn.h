@@ -4,9 +4,11 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
+#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudReturn : public INoeud
 {
+    LISTE_DES_AMIS_VISITEURS
 private:
     std::shared_ptr<INoeud> _valeurRetour;
 
