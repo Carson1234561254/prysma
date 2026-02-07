@@ -16,7 +16,6 @@ public:
     ~NoeudArgPassFonction();
 
     void accept(IVisiteur* visiteur) override;
-    llvm::Value* genCode() override;
 };
 
 #endif /* FD83BD8A_F363_49DA_B571_00377736E3B4 */

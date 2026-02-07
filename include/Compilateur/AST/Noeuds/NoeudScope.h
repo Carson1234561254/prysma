@@ -11,7 +11,6 @@ public:
     NoeudScope();
     ~NoeudScope();
     void accept(IVisiteur* visiteur) override;
-    llvm::Value* genCode() override;
 };
 
 #endif /* NOEUD_MAIN_H */

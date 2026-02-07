@@ -9,8 +9,7 @@
 #include <vector>
 #include <llvm-18/llvm/IR/Type.h>
 
-ParsingReturn::ParsingReturn(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::shared_ptr<ReturnContextCompilation> returnContextCompilation, std::shared_ptr<RegistreType> registreType)
-    : _backend(std::move(backend)), _registreVariable(std::move(registreVariable)), _returnContextCompilation(std::move(returnContextCompilation)), _registreType(std::move(registreType))
+ParsingReturn::ParsingReturn()
 {
 }
 
@@ -23,21 +22,17 @@ std::shared_ptr<INoeud> ParsingReturn::parser(std::vector<Token>& tokens, int& i
     if (constructeurArbreInstruction == nullptr) {
         throw std::runtime_error("Erreur : ConstructeurArbreInstruction est null dans ParsingReturn");
     }
-
-    if (_registreVariable == nullptr) {
-        throw std::runtime_error("ERREUR: ParsingReturn::parser() - Le registre de variables est NULL ! ");
-    }
     
     consommer(tokens, index, TOKEN_RETOUR, "Erreur: ce n'est pas le bon token ! 'return'");
 
     std::shared_ptr<INoeud> valeurRetour = nullptr;
 
     if (index < (int)tokens.size() && tokens[index].type != TOKEN_POINT_VIRGULE) {
-        ParseurEquation parseurEquation(_backend, _registreVariable);  
+        ParseurEquation parseurEquation;  
         valeurRetour = parseurEquation.parser(tokens, index, constructeurArbreInstruction);
     } else {
         consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur: point-virgule attendu après return");
     }
 
-    return std::make_shared<NoeudReturn>(_backend, valeurRetour, _returnContextCompilation, _registreType);
+    return std::make_shared<NoeudReturn>(valeurRetour);
 }

@@ -16,7 +16,6 @@ public:
     ~NoeudArgFonction();
 
     void accept(IVisiteur* visiteur) override;
-    llvm::Value* genCode() override;
 };
 
 #endif /* B9F8948B_23A4_4812_A098_C71C4D92373B */

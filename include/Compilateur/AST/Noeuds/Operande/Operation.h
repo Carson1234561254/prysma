@@ -36,5 +36,4 @@ public:
     ) override;
 
     void accept(IVisiteur* visiteur) override;
-    llvm::Value* genCode() override;
 };

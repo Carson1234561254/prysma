@@ -11,5 +11,4 @@ public:
     explicit Valeur(llvm::Value* valeur);
 
     void accept(IVisiteur* visiteur) override;
-    llvm::Value* genCode() override;
 };

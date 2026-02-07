@@ -16,7 +16,3 @@ void NoeudArgFonction::accept(IVisiteur* visiteur)
     visiteur->visiter(this);
 }
 
-llvm::Value* NoeudArgFonction::genCode()
-{
-    return nullptr;
-}

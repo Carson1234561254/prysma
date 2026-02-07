@@ -2,13 +2,9 @@
 #define DA3AD58B_D7B7_44D3_AC56_E1DDCD78F54F
 
 #include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
-#include "Compilateur/AST/Registre/RegistreSymbole.h"
-#include <memory>
 
 class ServiceParenthese : public IGestionnaireParenthese {
-private:
-    std::shared_ptr<RegistreSymbole> _registreSymbole;
-    
+private:  
     /**
      * @brief Vérifie si une paire de parenthèses est englobante
      * @param equation L'équation à vérifier
@@ -29,7 +25,7 @@ public:
      * @brief Constructeur
      * @param registreSymbole Registre des opérateurs
      */
-    explicit ServiceParenthese(std::shared_ptr<RegistreSymbole> registreSymbole);
+    explicit ServiceParenthese();
     
     /**
      * @brief Enlève les parenthèses qui englobent toute l'expression
