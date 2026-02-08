@@ -42,7 +42,6 @@ public:
     void visiter(NoeudArgFonction* noeudArgFonction) override;
     void visiter(NoeudDeclarationFonction* noeudDeclarationFonction) override;
     void visiter(NoeudOperation* noeudOperation) override;
-    void visiter(Valeur* valeur) override;
     void visiter(NoeudLitteral* noeudLitteral) override;
     void visiter(NoeudInstruction* instruction) override;
     void visiter(NoeudUnRefVariable* noeudUnRefVariable) override;

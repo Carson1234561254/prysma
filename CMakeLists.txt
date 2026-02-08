@@ -40,7 +40,6 @@ set(SOURCES
     src/main.cpp
     src/Lib/Print.cpp
     src/Compilateur/AST/ConstructeurArbreEquation.cpp
-    src/Compilateur/AST/Noeuds/Operande/Valeur.cpp
     src/Compilateur/AST/Noeuds/Operande/NoeudLitteral.cpp
     src/Compilateur/AST/Noeuds/Equation/NoeudOperation.cpp
     src/Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.cpp
@@ -86,7 +85,6 @@ set(SOURCES
     src/Compilateur/Visiteur/Fonction/VisiteurDeclarationFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurReturn.cpp
     src/Compilateur/Visiteur/Operande/VisiteurOperation.cpp
-    src/Compilateur/Visiteur/Operande/VisiteurValeur.cpp
     src/Compilateur/Visiteur/Variable/VisiteurAffectationVariable.cpp
     src/Compilateur/Visiteur/Variable/VisiteurDeclarationVariable.cpp
     src/Compilateur/Visiteur/Variable/VisiteurUnrefVariable.cpp
