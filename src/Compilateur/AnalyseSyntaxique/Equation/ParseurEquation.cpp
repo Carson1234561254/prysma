@@ -6,7 +6,7 @@
 
 ParseurEquation::ParseurEquation()
 {
-    _floatEquationBuilder = std::make_shared<FloatEquationBuilder>();
+    _floatEquationBuilder = std::make_shared<ConstructeurEquationFlottante>();
 }
 
 ParseurEquation::~ParseurEquation()

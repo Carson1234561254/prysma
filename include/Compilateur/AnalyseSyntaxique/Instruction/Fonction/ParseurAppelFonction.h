@@ -1,16 +1,16 @@
 #ifndef D6C839EF_D128_402F_BE44_4C7AB3B74703
 #define D6C839EF_D128_402F_BE44_4C7AB3B74703
-#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
 #include <memory>
 
-class ParserAppelFonction : public IParser, ParseurBase
+class ParseurAppelFonction : public IParseur, ParseurBase
 {
 
 public:
 
-    ParserAppelFonction();
-    ~ParserAppelFonction();
+    ParseurAppelFonction();
+    ~ParseurAppelFonction();
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) override;
 
 };

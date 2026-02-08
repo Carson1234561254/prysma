@@ -3,14 +3,14 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
 #include <memory>
 
 class RegistreVariable;
 class RegistreType;
 
-class ParseurDeclarationVariable : public IParser, public ParseurBase
+class ParseurDeclarationVariable : public IParseur, public ParseurBase
 {
 
 public:

@@ -1,9 +1,9 @@
 #ifndef BA7CC6F6_C206_4FBD_9DFD_D7DD1803CDAD
 #define BA7CC6F6_C206_4FBD_9DFD_D7DD1803CDAD
-#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
 
-class ParseurUnRefVariable : public IParser, ParseurBase
+class ParseurUnRefVariable : public IParseur, ParseurBase
 {
 public: 
     ParseurUnRefVariable();

@@ -52,7 +52,7 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Equation/GestionnaireOperateur.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.cpp
     src/Compilateur/Lexer/Lexer.cpp
-    src/Compilateur/Builder/Equation/FloatEquationBuilder.cpp
+    src/Compilateur/Builder/Equation/ConstructeurEquationFlottante.cpp
     src/Compilateur/TraitementFichier/FichierLecture.cpp
     src/Compilateur/TraitementFichier/FichierEcriture.cpp
     src/Compilateur/AST/Registre/RegistreVariable.cpp
@@ -63,17 +63,17 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ParseurEquation.cpp
-    src/Compilateur/AnalyseSyntaxique/ParserBase.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserDeclarationFonction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingReturn.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserAppelFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/ParseurBase.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.cpp
     src/Compilateur/AST/Noeuds/NoeudScope.cpp
     src/Compilateur/AST/Noeuds/NoeudInstruction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
-    src/Compilateur/AST/Noeuds/Fonction/NoeudReturn.cpp
+    src/Compilateur/AST/Noeuds/Fonction/NoeudRetour.cpp
     src/Compilateur/AST/Registre/ReturnContextCompilation.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserArgFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
     src/Compilateur/AST/Registre/RegistreArgument.cpp
     src/Compilateur/TraitementFichier/ConstructeurSysteme.cpp

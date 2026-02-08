@@ -1,23 +1,23 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudReturn.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingReturn.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.h"
 #include "Compilateur/AnalyseSyntaxique/Equation/ParseurEquation.h"
 #include <memory>
 #include <utility>
 #include <vector>
 #include <llvm-18/llvm/IR/Type.h>
 
-ParsingReturn::ParsingReturn()
+ParseurRetour::ParseurRetour()
 {
 }
 
-ParsingReturn::~ParsingReturn()
+ParseurRetour::~ParseurRetour()
 {
 }
 
-std::shared_ptr<INoeud> ParsingReturn::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction)
+std::shared_ptr<INoeud> ParseurRetour::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction)
 {
     if (constructeurArbreInstruction == nullptr) {
         throw std::runtime_error("Erreur : ConstructeurArbreInstruction est null dans ParsingReturn");
@@ -34,5 +34,5 @@ std::shared_ptr<INoeud> ParsingReturn::parser(std::vector<Token>& tokens, int& i
         consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur: point-virgule attendu après return");
     }
 
-    return std::make_shared<NoeudReturn>(valeurRetour);
+    return std::make_shared<NoeudRetour>(valeurRetour);
 }

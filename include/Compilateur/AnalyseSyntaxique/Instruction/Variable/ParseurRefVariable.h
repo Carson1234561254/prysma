@@ -1,10 +1,10 @@
 #ifndef BC83F571_6C52_4181_AF89_0CFE23C9EEA1
 #define BC83F571_6C52_4181_AF89_0CFE23C9EEA1
 
-#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
 
-class ParseurRefVariable : public IParser, ParseurBase
+class ParseurRefVariable : public IParseur, ParseurBase
 {
 public: 
     ParseurRefVariable();

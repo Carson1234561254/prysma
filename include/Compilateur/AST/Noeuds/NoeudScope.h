@@ -1,5 +1,5 @@
-#ifndef NOEUD_MAIN_H
-#define NOEUD_MAIN_H
+#ifndef NoeudScope_
+#define NoeudScope_
 
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include <llvm/IR/Value.h>
@@ -15,4 +15,4 @@ public:
     void accept(IVisiteur* visiteur) override;
 };
 
-#endif /* NOEUD_MAIN_H */
+#endif /* NoeudScope_ */

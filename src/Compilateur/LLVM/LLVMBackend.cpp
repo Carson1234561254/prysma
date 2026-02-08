@@ -1,4 +1,4 @@
-#include "Compilateur/LLVM/LLVMBackend.h"
+#include "Compilateur/LLVM/LlvmBackend.h"
 #include "Compilateur/LLVM/LLVMSerializer.h"
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/MC/TargetRegistry.h>
@@ -9,7 +9,7 @@
 
 using namespace llvm;
 
-LLVMBackend::LLVMBackend() {
+LlvmBackend::LlvmBackend() {
 
     _context = std::make_unique<LLVMContext>();
     _module = std::make_unique<Module>("output", *_context);
@@ -36,7 +36,7 @@ LLVMBackend::LLVMBackend() {
 
 
 
-llvm::Value* LLVMBackend::creerAutoCast(llvm::Value* valeurSource, llvm::Type* typeCible)
+llvm::Value* LlvmBackend::creerAutoCast(llvm::Value* valeurSource, llvm::Type* typeCible)
 {
     if (valeurSource->getType() == typeCible) return valeurSource;
 
@@ -51,13 +51,13 @@ llvm::Value* LLVMBackend::creerAutoCast(llvm::Value* valeurSource, llvm::Type* t
 }
 
 
-void LLVMBackend::declarerExterne(const std::string& nom, llvm::Type* ret, std::vector<llvm::Type*>& args)
+void LlvmBackend::declarerExterne(const std::string& nom, llvm::Type* ret, std::vector<llvm::Type*>& args)
 {
     llvm::FunctionType* type = llvm::FunctionType::get(ret, args, false);
     llvm::Function::Create(type, llvm::Function::ExternalLinkage, nom, *_module);
 }
 
-llvm::Value* LLVMBackend::chargerValeur(llvm::Value* adresseMemoire, const std::string& nomVariable)
+llvm::Value* LlvmBackend::chargerValeur(llvm::Value* adresseMemoire, const std::string& nomVariable)
 {
     if (!adresseMemoire) return nullptr;
 

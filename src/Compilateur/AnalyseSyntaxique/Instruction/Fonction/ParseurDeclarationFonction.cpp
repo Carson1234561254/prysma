@@ -4,18 +4,18 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Lexer/TokenCategories.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingDeclarationFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.h"
 #include <memory>
 #include <vector>
 
-ParsingDeclarationFonction::ParsingDeclarationFonction()
+ParseurDeclarationFonction::ParseurDeclarationFonction()
 {}
 
-ParsingDeclarationFonction::~ParsingDeclarationFonction()
+ParseurDeclarationFonction::~ParseurDeclarationFonction()
 {
 }
 
-std::shared_ptr<INoeud> ParsingDeclarationFonction::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction)
+std::shared_ptr<INoeud> ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction)
 {
     if (constructeurArbreInstruction == nullptr) {
         throw std::runtime_error("Erreur : ConstructeurArbreInstruction est null dans ParsingDeclarationFonction");

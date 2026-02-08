@@ -1,19 +1,19 @@
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserArgFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.h"
 #include "Compilateur/Lexer/TokenCategories.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <stdexcept>
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
 
-ParserArgFonction::ParserArgFonction()
+ParseurArgFonction::ParseurArgFonction()
 {
 
 }
 
-ParserArgFonction::~ParserArgFonction()
+ParseurArgFonction::~ParseurArgFonction()
 {
 }
 
-std::shared_ptr<INoeud> ParserArgFonction::parser(std::vector<Token>& tokens, int& index,[[maybe_unused]] ConstructeurArbreInstruction* constructeurArbreInstruction) 
+std::shared_ptr<INoeud> ParseurArgFonction::parser(std::vector<Token>& tokens, int& index,[[maybe_unused]] ConstructeurArbreInstruction* constructeurArbreInstruction) 
 {
 
     consommer(tokens,index,TOKEN_ARG,"Erreur: le token n'est pas 'arg' !");

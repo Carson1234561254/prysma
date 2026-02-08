@@ -7,10 +7,10 @@
 
 class ConstructeurArbreInstruction;
 
-class IParser
+class IParseur
 {
 public: 
-    virtual ~IParser() = default;
+    virtual ~IParseur() = default;
     virtual std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) = 0;
 };
 

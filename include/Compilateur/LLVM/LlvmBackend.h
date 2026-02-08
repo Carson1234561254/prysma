@@ -9,7 +9,7 @@
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Constants.h>
 
-class LLVMBackend {
+class LlvmBackend {
 private:
     // L'ordre de déclaration est CRUCIAL ici (C++ détruit dans l'ordre inverse)
     std::unique_ptr<llvm::LLVMContext> _context;
@@ -20,10 +20,10 @@ private:
 
 public:
 
-    LLVMBackend();
+    LlvmBackend();
 
 
-    ~LLVMBackend() = default;
+    ~LlvmBackend() = default;
 
     llvm::LLVMContext& getContext() { return *_context; }
     llvm::Module& getModule() { return *_module; }

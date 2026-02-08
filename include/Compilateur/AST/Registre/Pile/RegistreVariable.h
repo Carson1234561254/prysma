@@ -11,23 +11,23 @@ namespace llvm { class AllocaInst; }
 
 class RegistreVariable 
 {
-    private: 
-       std::stack<std::map<std::string, llvm::Value* >>  _variables; 
+private: 
+    std::stack<std::map<std::string, llvm::Value* >>  _variables; 
 
-    public:
-        RegistreVariable();
-        
-        ~RegistreVariable();
-        
-        llvm::Value* recupererVariables(const Token& token);
+public:
+    RegistreVariable();
+    
+    ~RegistreVariable();
+    
+    llvm::Value* recupererVariables(const Token& token);
 
-        void enregistrer(
-            const Token& token,
-            llvm::Value* instance
-        );
-        
-        void piler();
-        void depiler();
+    void enregistrer(
+        const Token& token,
+        llvm::Value* instance
+    );
+    
+    void piler();
+    void depiler();
 };
 
 #endif /* F7F44FF6_77D4_456C_A897_1A52149FDE53 */

@@ -8,7 +8,7 @@ class NoeudVariable;
 class NoeudAppelFonction;
 class NoeudArgFonction;
 class NoeudArgPassFonction;
-class NoeudReturn;
+class NoeudRetour;
 class NoeudDeclarationFonction;
 class NoeudOperation;
 class Valeur;
@@ -24,7 +24,7 @@ public:
     virtual void visiter(NoeudAffectationVariable* noeudAffectationVariable) = 0;
     virtual void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) = 0; 
     virtual void visiter(NoeudAppelFonction* noeudAppelFonction) = 0;
-    virtual void visiter(NoeudReturn* noeudReturn) = 0; 
+    virtual void visiter(NoeudRetour* noeudReturn) = 0; 
     virtual void visiter(NoeudArgFonction* noeudArgFonction) = 0 ;
     virtual void visiter(NoeudDeclarationFonction* noeudDeclarationFonction) = 0;
     virtual void visiter(NoeudOperation* noeudOperation) = 0;

@@ -5,7 +5,6 @@
 #include <memory>
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 
-
 class NoeudInstruction: public IInstruction
 {
     LISTE_DES_AMIS_VISITEURS

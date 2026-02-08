@@ -1,14 +1,14 @@
-#include "Compilateur/AST/Noeuds/Fonction/NoeudReturn.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <utility>
 
-NoeudReturn::NoeudReturn(std::shared_ptr<INoeud> valeurRetour)
+NoeudRetour::NoeudRetour(std::shared_ptr<INoeud> valeurRetour)
     : _valeurRetour(std::move(valeurRetour))
 {
 }
 
  // Implémentation sera géré par le parent 
-void NoeudReturn::accept(IVisiteur* visiteur)
+void NoeudRetour::accept(IVisiteur* visiteur)
 {
     visiteur->visiter(this);
 }

@@ -3,23 +3,23 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
-#include "Compilateur/LLVM/LLVMBackend.h"
+#include "Compilateur/LLVM/LlvmBackend.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/AST/Registre/RegistreType.h"
 #include <memory>
 
-class ParseurAffectationVariable : public IParser, public ParseurBase
+class ParseurAffectationVariable : public IParseur, public ParseurBase
 {
 private:
-    std::shared_ptr<LLVMBackend> _backend;
+    std::shared_ptr<LlvmBackend> _backend;
     std::shared_ptr<RegistreVariable> _registreVariable;
     std::shared_ptr<RegistreType> _registreType;
 
 public:
 
-    ParseurAffectationVariable(std::shared_ptr<LLVMBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::shared_ptr<RegistreType> registreType);
+    ParseurAffectationVariable(std::shared_ptr<LlvmBackend> backend, std::shared_ptr<RegistreVariable> registreVariable, std::shared_ptr<RegistreType> registreType);
     ~ParseurAffectationVariable();
 
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) override;

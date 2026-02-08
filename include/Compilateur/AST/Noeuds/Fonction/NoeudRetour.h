@@ -6,15 +6,15 @@
 #include <memory>
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 
-class NoeudReturn : public INoeud
+class NoeudRetour : public INoeud
 {
     LISTE_DES_AMIS_VISITEURS
 private:
     std::shared_ptr<INoeud> _valeurRetour;
 
 public:
-    explicit NoeudReturn(std::shared_ptr<INoeud> valeurRetour);
-    ~NoeudReturn() = default;
+    explicit NoeudRetour(std::shared_ptr<INoeud> valeurRetour);
+    ~NoeudRetour() = default;
 
     void accept(IVisiteur* visiteur) override;
 };

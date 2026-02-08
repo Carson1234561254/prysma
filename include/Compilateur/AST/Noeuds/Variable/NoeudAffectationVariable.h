@@ -7,7 +7,6 @@
 #include <memory>
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 
-// Forward declarations pour les fonctions amies
 class ContextGenCode;
 
 class NoeudAffectationVariable : public INoeud

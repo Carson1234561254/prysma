@@ -15,7 +15,7 @@ ConstructeurArbreInstruction::~ConstructeurArbreInstruction()
 
 std::shared_ptr<INoeud> ConstructeurArbreInstruction::construire(std::vector<Token>& tokens, int& index)
 {
-    std::shared_ptr<IParser> ParentNoeud = _registreInstructions->recuperer(tokens[index].type);
+    std::shared_ptr<IParseur> ParentNoeud = _registreInstructions->recuperer(tokens[index].type);
     std::shared_ptr<INoeud> enfant = ParentNoeud->parser(tokens, index, this);
     return enfant;
 }

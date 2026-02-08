@@ -1,22 +1,22 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserAppelFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
 #include "Compilateur/AST/Registre/RegistreArgument.h"
 #include <memory>
 
 
-ParserAppelFonction::ParserAppelFonction()
+ParseurAppelFonction::ParseurAppelFonction()
 {
 }
 
-ParserAppelFonction::~ParserAppelFonction()
+ParseurAppelFonction::~ParseurAppelFonction()
 {
     
 }
 
 //call nomFonction()
-std::shared_ptr<INoeud> ParserAppelFonction::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) 
+std::shared_ptr<INoeud> ParseurAppelFonction::parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) 
 {
 
     consommer(tokens,index,TOKEN_CALL,"Erreur: ce n'est pas le token call, la fonction est invalid! 'call'");

@@ -14,7 +14,7 @@
 
 struct Token;
 
-class FloatEquationBuilder
+class ConstructeurEquationFlottante
 {
 private:
       std::shared_ptr<RegistreSymbole> _registreSymbole;
@@ -34,9 +34,9 @@ private:
 
 public: 
 
-    FloatEquationBuilder();
+    ConstructeurEquationFlottante();
     
-    ~FloatEquationBuilder() = default;
+    ~ConstructeurEquationFlottante() = default;
     
     std::shared_ptr<INoeud> construire(std::vector<Token> &tokens);
 };

@@ -23,7 +23,7 @@ class NoeudOperation;
 
 //Outils 
 class RegistreVariable;
-class LLVMBackend;
+class LlvmBackend;
 
 class VisiteurGeneralGenCode : public IVisiteur
 {
@@ -38,7 +38,7 @@ public:
     void visiter(NoeudAffectationVariable* noeudAffectationVariable) override;
     void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) override; 
     void visiter(NoeudAppelFonction* noeudAppelFonction) override;
-    void visiter(NoeudReturn* noeudReturn) override;
+    void visiter(NoeudRetour* noeudReturn) override;
     void visiter(NoeudArgFonction* noeudArgFonction) override;
     void visiter(NoeudDeclarationFonction* noeudDeclarationFonction) override;
     void visiter(NoeudOperation* noeudOperation) override;

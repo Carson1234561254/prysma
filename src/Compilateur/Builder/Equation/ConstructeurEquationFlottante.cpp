@@ -1,8 +1,8 @@
-#include "Compilateur/Builder/Equation/FloatEquationBuilder.h"
+#include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
 #include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 
-FloatEquationBuilder::FloatEquationBuilder()
+ConstructeurEquationFlottante::ConstructeurEquationFlottante()
 {
     _registreSymbole = std::make_shared<RegistreSymbole>();
 
@@ -31,7 +31,7 @@ FloatEquationBuilder::FloatEquationBuilder()
     initialiserRegistre();
 }
 
-void FloatEquationBuilder::initialiserRegistre()
+void ConstructeurEquationFlottante::initialiserRegistre()
 {
     _registreSymbole->enregistrer(TOKEN_PLUS, []() -> std::shared_ptr<IExpression> { 
         return std::make_shared<NoeudOperation>(OP_ADDITION); 
@@ -50,7 +50,7 @@ void FloatEquationBuilder::initialiserRegistre()
     });
 }
 
-std::shared_ptr<INoeud> FloatEquationBuilder::construire(std::vector<Token> &tokens)
+std::shared_ptr<INoeud> ConstructeurEquationFlottante::construire(std::vector<Token> &tokens)
 {
     return _constructeurArbre->construire(tokens);
 }

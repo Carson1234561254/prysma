@@ -1,20 +1,20 @@
-#include "Compilateur/AST/Registre/Pile/ReturnContextCompilation.h"
+#include "Compilateur/AST/Registre/Pile/RetourContexteCompilation.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <stack>
 #include <stdexcept>
 
 
-TokenType ReturnContextCompilation::recupererContext()
+TokenType RetourContexteCompilation::recupererContext()
 {
     return _contexte.top();
 }
 
-void ReturnContextCompilation::piler(const TokenType& token)
+void RetourContexteCompilation::piler(const TokenType& token)
 {
     _contexte.push(token);
 }
 
-void ReturnContextCompilation::depiler()
+void RetourContexteCompilation::depiler()
 {
     if(_contexte.empty())
     {

@@ -1,8 +1,8 @@
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudReturn.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
 
-void VisiteurGeneralGenCode::visiter(NoeudReturn* noeudReturn)
+void VisiteurGeneralGenCode::visiter(NoeudRetour* noeudReturn)
 {
     noeudReturn->_valeurRetour->accept(this);
 
@@ -13,4 +13,4 @@ void VisiteurGeneralGenCode::visiter(NoeudReturn* noeudReturn)
     
     _contextGenCode->backend->getBuilder().CreateRet(valeurRetour);
     _contextGenCode->valeurTemporaire = valeurRetour;
-}
+} 

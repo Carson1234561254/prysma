@@ -1,10 +1,10 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
-#include "Compilateur/AST/Registre/Pile/ReturnContextCompilation.h"
+#include "Compilateur/AST/Registre/Pile/RetourContexteCompilation.h"
 #include "Compilateur/AST/Registre/RegistreArgument.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
-#include "Compilateur/LLVM/LLVMBackend.h"
+#include "Compilateur/LLVM/LlvmBackend.h"
 #include "Compilateur/LLVM/LLVMSerializer.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
@@ -17,10 +17,10 @@
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
 #include "Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingDeclarationFonction.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingReturn.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserAppelFonction.h"
-#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserArgFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.h"
@@ -30,12 +30,12 @@ int main(int argc, char* argv[])
 {
     try {
 
-        std::shared_ptr<LLVMBackend> backend = std::make_shared<LLVMBackend>();
+        std::shared_ptr<LlvmBackend> backend = std::make_shared<LlvmBackend>();
         std::shared_ptr<RegistreInstruction> registreInstruction = std::make_shared<RegistreInstruction>();
         std::shared_ptr<RegistreVariable> registreVariable = std::make_shared<RegistreVariable>();
         std::shared_ptr<RegistreFonction> registreFonction = std::make_shared<RegistreFonction>();
         std::shared_ptr<RegistreType> registreType = std::make_shared<RegistreType>();
-        std::shared_ptr<ReturnContextCompilation> returnContextCompilation = std::make_shared<ReturnContextCompilation>();
+        std::shared_ptr<RetourContexteCompilation> returnContextCompilation = std::make_shared<RetourContexteCompilation>();
         std::shared_ptr<RegistreArgument> registreArgument = std::make_shared<RegistreArgument>();
         llvm::Value* valeurTemporaire = nullptr;
 
@@ -78,12 +78,12 @@ int main(int argc, char* argv[])
         
         // NoeudInstruction du langage prysma
         context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParseurScope>());
-        context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(TOKEN_FONCTION));
+        context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParseurDeclarationFonction>(TOKEN_FONCTION));
         context->registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>(context->backend, context->registreVariable, context->registreType));
         context->registreInstruction->enregistrer(TOKEN_DEC, std::make_shared<ParseurDeclarationVariable>());
-        context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>());
-        context->registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>());
-        context->registreInstruction->enregistrer(TOKEN_ARG, std::make_shared<ParserArgFonction>());
+        context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParseurAppelFonction>());
+        context->registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParseurRetour>());
+        context->registreInstruction->enregistrer(TOKEN_ARG, std::make_shared<ParseurArgFonction>());
         context->registreInstruction->enregistrer(TOKEN_UNREF, std::make_shared<ParseurUnRefVariable>());
         context->registreInstruction->enregistrer(TOKEN_REF, std::make_shared<ParseurRefVariable>());
 
