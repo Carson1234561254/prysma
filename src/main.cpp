@@ -83,7 +83,6 @@ int main(int argc, char* argv[])
         context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParserAppelFonction>());
         context->registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParsingReturn>());
         context->registreInstruction->enregistrer(TOKEN_ARG, std::make_shared<ParserArgFonction>());
-        context->registreInstruction->enregistrer(TOKEN_PASS, std::make_shared<ParserArgPassFonction>(context->registreVariable, context->registreArgument));
 
         ConstructeurArbreInstruction constructeurArbreInstruction(context->registreInstruction);
         std::shared_ptr<INoeud> arbre = constructeurArbreInstruction.construire(tokens);
@@ -95,8 +94,8 @@ int main(int argc, char* argv[])
         serializer.SauvegarderCodeLLVM("output.ll");
        
         ConstructeurSysteme constructeur("../src/Lib", "Lib", "output.ll", "programme");
-        //constructeur.compilerLib();
-        //constructeur.lierLibExecutable();
+        constructeur.compilerLib();
+        constructeur.lierLibExecutable();
     }
     catch (const std::exception& e) {
         std::cerr << "Erreur: " << e.what() << std::endl;

@@ -7,9 +7,14 @@
 #include <memory>
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 
+// Forward declarations pour les fonctions amies
+class ContextGenCode;
+
 class NoeudAffectationVariable : public INoeud
 {
     LISTE_DES_AMIS_VISITEURS
+    friend void assignation(llvm::AllocaInst* allocaInst, llvm::Value* valeur, std::shared_ptr<ContextGenCode> contextGenCode);
+    friend llvm::AllocaInst* recupererVariable(NoeudAffectationVariable* noeudAffectationVariable, std::shared_ptr<ContextGenCode> contextGenCode);
 private:
     std::string _nom;
     std::shared_ptr<INoeud> _expression;

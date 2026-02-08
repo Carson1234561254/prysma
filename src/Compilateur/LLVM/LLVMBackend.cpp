@@ -56,3 +56,16 @@ void LLVMBackend::declarerExterne(const std::string& nom, llvm::Type* ret, std::
     llvm::FunctionType* type = llvm::FunctionType::get(ret, args, false);
     llvm::Function::Create(type, llvm::Function::ExternalLinkage, nom, *_module);
 }
+
+llvm::Value* LLVMBackend::chargerValeur(llvm::Value* adresseMemoire, const std::string& nomVariable)
+{
+    if (!adresseMemoire) return nullptr;
+
+    if (auto* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(adresseMemoire)) {
+        
+        llvm::Type* typeStocke = allocaInst->getAllocatedType();
+
+        return _builder->CreateLoad(typeStocke, allocaInst, nomVariable);
+    }
+    return adresseMemoire;
+}

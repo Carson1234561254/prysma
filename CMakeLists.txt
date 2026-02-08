@@ -40,8 +40,6 @@ set(SOURCES
     src/main.cpp
     src/Lib/Print.cpp
     src/Compilateur/AST/ConstructeurArbreEquation.cpp
-    src/Compilateur/AST/GestionnaireChargementVariable.cpp
-    src/Compilateur/AST/Noeuds/Operande/Operation.cpp
     src/Compilateur/AST/Noeuds/Operande/Valeur.cpp
     src/Compilateur/AST/Noeuds/Operande/NoeudLitteral.cpp
     src/Compilateur/AST/Noeuds/Operande/NoeudVariable.cpp
@@ -67,7 +65,6 @@ set(SOURCES
     src/Compilateur/Parsing/Instruction/Fonction/ParserDeclarationFonction.cpp
     src/Compilateur/Parsing/Instruction/Fonction/ParsingReturn.cpp
     src/Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.cpp
-    src/Compilateur/Parsing/Instruction/Fonction/ParserArgPassFonction.cpp
     src/Compilateur/AST/Noeuds/NoeudScope.cpp
     src/Compilateur/AST/Noeuds/NoeudInstruction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
@@ -76,7 +73,6 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
     src/Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
-    src/Compilateur/AST/Noeuds/Fonction/NoeudArgPassFonction.cpp
     src/Compilateur/AST/Registre/RegistreArgument.cpp
     src/Compilateur/TraitementFichier/ConstructeurSysteme.cpp
     src/Compilateur/Visiteur/VisiteurGeneralGenCode.cpp
@@ -84,7 +80,6 @@ set(SOURCES
     src/Compilateur/Visiteur/VisiteurInstruction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurAppelFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurArgFonction.cpp
-    src/Compilateur/Visiteur/Fonction/VisiteurArgPassFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurDeclarationFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurReturn.cpp
     src/Compilateur/Visiteur/Operande/VisiteurNoeudVariable.cpp

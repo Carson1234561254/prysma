@@ -26,7 +26,3 @@ void VisiteurGeneralGenCode::visiter(NoeudLitteral* noeudLitteral)
     _contextGenCode->valeurTemporaire = valeurLLVM;
 }
 
-void VisiteurGeneralGenCode::visiter(Operation* operation)
-{
-    ///Tempo
-}
