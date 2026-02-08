@@ -29,5 +29,5 @@ std::shared_ptr<INoeud> ParseurArgFonction::parser(std::vector<Token>& tokens, i
     }
     Token nom = consommer(tokens,index,TOKEN_IDENTIFIANT,"Erreur: ce n'est pas un identifiant!");
 
-    return make_shared<NoeudArgFonction>(nullptr, nom.type, type);
+    return make_shared<NoeudArgFonction>(nullptr, nom.value, type);
 }

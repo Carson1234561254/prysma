@@ -7,7 +7,7 @@
 #include <utility>
 
 NoeudDeclarationVariable::NoeudDeclarationVariable(const std::string& nom, std::shared_ptr<INoeud> expression, TokenType token)
-    : _nom(nom), _arraySize(nullptr), _expression(std::move(expression)), _token(token)
+    : _nom(nom), _arraySize(nullptr), _expression(std::move(expression)), _tokenType(token)
 {
 }
 

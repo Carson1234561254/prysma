@@ -75,3 +75,33 @@ llvm::Value* LlvmBackend::chargerValeur(llvm::Value* adresseMemoire, const std::
     }
     return adresseMemoire;
 }
+
+// Créer l'allocation au début du bloc d'entrée (mais après les autres allocas) : simple gestionnaire de position il déplace le curseur LLVM
+void LlvmBackend::definirPointInsertionApresAllocation()
+{
+    llvm::BasicBlock* insertBlock = _builder->GetInsertBlock();
+    llvm::Instruction* positionInsertion = nullptr;
+    
+    if (insertBlock != nullptr) {
+        for (auto& instruction : *insertBlock) {
+            if (llvm::dyn_cast<llvm::AllocaInst>(&instruction) != nullptr) {
+                positionInsertion = &instruction;
+            }
+        }
+        
+        if (positionInsertion != nullptr) {
+            llvm::Instruction* nextNode = positionInsertion->getNextNode();
+            if (nextNode != nullptr) {
+                _builder->SetInsertPoint(nextNode);
+            } else {
+                _builder->SetInsertPoint(insertBlock);
+            }
+        } else {
+            if (insertBlock->empty()) {
+                _builder->SetInsertPoint(insertBlock);
+            } else {
+                _builder->SetInsertPoint(&insertBlock->front());
+            }
+        }
+    }
+}

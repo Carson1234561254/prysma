@@ -14,7 +14,7 @@ private:
     std::string _nom;
     llvm::Value* _arraySize;
     std::shared_ptr<INoeud> _expression;
-    TokenType _token; 
+    TokenType _tokenType; 
 
     llvm::AllocaInst* allocation();
     llvm::AllocaInst* initialisation(llvm::AllocaInst* allocaInst, llvm::Value* valeur);

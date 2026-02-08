@@ -3,6 +3,7 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/RegistreType.h"
 #include <memory>
+#include <string>
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudArgFonction: public INoeud
@@ -10,11 +11,11 @@ class NoeudArgFonction: public INoeud
     LISTE_DES_AMIS_VISITEURS
 private:
      std::shared_ptr<RegistreType> _registreType; 
-     TokenType _nom;
+     std::string _nom;
      TokenType _type;
 
 public: 
-    NoeudArgFonction(std::shared_ptr<RegistreType> registreType, TokenType nom, TokenType type);
+    NoeudArgFonction(std::shared_ptr<RegistreType> registreType, std::string nom, TokenType type);
     ~NoeudArgFonction();
 
     void accept(IVisiteur* visiteur) override;

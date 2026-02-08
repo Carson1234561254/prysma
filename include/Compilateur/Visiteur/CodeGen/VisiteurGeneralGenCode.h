@@ -1,9 +1,11 @@
 #ifndef FDDB5968_6DEF_49B0_AD11_8791D523278A
 #define FDDB5968_6DEF_49B0_AD11_8791D523278A
+#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include <llvm-18/llvm/IR/Value.h>
 #include "Compilateur/AST/Registre/ContextGenCode.h"
+#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 #include <memory>
 
 // Importation des classes 
@@ -25,6 +27,7 @@ class NoeudOperation;
 class RegistreVariable;
 class LlvmBackend;
 
+
 class VisiteurGeneralGenCode : public IVisiteur
 {
 private:
@@ -33,6 +36,8 @@ public:
     VisiteurGeneralGenCode(std::shared_ptr<ContextGenCode> contextGenCode);
     ~VisiteurGeneralGenCode();
     void parcourirEnfant(NoeudInstruction* noeud);
+    
+    llvm::Value* evaluerExpression(std::shared_ptr<INoeud> expression);
     
     void visiter(NoeudScope* NoeudScope) override;
     void visiter(NoeudAffectationVariable* noeudAffectationVariable) override;
