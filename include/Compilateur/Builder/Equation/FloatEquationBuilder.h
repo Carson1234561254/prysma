@@ -7,9 +7,9 @@
 
 #include "Compilateur/AST/ConstructeurArbreEquation.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/Parsing/Equation/ChaineResponsabilite.h"
-#include "Compilateur/Parsing/Equation/ServiceParenthese.h"
-#include "Compilateur/Parsing/Equation/GestionnaireOperateur.h"
+#include "Compilateur/AnalyseSyntaxique/Equation/ChaineResponsabilite.h"
+#include "Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.h"
+#include "Compilateur/AnalyseSyntaxique/Equation/GestionnaireOperateur.h"
 #include "Compilateur/AST/Registre/RegistreSymbole.h"
 
 struct Token;

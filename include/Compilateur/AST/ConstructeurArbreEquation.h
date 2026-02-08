@@ -4,8 +4,8 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/RegistreSymbole.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include "Compilateur/Parsing/Equation/ChaineResponsabilite.h"
-#include "Compilateur/Parsing/Equation/Interfaces/IGestionnaireParenthese.h"
+#include "Compilateur/AnalyseSyntaxique/Equation/ChaineResponsabilite.h"
+#include "Compilateur/AnalyseSyntaxique/Equation/Interfaces/IGestionnaireParenthese.h"
 #include <memory>
 #include <vector>
 

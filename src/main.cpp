@@ -8,7 +8,7 @@
 #include "Compilateur/LLVM/LLVMSerializer.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurDeclarationVariable.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
 #include <iostream>
@@ -16,14 +16,14 @@
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
-#include "Compilateur/Parsing/Instruction/ParserScope.h"
-#include "Compilateur/Parsing/Instruction/Fonction/ParsingDeclarationFonction.h"
-#include "Compilateur/Parsing/Instruction/Fonction/ParsingReturn.h"
-#include "Compilateur/Parsing/Instruction/Fonction/ParserAppelFonction.h"
-#include "Compilateur/Parsing/Instruction/Fonction/ParserArgFonction.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurAffectationVariable.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurUnRefVariable.h"
-#include "Compilateur/Parsing/Instruction/Variable/ParseurRefVariable.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingDeclarationFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParsingReturn.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserAppelFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParserArgFonction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 
 int main(int argc, char* argv[])
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
         context->registreType->enregistrer(TOKEN_TYPE_VOID, llvm::Type::getVoidTy(context->backend->getContext()));
         
         // NoeudInstruction du langage prysma
-        context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParserScope>());
+        context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParseurScope>());
         context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParsingDeclarationFonction>(TOKEN_FONCTION));
         context->registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>(context->backend, context->registreVariable, context->registreType));
         context->registreInstruction->enregistrer(TOKEN_DEC, std::make_shared<ParseurDeclarationVariable>());

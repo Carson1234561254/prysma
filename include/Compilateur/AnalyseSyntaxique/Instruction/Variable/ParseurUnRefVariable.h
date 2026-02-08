@@ -1,0 +1,16 @@
+#ifndef BA7CC6F6_C206_4FBD_9DFD_D7DD1803CDAD
+#define BA7CC6F6_C206_4FBD_9DFD_D7DD1803CDAD
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
+
+class ParseurUnRefVariable : public IParser, ParseurBase
+{
+public: 
+    ParseurUnRefVariable();
+    ~ParseurUnRefVariable();
+    
+    std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) override;
+
+};
+
+#endif /* BA7CC6F6_C206_4FBD_9DFD_D7DD1803CDAD */

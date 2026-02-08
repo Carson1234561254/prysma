@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Compilateur/AST/Registre/RegistreGeneric.h"
-#include "Compilateur/Parsing/Interfaces/IParser.h"
+#include "Compilateur/AnalyseSyntaxique/Interfaces/IParser.h"
 #include <memory>
 #include <set>
 #include "Compilateur/Lexer/TokenType.h"
