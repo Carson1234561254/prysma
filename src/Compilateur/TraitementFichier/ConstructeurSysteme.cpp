@@ -1,6 +1,5 @@
 #include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
 #include <filesystem>
-#include <iostream>
 #include <cstdlib>
 #include <sstream>
 
@@ -38,7 +37,10 @@ void ConstructeurSysteme::compilerLib()
     while (stream >> fichier) {
         const fs::path filePath(fichier);
         std::string objectFile = (fs::path(_libObjDir) / filePath.filename()).replace_extension(".o").string();
-        std::string command = "clang++ -c " + fichier + " -o " + objectFile;
+        std::string command = "clang++ -c ";
+        command += fichier;
+        command += " -o ";
+        command += objectFile;
         (void)system(command.c_str());
     }
 }

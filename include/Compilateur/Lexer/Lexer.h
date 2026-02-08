@@ -47,14 +47,14 @@ class Lexer {
 
     // Fonctions privées pour la tokenization
     void ajouterMotCourant(const string& motCourant, vector<Token>& tokens);
-    void traiterOperateursEtDelimiteurs(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    void traiterOperateursMathematiques(char current, vector<Token>& tokens);
-    void traiterDelimiteurs(char current, vector<Token>& tokens);
-    void traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    void traiterLitteraux(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    void traiterCommentaires(const string& sourceCode, size_t& pos);
-    void traiterChaine(const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    void traiterNombre(const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    static void traiterOperateursEtDelimiteurs(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    static void traiterOperateursMathematiques(char current, vector<Token>& tokens);
+    static void traiterDelimiteurs(char current, vector<Token>& tokens);
+    static void traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    static void traiterLitteraux(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    static void traiterCommentaires(const string& sourceCode, size_t& pos);
+    static void traiterChaine(const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    static void traiterNombre(const string& sourceCode, size_t& pos, vector<Token>& tokens);
     
     public: 
         Lexer() {}

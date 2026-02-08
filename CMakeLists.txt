@@ -37,49 +37,44 @@ include_directories(${CMAKE_SOURCE_DIR}/include ${LLVM_INCLUDE_DIRS})
 
 # Sources
 set(SOURCES
-    src/main.cpp
-    src/Lib/Print.cpp
-    src/Compilateur/AST/ConstructeurArbreEquation.cpp
-    src/Compilateur/AST/Noeuds/Operande/NoeudLitteral.cpp
-    src/Compilateur/AST/Noeuds/Equation/NoeudOperation.cpp
-    src/Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.cpp
-    src/Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.cpp
-    src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
-    src/Compilateur/AST/Noeuds/Variable/NoeudRefVariable.cpp
-    src/Compilateur/LLVM/LlvmSerializer.cpp
-    src/Compilateur/LLVM/LlvmBackend.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ChaineResponsabilite.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/GestionnaireOperateur.cpp
-    src/Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.cpp
-    src/Compilateur/Lexer/Lexer.cpp
-    src/Compilateur/Builder/Equation/ConstructeurEquationFlottante.cpp
-    src/Compilateur/TraitementFichier/FichierLecture.cpp
-    src/Compilateur/TraitementFichier/FichierEcriture.cpp
-    src/Compilateur/AST/Registre/RegistreVariable.cpp
-    src/Compilateur/AST/ConstructeurArbreInstruction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ParseurEquation.cpp
-    src/Compilateur/AnalyseSyntaxique/ParseurBase.cpp
+    src/Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.cpp
-    src/Compilateur/AST/Noeuds/NoeudScope.cpp
-    src/Compilateur/AST/Noeuds/NoeudInstruction.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/ParseurBase.cpp
+    src/Compilateur/AST/ConstructeurArbreEquation.cpp
+    src/Compilateur/AST/ConstructeurArbreInstruction.cpp
+    src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
+    src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudRetour.cpp
-    src/Compilateur/AST/Registre/ReturnContextCompilation.cpp
-    src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.cpp
-    src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
+    src/Compilateur/AST/Noeuds/NoeudInstruction.cpp
+    src/Compilateur/AST/Noeuds/NoeudScope.cpp
+    src/Compilateur/AST/Noeuds/Equation/NoeudOperation.cpp
+    src/Compilateur/AST/Noeuds/Operande/NoeudLitteral.cpp
+    src/Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.cpp
+    src/Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.cpp
+    src/Compilateur/AST/Noeuds/Variable/NoeudRefVariable.cpp
+    src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
     src/Compilateur/AST/Registre/RegistreArgument.cpp
+    src/Compilateur/AST/Registre/RegistreVariable.cpp
+    src/Compilateur/AST/Registre/ReturnContextCompilation.cpp
+    src/Compilateur/Builder/Equation/ConstructeurEquationFlottante.cpp
+    src/Compilateur/Lexer/Lexer.cpp
+    src/Compilateur/LLVM/LlvmBackend.cpp
+    src/Compilateur/LLVM/LlvmSerializer.cpp
     src/Compilateur/TraitementFichier/ConstructeurSysteme.cpp
-    src/Compilateur/Visiteur/VisiteurGeneralGenCode.cpp
-    src/Compilateur/Visiteur/VisiteurScope.cpp
-    src/Compilateur/Visiteur/VisiteurInstruction.cpp
+    src/Compilateur/TraitementFichier/FichierEcriture.cpp
+    src/Compilateur/TraitementFichier/FichierLecture.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurAppelFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurArgFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurDeclarationFonction.cpp
@@ -87,8 +82,13 @@ set(SOURCES
     src/Compilateur/Visiteur/Operande/VisiteurOperation.cpp
     src/Compilateur/Visiteur/Variable/VisiteurAffectationVariable.cpp
     src/Compilateur/Visiteur/Variable/VisiteurDeclarationVariable.cpp
-    src/Compilateur/Visiteur/Variable/VisiteurUnrefVariable.cpp
     src/Compilateur/Visiteur/Variable/VisiteurRefVariable.cpp
+    src/Compilateur/Visiteur/Variable/VisiteurUnRefVariable.cpp
+    src/Compilateur/Visiteur/VisiteurGeneralGenCode.cpp
+    src/Compilateur/Visiteur/VisiteurInstruction.cpp
+    src/Compilateur/Visiteur/VisiteurScope.cpp
+    src/Lib/Print.cpp
+    src/main.cpp
 )
 
 # Créer l'exécutable

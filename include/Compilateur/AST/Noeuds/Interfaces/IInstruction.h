@@ -2,9 +2,8 @@
 #define C6C14887_3564_44B6_93AF_297915A05DCF
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/Lexer/Lexer.h"
 #include <memory>
-#include <vector>
+
 class IInstruction : public INoeud
 {
 public: 

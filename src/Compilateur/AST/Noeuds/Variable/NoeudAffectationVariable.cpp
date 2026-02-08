@@ -4,7 +4,6 @@
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/Value.h>
 #include <memory>
-#include <stdexcept>
 #include <utility>
 
 NoeudAffectationVariable::NoeudAffectationVariable(const std::string& nom, std::shared_ptr<INoeud> expression, Token token)

@@ -11,8 +11,7 @@ class ParseurDeclarationFonction : public IParseur, public ParseurBase
 
 public:
 
-    ParseurDeclarationFonction(TokenType token) {}
-    ParseurDeclarationFonction();
+     ParseurDeclarationFonction();
     ~ParseurDeclarationFonction();
 
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, ConstructeurArbreInstruction* constructeurArbreInstruction) override;

@@ -1,5 +1,4 @@
 #include "Compilateur/LLVM/LlvmBackend.h"
-#include "Compilateur/LLVM/LlvmSerializer.h"
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/MC/TargetRegistry.h>
 #include <llvm/Target/TargetOptions.h>
@@ -26,7 +25,7 @@ LlvmBackend::LlvmBackend() {
     
     std::string error;
     const auto *target = TargetRegistry::lookupTarget(targetTriple, error);
-    if (!target) {
+    if (target == nullptr) {
         errs() << error;
     }
 
@@ -38,7 +37,11 @@ LlvmBackend::LlvmBackend() {
 
 llvm::Value* LlvmBackend::creerAutoCast(llvm::Value* valeurSource, llvm::Type* typeCible)
 {
-    if (valeurSource->getType() == typeCible) return valeurSource;
+    if (valeurSource->getType() == typeCible)
+    {
+        return valeurSource;
+    }
+    
 
     llvm::Instruction::CastOps opcode = llvm::CastInst::getCastOpcode(
         valeurSource, 
@@ -59,7 +62,10 @@ void LlvmBackend::declarerExterne(const std::string& nom, llvm::Type* ret, std::
 
 llvm::Value* LlvmBackend::chargerValeur(llvm::Value* adresseMemoire, const std::string& nomVariable)
 {
-    if (!adresseMemoire) return nullptr;
+    if (adresseMemoire == nullptr) 
+    { 
+        return nullptr;
+    }
 
     if (auto* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(adresseMemoire)) {
         

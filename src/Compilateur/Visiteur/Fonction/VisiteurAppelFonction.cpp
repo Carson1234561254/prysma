@@ -19,7 +19,7 @@ void VisiteurGeneralGenCode::visiter(NoeudAppelFonction* noeudAppelFonction)
         _contextGenCode->registreArgument->ajouter(valeurArgument);
     }
 
-    llvm::Function* fonction = _contextGenCode->registreFonction->recuperer(noeudAppelFonction->_nomFonction.value); // Assurez-vous d'avoir un getter pour le nom ou utilisez _nomFonction.value
+    llvm::Function* fonction = _contextGenCode->registreFonction->recuperer(noeudAppelFonction->_nomFonction.value); 
 
     if (fonction == nullptr) {
         throw std::runtime_error("Fonction introuvable : " + noeudAppelFonction->_nomFonction.value);

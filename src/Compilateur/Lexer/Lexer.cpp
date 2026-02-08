@@ -168,8 +168,7 @@ void Lexer::traiterDelimiteurs(char current, vector<Token>& tokens) {
 void Lexer::traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens) {
     switch (current) {
         case '=': 
-            if (pos + 1 < sourceCode.length() && sourceCode[pos + 1] == '=') {
-                tokens.push_back({TOKEN_EGAL_EGAL, "=="});
+            if (pos + 1 < sourceCode.length() && sourceCode[pos + 1] == '=') {                tokens.push_back({TOKEN_EGAL_EGAL, "=="});
                 pos++;
             } else {
                 tokens.push_back({TOKEN_EGAL, "="});

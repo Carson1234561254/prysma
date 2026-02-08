@@ -3,7 +3,6 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include <string>
-#include <memory>
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class NoeudUnRefVariable : public INoeud

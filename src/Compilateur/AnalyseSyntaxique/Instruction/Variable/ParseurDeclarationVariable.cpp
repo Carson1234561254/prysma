@@ -4,7 +4,6 @@
 #include "Compilateur/AnalyseSyntaxique/Equation/ParseurEquation.h"
 #include "Compilateur/Lexer/TokenCategories.h"
 #include <memory>
-#include <iostream> 
 
 ParseurDeclarationVariable::ParseurDeclarationVariable()
 {}

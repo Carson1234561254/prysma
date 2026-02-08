@@ -1,4 +1,3 @@
-#include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
 
