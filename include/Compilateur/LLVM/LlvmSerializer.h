@@ -9,14 +9,14 @@
 using namespace llvm;
 using namespace std;
 
-class LLVMSerializer {
+class LlvmSerializer {
     private: 
         LLVMContext& _context;
         Module& _module;
         error_code errorCode;
             
     public: 
-        LLVMSerializer(LLVMContext& ctx, Module& mod) : _context(ctx), _module(mod) {}
+        LlvmSerializer(LLVMContext& ctx, Module& mod) : _context(ctx), _module(mod) {}
         void SauvegarderCodeLLVM(const string& path);
 };
 

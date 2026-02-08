@@ -7,7 +7,7 @@
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Constants.h>  
 #include <llvm/IR/Instructions.h>
-#include "../../include/Compilateur/LLVM/LLVMSerializer.h"
+#include "Compilateur/LLVM/LlvmSerializer.h"
 
 #include <llvm/TargetParser/Host.h>
 #include <llvm/Support/TargetSelect.h>

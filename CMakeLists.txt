@@ -46,8 +46,8 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.cpp
     src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
     src/Compilateur/AST/Noeuds/Variable/NoeudRefVariable.cpp
-    src/Compilateur/LLVM/LLVMSerializer.cpp
-    src/Compilateur/LLVM/LLVMBackend.cpp
+    src/Compilateur/LLVM/LlvmSerializer.cpp
+    src/Compilateur/LLVM/LlvmBackend.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ChaineResponsabilite.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/GestionnaireOperateur.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.cpp
@@ -83,7 +83,7 @@ set(SOURCES
     src/Compilateur/Visiteur/Fonction/VisiteurAppelFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurArgFonction.cpp
     src/Compilateur/Visiteur/Fonction/VisiteurDeclarationFonction.cpp
-    src/Compilateur/Visiteur/Fonction/VisiteurReturn.cpp
+    src/Compilateur/Visiteur/Fonction/VisiteurRetour.cpp
     src/Compilateur/Visiteur/Operande/VisiteurOperation.cpp
     src/Compilateur/Visiteur/Variable/VisiteurAffectationVariable.cpp
     src/Compilateur/Visiteur/Variable/VisiteurDeclarationVariable.cpp

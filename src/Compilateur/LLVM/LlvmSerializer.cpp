@@ -1,6 +1,6 @@
-#include "Compilateur/LLVM/LLVMSerializer.h"
+#include "Compilateur/LLVM/LlvmSerializer.h"
 
-void LLVMSerializer::SauvegarderCodeLLVM(const string& path)
+void LlvmSerializer::SauvegarderCodeLLVM(const string& path)
 {
         llvm::raw_fd_ostream out(path, errorCode);
         _module.print(out, nullptr);

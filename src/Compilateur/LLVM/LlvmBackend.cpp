@@ -1,5 +1,5 @@
 #include "Compilateur/LLVM/LlvmBackend.h"
-#include "Compilateur/LLVM/LLVMSerializer.h"
+#include "Compilateur/LLVM/LlvmSerializer.h"
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/MC/TargetRegistry.h>
 #include <llvm/Target/TargetOptions.h>

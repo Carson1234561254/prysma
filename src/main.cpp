@@ -5,7 +5,7 @@
 #include "Compilateur/AST/Registre/RegistreArgument.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/LLVM/LlvmBackend.h"
-#include "Compilateur/LLVM/LLVMSerializer.h"
+#include "Compilateur/LLVM/LlvmSerializer.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.h"
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
         VisiteurGeneralGenCode visiteur(context);
         arbre->accept(&visiteur);
 
-        LLVMSerializer serializer(context->backend->getContext(), context->backend->getModule());
+        LlvmSerializer serializer(context->backend->getContext(), context->backend->getModule());
         serializer.SauvegarderCodeLLVM("output.ll");
        
         ConstructeurSysteme constructeur("../src/Lib", "Lib", "output.ll", "programme");
