@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
             valeurTemporaire
         );
       
-        FichierLecture fichierLecture("../src/PrysmaCodeTests/main.p");
+        FichierLecture fichierLecture("../src/PrysmaCodeTests/testeFonctionnel.p");
         std::string document = fichierLecture.entrer();
   
         Lexer lexer;

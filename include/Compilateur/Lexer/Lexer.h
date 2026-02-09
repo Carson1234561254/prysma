@@ -10,8 +10,10 @@ using namespace std;
 // filtre le code source en une liste de tokens identifiés 
 
 struct Token {
-TokenType type;
-string value;
+    TokenType type;
+    string value;
+    int ligne;      // Numéro de ligne (1-indexed)
+    int colonne;    // Numéro de colonne (1-indexed)
 };
 
 class Lexer {
@@ -46,15 +48,15 @@ class Lexer {
     };
 
     // Fonctions privées pour la tokenization
-    void ajouterMotCourant(const string& motCourant, vector<Token>& tokens);
-    static void traiterOperateursEtDelimiteurs(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    static void traiterOperateursMathematiques(char current, vector<Token>& tokens);
-    static void traiterDelimiteurs(char current, vector<Token>& tokens);
-    static void traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    static void traiterLitteraux(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    void ajouterMotCourant(const string& motCourant, vector<Token>& tokens, int ligne, int colonne);
+    static void traiterOperateursEtDelimiteurs(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens, int ligne, int& colonne);
+    static void traiterOperateursMathematiques(char current, vector<Token>& tokens, int ligne, int colonne);
+    static void traiterDelimiteurs(char current, vector<Token>& tokens, int ligne, int colonne);
+    static void traiterOperateursComplexes(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens, int ligne, int& colonne);
+    static void traiterLitteraux(char current, const string& sourceCode, size_t& pos, vector<Token>& tokens, int ligne, int& colonne);
     static void traiterCommentaires(const string& sourceCode, size_t& pos);
-    static void traiterChaine(const string& sourceCode, size_t& pos, vector<Token>& tokens);
-    static void traiterNombre(const string& sourceCode, size_t& pos, vector<Token>& tokens);
+    static void traiterChaine(const string& sourceCode, size_t& pos, vector<Token>& tokens, int ligne, int& colonne);
+    static void traiterNombre(const string& sourceCode, size_t& pos, vector<Token>& tokens, int ligne, int colonne);
     
     public: 
         Lexer() {}
