@@ -31,7 +31,7 @@ std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>
     }
     
     int indice = _chaineResponsabilite->trouverOperateur(equation);
-    
+
     if (indice == -1) {
         // Déterminer si c'est une référence ou déréférence
         if (equation[0].type == TOKEN_REF)

@@ -1,5 +1,6 @@
-scope {
+// Simple boucle récursive jusqu'au segmentation fault 
 
+scope {
    fn int fact_accum(arg int produit, arg int n)
    {
       aff produit =  produit * n;     
@@ -16,5 +17,4 @@ scope {
       call fact_accum(resultat, nombre);    
       return resultat;
    }
-
 }

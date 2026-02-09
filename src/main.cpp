@@ -30,9 +30,13 @@
 
 int main(int argc, char* argv[])
 {
+    if (argc < 2) {
+        std::cerr << "Erreur: Aucun fichier spécifié" << std::endl;
+        return 1;
+    }
     // Utiliser le chemin passé en argument, sinon utiliser le chemin par défaut
     std::string cheminFichier = argv[1];
-    std::string nomFichier = std::filesystem::path(cheminFichier).filename().string();
+    std::string nomFichier = std::filesystem::path(cheminFichier).string(); 
     
     try {
 
