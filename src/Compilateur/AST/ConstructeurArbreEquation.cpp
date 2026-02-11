@@ -78,7 +78,6 @@ std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>
 
 std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>& tokens, int& index) {
     // Pour ConstructeurArbreEquation, on crée un vecteur contenant les tokens à partir de l'index
-    // jusqu'au prochain point-virgule ou fin, ou jusqu'à un token qui n'appartient pas à l'équation
     // Temporaire pour les testes je ne vais pas garder une grosse condition comme ça
     std::vector<Token> equationTokens;
     while(index < (int)tokens.size() && 

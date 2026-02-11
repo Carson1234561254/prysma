@@ -54,3 +54,8 @@ std::shared_ptr<INoeud> ConstructeurEquationFlottante::construire(std::vector<To
 {
     return _constructeurArbre->construire(tokens);
 }
+
+IConstructeurArbre* ConstructeurEquationFlottante::recupererConstructeurArbre() const
+{
+    return _constructeurArbre.get();
+}

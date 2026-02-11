@@ -39,6 +39,8 @@ public:
     ~ConstructeurEquationFlottante() = default;
     
     std::shared_ptr<INoeud> construire(std::vector<Token> &tokens);
+
+    IConstructeurArbre* recupererConstructeurArbre() const;
 };
 
 #endif /* FLOATEQUATIONBUILDER_H */
