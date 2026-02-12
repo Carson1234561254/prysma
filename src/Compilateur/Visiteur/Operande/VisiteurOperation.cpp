@@ -33,6 +33,18 @@ void VisiteurGeneralGenCode::visiter(NoeudOperation* noeud)
         case TOKEN_SLASH:
             resultat = builder.CreateFDiv(valGauche, valDroite, "divtmp");
             break;
+        case TOKEN_PLUS_PETIT:
+            resultat = builder.CreateFCmpULT(valGauche, valDroite, "cmptmp");
+            break;
+        case TOKEN_PLUS_GRAND:
+            resultat = builder.CreateFCmpUGT(valGauche, valDroite, "cmptmp");
+            break;
+        case TOKEN_PLUS_PETIT_EGAL:
+            resultat = builder.CreateFCmpULE(valGauche, valDroite, "cmptmp");
+            break;
+        case TOKEN_PLUS_GRAND_EGAL:
+            resultat = builder.CreateFCmpUGE(valGauche, valDroite, "cmptmp");
+            break;
         default:
             throw std::runtime_error("Erreur: type d'opération non reconnu dans VisiteurOperation");
     }
@@ -43,3 +55,4 @@ void VisiteurGeneralGenCode::visiter(NoeudOperation* noeud)
     
     _contextGenCode->valeurTemporaire = resultat;
 }
+

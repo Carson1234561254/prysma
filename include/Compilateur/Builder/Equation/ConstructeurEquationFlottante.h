@@ -22,6 +22,10 @@ private:
     std::unique_ptr<GestionnaireOperateur> _gestionnaireSoustraction;
     std::unique_ptr<GestionnaireOperateur> _gestionnaireMultiplication;
     std::unique_ptr<GestionnaireOperateur> _gestionnaireDivision;
+    std::unique_ptr<GestionnaireOperateur> _gestionnairePlusPetit;
+    std::unique_ptr<GestionnaireOperateur> _gestionnairePlusGrand;
+    std::unique_ptr<GestionnaireOperateur> _gestionnairePlusPetitEgal;
+    std::unique_ptr<GestionnaireOperateur> _gestionnairePlusGrandEgal;
 
     std::unique_ptr<ServiceParenthese> _serviceParenthese;
     std::unique_ptr<ChaineResponsabilite> _chaineResponsabilite;

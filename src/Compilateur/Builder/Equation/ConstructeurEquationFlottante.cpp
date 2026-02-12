@@ -1,6 +1,7 @@
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
 #include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
+#include "Compilateur/Lexer/TokenType.h"
 
 ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder)
     : _instructionBuilder(instructionBuilder)
@@ -13,12 +14,20 @@ ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre*
     _gestionnaireSoustraction = std::make_unique<GestionnaireOperateur>(TOKEN_MOINS);
     _gestionnaireMultiplication = std::make_unique<GestionnaireOperateur>(TOKEN_ETOILE);
     _gestionnaireDivision = std::make_unique<GestionnaireOperateur>(TOKEN_SLASH);
+    _gestionnairePlusPetit = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_PETIT);
+    _gestionnairePlusGrand = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_GRAND);
+    _gestionnairePlusPetitEgal = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_PETIT_EGAL);
+    _gestionnairePlusGrandEgal = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_GRAND_EGAL);
 
     std::vector<GestionnaireOperateur*> operateurs = {
         _gestionnaireAddition.get(), 
         _gestionnaireSoustraction.get(), 
         _gestionnaireMultiplication.get(), 
-        _gestionnaireDivision.get()
+        _gestionnaireDivision.get(),
+        _gestionnairePlusPetit.get(),
+        _gestionnairePlusGrand.get(),
+        _gestionnairePlusPetitEgal.get(),
+        _gestionnairePlusGrandEgal.get()
     };
             
     _chaineResponsabilite = std::make_unique<ChaineResponsabilite>(_serviceParenthese.get(), operateurs);
@@ -50,6 +59,18 @@ void ConstructeurEquationFlottante::initialiserRegistre()
     _registreSymbole->enregistrer(TOKEN_SLASH, []() -> std::shared_ptr<IExpression> { 
         return std::make_shared<NoeudOperation>(TOKEN_SLASH); 
     });
+    _registreSymbole->enregistrer(TOKEN_PLUS_PETIT, []() -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(TOKEN_PLUS_PETIT); 
+    });
+    _registreSymbole->enregistrer(TOKEN_PLUS_GRAND, []() -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(TOKEN_PLUS_GRAND); 
+    });
+    _registreSymbole->enregistrer(TOKEN_PLUS_GRAND_EGAL, []() -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(TOKEN_PLUS_GRAND_EGAL); 
+    });
+    _registreSymbole->enregistrer(TOKEN_PLUS_PETIT_EGAL, []() -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(TOKEN_PLUS_PETIT_EGAL);
+     });
 }
 
 std::shared_ptr<INoeud> ConstructeurEquationFlottante::construire(std::vector<Token> &tokens)
