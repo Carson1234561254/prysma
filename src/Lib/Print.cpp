@@ -1,11 +1,19 @@
 #include <cstdio>
 
 extern "C" {
-    void printInt(int x) {
-        printf("%d\n", x);
+    void printInt(int value) {
+        printf("%d\n", value);
     }
 
-    void printFloat(float x) {
-        printf("%f\n", x);
+    void printFloat(float value) {
+        printf("%f\n", value);
+    }
+
+    void printBool(bool value) {
+        if (value) {
+            printf("true\n");
+        } else {
+            printf("false\n");
+        }
     }
 }
