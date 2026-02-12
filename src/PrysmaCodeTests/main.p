@@ -1,9 +1,12 @@
 scope {
    fn int main() {
-      dec bool b = 10<=(1+50);
-      call printBool(b);
+      dec bool b = 10000<=(1+50);
 
       if (b)
+      {
+         call printBool(b);
+      }
+      else
       {
          call printBool(b);
       }

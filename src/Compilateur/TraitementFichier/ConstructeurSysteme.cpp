@@ -17,6 +17,9 @@ ConstructeurSysteme::~ConstructeurSysteme() {}
 std::string ConstructeurSysteme::parcourirEtCollecterFichiers(const std::string& repertoire, const std::string& extension)
 {
     std::string fichiers;
+    if (!fs::exists(repertoire)) {
+        return fichiers;
+    }
     for (const auto& entry : fs::directory_iterator(repertoire)) {
         if (entry.is_regular_file() && entry.path().extension() == extension) {
             fichiers += " " + entry.path().string();
