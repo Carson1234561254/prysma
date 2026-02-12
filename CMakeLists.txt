@@ -70,9 +70,6 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Variable/NoeudRefVariable.cpp
     src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
     src/Compilateur/AST/Noeuds/Condition/NoeudIf.cpp
-    src/Compilateur/AST/Noeuds/Condition/NoeudBlocIf.cpp
-    src/Compilateur/AST/Noeuds/Condition/NoeudBlocElse.cpp
-    src/Compilateur/AST/Noeuds/Condition/NoeudBlocEndif.cpp
     src/Compilateur/AST/Registre/RegistreArgument.cpp
     src/Compilateur/AST/Registre/RegistreVariable.cpp
     src/Compilateur/AST/Registre/ReturnContextCompilation.cpp

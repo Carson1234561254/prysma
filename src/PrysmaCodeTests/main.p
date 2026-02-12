@@ -1,15 +1,19 @@
 scope {
-   fn int main() {
-      dec bool b = 10000<=(1+50);
 
-      if (b)
+   fn int main() {
+   
+      if (10<=(1+50))
       {
-         call printBool(b);
+         dec int a = 10;
+         call printInt(a);
       }
       else
       {
-         call printBool(b);
+         dec int c = 20;
+         call printInt(c);
       }
+
+      
       
       return 0;
    }

@@ -5,21 +5,20 @@
 #include "Compilateur/Visiteur/AmisVisiteurs.h"
 #include <memory>
 
-class NoeudBlocIf;
-class NoeudBlocElse;
-class NoeudBlocEndif;
+class INoeud;
 
 class NoeudIf : public NoeudInstruction
 {
     LISTE_DES_AMIS_VISITEURS
 private: 
-    std::shared_ptr<NoeudBlocIf> noeudBlocIf;
-    std::shared_ptr<NoeudBlocElse> noeudBlocElse;
-    std::shared_ptr<NoeudBlocEndif> noeudBlocEndif;
+    std::shared_ptr<INoeud> noeudCondition;
+    std::shared_ptr<INoeud> noeudBlocIf;
+    std::shared_ptr<INoeud> noeudBlocElse;
+    std::shared_ptr<INoeud> noeudBlocEndif;
 
 public: 
     NoeudIf();
-    NoeudIf(std::shared_ptr<NoeudBlocIf>&& blocIf, std::shared_ptr<NoeudBlocElse>&& blocElse, std::shared_ptr<NoeudBlocEndif>&& blocEndif);
+    NoeudIf(std::shared_ptr<INoeud>&& condition, std::shared_ptr<INoeud>&& blocIf, std::shared_ptr<INoeud>&& blocElse, std::shared_ptr<INoeud>&& blocEndif);
     ~NoeudIf();
     
     void accept(IVisiteur* visiteur) override;

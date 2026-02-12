@@ -1,20 +1,17 @@
 #include "Compilateur/AST/Noeuds/Condition/NoeudIf.h"
-#include "Compilateur/AST/Noeuds/Condition/NoeudBlocElse.h"
-#include "Compilateur/AST/Noeuds/Condition/NoeudBlocEndif.h"
-#include "Compilateur/AST/Noeuds/Condition/NoeudBlocIf.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include <llvm-18/llvm/IR/Value.h>
 
 void VisiteurGeneralGenCode::visiter(NoeudIf* noeudIf) 
 {
-    // Récupérer les blocs if, else et endif à partir du noeud if
-    std::shared_ptr<NoeudBlocIf> noeudBlocIf = noeudIf->noeudBlocIf;
-    std::shared_ptr<NoeudBlocElse> noeudBlocElse = noeudIf->noeudBlocElse;
-    std::shared_ptr<NoeudBlocEndif> noeudBlocEndif = noeudIf->noeudBlocEndif;
+    // Récupérer la condition et les blocs à partir du noeud if
+    std::shared_ptr<INoeud> noeudCondition = noeudIf->noeudCondition;
+    std::shared_ptr<INoeud> noeudBlocIf = noeudIf->noeudBlocIf;
+    std::shared_ptr<INoeud> noeudBlocElse = noeudIf->noeudBlocElse;
 
-    // Récupérer le registre cmp pour la condition 
-
-   llvm::Value* cmp = _contextGenCode->valeurTemporaire; 
+    // Évaluer la condition
+    noeudCondition->accept(this);
+    llvm::Value* cmp = _contextGenCode->valeurTemporaire; 
 
     llvm::Function* fonctionEnCours = _contextGenCode->backend->getBuilder().GetInsertBlock()->getParent();
 
@@ -22,36 +19,29 @@ void VisiteurGeneralGenCode::visiter(NoeudIf* noeudIf)
     llvm::BasicBlock* blocElse = llvm::BasicBlock::Create(_contextGenCode->backend->getContext(), "else", fonctionEnCours);
     llvm::BasicBlock* blocFin = llvm::BasicBlock::Create(_contextGenCode->backend->getContext(), "endif", fonctionEnCours);
 
-    // Générer le code de branchement conditionnel c'est la condition br qui jump au flag 
+    // Générer le code de branchement conditionnel
     _contextGenCode->backend->getBuilder().CreateCondBr(cmp, blocThen, blocElse);
 
     // Générer le code pour le bloc "if"
     _contextGenCode->backend->getBuilder().SetInsertPoint(blocThen);
-    
-    for (const auto& enfant : noeudBlocIf->getEnfants()) {
-        enfant->accept(this);
+    if (noeudBlocIf) {
+        noeudBlocIf->accept(this);
     }
-    
     // Brancher vers endif à la fin du bloc if
     _contextGenCode->backend->getBuilder().CreateBr(blocFin);
 
     // Générer le code pour le bloc "else"
     _contextGenCode->backend->getBuilder().SetInsertPoint(blocElse);
-    
-    // Traiter le bloc else s'il existe
     if (noeudBlocElse) {
-        for(const auto& enfant : noeudBlocElse->getEnfants()) {
-            enfant->accept(this);
-        }
+        noeudBlocElse->accept(this);
     }
-    
     // Brancher vers endif à la fin du bloc else
     _contextGenCode->backend->getBuilder().CreateBr(blocFin);
 
     // Générer le code pour le bloc "endif"
     _contextGenCode->backend->getBuilder().SetInsertPoint(blocFin);
     
-     // Car plus de noeud devrait traiter cette valeur temporaire après le if
+    // Car plus de noeud devrait traiter cette valeur temporaire après le if
     _contextGenCode->valeurTemporaire = nullptr;
 
 }
