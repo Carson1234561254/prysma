@@ -4,7 +4,7 @@ scope {
 
       dec int i = 0; 
 
-      while(i < 10) 
+      while(i < 2000) 
       {
          aff i = i +1; 
          call printInt(i); 
