@@ -4,9 +4,9 @@
 void VisiteurGeneralGenCode::visiter(NoeudWhile* noeudWhile) 
 {
     // Récupérer la condition et les blocs à partir du noeud while
-    std::shared_ptr<INoeud> noeudCondition = noeudWhile->noeudCondition;
-    std::shared_ptr<INoeud> noeudBlocWhile = noeudWhile->noeudBlocWhile;
-    std::shared_ptr<INoeud> noeudBlocEndWhile = noeudWhile->noeudBlocFinWhile;
+    const std::shared_ptr<INoeud>& noeudCondition = noeudWhile->getNoeudCondition();
+    const std::shared_ptr<INoeud>& noeudBlocWhile = noeudWhile->getNoeudBlocWhile();
+    const std::shared_ptr<INoeud>& noeudBlocEndWhile = noeudWhile->getNoeudBlocFinWhile();
     
     // construire les blocs de base pour le while 
     llvm::Function* fonctionEnCours = _contextGenCode->backend->getBuilder().GetInsertBlock()->getParent();

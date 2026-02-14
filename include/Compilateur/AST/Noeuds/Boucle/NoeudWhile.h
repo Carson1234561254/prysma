@@ -10,7 +10,6 @@ class GestionFonction;
 
 class NoeudWhile : public NoeudInstruction
 {
-    LISTE_DES_AMIS_VISITEURS
 private: 
     std::shared_ptr<INoeud> noeudCondition;
     std::shared_ptr<INoeud> noeudBlocWhile;
@@ -22,6 +21,10 @@ public:
     ~NoeudWhile();
     
     void accept(IVisiteur* visiteur) override;
+
+    const std::shared_ptr<INoeud>& getNoeudCondition() const { return noeudCondition; }
+    const std::shared_ptr<INoeud>& getNoeudBlocWhile() const { return noeudBlocWhile; }
+    const std::shared_ptr<INoeud>& getNoeudBlocFinWhile() const { return noeudBlocFinWhile; }
 };
 
 #endif /* F158F3CA_48BA_406A_A611_87940EE9E015 */

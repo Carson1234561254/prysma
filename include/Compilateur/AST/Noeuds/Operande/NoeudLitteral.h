@@ -3,11 +3,8 @@
 #pragma once
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudLitteral : public INoeud
 {
-    LISTE_DES_AMIS_VISITEURS
 private:
     float _valeur;
 

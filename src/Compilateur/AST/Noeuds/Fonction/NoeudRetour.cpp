@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <utility>
 

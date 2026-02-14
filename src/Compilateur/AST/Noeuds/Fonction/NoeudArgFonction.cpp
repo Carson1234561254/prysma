@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 
 NoeudArgFonction::NoeudArgFonction(std::shared_ptr<RegistreType> registreType, std::string nom, TokenType type)
 {

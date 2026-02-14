@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/Lexer/TokenType.h"
 
 #include <llvm/IR/Instructions.h>

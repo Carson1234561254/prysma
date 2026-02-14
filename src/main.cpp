@@ -116,6 +116,10 @@ int main(int argc, char* argv[])
         VisiteurGeneralGenCode visiteur(context);
         arbre->accept(&visiteur);
 
+        SortieGrapheVisuelTexte sortieGrapheVisuel("output.dot");
+        VisiteurGeneralGraphViz visiteurGraphViz(std::move(sortieGrapheVisuel));
+        arbre->accept(&visiteurGraphViz);
+
         LlvmSerializer serializer(context->backend->getContext(), context->backend->getModule());
         serializer.SauvegarderCodeLLVM("output.ll");
        

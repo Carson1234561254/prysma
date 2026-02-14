@@ -3,11 +3,8 @@
 #include "Compilateur/AST/Noeuds/Interfaces/IInstruction.h"
 #include <vector>
 #include <memory>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudInstruction: public IInstruction
 {
-    LISTE_DES_AMIS_VISITEURS
 protected: 
     std::vector<std::shared_ptr<INoeud>> enfants; 
 public: 

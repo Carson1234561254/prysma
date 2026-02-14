@@ -5,11 +5,8 @@
 #include "Compilateur/Lexer/TokenType.h"
 #include <llvm/IR/Instructions.h>
 #include <memory>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudDeclarationVariable : public INoeud
 {
-    LISTE_DES_AMIS_VISITEURS
 private:
     std::string _nom;
     llvm::Value* _arraySize;
@@ -24,6 +21,10 @@ public:
     ~NoeudDeclarationVariable();
 
     void accept(IVisiteur* visiteur) override;
+
+    const std::string& getNom() const { return _nom; }
+    std::shared_ptr<INoeud>& getExpression() { return _expression; }
+    TokenType getTokenType() const { return _tokenType; }
 };
 
 #endif /* B18E8AB9_A311_4560_9FDD_5E2D3FAC0F14 */

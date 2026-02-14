@@ -4,11 +4,8 @@
 #include "Compilateur/AST/Registre/RegistreType.h"
 #include <memory>
 #include <string>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudArgFonction: public INoeud
 {
-    LISTE_DES_AMIS_VISITEURS
 private:
      std::shared_ptr<RegistreType> _registreType; 
      std::string _nom;
@@ -19,6 +16,10 @@ public:
     ~NoeudArgFonction();
 
     void accept(IVisiteur* visiteur) override;
+
+    const std::shared_ptr<RegistreType>& getRegistreType() const { return _registreType; }
+    const std::string& getNom() const { return _nom; }
+    TokenType getType() const { return _type; }
 };
 
 #endif /* B9F8948B_23A4_4812_A098_C71C4D92373B */

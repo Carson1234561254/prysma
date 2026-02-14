@@ -4,7 +4,7 @@
 void VisiteurGeneralGenCode::visiter(NoeudRefVariable* noeudRefVariable) 
 {
     Token variableToken;
-    variableToken.value = noeudRefVariable->_nomVariable;
+    variableToken.value = noeudRefVariable->getNomVariable();
     llvm::Value* variable = _contextGenCode->registreVariable->recupererVariables(variableToken);
     _contextGenCode->valeurTemporaire = variable;
 }

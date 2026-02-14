@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 
 NoeudUnRefVariable::NoeudUnRefVariable(const std::string& nomVariable)
     : _nomVariable(nomVariable)

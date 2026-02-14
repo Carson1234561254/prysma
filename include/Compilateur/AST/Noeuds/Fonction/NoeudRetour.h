@@ -4,11 +4,8 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudRetour : public INoeud
 {
-    LISTE_DES_AMIS_VISITEURS
 private:
     std::shared_ptr<INoeud> _valeurRetour;
 
@@ -17,6 +14,8 @@ public:
     ~NoeudRetour() = default;
 
     void accept(IVisiteur* visiteur) override;
+
+    const std::shared_ptr<INoeud>& getValeurRetour() const { return _valeurRetour; }
 };
 
 #endif /* DC6C556F_6309_4430_98EB_911BFF855216 */

@@ -5,11 +5,11 @@
 void VisiteurGeneralGenCode::visiter(NoeudOperation* noeud)
 {
 
-    noeud->gauche->accept(this);
+    noeud->getGauche()->accept(this);
     llvm::Value* valGauche = _contextGenCode->valeurTemporaire;
 
 
-    noeud->droite->accept(this);
+    noeud->getDroite()->accept(this);
     llvm::Value* valDroite = _contextGenCode->valeurTemporaire;
 
 
@@ -20,7 +20,7 @@ void VisiteurGeneralGenCode::visiter(NoeudOperation* noeud)
     llvm::Value* resultat = nullptr;
     auto& builder = _contextGenCode->backend->getBuilder();
 
-    switch (noeud->typeOperation) {
+    switch (noeud->getTypeOperation()) {
         case TOKEN_PLUS:
             resultat = builder.CreateFAdd(valGauche, valDroite, "addtmp");
             break;

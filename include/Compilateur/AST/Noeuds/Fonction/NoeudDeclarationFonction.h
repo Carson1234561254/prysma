@@ -4,11 +4,8 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <string>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudDeclarationFonction : public NoeudInstruction
 {
-    LISTE_DES_AMIS_VISITEURS
 private:
     std::string _nom;
     TokenType _typeRetourToken;
@@ -19,6 +16,9 @@ public:
     ~NoeudDeclarationFonction() = default;
 
     void accept(IVisiteur* visiteur) override;
+
+    const std::string& getNom() const { return _nom; }
+    TokenType getTypeRetourToken() const { return _typeRetourToken; }
 };
 
 #endif /* A2837407_B466_49AE_8A29_4BFC0A5D0461 */

@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <llvm-18/llvm/IR/BasicBlock.h>
 #include <llvm-18/llvm/IR/DerivedTypes.h>

@@ -116,7 +116,9 @@ set(SOURCES
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurScope.cpp
-
+    # Graph visuel 
+    src/Compilateur/GrapheVisuel/SortieArbreVisuelTexte.cpp
+    
     src/main.cpp
 )
 

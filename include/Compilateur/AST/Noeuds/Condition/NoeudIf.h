@@ -2,14 +2,8 @@
 #define B7984297_5521_450F_A453_2594C7FDFC7A
 
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-#include <memory>
-
-class INoeud;
-
 class NoeudIf : public NoeudInstruction
 {
-    LISTE_DES_AMIS_VISITEURS
 private: 
     std::shared_ptr<INoeud> noeudCondition;
     std::shared_ptr<INoeud> noeudBlocIf;
@@ -22,6 +16,11 @@ public:
     ~NoeudIf();
     
     void accept(IVisiteur* visiteur) override;
+
+    const std::shared_ptr<INoeud>& getNoeudCondition() const { return noeudCondition; }
+    const std::shared_ptr<INoeud>& getNoeudBlocIf() const { return noeudBlocIf; }
+    const std::shared_ptr<INoeud>& getNoeudBlocElse() const { return noeudBlocElse; }
+    const std::shared_ptr<INoeud>& getNoeudBlocEndif() const { return noeudBlocEndif; }
 };
 
 #endif /* B7984297_5521_450F_A453_2594C7FDFC7A */

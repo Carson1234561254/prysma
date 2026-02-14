@@ -3,11 +3,8 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include <string>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
-
 class NoeudUnRefVariable : public INoeud
 {   
-    LISTE_DES_AMIS_VISITEURS
 private:
     std::string _nomVariable;
 
@@ -17,6 +14,7 @@ public:
 
     void accept(IVisiteur* visiteur) override;
 
+    const std::string& getNomVariable() const { return _nomVariable; }
 };
 
 #endif /* C1FA2E98_E6EC_48D0_9F9D_84FB77C0023E */

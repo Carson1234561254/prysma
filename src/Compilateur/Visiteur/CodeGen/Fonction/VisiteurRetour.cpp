@@ -3,7 +3,7 @@
 
 void VisiteurGeneralGenCode::visiter(NoeudRetour* noeudReturn)
 {
-    noeudReturn->_valeurRetour->accept(this);
+    noeudReturn->getValeurRetour()->accept(this);
 
     TokenType typeRetourToken = _contextGenCode->returnContextCompilation->recupererContext();
     llvm::Type* typeRetour = _contextGenCode->registreType->recuperer(typeRetourToken);

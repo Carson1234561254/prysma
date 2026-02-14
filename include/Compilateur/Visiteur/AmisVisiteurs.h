@@ -1,8 +1,5 @@
-#include "Compilateur/LLVM/GenerateurFonction.h"
-#ifndef LISTE_DES_AMIS_VISITEURS
-#define LISTE_DES_AMIS_VISITEURS \
-    friend class VisiteurGeneralGenCode;\
-    friend class GestionFonction;
+#ifndef AMISVISITEURS_H
+#define AMISVISITEURS_H
 
+#endif /* AMISVISITEURS_H */
 
-#endif /* LISTE_DES_AMIS_VISITEURS */

@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 
 NoeudInstruction::NoeudInstruction()
 {

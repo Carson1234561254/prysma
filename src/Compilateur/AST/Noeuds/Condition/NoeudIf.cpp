@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Condition/NoeudIf.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 
 NoeudIf::NoeudIf()
     = default;

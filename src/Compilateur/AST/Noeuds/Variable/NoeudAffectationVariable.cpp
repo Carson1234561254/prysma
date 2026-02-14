@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.h"
+#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/Lexer/Lexer.h"
 
 #include <llvm/IR/Instructions.h>

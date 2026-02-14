@@ -26,7 +26,9 @@ public:
 
     void accept(IVisiteur* visiteur) override;
 
-    friend class VisiteurGeneralGenCode;
+    TokenType getTypeOperation() const { return typeOperation; }
+    const std::shared_ptr<INoeud>& getGauche() const { return gauche; }
+    const std::shared_ptr<INoeud>& getDroite() const { return droite; }
 };
 
 

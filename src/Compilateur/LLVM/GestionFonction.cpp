@@ -40,7 +40,7 @@ GestionFonction::ArgumentsCodeGen GestionFonction::chargerArguments()
         if (typeid(*enfant) == typeid(NoeudArgFonction)) {
             auto* arg = static_cast<NoeudArgFonction*>(enfant);
             arguments.push_back(arg);
-            llvm::Type* argType = _contextGenCode->registreType->recuperer(arg->_type);
+            llvm::Type* argType = _contextGenCode->registreType->recuperer(arg->getType());
             argTypes.push_back(argType);
         }
     }
@@ -57,7 +57,7 @@ llvm::Function* GestionFonction::creerFonction(llvm::Type* typeDeRetour, const A
     llvm::Function* function = llvm::Function::Create(
         funcType,
         llvm::Function::ExternalLinkage,
-        _noeudDeclarationFonction->_nom,
+        _noeudDeclarationFonction->getNom(),
         &_contextGenCode->backend->getModule()
     );
 
@@ -70,13 +70,13 @@ llvm::Function* GestionFonction::creerFonction(llvm::Type* typeDeRetour, const A
 
 void GestionFonction::enregistrerFonction(llvm::Function* function)
 {
-    _contextGenCode->registreFonction->enregistrer(_noeudDeclarationFonction->_nom, function);
+    _contextGenCode->registreFonction->enregistrer(_noeudDeclarationFonction->getNom(), function);
 }
 
 
 void GestionFonction::initialiserContexte()
 {
-    _contextGenCode->returnContextCompilation->piler(_noeudDeclarationFonction->_typeRetourToken);
+    _contextGenCode->returnContextCompilation->piler(_noeudDeclarationFonction->getTypeRetourToken());
     _contextGenCode->registreVariable->piler();
 }
 
@@ -86,14 +86,14 @@ void GestionFonction::traiterArgumentsConstruit(llvm::Function* function, const 
     size_t argIndex = 0;
     for (auto* noeudArg : argumentsCodeGen.arguments) {
         llvm::Argument* arg = function->getArg(argIndex);
-        arg->setName(noeudArg->_nom);
+        arg->setName(noeudArg->getNom());
         
         llvm::Type* argType = arg->getType();
         llvm::AllocaInst* alloca = _contextGenCode->backend->getBuilder().CreateAlloca(argType);
         _contextGenCode->backend->getBuilder().CreateStore(arg, alloca);
         
         Token argumentToken;
-        argumentToken.value = noeudArg->_nom;
+        argumentToken.value = noeudArg->getNom();
         argumentToken.type = TOKEN_IDENTIFIANT;
         
         _contextGenCode->registreVariable->enregistrer(argumentToken, alloca);
@@ -125,7 +125,7 @@ void GestionFonction::passArguments(NoeudAppelFonction* noeudAppelFonction)
 {
     _contextGenCode->registreArgument->vider();
 
-    std::string nomFonction = noeudAppelFonction->_nomFonction.value;
+    std::string nomFonction = noeudAppelFonction->getNomFonction().value;
     llvm::Function* fonctionCible = _contextGenCode->registreFonction->recuperer(nomFonction);
 
     llvm::FunctionType* typeFonction = fonctionCible->getFunctionType();
@@ -183,7 +183,7 @@ void GestionFonction::genererAppelFonction(llvm::Function* fonction)
 
 void GestionFonction::declarerFonction()
 {
-    llvm::Type* typeDeRetour = _contextGenCode->registreType->recuperer(_noeudDeclarationFonction->_typeRetourToken);
+    llvm::Type* typeDeRetour = _contextGenCode->registreType->recuperer(_noeudDeclarationFonction->getTypeRetourToken());
     
     GestionFonction::ArgumentsCodeGen argumentsCodeGen = chargerArguments();
 
@@ -201,6 +201,6 @@ void GestionFonction::declarerFonction()
 void GestionFonction::genererAppelFonction(NoeudAppelFonction* noeudAppelFonction)
 {
     passArguments(noeudAppelFonction);
-    llvm::Function* fonction = obtenirFonction(noeudAppelFonction->_nomFonction.value);
+    llvm::Function* fonction = obtenirFonction(noeudAppelFonction->getNomFonction().value);
     genererAppelFonction(fonction);
 }

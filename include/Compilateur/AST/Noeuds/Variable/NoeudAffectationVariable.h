@@ -5,28 +5,25 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include <llvm/IR/Instructions.h>
 #include <memory>
-#include "Compilateur/Visiteur/AmisVisiteurs.h"
 
 class ContextGenCode;
 
 class NoeudAffectationVariable : public INoeud
 {
-    LISTE_DES_AMIS_VISITEURS
-    friend void assignation(llvm::AllocaInst* allocaInst, llvm::Value* valeur, std::shared_ptr<ContextGenCode> contextGenCode);
-    friend llvm::AllocaInst* recupererVariable(NoeudAffectationVariable* noeudAffectationVariable, std::shared_ptr<ContextGenCode> contextGenCode);
 private:
     std::string _nom;
     std::shared_ptr<INoeud> _expression;
     Token _token; 
-
-    void assignation(llvm::AllocaInst* allocaInst, llvm::Value* valeur);
-    llvm::AllocaInst* recupererVariable();
 
 public:
     NoeudAffectationVariable(const std::string& nom, std::shared_ptr<INoeud> expression, Token token);
     ~NoeudAffectationVariable();
 
     void accept(IVisiteur* visiteur) override;
+
+    const std::string& getNom() const { return _nom; }
+    std::shared_ptr<INoeud>& getExpression() { return _expression; }
+    const Token& getToken() const { return _token; }
 };
 
 #endif /* F529C0E5_B051_4DF3_9DB0_8987D960AAF6 */
