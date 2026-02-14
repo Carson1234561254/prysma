@@ -3,10 +3,11 @@
 #include "Compilateur/Lexer/TokenType.h"
 #include <llvm/IR/Type.h>
 #include <memory>
+#include <string>
 
 void VisiteurGeneralGraphViz::visiter(NoeudOperation* noeud)
 {
-    int idNoeud = _sortieGrapheVisuel.ajouterNoeud(to_string(noeud->getTypeOperation()));
+    int idNoeud = _sortieGrapheVisuel.ajouterNoeud(noeud->getToken().value);
     
     const std::shared_ptr<INoeud>& gauche = noeud->getGauche();
     if (gauche) {

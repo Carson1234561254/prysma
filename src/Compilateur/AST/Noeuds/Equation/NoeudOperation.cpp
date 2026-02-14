@@ -1,8 +1,8 @@
 #include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 
-NoeudOperation::NoeudOperation(TokenType type) 
-    : typeOperation(type), gauche(nullptr), droite(nullptr) {
+NoeudOperation::NoeudOperation(Token operation) 
+    : _operation(operation), gauche(nullptr), droite(nullptr) {
 }
 
 void NoeudOperation::accept(IVisiteur* visiteur) {

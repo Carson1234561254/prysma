@@ -77,7 +77,7 @@ std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>
         }    
     }
     
-    std::shared_ptr<IExpression> noeud = _registreSymbole->recupererNoeud(equation[indice].type);
+    std::shared_ptr<IExpression> noeud = _registreSymbole->recupererNoeud(equation[indice]);
     std::vector<Token> gauche(equation.begin(), equation.begin() + indice); 
     std::vector<Token> droite(equation.begin() + indice + 1, equation.end());
     

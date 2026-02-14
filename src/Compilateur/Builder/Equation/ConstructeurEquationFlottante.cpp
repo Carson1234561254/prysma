@@ -44,32 +44,32 @@ ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre*
 
 void ConstructeurEquationFlottante::initialiserRegistre()
 {
-    _registreSymbole->enregistrer(TOKEN_PLUS, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_PLUS); 
+    _registreSymbole->enregistrer(TOKEN_PLUS, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
 
-    _registreSymbole->enregistrer(TOKEN_MOINS, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_MOINS); 
+    _registreSymbole->enregistrer(TOKEN_MOINS, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
 
-    _registreSymbole->enregistrer(TOKEN_ETOILE, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_ETOILE); 
+    _registreSymbole->enregistrer(TOKEN_ETOILE, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
 
-    _registreSymbole->enregistrer(TOKEN_SLASH, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_SLASH); 
+    _registreSymbole->enregistrer(TOKEN_SLASH, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
-    _registreSymbole->enregistrer(TOKEN_PLUS_PETIT, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_PLUS_PETIT); 
+    _registreSymbole->enregistrer(TOKEN_PLUS_PETIT, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
-    _registreSymbole->enregistrer(TOKEN_PLUS_GRAND, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_PLUS_GRAND); 
+    _registreSymbole->enregistrer(TOKEN_PLUS_GRAND, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
-    _registreSymbole->enregistrer(TOKEN_PLUS_GRAND_EGAL, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_PLUS_GRAND_EGAL); 
+    _registreSymbole->enregistrer(TOKEN_PLUS_GRAND_EGAL, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token); 
     });
-    _registreSymbole->enregistrer(TOKEN_PLUS_PETIT_EGAL, []() -> std::shared_ptr<IExpression> { 
-        return std::make_shared<NoeudOperation>(TOKEN_PLUS_PETIT_EGAL);
+    _registreSymbole->enregistrer(TOKEN_PLUS_PETIT_EGAL, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token);
      });
 }
 

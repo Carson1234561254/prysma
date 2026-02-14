@@ -20,7 +20,7 @@ void VisiteurGeneralGenCode::visiter(NoeudOperation* noeud)
     llvm::Value* resultat = nullptr;
     auto& builder = _contextGenCode->backend->getBuilder();
 
-    switch (noeud->getTypeOperation()) {
+    switch (noeud->getToken().type) {
         case TOKEN_PLUS:
             resultat = builder.CreateFAdd(valGauche, valDroite, "addtmp");
             break;

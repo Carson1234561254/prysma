@@ -6,6 +6,8 @@
 #include "Compilateur/Lexer/TokenType.h"
 
 
+#include "Compilateur/Lexer/Lexer.h"
+
 class IExpression;
 
 /**
@@ -18,23 +20,9 @@ class IExpression;
 class IRegistreSymbole {
 public:
     virtual ~IRegistreSymbole() = default;
-    
-    /**
-     * @brief Enregistre un opérateur
-     * @param symbole Le caractère de l'opérateur
-     * @param supplier Fonction créant un nœud d'opération
-     */
-    virtual void enregistrer(
-        TokenType symbole, 
-        std::function<std::shared_ptr<IExpression>()> supplier
-    ) = 0;
-    
-    /**
-     * @brief Obtient un nœud d'opération pour un symbole
-     * @param symbole Le caractère de l'opérateur
-     * @return Un nouveau nœud d'opération
-     */
-    virtual std::shared_ptr<IExpression> recupererNoeud(TokenType symbole) = 0;
+
+    virtual void enregistrer(TokenType symbole, std::function<std::shared_ptr<IExpression>(Token)> fournisseur) = 0;
+    virtual std::shared_ptr<IExpression> recupererNoeud(Token token) = 0;
     
     /**
      * @brief Vérifie si un caractère est un opérateur connu

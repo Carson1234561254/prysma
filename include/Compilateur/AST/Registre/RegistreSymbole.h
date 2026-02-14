@@ -8,7 +8,7 @@
 
 class IExpression;
 
-class RegistreSymbole : public RegistreGeneric<TokenType,std::function<std::shared_ptr<IExpression>()>>,
+class RegistreSymbole : public RegistreGeneric<TokenType,std::function<std::shared_ptr<IExpression>(Token)>>,
                         public IRegistreSymbole {
 public:
     RegistreSymbole() = default;
@@ -17,14 +17,14 @@ public:
   
     void enregistrer(
         TokenType symbole, 
-        std::function<std::shared_ptr<IExpression>()> fournisseur) override {
+        std::function<std::shared_ptr<IExpression>(Token)> fournisseur) override {
         RegistreGeneric::enregistrer(symbole, std::move(fournisseur));
     }
 
 
-    std::shared_ptr<IExpression> recupererNoeud(TokenType symbole) override {
-        auto fournisseur = RegistreGeneric::recuperer(symbole);
-        return fournisseur();
+    std::shared_ptr<IExpression> recupererNoeud(Token token) override {
+        std::function<std::shared_ptr<IExpression>(Token)> fournisseur = RegistreGeneric::recuperer(token.type);
+        return fournisseur(token);
     }
 
   

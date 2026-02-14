@@ -3,17 +3,18 @@
 #pragma once
 
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
-#include "Compilateur/Lexer/TokenType.h"
+#include "Compilateur/Lexer/Lexer.h"
 #include <memory>
+#include <string>
 
 class NoeudOperation : public IExpression {
 private:
-    TokenType typeOperation;
+    Token _operation;
     std::shared_ptr<INoeud> gauche;
     std::shared_ptr<INoeud> droite;
 
 public:
-    explicit NoeudOperation(TokenType type);
+    explicit NoeudOperation(Token operation);
 
     void setGauche(std::shared_ptr<INoeud> gauche_node) { gauche = std::move(gauche_node); }
     void setDroite(std::shared_ptr<INoeud> droite_node) { droite = std::move(droite_node); }
@@ -26,7 +27,7 @@ public:
 
     void accept(IVisiteur* visiteur) override;
 
-    TokenType getTypeOperation() const { return typeOperation; }
+    const Token& getToken() const { return _operation; }
     const std::shared_ptr<INoeud>& getGauche() const { return gauche; }
     const std::shared_ptr<INoeud>& getDroite() const { return droite; }
 };

@@ -64,5 +64,4 @@ enum TokenType {
     TOKEN_TYPE_VOID,
 };
 
-
 #endif /* F738FE90_52E0_4F82_9BB5_5833C5E4D2CB */
