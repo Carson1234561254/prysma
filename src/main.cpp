@@ -32,6 +32,7 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
+#include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 
 int main(int argc, char* argv[])
 {

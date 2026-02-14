@@ -86,22 +86,37 @@ set(SOURCES
     src/Compilateur/TraitementFichier/ConstructeurSysteme.cpp
     src/Compilateur/TraitementFichier/FichierEcriture.cpp
     src/Compilateur/TraitementFichier/FichierLecture.cpp
-    src/Compilateur/Visiteur/Fonction/VisiteurAppelFonction.cpp
-    src/Compilateur/Visiteur/Boucle/VisiteurNoeudWhile.cpp
-    # Visiteur 
-    src/Compilateur/Visiteur/Fonction/VisiteurArgFonction.cpp
-    src/Compilateur/Visiteur/Fonction/VisiteurDeclarationFonction.cpp
-    src/Compilateur/Visiteur/Fonction/VisiteurRetour.cpp
-    src/Compilateur/Visiteur/Operande/VisiteurOperation.cpp
-    src/Compilateur/Visiteur/Variable/VisiteurAffectationVariable.cpp
-    src/Compilateur/Visiteur/Variable/VisiteurDeclarationVariable.cpp
-    src/Compilateur/Visiteur/Variable/VisiteurRefVariable.cpp
-    src/Compilateur/Visiteur/Variable/VisiteurUnRefVariable.cpp
-    src/Compilateur/Visiteur/VisiteurGeneralGenCode.cpp
-    src/Compilateur/Visiteur/VisiteurInstruction.cpp
-    src/Compilateur/Visiteur/VisiteurScope.cpp
-    src/Compilateur/Visiteur/Condition/VisiteurNoeudIf.cpp
-    src/Compilateur/Visiteur/Boucle/VisiteurNoeudWhile.cpp
+    # Visiteur code gen
+    src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurAppelFonction.cpp
+    src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp
+    src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurArgFonction.cpp
+    src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurDeclarationFonction.cpp
+    src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurRetour.cpp
+    src/Compilateur/Visiteur/CodeGen/Operande/VisiteurOperation.cpp
+    src/Compilateur/Visiteur/CodeGen/Variable/VisiteurAffectationVariable.cpp
+    src/Compilateur/Visiteur/CodeGen/Variable/VisiteurDeclarationVariable.cpp
+    src/Compilateur/Visiteur/CodeGen/Variable/VisiteurRefVariable.cpp
+    src/Compilateur/Visiteur/CodeGen/Variable/VisiteurUnRefVariable.cpp
+    src/Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.cpp
+    src/Compilateur/Visiteur/CodeGen/VisiteurInstruction.cpp
+    src/Compilateur/Visiteur/CodeGen/VisiteurScope.cpp
+    src/Compilateur/Visiteur/CodeGen/Condition/VisiteurNoeudIf.cpp
+    src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp
+    # Visiteur ast graphviz dump 
+    src/Compilateur/Visiteur/ASTGraphViz/Boucle/VisiteurNoeudWhile.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Condition/VisiteurNoeudIf.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurAppelFonction.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurArgFonction.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurDeclarationFonction.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurRetour.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Operande/VisiteurOperation.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurAffectationVariable.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurDeclarationVariable.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurRefVariable.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/VisiteurScope.cpp
+
     src/main.cpp
 )
 

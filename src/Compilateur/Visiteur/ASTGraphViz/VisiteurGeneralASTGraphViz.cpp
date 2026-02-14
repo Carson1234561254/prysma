@@ -1,7 +1,6 @@
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
-#include <llvm/IR/Constants.h>
 
 VisiteurGeneralGraphViz::VisiteurGeneralGraphViz(std::shared_ptr<ContextGenCode> contextGenCode) 
 {}
