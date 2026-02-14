@@ -5,14 +5,11 @@
 SortieGrapheVisuelTexte::SortieGrapheVisuelTexte(const std::string& cheminSortie)
     : _cheminSortie(cheminSortie), _compteurId(0) {}
 
-void SortieGrapheVisuelTexte::ajouterNoeudValeur(int noeudId, const std::string& valeur) {
+int SortieGrapheVisuelTexte::ajouterNoeud(const std::string& label) {
+    int noeudId = obtenirNouvelId();
     _contenuGraphe << "    node" << noeudId 
-                   << " [label=\"" << valeur << "\", shape=ellipse, style=filled, fillcolor=lightgreen];\n";
-}
-
-void SortieGrapheVisuelTexte::ajouterNoeudOperation(int noeudId, const std::string& operateur) {
-    _contenuGraphe << "    node" << noeudId 
-                   << " [label=\"" << operateur << "\", shape=ellipse, style=filled, fillcolor=lightgreen];\n";
+                   << " [label=\"" << label << "\", shape=ellipse, style=filled, fillcolor=lightgreen];\n";
+    return noeudId;
 }
 
 void SortieGrapheVisuelTexte::ajouterArete(int parentId, int enfantId) {

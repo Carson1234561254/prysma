@@ -10,14 +10,13 @@ private:
     std::string _cheminSortie;
     std::stringstream _contenuGraphe;
     int _compteurId;
+    int obtenirNouvelId();
 
 public:
     SortieGrapheVisuelTexte(const std::string& cheminSortie);
-    void ajouterNoeudValeur(int noeudId, const std::string& valeur);
-    void ajouterNoeudOperation(int noeudId, const std::string& operateur);
+    int ajouterNoeud(const std::string& label);
     void ajouterArete(int parentId, int enfantId);
     void generer();
-    int obtenirNouvelId();
 };
 
 #endif /* ECD975BF_C219_4D88_AC4A_B12DE1902F2B */

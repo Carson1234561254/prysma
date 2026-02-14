@@ -33,6 +33,7 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
+#include <cstdlib>
 
 int main(int argc, char* argv[])
 {
@@ -119,6 +120,9 @@ int main(int argc, char* argv[])
         SortieGrapheVisuelTexte sortieGrapheVisuel("output.dot");
         VisiteurGeneralGraphViz visiteurGraphViz(std::move(sortieGrapheVisuel));
         arbre->accept(&visiteurGraphViz);
+        visiteurGraphViz.generer();
+
+        system("dot -Tpng output.dot -o ast_graph.png");
 
         LlvmSerializer serializer(context->backend->getContext(), context->backend->getModule());
         serializer.SauvegarderCodeLLVM("output.ll");

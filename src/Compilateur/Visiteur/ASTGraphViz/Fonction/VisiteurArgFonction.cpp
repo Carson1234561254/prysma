@@ -3,5 +3,5 @@
 
 void VisiteurGeneralGraphViz::visiter([[maybe_unused]]NoeudArgFonction* noeudArgFonction) 
 {
-    
+    _dernierId = _sortieGrapheVisuel.ajouterNoeud("Argument: " + noeudArgFonction->getNom());
 }

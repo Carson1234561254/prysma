@@ -12,8 +12,8 @@ using namespace std;
 struct Token {
     TokenType type;
     string value;
-    int ligne;      // Numéro de ligne (1-indexed)
-    int colonne;    // Numéro de colonne (1-indexed)
+    int ligne;      
+    int colonne;    
 };
 
 class Lexer {

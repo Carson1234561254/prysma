@@ -4,5 +4,5 @@
 
 void VisiteurGeneralGraphViz::visiter(NoeudUnRefVariable* noeudUnRefVariable) 
 {
-    
+    _dernierId = _sortieGrapheVisuel.ajouterNoeud("UnRef: " + noeudUnRefVariable->getNomVariable());
 }

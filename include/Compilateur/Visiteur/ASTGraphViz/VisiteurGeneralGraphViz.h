@@ -16,10 +16,12 @@ class VisiteurGeneralGraphViz : public IVisiteur
 { 
 private:
  SortieGrapheVisuelTexte _sortieGrapheVisuel;
+ int _dernierId;
     
 public:
     VisiteurGeneralGraphViz(SortieGrapheVisuelTexte sortieGrapheVisuel);
     ~VisiteurGeneralGraphViz();
+    void generer();
         
     DECLARER_METHODES_VISITEUR
 };

@@ -3,5 +3,9 @@
 
 void VisiteurGeneralGraphViz::visiter(NoeudRetour* noeudReturn)
 {
-    
-} 
+    int idNoeud = _sortieGrapheVisuel.ajouterNoeud("Retour");
+
+    noeudReturn->getValeurRetour()->accept(this);
+    _sortieGrapheVisuel.ajouterArete(idNoeud, _dernierId);
+    _dernierId = idNoeud;
+}
