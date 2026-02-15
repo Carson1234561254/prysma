@@ -25,13 +25,3 @@ llvm::Value* VisiteurGeneralGenCode::evaluerExpression(std::shared_ptr<INoeud>& 
     return nullptr;
 }
 
-void VisiteurGeneralGenCode::visiter(NoeudLitteral* noeudLitteral)
-{
-    float valeur = noeudLitteral->getValeur();
-    llvm::Value* valeurLLVM = llvm::ConstantFP::get(
-        llvm::Type::getFloatTy(_contextGenCode->backend->getContext()), 
-        valeur
-    );
-    _contextGenCode->valeurTemporaire = valeurLLVM;
-}
-

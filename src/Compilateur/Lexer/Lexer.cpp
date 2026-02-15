@@ -218,6 +218,22 @@ void Lexer::traiterOperateursComplexes(char current, const string& sourceCode, s
                 colonne++;
             }
             break;
+
+        case '&':
+            if (pos + 1 < sourceCode.length() && sourceCode[pos + 1] == '&') {
+                tokens.push_back({TOKEN_ET, "&&", ligne, colonne});
+                pos++;
+                colonne++;
+            }
+            break;
+
+        case '|':
+            if (pos + 1 < sourceCode.length() && sourceCode[pos + 1] == '|') {
+                tokens.push_back({TOKEN_OU, "||", ligne, colonne});
+                pos++;
+                colonne++;
+            }
+            break;
     }
 }
 
@@ -229,7 +245,7 @@ void Lexer::traiterOperateursEtDelimiteurs(char current, const string& sourceCod
              current == '[' || current == ']' || current == ';' || current == ',') {
         traiterDelimiteurs(current, tokens, ligne, colonne);
     }
-    else if (current == '=' || current == '<' || current == '>' || current == '!') {
+    else if (current == '=' || current == '<' || current == '>' || current == '!' || current == '&' || current == '|') {
         traiterOperateursComplexes(current, sourceCode, pos, tokens, ligne, colonne);
     }
 }

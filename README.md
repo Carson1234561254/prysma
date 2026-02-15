@@ -121,6 +121,12 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
 - Supporter l'instruction if, 
 - Supporter l'instruction while, passer par la pile avec alloca
 - Supporter l'approche orientée objet avec des classes, polymorphisme fait avec une vtable. 
+ - Le Layout de Données (La Structure)
+ - Les Contrôles d'Accès (Visibilité)
+ - l'Encapsulation et le Pointeur this
+ - Le Cycle de Vie (Constructeurs & Destructeurs)
+ - L' Héritage (La Hiérarchie de Classes) 
+ - Le Polymorphisme (La VTable)
 
 ### Itération 3 du projet fonctionnalités à réaliser en 2 semaines ?
 

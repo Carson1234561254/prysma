@@ -64,17 +64,17 @@ std::shared_ptr<INoeud> ConstructeurArbreEquation::construire(std::vector<Token>
             return std::make_shared<NoeudUnRefVariable>(equation[1].value);
         }
         
+        if (equation[0].type == TOKEN_LIT_INT || equation[0].type == TOKEN_LIT_FLOAT || equation[0].type == TOKEN_LIT_BOLEEN) {
+            return std::make_shared<NoeudLitteral>(equation[0]);
+        }
+
         if (equation[0].type == TOKEN_IDENTIFIANT && equation.size() == 1) {
      
             return std::make_shared<NoeudUnRefVariable>(equation[0].value); 
         }
         
-        try {
-            float valeurFloat = std::stof(equation[0].value);
-            return std::make_shared<NoeudLitteral>(valeurFloat);
-        } catch (const std::exception& e) {
-            throw std::runtime_error("Erreur: impossible de convertir '" + equation[0].value + "' en nombre");
-        }    
+
+        return std::make_shared<NoeudUnRefVariable>(equation[0].value);
     }
     
     std::shared_ptr<IExpression> noeud = _registreSymbole->recupererNoeud(equation[indice]);

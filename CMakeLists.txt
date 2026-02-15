@@ -113,6 +113,7 @@ set(SOURCES
     src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurAffectationVariable.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurDeclarationVariable.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurRefVariable.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurUnRefVariable.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurScope.cpp

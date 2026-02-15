@@ -1,31 +1,21 @@
 scope {
 
-   fn int fib(arg int n) {
-      
-      if (n <= 1) {
-         return n;
+   fn bool testPassArgFonction(arg int a)
+   {  
+      if (a<= 10) {
+         return true;
+      } else {
+         return false;
       }
-      else
-      {
-         dec int un = n-1; 
-         dec int deux = n-2;
-         dec int fib_un = call fib(un);
-         dec int fib_deux = call fib(deux);
-         
-         dec int res = fib_un + fib_deux;
-      }
-      return res;
+
+      return false;
    }
 
-   fn int main() {
-      dec int equation = ((1+3)*3+2)*3-(2+3)*3*(2+3);
-      dec int equationDeux = ((1+3)*3+2)*3-(2+3)*3*(2+3);
-      call printInt(equation);
-      call printInt(equationDeux);
-      
-      dec int n = 7; 
-      dec int res = call fib(n);
-      call printInt(res);
-      return 0;
+   fn int main()
+   {
+      dec int a = 10;
+      call printBool(call testPassArgFonction(a));
+ 
+      return 1;
    }
 }

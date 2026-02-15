@@ -14,20 +14,30 @@ ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre*
     _gestionnaireSoustraction = std::make_unique<GestionnaireOperateur>(TOKEN_MOINS);
     _gestionnaireMultiplication = std::make_unique<GestionnaireOperateur>(TOKEN_ETOILE);
     _gestionnaireDivision = std::make_unique<GestionnaireOperateur>(TOKEN_SLASH);
+    _gestionnaireModulo = std::make_unique<GestionnaireOperateur>(TOKEN_MODULO);
     _gestionnairePlusPetit = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_PETIT);
     _gestionnairePlusGrand = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_GRAND);
     _gestionnairePlusPetitEgal = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_PETIT_EGAL);
     _gestionnairePlusGrandEgal = std::make_unique<GestionnaireOperateur>(TOKEN_PLUS_GRAND_EGAL);
+    _gestionnaireEgal = std::make_unique<GestionnaireOperateur>(TOKEN_EGAL_EGAL);
+    _gestionnaireDifferent = std::make_unique<GestionnaireOperateur>(TOKEN_DIFFERENT);
+    _gestionnaireEt = std::make_unique<GestionnaireOperateur>(TOKEN_ET);
+    _gestionnaireOu = std::make_unique<GestionnaireOperateur>(TOKEN_OU);
 
     std::vector<GestionnaireOperateur*> operateurs = {
+        _gestionnaireOu.get(),
+        _gestionnaireEt.get(),
+        _gestionnaireEgal.get(),
+        _gestionnaireDifferent.get(),
+        _gestionnairePlusPetit.get(),
+        _gestionnairePlusGrand.get(),
+        _gestionnairePlusPetitEgal.get(),
+        _gestionnairePlusGrandEgal.get(),
         _gestionnaireAddition.get(), 
         _gestionnaireSoustraction.get(), 
         _gestionnaireMultiplication.get(), 
         _gestionnaireDivision.get(),
-        _gestionnairePlusPetit.get(),
-        _gestionnairePlusGrand.get(),
-        _gestionnairePlusPetitEgal.get(),
-        _gestionnairePlusGrandEgal.get()
+        _gestionnaireModulo.get()
     };
             
     _chaineResponsabilite = std::make_unique<ChaineResponsabilite>(_serviceParenthese.get(), operateurs);
@@ -71,6 +81,21 @@ void ConstructeurEquationFlottante::initialiserRegistre()
     _registreSymbole->enregistrer(TOKEN_PLUS_PETIT_EGAL, [](Token token) -> std::shared_ptr<IExpression> { 
         return std::make_shared<NoeudOperation>(token);
      });
+    _registreSymbole->enregistrer(TOKEN_MODULO, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token);
+    });
+    _registreSymbole->enregistrer(TOKEN_EGAL_EGAL, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token);
+    });
+    _registreSymbole->enregistrer(TOKEN_DIFFERENT, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token);
+    });
+    _registreSymbole->enregistrer(TOKEN_ET, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token);
+    });
+    _registreSymbole->enregistrer(TOKEN_OU, [](Token token) -> std::shared_ptr<IExpression> { 
+        return std::make_shared<NoeudOperation>(token);
+    });
 }
 
 std::shared_ptr<INoeud> ConstructeurEquationFlottante::construire(std::vector<Token> &tokens)

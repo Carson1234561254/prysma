@@ -16,6 +16,6 @@ void VisiteurGeneralGraphViz::generer()
 
 void VisiteurGeneralGraphViz::visiter(NoeudLitteral* noeudLitteral)
 {
-    _dernierId = _sortieGrapheVisuel.ajouterNoeud(std::to_string(noeudLitteral->getValeur()));
+    _dernierId = _sortieGrapheVisuel.ajouterNoeud("Litteral: " + noeudLitteral->getToken().value);
 }
 

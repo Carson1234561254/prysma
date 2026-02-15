@@ -3,20 +3,22 @@
 #pragma once
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
+#include "Compilateur/Lexer/Lexer.h"
+
 class NoeudLitteral : public INoeud
 {
 private:
-    float _valeur;
+    Token _token;
 
 public:
  
-    explicit NoeudLitteral(float valeur);
+    explicit NoeudLitteral(const Token& token);
 
     ~NoeudLitteral() = default;
 
     void accept(IVisiteur* visiteur) override;
 
-    float getValeur() const { return _valeur; }
+    const Token& getToken() const { return _token; }
 };
 
 
