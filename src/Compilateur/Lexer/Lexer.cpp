@@ -295,7 +295,7 @@ vector<Token> Lexer::tokenizer(const string& sourceCode) {
             continue;
         }
 
-        if (isdigit(current) != 0) {
+        if (motCourant.empty() && isdigit(current) != 0) {
             ajouterMotCourant(motCourant, tokens, ligne, colonneMotCourant);
             motCourant = "";
             colonneMotCourant = colonne;
