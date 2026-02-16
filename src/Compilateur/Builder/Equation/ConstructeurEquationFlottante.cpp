@@ -3,6 +3,8 @@
 #include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 #include "Compilateur/Lexer/TokenType.h"
 
+std::shared_ptr<RegistreStrategieEquation> ConstructeurEquationFlottante::_registreStrategieEquation = nullptr;
+
 ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder)
     : _instructionBuilder(instructionBuilder)
 {
@@ -45,6 +47,7 @@ ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre*
     _constructeurArbre = std::make_shared<ConstructeurArbreEquation>(
         _chaineResponsabilite.get(), 
         _registreSymbole, 
+        _registreStrategieEquation,
         _serviceParenthese.get(),
         instructionBuilder
     );
@@ -106,4 +109,9 @@ std::shared_ptr<INoeud> ConstructeurEquationFlottante::construire(std::vector<To
 IConstructeurArbre* ConstructeurEquationFlottante::recupererConstructeurArbre() const
 {
     return _constructeurArbre.get();
+}
+
+void ConstructeurEquationFlottante::setRegistreStrategieEquation(std::shared_ptr<RegistreStrategieEquation> registre)
+{
+    _registreStrategieEquation = std::move(registre);
 }

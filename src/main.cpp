@@ -6,6 +6,14 @@
 #include "Compilateur/AST/Registre/Pile/RetourContexteCompilation.h"
 #include "Compilateur/AST/Registre/RegistreArgument.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
+#include "Compilateur/AST/Registre/RegistreStrategieEquation.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieAppelFonction.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieRef.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieUnRef.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieNegation.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieIdentifiant.h"
+#include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/Equation/ParseurInstructionAppel.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Condition/ParseurIf.h"
@@ -110,6 +118,17 @@ int main(int argc, char* argv[])
         context->registreInstruction->enregistrer(TOKEN_REF, std::make_shared<ParseurRefVariable>());
         context->registreInstruction->enregistrer(TOKEN_SI, std::make_shared<ParseurIf>());
         context->registreInstruction->enregistrer(TOKEN_TANT_QUE, std::make_shared<ParseurWhile>());
+
+        std::shared_ptr<RegistreStrategieEquation> registreStrategieEquation = std::make_shared<RegistreStrategieEquation>();
+        registreStrategieEquation->enregistrer(TOKEN_CALL, std::make_shared<StrategieAppelFonction>());
+        registreStrategieEquation->enregistrer(TOKEN_REF, std::make_shared<StrategieRef>());
+        registreStrategieEquation->enregistrer(TOKEN_UNREF, std::make_shared<StrategieUnRef>());
+        registreStrategieEquation->enregistrer(TOKEN_NON, std::make_shared<StrategieNegation>());
+        registreStrategieEquation->enregistrer(TOKEN_LIT_INT, std::make_shared<StrategieLitteral>());
+        registreStrategieEquation->enregistrer(TOKEN_LIT_FLOAT, std::make_shared<StrategieLitteral>());
+        registreStrategieEquation->enregistrer(TOKEN_LIT_BOLEEN, std::make_shared<StrategieLitteral>());
+        registreStrategieEquation->enregistrer(TOKEN_IDENTIFIANT, std::make_shared<StrategieIdentifiant>());
+        ConstructeurEquationFlottante::setRegistreStrategieEquation(registreStrategieEquation);
 
         ConstructeurArbreInstruction constructeurArbreInstruction(context->registreInstruction);
         std::shared_ptr<INoeud> arbre = constructeurArbreInstruction.construire(tokens);

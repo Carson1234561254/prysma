@@ -10,6 +10,7 @@
 #include "Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.h"
 #include "Compilateur/AnalyseSyntaxique/Equation/GestionnaireOperateur.h"
 #include "Compilateur/AST/Registre/RegistreSymbole.h"
+#include "Compilateur/AST/Registre/RegistreStrategieEquation.h"
 
 struct Token;
 
@@ -38,6 +39,8 @@ private:
     std::shared_ptr<IConstructeurArbre> _constructeurArbre;
     IConstructeurArbre* _instructionBuilder;
 
+    static std::shared_ptr<RegistreStrategieEquation> _registreStrategieEquation;
+
     void initialiserRegistre();
 
 public: 
@@ -46,6 +49,8 @@ public:
     
     ~ConstructeurEquationFlottante() = default;
     
+    static void setRegistreStrategieEquation(std::shared_ptr<RegistreStrategieEquation> registre);
+
     std::shared_ptr<INoeud> construire(std::vector<Token> &tokens);
 
     IConstructeurArbre* recupererConstructeurArbre() const;

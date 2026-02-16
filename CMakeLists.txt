@@ -74,6 +74,13 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
     src/Compilateur/AST/Noeuds/Condition/NoeudIf.cpp
     src/Compilateur/AST/Noeuds/Boucle/NoeudWhile.cpp
+    # StrategieEquation
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieAppelFonction.cpp
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieRef.cpp
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieUnRef.cpp
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieNegation.cpp
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.cpp
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieIdentifiant.cpp
     # Arbre syntaxique abstrait
     src/Compilateur/AST/Registre/RegistreArgument.cpp
     src/Compilateur/AST/Registre/RegistreVariable.cpp
