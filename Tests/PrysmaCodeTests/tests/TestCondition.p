@@ -132,7 +132,7 @@ scope {
         call printBool(call testParentheses()); // true 
         
         dec int param = 100;
-        call printBool(call testArgDansIf(param)); // false
+        call printBool(call testArgDansIf(param)); // true
 
         call printBool(call testImbrique());    // true
     

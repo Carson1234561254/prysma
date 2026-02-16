@@ -148,10 +148,10 @@ scope {
       call printBool(call testPrioriteComplexe());
       call printBool(call testMiseAJourEtat());
 
-      call printBool(call testPassArgFonction(10,25.5)); // false
+      call printBool(call testPassArgFonction(10,25.5)); 
       
       // Appeler la méthode de nouveau pour voir si le contexte n'a pas changé
-      call printBool(call testPassArgFonction(10,25.5)); // false
+      call printBool(call testPassArgFonction(10,25.5)); 
 
       call printBool(call testProfondeurEquation()); 
 

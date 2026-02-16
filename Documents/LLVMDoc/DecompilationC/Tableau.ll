@@ -4,6 +4,15 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Tableau de 5 entiers initialisé avec les valeurs 1, 2, 3, 4, 5
+; Les tableau en llvm sont représenté sous forme de type [N*T] où N est le nombre d'éléments et T est le type des éléments
+; On utilise 2 index pour accéder à un élément d'un tableau, le premier est l'index pour la position d'octet 00 00 00 00 / 00 00 00 00 / 00 00 00 00/ 
+; on laisse le premier index à 0 mais ça peux être utile pour des cas particulier 
+; Le deuxième c'est la navigation d'un bloc complet en mémoire index i pour accéder à l'élément i du tableau 
+; on utilise une instruction getelementptr pour calculer l'adresse de l'élément i du tableau, en utilisant les deux index pour naviguer dans la mémoire
+; Le fonctionnement derière l'accès à la mémoire du tableau est fait avec une formule mathématique pour calculer l'adresse de l'élément i du tableau, 
+; la formule est la suivante : adresse de l'élément i = adresse de base du tableau + (i * taille de l'élément)
+; on peux naviguer jump vers les bonnes adresse mémoire en utilisant cette formule mathématique. Mais c'est l'outils gep qui s'occupe de faire le calcule pour nous. 
+
 @__const.tableau.tableau = private unnamed_addr constant [5 x i32] [i32 1, i32 2, i32 3, i32 4, i32 5], align 16
 
 define dso_local void @tableau() #0 {

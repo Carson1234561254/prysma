@@ -106,8 +106,8 @@ scope {
       // Tester les bool 
       call printBool(call testEtLogique()); 
       call printBool(call testOuLogique());
-      call printBool(call testNonLogique()); // false
-      call printBool(call testNonLogiqueFaux()); // false
+      call printBool(call testNonLogique());
+      call printBool(call testNonLogiqueFaux());
       call printBool(call testOuLogiqueVariable());
       call printBool(call testEtLogiqueVariable());
       call printBool(call testNonEtLogiqueVariable());

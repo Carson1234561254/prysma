@@ -3,7 +3,6 @@
 
 #include <llvm-18/llvm/IR/Value.h>
 #include "Compilateur/AST/Registre/ContextGenCode.h"
-#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
 #include <memory>
