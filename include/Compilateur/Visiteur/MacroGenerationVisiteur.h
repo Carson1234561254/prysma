@@ -1,7 +1,6 @@
 #ifndef D2023444_D6C2_4302_89E4_57775CF04AD5
 #define D2023444_D6C2_4302_89E4_57775CF04AD5
 
-#include "Compilateur/AST/Noeuds/Tableau/NoeudTableauDeclaration.h"
 
 #define DECLARER_METHODES_VISITEUR \
     void visiter(NoeudScope* NoeudScope) override; \
@@ -19,7 +18,6 @@
     void visiter(NoeudIf* noeudIf) override; \
     void visiter(NoeudWhile* noeudWhile) override; \
     void visiter(NoeudNegation* noeudNegation) override;\
-    void visiter(NoeudTableauDeclaration* noeudTableauDeclaration) override;
 
 #define CLASS_NOEUD \
     class NoeudInstruction; \
@@ -38,6 +36,5 @@
     class NoeudWhile; \
     class NoeudOperation; \
     class NoeudNegation;\
-    class NoeudTableauDeclaration;
     
 #endif /* D2023444_D6C2_4302_89E4_57775CF04AD5 */
