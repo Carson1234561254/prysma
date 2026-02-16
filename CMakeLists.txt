@@ -53,6 +53,7 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.cpp
     src/Compilateur/AnalyseSyntaxique/ParseurBase.cpp
+    src/Compilateur/AnalyseSyntaxique/ParseurType.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Condition/ParseurIf.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.cpp
     # ConstructeurArbre
@@ -85,6 +86,8 @@ set(SOURCES
     src/Compilateur/AST/Registre/RegistreArgument.cpp
     src/Compilateur/AST/Registre/RegistreVariable.cpp
     src/Compilateur/AST/Registre/ReturnContextCompilation.cpp
+    src/Compilateur/AST/Registre/TypeSimple.cpp
+    src/Compilateur/AST/Registre/TypeTableau.cpp
     src/Compilateur/Builder/Equation/ConstructeurEquationFlottante.cpp
     src/Compilateur/Lexer/Lexer.cpp
     src/Compilateur/LLVM/LlvmBackend.cpp

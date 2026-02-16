@@ -6,8 +6,8 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
 {
     GestionVariable gestionVariable(_contextGenCode);
 
-    // Allouer de la mémoire pour la variable
-    llvm::Type* typeVariable = _contextGenCode->registreType->recuperer(noeudDeclarationVariable->getTokenType());
+    // Générer le type LLVM via la hiérarchie IType
+    llvm::Type* typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
     llvm::AllocaInst* allocaInst = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
 
     // Enregistrer la variable

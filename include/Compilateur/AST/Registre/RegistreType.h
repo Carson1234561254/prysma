@@ -1,11 +1,11 @@
 #ifndef DD335087_6EDE_4036_872C_8BD586E26252
 #define DD335087_6EDE_4036_872C_8BD586E26252
 
-#include "RegistreGeneric.h"
+#include "Interfaces/IRegistreType.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <llvm/IR/Type.h>
 
-class RegistreType : public RegistreGeneric<TokenType,llvm::Type*>
+class RegistreType : public IRegistreType
 {
 
 public:

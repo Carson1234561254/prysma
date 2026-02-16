@@ -2,11 +2,11 @@
 #include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/AnalyseSyntaxique/Equation/ParseurEquation.h"
-#include "Compilateur/Lexer/TokenCategories.h"
-#include "Compilateur/GestionnaireErreur.h"
 #include <memory>
+#include <utility>
 
-ParseurDeclarationVariable::ParseurDeclarationVariable()
+ParseurDeclarationVariable::ParseurDeclarationVariable(std::shared_ptr<ParseurType> parseurType)
+    : _parseurType(std::move(parseurType))
 {}
 
 ParseurDeclarationVariable::~ParseurDeclarationVariable()
@@ -15,14 +15,10 @@ ParseurDeclarationVariable::~ParseurDeclarationVariable()
 
 std::shared_ptr<INoeud> ParseurDeclarationVariable::parser(std::vector<Token>& tokens, int& index, IConstructeurArbre* constructeurArbre)
 {
-    consommer(tokens,index,TOKEN_DEC,"Erreur : type attendu 'dec");
+    consommer(tokens, index, TOKEN_DEC, "Erreur : type attendu 'dec");
     
-    // Vérifier que le token courant est un type valide
-    if (TokenCategories::TYPES.find(tokens[index].type) == TokenCategories::TYPES.end()) {
-        throw ErreurCompilation("Erreur : type attendu après 'dec'", tokens[index].ligne, tokens[index].colonne);
-    }
-    Token typeToken = tokens[index];
-    index++;
+    // Utiliser le ParseurType pour analyser le type (simple ou tableau)
+    std::shared_ptr<IType> type = _parseurType->parser(tokens, index);
     
     Token nomToken = consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur : nom de variable attendu");
     std::string nomVariable = nomToken.value;
@@ -34,7 +30,7 @@ std::shared_ptr<INoeud> ParseurDeclarationVariable::parser(std::vector<Token>& t
 
     return std::make_shared<NoeudDeclarationVariable>(
         nomVariable,
-        expression,
-        typeToken.type
+        type,
+        expression
     );
 }

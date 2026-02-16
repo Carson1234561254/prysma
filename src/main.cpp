@@ -22,6 +22,7 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.h"
+#include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
 #include "Compilateur/GestionnaireErreur.h"
@@ -106,11 +107,14 @@ int main(int argc, char* argv[])
         context->registreType->enregistrer(TOKEN_TYPE_BOOL, llvm::Type::getInt1Ty(context->backend->getContext()));
         context->registreType->enregistrer(TOKEN_TYPE_VOID, llvm::Type::getVoidTy(context->backend->getContext()));
         
+        // Créer le ParseurType avec le registre
+        std::shared_ptr<ParseurType> parseurType = std::make_shared<ParseurType>(context->registreType);
+        
         // NoeudInstruction du langage prysma
         context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParseurScope>());
         context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParseurDeclarationFonction>());
         context->registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>(context->backend, context->registreVariable, context->registreType));
-        context->registreInstruction->enregistrer(TOKEN_DEC, std::make_shared<ParseurDeclarationVariable>());
+        context->registreInstruction->enregistrer(TOKEN_DEC, std::make_shared<ParseurDeclarationVariable>(parseurType));
         context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParseurInstructionAppel>());
         context->registreInstruction->enregistrer(TOKEN_RETOUR, std::make_shared<ParseurRetour>());
         context->registreInstruction->enregistrer(TOKEN_ARG, std::make_shared<ParseurArgFonction>());

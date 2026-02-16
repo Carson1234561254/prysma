@@ -5,6 +5,7 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
+#include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 #include <memory>
 
 class RegistreVariable;
@@ -12,10 +13,12 @@ class RegistreType;
 
 class ParseurDeclarationVariable : public IParseur, public ParseurBase
 {
+private:
+    std::shared_ptr<ParseurType> _parseurType;
 
 public:
 
-    ParseurDeclarationVariable();
+     ParseurDeclarationVariable(std::shared_ptr<ParseurType> parseurType);
     ~ParseurDeclarationVariable();
 
     std::shared_ptr<INoeud> parser(std::vector<Token>& tokens, int& index, IConstructeurArbre* constructeurArbre) override;
