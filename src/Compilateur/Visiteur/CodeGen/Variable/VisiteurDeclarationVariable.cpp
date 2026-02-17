@@ -17,8 +17,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
 
     // Vérifier si l'expression est une initialisation de tableau
     std::shared_ptr<INoeud> expression = noeudDeclarationVariable->getExpression();
-
-
+    
     // L'utilisation de dynamic_cast ici est un peu délicate, 
     // pour le moment je n'ai pas trouvé de solution optimal pour retirer ça, sinon je dois dépendre de llvm dans les INoeud, ce qui n'est pas idéal.
     // Le double dispatch est compliqué à mettre en place et ajouter une dépendance dans le context de génération du code 

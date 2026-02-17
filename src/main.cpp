@@ -110,6 +110,10 @@ int main(int argc, char* argv[])
         
         // Créer le ParseurType avec le registre
         std::shared_ptr<ParseurType> parseurType = std::make_shared<ParseurType>(context->registreType);
+
+        // Constuire les chef d'orchestre de l'arbre syntaxique abstrait
+        ConstructeurArbreInstruction constructeurArbreInstruction(context->registreInstruction);
+        std::shared_ptr<ConstructeurEquationFlottante> constructeurEquation = std::make_shared<ConstructeurEquationFlottante>(&constructeurArbreInstruction);
         
         // Enregistrer les strategies d'équation 
         std::shared_ptr<RegistreStrategieEquation> registreStrategieEquation = std::make_shared<RegistreStrategieEquation>();
@@ -120,13 +124,9 @@ int main(int argc, char* argv[])
         registreStrategieEquation->enregistrer(TOKEN_REF, std::make_shared<StrategieRef>());
         registreStrategieEquation->enregistrer(TOKEN_UNREF, std::make_shared<StrategieUnRef>());
         registreStrategieEquation->enregistrer(TOKEN_NON, std::make_shared<StrategieNegation>());
-        registreStrategieEquation->enregistrer(TOKEN_CROCHET_OUVERT, std::make_shared<StrategieTableauInitialisation>());
+        registreStrategieEquation->enregistrer(TOKEN_CROCHET_OUVERT, std::make_shared<StrategieTableauInitialisation>(constructeurEquation->recupererConstructeurArbre()));
         ConstructeurEquationFlottante::setRegistreStrategieEquation(registreStrategieEquation);
-        
-        // Constuire les chef d'orchestre de l'arbre syntaxique abstrait
-        ConstructeurArbreInstruction constructeurArbreInstruction(context->registreInstruction);
-        std::shared_ptr<ConstructeurEquationFlottante> constructeurEquation = std::make_shared<ConstructeurEquationFlottante>(&constructeurArbreInstruction);
-        
+    
         // NoeudInstruction du langage prysma
         context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParseurScope>(&constructeurArbreInstruction));
         context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParseurDeclarationFonction>(&constructeurArbreInstruction));
