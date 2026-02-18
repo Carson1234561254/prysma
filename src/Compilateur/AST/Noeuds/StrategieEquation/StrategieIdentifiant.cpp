@@ -37,7 +37,7 @@ std::shared_ptr<INoeud> StrategieIdentifiant::construire(std::vector<Token>& equ
         }
 
         std::shared_ptr<INoeud> indexEquation = _constructeurArbre->construire(EquationIndex);
-        return std::make_shared<NoeudLectureTableau>(indexEquation, equation[0].value);
+        return std::make_shared<NoeudLectureTableau>(indexEquation, equation[0]);
     }
   
     return std::make_shared<NoeudUnRefVariable>(equation[0].value);

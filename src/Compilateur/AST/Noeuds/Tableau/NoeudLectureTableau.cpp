@@ -1,7 +1,7 @@
 #include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h"
 
 
-NoeudLectureTableau::NoeudLectureTableau(std::shared_ptr<INoeud> indexEquation, std::string nomTableau)
+NoeudLectureTableau::NoeudLectureTableau(std::shared_ptr<INoeud> indexEquation, Token nomTableau)
 : _indexEquation(std::move(indexEquation)), _nomTableau(std::move(nomTableau))
 {}
 
