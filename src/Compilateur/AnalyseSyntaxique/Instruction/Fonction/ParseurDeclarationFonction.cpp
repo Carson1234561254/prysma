@@ -1,14 +1,16 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
+#include "Compilateur/AST/Registre/Types/IType.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Lexer/TokenCategories.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.h"
 #include "Compilateur/GestionnaireErreur.h"
 #include <memory>
+#include <utility>
 #include <vector>
 
-ParseurDeclarationFonction::ParseurDeclarationFonction(IConstructeurArbre* constructeurArbreInstruction)
-    : _constructeurArbreInstruction(constructeurArbreInstruction)
+ParseurDeclarationFonction::ParseurDeclarationFonction(IConstructeurArbre* constructeurArbreInstruction, std::shared_ptr<ParseurType> parseurType)
+    : _constructeurArbreInstruction(constructeurArbreInstruction), _parseurType(std::move(parseurType))
 {}
 
 ParseurDeclarationFonction::~ParseurDeclarationFonction()
@@ -20,14 +22,8 @@ std::shared_ptr<INoeud> ParseurDeclarationFonction::parser(std::vector<Token>& t
     consommer(tokens, index, TOKEN_FONCTION, "Erreur: ce n'est pas le bon token ! 'fn'");
 
     Token tokenTypeRetour = tokens[index];
-    TokenType typeRetour = tokenTypeRetour.type;
+    std::shared_ptr<IType> typeRetour = _parseurType->parser(tokens, index);
     
-    if (TokenCategories::TYPES.find(typeRetour) != TokenCategories::TYPES.end()) {
-        index++; 
-    } else {
-        throw ErreurCompilation("Erreur : type de retour attendu (int, float, void...)", tokenTypeRetour.ligne, tokenTypeRetour.colonne);
-    }
-
     Token tokenNomFonction = tokens[index];
     std::string nomFonction = tokenNomFonction.value;
     consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur: identifiant invalide, ce dois être un nom de fonction ");

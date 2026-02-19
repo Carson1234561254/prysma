@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
     
         // NoeudInstruction du langage prysma
         context->registreInstruction->enregistrer(TOKEN_SCOPE, std::make_shared<ParseurScope>(&constructeurArbreInstruction));
-        context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParseurDeclarationFonction>(&constructeurArbreInstruction));
+        context->registreInstruction->enregistrer(TOKEN_FONCTION, std::make_shared<ParseurDeclarationFonction>(&constructeurArbreInstruction,parseurType));
         context->registreInstruction->enregistrer(TOKEN_AFF, std::make_shared<ParseurAffectationVariable>(context->backend, context->registreVariable, context->registreType, constructeurEquation->recupererConstructeurArbre()));
         context->registreInstruction->enregistrer(TOKEN_DEC, std::make_shared<ParseurDeclarationVariable>(parseurType, constructeurEquation->recupererConstructeurArbre()));
         context->registreInstruction->enregistrer(TOKEN_CALL, std::make_shared<ParseurInstructionAppel>(constructeurEquation->recupererConstructeurArbre()));

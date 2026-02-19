@@ -76,7 +76,7 @@ void GestionFonction::enregistrerFonction(llvm::Function* function)
 
 void GestionFonction::initialiserContexte()
 {
-    _contextGenCode->returnContextCompilation->piler(_noeudDeclarationFonction->getTypeRetourToken());
+    _contextGenCode->returnContextCompilation->piler(_noeudDeclarationFonction->getTypeRetour());
     _contextGenCode->registreVariable->piler();
 }
 
@@ -184,7 +184,7 @@ void GestionFonction::genererAppelFonction(llvm::Function* fonction)
 
 void GestionFonction::declarerFonction()
 {
-    llvm::Type* typeDeRetour = _contextGenCode->registreType->recuperer(_noeudDeclarationFonction->getTypeRetourToken());
+    llvm::Type* typeDeRetour = _noeudDeclarationFonction->getTypeRetour()->genererTypeLLVM(_contextGenCode->backend->getContext());
     
     GestionFonction::ArgumentsCodeGen argumentsCodeGen = chargerArguments();
 

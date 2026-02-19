@@ -1,12 +1,13 @@
 #ifndef D5D5CC5E_96E0_4410_95A8_57E0E7660888
 #define D5D5CC5E_96E0_4410_95A8_57E0E7660888
 
-#include "Compilateur/Lexer/TokenType.h"
+#include "Compilateur/AST/Registre/Types/IType.h"
+#include <memory>
 #include <stack>
 class RetourContexteCompilation
 {
 private:
-    std::stack<TokenType> _contexte; 
+    std::stack<std::shared_ptr<IType>> _contexte; 
 
 public:
 
@@ -16,9 +17,9 @@ public:
     ~RetourContexteCompilation()
     {}
 
-    TokenType recupererContext();
+    std::shared_ptr<IType> recupererContext();
         
-    void piler(const TokenType& token);
+    void piler(std::shared_ptr<IType> token);
     void depiler();
 
 };

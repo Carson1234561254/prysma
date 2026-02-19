@@ -1,15 +1,14 @@
 #include "Compilateur/AST/Registre/Pile/RetourContexteCompilation.h"
-#include "Compilateur/Lexer/TokenType.h"
 #include <stack>
 #include <stdexcept>
 
 
-TokenType RetourContexteCompilation::recupererContext()
+std::shared_ptr<IType> RetourContexteCompilation::recupererContext()
 {
     return _contexte.top();
 }
 
-void RetourContexteCompilation::piler(const TokenType& token)
+void RetourContexteCompilation::piler(std::shared_ptr<IType> token)
 {
     _contexte.push(token);
 }
