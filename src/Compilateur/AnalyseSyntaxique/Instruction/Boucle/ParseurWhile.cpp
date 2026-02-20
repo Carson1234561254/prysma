@@ -24,15 +24,15 @@ INoeud* ParseurWhile::parser(std::vector<Token>& tokens, int& index)
 
     consommer(tokens,index,TOKEN_PAREN_FERMEE,"Erreur, le token n'est pas ')'! ");
 
-    NoeudInstruction* noeudBlocWhile = new NoeudInstruction();
+    NoeudInstruction* noeudBlocWhile = _constructeurArbreInstruction->allouer<NoeudInstruction>();
     consommer(tokens,index,TOKEN_ACCOLADE_OUVERTE, "Erreur, le token n'est pas '{'");
     consommerEnfantCorps(tokens,index,noeudBlocWhile,_constructeurArbreInstruction,TOKEN_ACCOLADE_FERMEE);
     consommer(tokens,index,TOKEN_ACCOLADE_FERMEE,"Erreur, le token n'est pas '}'");
 
 
-    NoeudInstruction* noeudBlocEndWhile = new NoeudInstruction();
+    NoeudInstruction* noeudBlocEndWhile = _constructeurArbreInstruction->allouer<NoeudInstruction>();
 
-    NoeudWhile* noeudWhile = new NoeudWhile(condition, noeudBlocWhile, noeudBlocEndWhile);
+    NoeudWhile* noeudWhile = _constructeurArbreInstruction->allouer<NoeudWhile>(condition, noeudBlocWhile, noeudBlocEndWhile);
 
     return noeudWhile;
 }

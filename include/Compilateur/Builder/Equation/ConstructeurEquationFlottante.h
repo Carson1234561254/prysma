@@ -38,6 +38,7 @@ private:
         
     IConstructeurArbre* _constructeurArbre;
     IConstructeurArbre* _instructionBuilder;
+    llvm::BumpPtrAllocator& _arena;
 
     static RegistreStrategieEquation* _registreStrategieEquation;
 
@@ -45,12 +46,13 @@ private:
 
 public: 
 
-    ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder);
+    ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder, llvm::BumpPtrAllocator& arena);
     
     ~ConstructeurEquationFlottante() = default;
 
     INoeud* construire(std::vector<Token>& tokens) override;
     INoeud* construire(std::vector<Token>& tokens, int& index) override;
+    llvm::BumpPtrAllocator& getArena() override;
     
     static void setRegistreStrategieEquation(RegistreStrategieEquation* registre);
     

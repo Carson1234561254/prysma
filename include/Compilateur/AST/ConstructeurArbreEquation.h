@@ -19,6 +19,7 @@ private:
     RegistreStrategieEquation* _registreStrategieEquation;
     IGestionnaireParenthese* _gestionnaireParenthese;
     IConstructeurArbre* _instructionBuilder;
+    llvm::BumpPtrAllocator& _arena;
 
 public:
   
@@ -27,9 +28,11 @@ public:
         RegistreSymbole* registreSymbole,
         RegistreStrategieEquation* registreStrategieEquation,
         IGestionnaireParenthese* gestionnaireParenthese,
+        llvm::BumpPtrAllocator& arena,
         IConstructeurArbre* instructionBuilder = nullptr
     );
     
     INoeud* construire(std::vector<Token> &equation) override;
     INoeud* construire(std::vector<Token>& tokens, int& index) override;
+    llvm::BumpPtrAllocator& getArena() override;
 };

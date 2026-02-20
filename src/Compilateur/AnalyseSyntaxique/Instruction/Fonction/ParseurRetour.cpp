@@ -24,10 +24,10 @@ INoeud* ParseurRetour::parser(std::vector<Token>& tokens, int& index)
         valeurRetour = _constructeurEquation->construire(tokens, index);
     } else {
         consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur: point-virgule attendu après return");
-        return new NoeudRetour(valeurRetour);
+        return _constructeurEquation->allouer<NoeudRetour>(valeurRetour);
     }
     
     consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur : ';' attendu à la fin du return");
 
-    return new NoeudRetour(valeurRetour);
+    return _constructeurEquation->allouer<NoeudRetour>(valeurRetour);
 }

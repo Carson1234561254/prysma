@@ -111,11 +111,11 @@ int main(int argc, char* argv[])
         context->registreType->enregistrer(TOKEN_TYPE_VOID, llvm::Type::getVoidTy(context->backend->getContext()));
        
         // Constuire les chef d'orchestre de l'arbre syntaxique abstrait
-        auto* rawConstructeurArbreInstruction = new (arena.Allocate<ConstructeurArbreInstruction>()) 
-            ConstructeurArbreInstruction(context->registreInstruction);
+        auto* rawConstructeurArbreInstruction = new (arena) 
+            ConstructeurArbreInstruction(context->registreInstruction, arena);
         
-        auto* constructeurEquation = new (arena.Allocate<ConstructeurEquationFlottante>()) 
-            ConstructeurEquationFlottante(rawConstructeurArbreInstruction);
+        auto* constructeurEquation = new (arena) 
+            ConstructeurEquationFlottante(rawConstructeurArbreInstruction, arena);
         
          
         // Créer le ParseurType avec le registre
@@ -124,25 +124,25 @@ int main(int argc, char* argv[])
         // Enregistrer les strategies d'équation 
         auto* registreStrategieEquation = new (arena.Allocate<RegistreStrategieEquation>()) RegistreStrategieEquation();
         
-        auto* stratLitInt = new (arena.Allocate<StrategieLitteral>()) StrategieLitteral();
+        auto* stratLitInt = new (arena.Allocate<StrategieLitteral>()) StrategieLitteral(arena);
         registreStrategieEquation->enregistrer(TOKEN_LIT_INT, stratLitInt);
         
-        auto* stratLitFloat = new (arena.Allocate<StrategieLitteral>()) StrategieLitteral();
+        auto* stratLitFloat = new (arena.Allocate<StrategieLitteral>()) StrategieLitteral(arena);
         registreStrategieEquation->enregistrer(TOKEN_LIT_FLOAT, stratLitFloat);
         
-        auto* stratLitBool = new (arena.Allocate<StrategieLitteral>()) StrategieLitteral();
+        auto* stratLitBool = new (arena.Allocate<StrategieLitteral>()) StrategieLitteral(arena);
         registreStrategieEquation->enregistrer(TOKEN_LIT_BOLEEN, stratLitBool);
         
         auto* stratIdent = new (arena.Allocate<StrategieIdentifiant>()) StrategieIdentifiant(constructeurEquation);
         registreStrategieEquation->enregistrer(TOKEN_IDENTIFIANT, stratIdent);
         
-        auto* stratRef = new (arena.Allocate<StrategieRef>()) StrategieRef();
+        auto* stratRef = new (arena.Allocate<StrategieRef>()) StrategieRef(arena);
         registreStrategieEquation->enregistrer(TOKEN_REF, stratRef);
         
-        auto* stratUnRef = new (arena.Allocate<StrategieUnRef>()) StrategieUnRef();
+        auto* stratUnRef = new (arena.Allocate<StrategieUnRef>()) StrategieUnRef(arena);
         registreStrategieEquation->enregistrer(TOKEN_UNREF, stratUnRef);
         
-        auto* stratNeg = new (arena.Allocate<StrategieNegation>()) StrategieNegation();
+        auto* stratNeg = new (arena.Allocate<StrategieNegation>()) StrategieNegation(arena);
         registreStrategieEquation->enregistrer(TOKEN_NON, stratNeg);
         
         auto* stratTab = new (arena.Allocate<StrategieTableauInitialisation>()) StrategieTableauInitialisation(constructeurEquation->recupererConstructeurArbre());
@@ -169,13 +169,13 @@ int main(int argc, char* argv[])
         auto* parsRet = new (arena.Allocate<ParseurRetour>()) ParseurRetour(constructeurEquation->recupererConstructeurArbre());
         context->registreInstruction->enregistrer(TOKEN_RETOUR, parsRet);
         
-        auto* parsArg = new (arena.Allocate<ParseurArgFonction>()) ParseurArgFonction(parseurType);
+        auto* parsArg = new (arena.Allocate<ParseurArgFonction>()) ParseurArgFonction(parseurType, arena);
         context->registreInstruction->enregistrer(TOKEN_ARG, parsArg);
         
-        auto* parsUnRef = new (arena.Allocate<ParseurUnRefVariable>()) ParseurUnRefVariable();
+        auto* parsUnRef = new (arena.Allocate<ParseurUnRefVariable>()) ParseurUnRefVariable(arena);
         context->registreInstruction->enregistrer(TOKEN_UNREF, parsUnRef);
         
-        auto* parsRefVar = new (arena.Allocate<ParseurRefVariable>()) ParseurRefVariable();
+        auto* parsRefVar = new (arena.Allocate<ParseurRefVariable>()) ParseurRefVariable(arena);
         context->registreInstruction->enregistrer(TOKEN_REF, parsRefVar);
         
         auto* parsIf = new (arena.Allocate<ParseurIf>()) ParseurIf(constructeurEquation->recupererConstructeurArbre(), rawConstructeurArbreInstruction);

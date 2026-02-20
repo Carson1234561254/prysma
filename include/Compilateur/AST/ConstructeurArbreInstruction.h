@@ -10,13 +10,15 @@ class ConstructeurArbreInstruction : public IConstructeurArbre
 {
 private: 
     RegistreInstruction* _registreInstructions;
+    llvm::BumpPtrAllocator& _arena;
 public: 
 
-    ConstructeurArbreInstruction(RegistreInstruction* registreInstructions);
+    ConstructeurArbreInstruction(RegistreInstruction* registreInstructions, llvm::BumpPtrAllocator& arena);
     ~ConstructeurArbreInstruction();
 
     INoeud* construire(std::vector<Token>& tokens) override;  
     INoeud* construire(std::vector<Token>& tokens, int& index) override;
+    llvm::BumpPtrAllocator& getArena() override;
 
 };
 

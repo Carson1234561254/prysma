@@ -7,7 +7,8 @@
 #include <utility>
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
 
-ParseurArgFonction::ParseurArgFonction(ParseurType* constructeurType) : _constructeurType(constructeurType)
+ParseurArgFonction::ParseurArgFonction(ParseurType* constructeurType, llvm::BumpPtrAllocator& arena) 
+    : _constructeurType(constructeurType), _arena(arena)
 {
 
 }
@@ -26,5 +27,5 @@ INoeud* ParseurArgFonction::parser(std::vector<Token>& tokens, int& index)
 
     Token nom = consommer(tokens,index,TOKEN_IDENTIFIANT,"Erreur: ce n'est pas un identifiant!");
 
-    return new NoeudArgFonction(type, nom.value);
+    return new (_arena.Allocate(sizeof(NoeudArgFonction), alignof(NoeudArgFonction))) NoeudArgFonction(type, nom.value);
 }

@@ -1,6 +1,8 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.h"
 #include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
 
+StrategieLitteral::StrategieLitteral(llvm::BumpPtrAllocator& arena) : _arena(arena) {}
+
 INoeud* StrategieLitteral::construire(std::vector<Token>& equation) {
-    return new NoeudLitteral(equation[0]);
+    return new (_arena.Allocate(sizeof(NoeudLitteral), alignof(NoeudLitteral))) NoeudLitteral(equation[0]);
 }

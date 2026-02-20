@@ -35,8 +35,8 @@ INoeud* ParseurAffectationVariable::parser(std::vector<Token>& tokens, int& inde
     consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur : ';' attendu");
 
     if (expressionIndex != nullptr) {
-        return new NoeudAffectationTableau(nomVariable, expressionIndex, expression, nomToken);
+        return _constructeurEquation->allouer<NoeudAffectationTableau>(nomVariable, expressionIndex, expression, nomToken);
     }
     
-    return new NoeudAffectationVariable(nomVariable, expression, nomToken);
+    return _constructeurEquation->allouer<NoeudAffectationVariable>(nomVariable, expression, nomToken);
 }

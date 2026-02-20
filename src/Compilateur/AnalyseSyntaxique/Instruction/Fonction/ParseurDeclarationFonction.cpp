@@ -28,7 +28,7 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
     std::string nomFonction = tokenNomFonction.value;
     consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur: identifiant invalide, ce dois être un nom de fonction ");
 
-    IInstruction* parent = new NoeudDeclarationFonction(nomFonction, typeRetour);
+    IInstruction* parent = _constructeurArbreInstruction->allouer<NoeudDeclarationFonction>(nomFonction, typeRetour);
 
     // Manger les parenthèses ouvertes
     consommer(tokens, index, TOKEN_PAREN_OUVERTE, "Erreur: ce n'est pas une parenthèse ouverte '('");

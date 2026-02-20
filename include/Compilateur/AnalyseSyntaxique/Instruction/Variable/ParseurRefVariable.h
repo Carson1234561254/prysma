@@ -3,11 +3,14 @@
 
 #include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
+#include "llvm/Support/Allocator.h"
 
 class ParseurRefVariable : public IParseur, ParseurBase
 {
+private:
+    llvm::BumpPtrAllocator& _arena;
 public: 
-    ParseurRefVariable();
+    ParseurRefVariable(llvm::BumpPtrAllocator& arena);
     ~ParseurRefVariable();
 
     INoeud* parser(std::vector<Token>& tokens, int& index) override;

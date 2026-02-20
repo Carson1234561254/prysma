@@ -18,7 +18,7 @@ INoeud* ParseurAppelFonction::parser(std::vector<Token>& tokens, int& index)
     Token nomFonction = consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur: identifiant de fonction attendu");
     consommer(tokens, index, TOKEN_PAREN_OUVERTE, "Erreur: '(' attendue");
     
-    IInstruction* noeudAppel = new NoeudAppelFonction(nomFonction);
+    IInstruction* noeudAppel = _constructeurArbreEquation->allouer<NoeudAppelFonction>(nomFonction);
     
     consommerEnfantCorps(tokens, index, noeudAppel, _constructeurArbreEquation, TOKEN_PAREN_FERMEE);
 

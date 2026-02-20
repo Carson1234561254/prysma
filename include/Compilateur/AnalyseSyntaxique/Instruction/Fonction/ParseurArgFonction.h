@@ -4,15 +4,17 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/AnalyseSyntaxique/Interfaces/IParseur.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurBase.h"
+#include "llvm/Support/Allocator.h"
 #include <memory>
 
 class ParseurArgFonction : public IParseur, public ParseurBase
 {
 private:
     ParseurType* _constructeurType;
+    llvm::BumpPtrAllocator& _arena;
 public: 
 
-    ParseurArgFonction(ParseurType* constructeurType);
+    ParseurArgFonction(ParseurType* constructeurType, llvm::BumpPtrAllocator& arena);
     ~ParseurArgFonction();
     
     INoeud* parser(std::vector<Token>& tokens, int& index) override;

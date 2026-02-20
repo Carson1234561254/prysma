@@ -25,7 +25,7 @@ INoeud* ParseurIf::parser(std::vector<Token>& tokens, int& index)
     consommer(tokens,index,TOKEN_PAREN_FERMEE,"Erreur, le token n'est pas ')'! ");
 
     // Créer le noeud bloc IF
-    NoeudInstruction* noeudBlocIf = new NoeudInstruction();
+    NoeudInstruction* noeudBlocIf = _constructeurArbreInstruction->allouer<NoeudInstruction>();
     consommer(tokens,index,TOKEN_ACCOLADE_OUVERTE, "Erreur, le token n'est pas '{'");
     consommerEnfantCorps(tokens,index,noeudBlocIf,_constructeurArbreInstruction,TOKEN_ACCOLADE_FERMEE);
     consommer(tokens,index,TOKEN_ACCOLADE_FERMEE,"Erreur, le token n'est pas '}'");
@@ -34,16 +34,16 @@ INoeud* ParseurIf::parser(std::vector<Token>& tokens, int& index)
     NoeudInstruction* noeudBlocElse = nullptr;
     if (index < (int)tokens.size() && tokens[index].type == TOKEN_SINON) {
         consommer(tokens,index,TOKEN_SINON,"Erreur, le token n'est pas 'else'! ");
-        noeudBlocElse = new NoeudInstruction();
+        noeudBlocElse = _constructeurArbreInstruction->allouer<NoeudInstruction>();
         consommer(tokens,index,TOKEN_ACCOLADE_OUVERTE, "Erreur, le token n'est pas '{'");
         consommerEnfantCorps(tokens,index,noeudBlocElse,_constructeurArbreInstruction,TOKEN_ACCOLADE_FERMEE);
         consommer(tokens,index,TOKEN_ACCOLADE_FERMEE,"Erreur, le token n'est pas '}'");
     }
 
     // Créer le noeud bloc ENDIF
-    NoeudInstruction* noeudBlocEndif = new NoeudInstruction();
+    NoeudInstruction* noeudBlocEndif = _constructeurArbreInstruction->allouer<NoeudInstruction>();
 
-    NoeudIf* noeudIf = new NoeudIf(condition, noeudBlocIf, noeudBlocElse, noeudBlocEndif);
+    NoeudIf* noeudIf = _constructeurArbreInstruction->allouer<NoeudIf>(condition, noeudBlocIf, noeudBlocElse, noeudBlocEndif);
 
     return noeudIf;
 }

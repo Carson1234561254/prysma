@@ -42,5 +42,5 @@ INoeud* StrategieTableauInitialisation::construire(std::vector<Token>& equation)
             elementsTableau.push_back(element);
         }
     }
-    return new NoeudTableauInitialisation(elementsTableau);
+    return _constructeurArbreEquation->allouer<NoeudTableauInitialisation>(elementsTableau);
 }

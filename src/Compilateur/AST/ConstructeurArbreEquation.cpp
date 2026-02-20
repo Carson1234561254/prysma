@@ -13,12 +13,14 @@ ConstructeurArbreEquation::ConstructeurArbreEquation(
     RegistreSymbole* registreSymbole,
     RegistreStrategieEquation* registreStrategieEquation,
     IGestionnaireParenthese* gestionnaireParenthese,
+    llvm::BumpPtrAllocator& arena,
     IConstructeurArbre* instructionBuilder)
     : _chaineResponsabilite(chaineResponsabilite), 
       _registreSymbole(registreSymbole), 
       _registreStrategieEquation(registreStrategieEquation),
       _gestionnaireParenthese(gestionnaireParenthese),
-      _instructionBuilder(instructionBuilder)
+      _instructionBuilder(instructionBuilder),
+      _arena(arena)
 {
 }
 
@@ -99,4 +101,9 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token>& tokens, int& i
     }
 
     return construire(equationTokens);
+}
+
+llvm::BumpPtrAllocator& ConstructeurArbreEquation::getArena()
+{
+    return _arena;
 }

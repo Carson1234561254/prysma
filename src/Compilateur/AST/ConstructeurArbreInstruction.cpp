@@ -4,7 +4,8 @@
 #include <vector>
 
 
-ConstructeurArbreInstruction::ConstructeurArbreInstruction(RegistreInstruction* registreInstructions)
+ConstructeurArbreInstruction::ConstructeurArbreInstruction(RegistreInstruction* registreInstructions, llvm::BumpPtrAllocator& arena)
+	: _arena(arena)
 {
 	_registreInstructions = registreInstructions;
 }
@@ -27,4 +28,9 @@ INoeud* ConstructeurArbreInstruction::construire(std::vector<Token>& tokens)
 {
     int index = 0; 
     return construire(tokens, index);
+}
+
+llvm::BumpPtrAllocator& ConstructeurArbreInstruction::getArena()
+{
+    return _arena;
 }

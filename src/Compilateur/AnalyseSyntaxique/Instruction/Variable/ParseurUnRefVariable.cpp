@@ -3,7 +3,8 @@
 #include "Compilateur/Lexer/TokenType.h"
 #include <memory>
 
-ParseurUnRefVariable::ParseurUnRefVariable()
+ParseurUnRefVariable::ParseurUnRefVariable(llvm::BumpPtrAllocator& arena)
+    : _arena(arena)
 {
 }
 
@@ -19,5 +20,5 @@ INoeud* ParseurUnRefVariable::parser(std::vector<Token>& tokens, int& index)
     Token nomToken = consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur : nom de variable attendu après 'unref'");
     std::string nomVariable = nomToken.value;
     
-    return new NoeudUnRefVariable(nomVariable);
+    return new (_arena.Allocate(sizeof(NoeudUnRefVariable), alignof(NoeudUnRefVariable))) NoeudUnRefVariable(nomVariable);
 }

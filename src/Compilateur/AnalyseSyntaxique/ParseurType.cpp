@@ -20,7 +20,7 @@ IType* ParseurType::parser(std::vector<Token>& tokens, int& index)
 
     // Récupérer le type LLVM depuis le registre et créer un TypeSimple
     llvm::Type* typeLLVM = _registreType->recuperer(tokens[index].type);
-    IType* type = new TypeSimple(typeLLVM);
+    IType* type = _constructeurArbre->allouer<TypeSimple>(typeLLVM);
     index++;
 
     while (index < static_cast<int>(tokens.size()) && tokens[index].type == TOKEN_CROCHET_OUVERT) {
@@ -33,7 +33,7 @@ IType* ParseurType::parser(std::vector<Token>& tokens, int& index)
         }
         index++; // Consommer le crochet fermant
 
-        type = new TypeTableau(type, tailleEquation);
+        type = _constructeurArbre->allouer<TypeTableau>(type, tailleEquation);
     }
 
     return type;

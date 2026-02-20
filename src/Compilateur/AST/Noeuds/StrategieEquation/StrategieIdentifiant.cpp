@@ -37,8 +37,8 @@ INoeud* StrategieIdentifiant::construire(std::vector<Token>& equation) {
         }
 
         INoeud* indexEquation = _constructeurArbre->construire(EquationIndex);
-        return new NoeudLectureTableau(indexEquation, equation[0]);
+        return _constructeurArbre->allouer<NoeudLectureTableau>(indexEquation, equation[0]);
     }
   
-    return new NoeudUnRefVariable(equation[0].value);
+    return _constructeurArbre->allouer<NoeudUnRefVariable>(equation[0].value);
 }

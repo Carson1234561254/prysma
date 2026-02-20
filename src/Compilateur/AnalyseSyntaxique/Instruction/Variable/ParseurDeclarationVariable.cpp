@@ -28,7 +28,7 @@ INoeud* ParseurDeclarationVariable::parser(std::vector<Token>& tokens, int& inde
     
     consommer(tokens, index, TOKEN_POINT_VIRGULE, "Erreur : ';' attendu à la fin de la déclaration");
 
-    return new NoeudDeclarationVariable(
+    return _constructeurEquation->allouer<NoeudDeclarationVariable>(
         nomVariable,
         type,
         expression

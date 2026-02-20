@@ -15,5 +15,4 @@ public:
     INoeud* parser(std::vector<Token>& tokens, int& index) override;
 };
 
-
 #endif /* A697C19E_AC37_4048_8FF1_CCFCA17CAD98 */
