@@ -55,6 +55,7 @@ void GestionFonction::enregistrerFonction(llvm::Function* function)
     SymboleFonction symboleFonction;
     symboleFonction.fonction = function;
     symboleFonction.typeRetour = _noeudDeclarationFonction->getTypeRetour();
+    symboleFonction.noeud = _noeudDeclarationFonction;
     _contextGenCode->registreFonction->enregistrer(_noeudDeclarationFonction->getNom(), symboleFonction);
 }
 

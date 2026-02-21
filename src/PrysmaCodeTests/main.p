@@ -10,7 +10,7 @@ scope {
       call print(10);
       call print(a);
       call print(true);
-    
+      
       return 0;
    }
 }

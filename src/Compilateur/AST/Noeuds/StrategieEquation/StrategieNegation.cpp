@@ -2,13 +2,14 @@
 #include "Compilateur/AST/Noeuds/Operande/NoeudNegation.h"
 #include <stdexcept>
 
-StrategieNegation::StrategieNegation(llvm::BumpPtrAllocator& arena) : _arena(arena) {}
+StrategieNegation::StrategieNegation(IConstructeurArbre* constructeurArbre) : _constructeurArbre(constructeurArbre) {}
 
 INoeud* StrategieNegation::construire(std::vector<Token>& equation) {
     if (equation.size() < 2) {
         throw std::runtime_error("Erreur: '!' doit être suivi d'une expression");
     }
     std::vector<Token> operande(equation.begin() + 1, equation.end());
-    INoeud* exprOperande = new (_arena.Allocate(sizeof(NoeudNegation), alignof(NoeudNegation))) NoeudNegation(equation[0], nullptr);
-    return exprOperande;
+    INoeud* exprOperande = _constructeurArbre->construire(operande);
+    INoeud* noeudNegation = _constructeurArbre->allouer<NoeudNegation>(equation[0], exprOperande);
+    return noeudNegation;
 }

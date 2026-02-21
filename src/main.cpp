@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
         auto* stratUnRef = new (arena.Allocate<StrategieUnRef>()) StrategieUnRef(arena);
         registreStrategieEquation->enregistrer(TOKEN_UNREF, stratUnRef);
         
-        auto* stratNeg = new (arena.Allocate<StrategieNegation>()) StrategieNegation(arena);
+        auto* stratNeg = new (arena.Allocate<StrategieNegation>()) StrategieNegation(constructeurEquation);
         registreStrategieEquation->enregistrer(TOKEN_NON, stratNeg);
         
         auto* stratTab = new (arena.Allocate<StrategieTableauInitialisation>()) StrategieTableauInitialisation(constructeurEquation->recupererConstructeurArbre());

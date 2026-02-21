@@ -3,7 +3,7 @@
 
 extern "C" {
 
-    void print(char type, ...) {
+    void print(int type, ...) {
         va_list args;
         va_start(args, type);
 

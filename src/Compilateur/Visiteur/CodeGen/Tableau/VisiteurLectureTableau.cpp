@@ -1,5 +1,6 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h"
+#include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/Support/Casting.h>
 
@@ -24,8 +25,10 @@ void VisiteurGeneralGenCode::visiter(NoeudLectureTableau* noeudLectureTableau)
         }, noeudLectureTableau->getNomTableau().value);
         
     // Lire la valeur de l'adresse de l'élément
-    llvm::Value* valeurElement = _contextGenCode->backend->getBuilder().CreateLoad(typeTableau->getArrayElementType(),adresseElement,noeudLectureTableau->getNomTableau().value);
+    llvm::Type* typeElement = typeTableau->getArrayElementType();
+    llvm::Value* valeurElement = _contextGenCode->backend->getBuilder().CreateLoad(typeElement, adresseElement, noeudLectureTableau->getNomTableau().value);
 
     _contextGenCode->valeurTemporaire.adresse = valeurElement;
+    _contextGenCode->valeurTemporaire.type = new (_contextGenCode->arena->Allocate<TypeSimple>()) TypeSimple(typeElement);
 } 
 

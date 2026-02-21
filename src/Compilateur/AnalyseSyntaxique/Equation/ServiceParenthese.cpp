@@ -57,12 +57,14 @@ bool ServiceParenthese::estEnglobante(const vector<Token>& equation) {
 }
 
 int ServiceParenthese::trouverDernierAuNiveauZero(const vector<Token>& equation, Token operateur) {
-    int profondeur = 0;
+    int profondeurParen = 0;
+    int profondeurCrochet = 0;
     for (int i = equation.size() - 1; i >= 0; i--) {
         Token token = equation[i];
-        profondeur += (token.type == TOKEN_PAREN_FERMEE ? 1 : token.type == TOKEN_PAREN_OUVERTE ? -1 : 0);
+        profondeurParen += (token.type == TOKEN_PAREN_FERMEE ? 1 : token.type == TOKEN_PAREN_OUVERTE ? -1 : 0);
+        profondeurCrochet += (token.type == TOKEN_CROCHET_FERME ? 1 : token.type == TOKEN_CROCHET_OUVERT ? -1 : 0);
         
-        if (token.type == operateur.type && profondeur == 0 && !estSigneUnaire(equation, i)) {
+        if (token.type == operateur.type && profondeurParen == 0 && profondeurCrochet == 0 && !estSigneUnaire(equation, i)) {
             if (i > 0 && operateur.type == equation[i - 1].type) {
                 return i - 1;
             }

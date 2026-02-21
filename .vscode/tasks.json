@@ -18,31 +18,6 @@
             "detail": "Configure cmake with clangd support and build"
         },
         {
-            "label": "CMake: build",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "${workspaceFolder}/build",
-                "--config",
-                "Debug",
-                "--",
-                "-j",
-                "${env:NUMBER_OF_PROCESSORS}"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ]
-        },
-        {
             "label": "CMake: configure",
             "type": "shell",
             "command": "cmake",

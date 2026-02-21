@@ -6,10 +6,12 @@
 #include <string>
 
 class IType;
+class NoeudDeclarationFonction;
 
 struct SymboleFonction {
     llvm::Function* fonction;
     IType* typeRetour;
+    NoeudDeclarationFonction* noeud;
 };
 
 class RegistreFonction : public RegistreGeneric<std::string, SymboleFonction>

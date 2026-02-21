@@ -43,7 +43,6 @@ class GestionFonction
         void declarerFonction();
         void genererAppelFonction(NoeudAppelFonction* noeudAppelFonction);
         GestionFonction(ContextGenCode* _contextGenCode, NoeudDeclarationFonction* noeudDeclarationFonction, IVisiteur* visiteurGeneralCodeGen);
-        GestionFonction(ContextGenCode* _contextGenCode, IVisiteur* visiteurGeneralCodeGen);
         ~GestionFonction();
 };
 
