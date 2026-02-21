@@ -75,7 +75,9 @@ int main(int argc, char* argv[])
         auto* registreType = new (arena.Allocate<RegistreType>()) RegistreType();
         auto* returnContextCompilation = new (arena.Allocate<RetourContexteCompilation>()) RetourContexteCompilation();
         auto* registreArgument = new (arena.Allocate<RegistreArgument>()) RegistreArgument();
-        llvm::Value* valeurTemporaire = nullptr;
+        Symbole valeurTemporaire;
+        valeurTemporaire.adresse = nullptr;
+        valeurTemporaire.type = nullptr;
 
         auto* context = new (arena.Allocate<ContextGenCode>()) ContextGenCode(
             backend,
@@ -85,7 +87,8 @@ int main(int argc, char* argv[])
             registreType,
             returnContextCompilation,
             registreArgument,
-            valeurTemporaire
+            valeurTemporaire,
+            &arena
         );
       
         FichierLecture fichierLecture(cheminFichier);
@@ -98,14 +101,24 @@ int main(int argc, char* argv[])
 
         // backSlashN
         context->backend->declarerExterne("backSlashN", llvm::Type::getVoidTy(context->backend->getContext()), {});
-        context->registreFonction->enregistrer("backSlashN", context->backend->getModule().getFunction("backSlashN"));      
+        {
+            SymboleFonction symBackSlashN;
+            symBackSlashN.fonction = context->backend->getModule().getFunction("backSlashN");
+            symBackSlashN.typeRetour = nullptr;  
+            context->registreFonction->enregistrer("backSlashN", symBackSlashN);
+        }
 
         // print
         std::vector<llvm::Type*> print_args;
         print_args.push_back(llvm::Type::getInt8Ty(context->backend->getContext()));
         llvm::FunctionType* print_type = llvm::FunctionType::get(llvm::Type::getVoidTy(context->backend->getContext()), print_args, true);
         llvm::Function* printFunc = llvm::Function::Create(print_type, llvm::Function::ExternalLinkage, "print", context->backend->getModule());
-        context->registreFonction->enregistrer("print", printFunc);
+        {
+            SymboleFonction symPrint;
+            symPrint.fonction = printFunc;
+            symPrint.typeRetour = nullptr;  
+            context->registreFonction->enregistrer("print", symPrint);
+        }
 
         // Enregistrer les types de base
         context->registreType->enregistrer(TOKEN_TYPE_STRING,llvm::Type::getInt8Ty(context->backend->getContext()));

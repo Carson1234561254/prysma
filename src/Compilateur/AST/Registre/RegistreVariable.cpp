@@ -8,14 +8,14 @@
 
 RegistreVariable::RegistreVariable()
 {
-    _variables.push(std::map<std::string, llvm::Value*>());
+    _variables.push(std::map<std::string, Symbole>());
 }
 
 RegistreVariable::~RegistreVariable()
 {
 }
 
-void RegistreVariable::enregistrer(const Token& token, llvm::Value* instance )
+void RegistreVariable::enregistrer(const Token& token, Symbole symbole )
 {
     if(!_variables.empty())
     {
@@ -24,11 +24,11 @@ void RegistreVariable::enregistrer(const Token& token, llvm::Value* instance )
         {
             throw ErreurCompilation("Variable '" + token.value + "' déjà déclarée", token.ligne, token.colonne);
         }
-         _variables.top()[token.value] = instance;
+         _variables.top()[token.value] = symbole;
     }
 }
 
-llvm::Value* RegistreVariable::recupererVariables(const Token& token)
+Symbole RegistreVariable::recupererVariables(const Token& token)
 {
 
     if(_variables.empty())
@@ -45,12 +45,11 @@ llvm::Value* RegistreVariable::recupererVariables(const Token& token)
         }
     }
     throw ErreurCompilation("Variable '" + token.value + "' non déclarée", token.ligne, token.colonne);
-    return nullptr;
 }
 
 void RegistreVariable::piler()
 {
-    _variables.push(std::map<std::string, llvm::Value*>());
+    _variables.push(std::map<std::string, Symbole>());
 }
 
 void RegistreVariable::depiler()

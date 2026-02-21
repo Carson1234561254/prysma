@@ -11,10 +11,11 @@
 #include "RegistreArgument.h"
 #include "Pile/RetourContexteCompilation.h"
 #include "../../LLVM/LlvmBackend.h"
+#include "llvm/Support/Allocator.h"
 
 struct ContextGenCode
 {
-    llvm::Value* valeurTemporaire;
+    Symbole valeurTemporaire;
     LlvmBackend* backend;
     RegistreInstruction* registreInstruction;
     RegistreVariable* registreVariable;
@@ -22,6 +23,7 @@ struct ContextGenCode
     RegistreType* registreType;
     RetourContexteCompilation* returnContextCompilation;
     RegistreArgument* registreArgument;
+    llvm::BumpPtrAllocator* arena;
 
     ContextGenCode(
         LlvmBackend* backend,
@@ -31,7 +33,8 @@ struct ContextGenCode
         RegistreType* registreType,
         RetourContexteCompilation* returnContextCompilation,
         RegistreArgument* registreArgument,
-        llvm::Value* valeurTemporaire
+        Symbole valeurTemporaire,
+        llvm::BumpPtrAllocator* arena
     ) 
     {
         try {
@@ -56,6 +59,9 @@ struct ContextGenCode
             if (registreArgument == nullptr) {
                 throw std::invalid_argument("Le registre d'argument ne peut pas être null");
             }
+            if (arena == nullptr) {
+                throw std::invalid_argument("L'arène d'allocation ne peut pas être null");
+            }
 
             this->valeurTemporaire = valeurTemporaire;
             this->backend = backend;
@@ -65,6 +71,7 @@ struct ContextGenCode
             this->registreType = registreType;
             this->returnContextCompilation = returnContextCompilation;
             this->registreArgument = registreArgument;
+            this->arena = arena;
         }
         catch (const std::invalid_argument& e) {
             std::cerr << "Erreur lors de l'initialisation du contexte de génération de code : " 

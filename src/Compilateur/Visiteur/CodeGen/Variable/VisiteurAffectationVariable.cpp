@@ -6,14 +6,15 @@ void VisiteurGeneralGenCode::visiter(NoeudAffectationVariable* noeudAffectationV
 {
     GestionVariable gestionVariable(_contextGenCode);
 
-    llvm::Value* expressionResult = evaluerExpression(noeudAffectationVariable->getExpression());
+    llvm::Value* expressionResult = evaluerExpression(noeudAffectationVariable->getExpression()).adresse;
 
-    llvm::Value* valeur = _contextGenCode->registreVariable->recupererVariables(noeudAffectationVariable->getToken());
+    Symbole symbole = _contextGenCode->registreVariable->recupererVariables(noeudAffectationVariable->getToken());
+    llvm::Value* valeur = symbole.adresse;
     llvm::AllocaInst* variableExistante = llvm::dyn_cast<llvm::AllocaInst>(valeur);
     
     gestionVariable.affecterVariable(variableExistante, expressionResult);
     
     // Reset la valeur pour éviter des problèmes
-    _contextGenCode->valeurTemporaire = nullptr;
+    _contextGenCode->valeurTemporaire.adresse = nullptr;
 }
 

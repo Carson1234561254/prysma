@@ -45,7 +45,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         
         // Allouer et enregistrer le tableau
         llvm::AllocaInst* allocaInstTableau = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
-        gestionVariable.enregistrerVariable(noeudDeclarationVariable->getNom(), allocaInstTableau);
+        gestionVariable.enregistrerVariable(noeudDeclarationVariable->getNom(), allocaInstTableau, noeudDeclarationVariable->getType());
         
         // Initialiser chaque élément du tableau
         auto* typeTableauLLVM = llvm::dyn_cast<llvm::ArrayType>(typeVariable);
@@ -57,17 +57,17 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
             llvm::Value* ptrCase = _contextGenCode->backend->getBuilder().CreateGEP(typeTableauLLVM, allocaInstTableau, indices, "ptr_case");
             
             INoeud* element = tableauInit->getElements()[i];
-            llvm::Value* valeurElement = evaluerExpression(element);
-            llvm::Value* valeurCastee = _contextGenCode->backend->creerAutoCast(valeurElement, typeElement);
+            Symbole symboleElement = evaluerExpression(element);
+            llvm::Value* valeurCastee = _contextGenCode->backend->creerAutoCast(symboleElement.adresse, typeElement);
             _contextGenCode->backend->getBuilder().CreateStore(valeurCastee, ptrCase);
         }
     } else {
         // Variable simple (non-tableau)
         llvm::Type* typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
         llvm::AllocaInst* allocaInst = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
-        gestionVariable.enregistrerVariable(noeudDeclarationVariable->getNom(), allocaInst);
+        gestionVariable.enregistrerVariable(noeudDeclarationVariable->getNom(), allocaInst, noeudDeclarationVariable->getType());
         
-        llvm::Value* valeurCalculee = evaluerExpression(expression);
+        llvm::Value* valeurCalculee = evaluerExpression(expression).adresse;
         if (valeurCalculee == nullptr) {
             return;
         }

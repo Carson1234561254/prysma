@@ -17,11 +17,14 @@ void VisiteurGeneralGenCode::parcourirEnfant(NoeudInstruction* noeud)
     }
 }
 
-llvm::Value* VisiteurGeneralGenCode::evaluerExpression(INoeud* expression) {
+Symbole VisiteurGeneralGenCode::evaluerExpression(INoeud* expression) {
     if (expression != nullptr) {
         expression->accept(this);
         return _contextGenCode->valeurTemporaire;
     }
-    return nullptr;
+    Symbole vide;
+    vide.adresse = nullptr;
+    vide.type = nullptr;
+    return vide;
 }
 

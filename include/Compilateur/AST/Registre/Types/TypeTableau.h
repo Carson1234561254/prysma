@@ -15,6 +15,10 @@ public:
     ~TypeTableau() override = default;
 
     llvm::Type* genererTypeLLVM(llvm::LLVMContext& context) override;
+    
+    bool estFlottant() const override;
+    bool estBooleen() const override;
+    bool estChaine() const override;
 
     IType* getTypeEnfant() const { return _typeEnfant; }
     INoeud* getTaille() const { return _taille; }

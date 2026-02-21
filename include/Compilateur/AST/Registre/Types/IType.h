@@ -9,6 +9,11 @@ public:
     virtual ~IType() = default;
 
     virtual llvm::Type* genererTypeLLVM(llvm::LLVMContext& context) = 0;
+    
+    // Méthodes utilitaires pour déterminer les caractéristiques du type
+    virtual bool estFlottant() const = 0;
+    virtual bool estBooleen() const = 0;
+    virtual bool estChaine() const = 0;
 };
 
 

@@ -21,3 +21,18 @@ llvm::Type* TypeTableau::genererTypeLLVM(llvm::LLVMContext& context)
     uint64_t taille = static_cast<uint64_t>(std::stoi(litteral->getToken().value));
     return llvm::ArrayType::get(typeElement, taille);
 }
+
+bool TypeTableau::estFlottant() const
+{
+    return false;
+}
+
+bool TypeTableau::estBooleen() const
+{
+    return false;
+}
+
+bool TypeTableau::estChaine() const
+{
+    return _typeEnfant->estChaine();
+}

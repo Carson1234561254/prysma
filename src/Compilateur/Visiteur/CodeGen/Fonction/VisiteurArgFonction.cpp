@@ -3,5 +3,5 @@
 
 void VisiteurGeneralGenCode::visiter([[maybe_unused]]NoeudArgFonction* noeudArgFonction) 
 {
-    _contextGenCode->valeurTemporaire = nullptr;
+    _contextGenCode->valeurTemporaire.adresse = nullptr;
 }

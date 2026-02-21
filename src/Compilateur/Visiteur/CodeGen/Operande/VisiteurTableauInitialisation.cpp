@@ -5,7 +5,8 @@
 void VisiteurGeneralGenCode::visiter(NoeudTableauInitialisation* noeudTableauInit)
 {
     if (noeudTableauInit == nullptr) {
-        _contextGenCode->valeurTemporaire = nullptr;
+        _contextGenCode->valeurTemporaire.adresse = nullptr;
+        _contextGenCode->valeurTemporaire.type = nullptr;
         return;
     }
 
@@ -15,5 +16,6 @@ void VisiteurGeneralGenCode::visiter(NoeudTableauInitialisation* noeudTableauIni
     // Pour l'instant, retourner nullptr - le vrai traitement doit se faire
     // dans VisiteurDeclarationVariable qui connaît le type du tableau.
     
-    _contextGenCode->valeurTemporaire = nullptr;
+    _contextGenCode->valeurTemporaire.adresse = nullptr;
+    _contextGenCode->valeurTemporaire.type = nullptr;
 }

@@ -1,6 +1,7 @@
 #ifndef D2944365_C1DD_41F8_A211_BFF33402A958
 #define D2944365_C1DD_41F8_A211_BFF33402A958
 #include "Compilateur/AST/Registre/ContextGenCode.h"
+#include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include <memory>
 
@@ -11,7 +12,6 @@ class GestionFonction
     private:
         ContextGenCode* _contextGenCode;
         NoeudDeclarationFonction* _noeudDeclarationFonction;
-        const std::vector<INoeud*>* enfants;
 
         IVisiteur* _visiteurGeneralCodeGen;
        
@@ -35,8 +35,8 @@ class GestionFonction
 
         // Appel de fonction
         void passArguments(NoeudAppelFonction* noeudAppelFonction);
-        llvm::Function* obtenirFonction(const std::string& nomFonction);
-        void genererAppelFonction(llvm::Function* fonction);
+        SymboleFonction obtenirFonction(const std::string& nomFonction);
+        void genererAppelFonction(SymboleFonction symboleFonction);
       
     public: 
 

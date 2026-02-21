@@ -23,12 +23,13 @@ llvm::Type* GestionVariable::extraireTypeDonnee(llvm::Value* adresseMemoire)
     return typeDonnee;
 }
 
-llvm::Value* GestionVariable::chargerVariable(const std::string& nomVariable)
+Symbole GestionVariable::chargerVariable(const std::string& nomVariable)
 {
     Token tokenRecherche;
     tokenRecherche.value = nomVariable;
 
-    llvm::Value* adresseMemoire = _contextGenCode->registreVariable->recupererVariables(tokenRecherche);
+    Symbole symbole = _contextGenCode->registreVariable->recupererVariables(tokenRecherche);
+    llvm::Value* adresseMemoire = symbole.adresse;
 
     if (adresseMemoire == nullptr) {
         throw std::runtime_error("Erreur sémantique : La variable '" + nomVariable + "' n'est pas déclarée.");
@@ -42,7 +43,8 @@ llvm::Value* GestionVariable::chargerVariable(const std::string& nomVariable)
         nomVariable
     );
 
-    return valeurChargee;
+    symbole.adresse = valeurChargee;
+    return symbole;
 }
 
 llvm::AllocaInst* GestionVariable::allouerVariable(llvm::Type* type, const std::string& nomVariable)
@@ -57,13 +59,16 @@ llvm::AllocaInst* GestionVariable::allouerVariable(llvm::Type* type, const std::
     return allocaInst;
 }
 
-void GestionVariable::enregistrerVariable(const std::string& nomVariable, llvm::AllocaInst* allocaInst)
+void GestionVariable::enregistrerVariable(const std::string& nomVariable, llvm::AllocaInst* allocaInst, IType* type)
 {
     Token nomDeLaVariable;
     nomDeLaVariable.value = nomVariable;
     nomDeLaVariable.type = TOKEN_IDENTIFIANT;
 
-    _contextGenCode->registreVariable->enregistrer(nomDeLaVariable, allocaInst);
+    Symbole symbole;
+    symbole.adresse = allocaInst;
+    symbole.type = type;
+    _contextGenCode->registreVariable->enregistrer(nomDeLaVariable, symbole);
 }
 
 void GestionVariable::stockerVariable(llvm::Value* valeur, llvm::AllocaInst* allocaInst)

@@ -5,7 +5,14 @@
 #include <llvm-18/llvm/IR/Function.h>
 #include <string>
 
-class RegistreFonction : public RegistreGeneric<std::string, llvm::Function*>
+class IType;
+
+struct SymboleFonction {
+    llvm::Function* fonction;
+    IType* typeRetour;
+};
+
+class RegistreFonction : public RegistreGeneric<std::string, SymboleFonction>
 {
 
 public:

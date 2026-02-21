@@ -18,7 +18,7 @@ void VisiteurGeneralGenCode::visiter(NoeudWhile* noeudWhile)
     _contextGenCode->backend->getBuilder().CreateBr(blocCondition);
     _contextGenCode->backend->getBuilder().SetInsertPoint(blocCondition); 
     noeudCondition->accept(this);
-    llvm::Value* cmp = _contextGenCode->valeurTemporaire;
+    llvm::Value* cmp = _contextGenCode->valeurTemporaire.adresse;
     _contextGenCode->backend->getBuilder().CreateCondBr(cmp, blocWhile, blocEndWhile);
 
     // Générer le code pour le bloc du while while.body
@@ -30,4 +30,7 @@ void VisiteurGeneralGenCode::visiter(NoeudWhile* noeudWhile)
 
     }
     _contextGenCode->backend->getBuilder().SetInsertPoint(blocEndWhile);
+    if (noeudBlocEndWhile != nullptr) {
+        noeudBlocEndWhile->accept(this);
+    }
 }

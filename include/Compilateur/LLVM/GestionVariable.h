@@ -2,6 +2,7 @@
 #define D5B94044_819C_4C15_B528_AAE97CBCB264
 
 #include "Compilateur/AST/Registre/ContextGenCode.h"
+#include "Compilateur/AST/Registre/Types/IType.h"
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
 #include <memory>
@@ -17,11 +18,11 @@ class GestionVariable
         GestionVariable(ContextGenCode* contextGenCode);
         ~GestionVariable();
 
-        llvm::Value* chargerVariable(const std::string& nomVariable);
+        Symbole chargerVariable(const std::string& nomVariable);
 
         llvm::AllocaInst* allouerVariable(llvm::Type* type, const std::string& nomVariable);
 
-        void enregistrerVariable(const std::string& nomVariable, llvm::AllocaInst* allocaInst);
+        void enregistrerVariable(const std::string& nomVariable, llvm::AllocaInst* allocaInst, IType* type);
 
         void stockerVariable(llvm::Value* valeur, llvm::AllocaInst* allocaInst);
 

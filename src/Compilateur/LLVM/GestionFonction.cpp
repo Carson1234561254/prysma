@@ -4,22 +4,12 @@
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/AST/Noeuds/NoeudScope.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
-#include <memory>
-#include <utility>
 
 GestionFonction::GestionFonction(ContextGenCode* contextGenCode, NoeudDeclarationFonction* noeudDeclarationFonction, IVisiteur* visiteurGeneralCodeGen) 
 :   _contextGenCode(contextGenCode),
     _noeudDeclarationFonction(noeudDeclarationFonction),
-    enfants(&noeudDeclarationFonction->getEnfants()),
-    _visiteurGeneralCodeGen(visiteurGeneralCodeGen)
-{
-}
-
-GestionFonction::GestionFonction(ContextGenCode* contextGenCode, IVisiteur* visiteurGeneralCodeGen)
-:   _contextGenCode(contextGenCode),
-    _noeudDeclarationFonction(nullptr),
-    enfants(nullptr),
     _visiteurGeneralCodeGen(visiteurGeneralCodeGen)
 {
 }
@@ -33,15 +23,11 @@ GestionFonction::ArgumentsCodeGen GestionFonction::chargerArguments()
     std::vector<llvm::Type*> argTypes;
     std::vector<NoeudArgFonction*> arguments;
     
-    // Remplir le vecteur argTypes  et arguments
-    for (INoeud* index : *enfants) {
-        INoeud* enfant = index;
-        if (typeid(*enfant) == typeid(NoeudArgFonction)) {
-            auto* arg = static_cast<NoeudArgFonction*>(enfant);
-            arguments.push_back(arg);
-            llvm::Type* argType = arg->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
-            argTypes.push_back(argType);
-        }
+    // Utiliser directement la liste stricte d'arguments
+    for (NoeudArgFonction* arg : _noeudDeclarationFonction->getArguments()) {
+        arguments.push_back(arg);
+        llvm::Type* argType = arg->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
+        argTypes.push_back(argType);
     }
     
     return ArgumentsCodeGen{argTypes, arguments};
@@ -66,7 +52,10 @@ llvm::Function* GestionFonction::creerFonction(llvm::Type* typeDeRetour, const A
 
 void GestionFonction::enregistrerFonction(llvm::Function* function)
 {
-    _contextGenCode->registreFonction->enregistrer(_noeudDeclarationFonction->getNom(), function);
+    SymboleFonction symboleFonction;
+    symboleFonction.fonction = function;
+    symboleFonction.typeRetour = _noeudDeclarationFonction->getTypeRetour();
+    _contextGenCode->registreFonction->enregistrer(_noeudDeclarationFonction->getNom(), symboleFonction);
 }
 
 
@@ -92,7 +81,10 @@ void GestionFonction::traiterArgumentsConstruit(llvm::Function* function, const 
         argumentToken.value = noeudArg->getNom();
         argumentToken.type = TOKEN_IDENTIFIANT;
         
-        _contextGenCode->registreVariable->enregistrer(argumentToken, alloca);
+        Symbole symbole;
+        symbole.adresse = alloca;
+        symbole.type = noeudArg->getType();
+        _contextGenCode->registreVariable->enregistrer(argumentToken, symbole);
         
         argIndex++;
     }
@@ -101,11 +93,9 @@ void GestionFonction::traiterArgumentsConstruit(llvm::Function* function, const 
 
 void GestionFonction::traiterCorpsFonction()
 {
-    for (const auto & index : *enfants) {
-        INoeud* enfant = index;
-        if (typeid(*enfant) != typeid(NoeudArgFonction)) {
-            index->accept(_visiteurGeneralCodeGen);
-        }
+    NoeudScope* corps = _noeudDeclarationFonction->getCorps();
+    if (corps != nullptr) {
+        corps->accept(_visiteurGeneralCodeGen);
     }
 }
 
@@ -122,7 +112,8 @@ void GestionFonction::passArguments(NoeudAppelFonction* noeudAppelFonction)
     _contextGenCode->registreArgument->vider();
 
     std::string nomFonction = noeudAppelFonction->getNomFonction().value;
-    llvm::Function* fonctionCible = _contextGenCode->registreFonction->recuperer(nomFonction);
+    SymboleFonction symboleFonction = _contextGenCode->registreFonction->recuperer(nomFonction);
+    llvm::Function* fonctionCible = symboleFonction.fonction;
 
     llvm::FunctionType* typeFonction = fonctionCible->getFunctionType();
     
@@ -133,7 +124,7 @@ void GestionFonction::passArguments(NoeudAppelFonction* noeudAppelFonction)
     {
 
         argumentEnfant->accept(_visiteurGeneralCodeGen);
-        llvm::Value* valeurArgument = _contextGenCode->valeurTemporaire;
+        llvm::Value* valeurArgument = _contextGenCode->valeurTemporaire.adresse;
 
         if (valeurArgument == nullptr) {
             throw std::runtime_error("Erreur : L'argument n'a pas généré de valeur.");
@@ -154,34 +145,39 @@ void GestionFonction::passArguments(NoeudAppelFonction* noeudAppelFonction)
 }
 
 
-llvm::Function* GestionFonction::obtenirFonction(const std::string& nomFonction)
+SymboleFonction GestionFonction::obtenirFonction(const std::string& nomFonction)
 {
-    llvm::Function* fonction = _contextGenCode->registreFonction->recuperer(nomFonction);
+    SymboleFonction symboleFonction = _contextGenCode->registreFonction->recuperer(nomFonction);
 
-    if (fonction == nullptr) {
+    if (symboleFonction.fonction == nullptr) {
         throw std::runtime_error("Fonction introuvable : " + nomFonction);
     }
 
-    return fonction;
+    return symboleFonction;
 }
 
 
-void GestionFonction::genererAppelFonction(llvm::Function* fonction)
+void GestionFonction::genererAppelFonction(SymboleFonction symboleFonction)
 {
     std::vector<llvm::Value*> args = _contextGenCode->registreArgument->recuperer();
     _contextGenCode->registreArgument->vider();
 
+    llvm::Function* fonction = symboleFonction.fonction;
+    
     if(fonction->getReturnType()->isVoidTy())
     {
         _contextGenCode->backend->getBuilder().CreateCall(fonction, args);
-        _contextGenCode->valeurTemporaire = nullptr;
+        _contextGenCode->valeurTemporaire.adresse = nullptr;
+        _contextGenCode->valeurTemporaire.type = nullptr;
         return;
     }
-    _contextGenCode->valeurTemporaire = _contextGenCode->backend->getBuilder().CreateCall(
+    _contextGenCode->valeurTemporaire.adresse = _contextGenCode->backend->getBuilder().CreateCall(
         fonction, 
         args, 
         "resultat_appel"
     );
+    // IMPORTANT: Affecter le type retour Prysma
+    _contextGenCode->valeurTemporaire.type = symboleFonction.typeRetour;
 }
 
 void GestionFonction::declarerFonction()
@@ -198,7 +194,7 @@ void GestionFonction::declarerFonction()
     traiterCorpsFonction();
     finaliserContexte();
 
-    _contextGenCode->valeurTemporaire = function;
+    _contextGenCode->valeurTemporaire.adresse = function;
 }
 
 void GestionFonction::genererAppelFonction(NoeudAppelFonction* noeudAppelFonction)
@@ -211,8 +207,8 @@ void GestionFonction::genererAppelFonction(NoeudAppelFonction* noeudAppelFonctio
     }
 
     passArguments(noeudAppelFonction);
-    llvm::Function* fonction = obtenirFonction(nomFonction);
-    genererAppelFonction(fonction);
+    SymboleFonction symboleFonction = obtenirFonction(nomFonction);
+    genererAppelFonction(symboleFonction);
 }
 
 void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction)
@@ -222,31 +218,32 @@ void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction
     }
 
     noeudAppelFonction->getEnfants()[0]->accept(_visiteurGeneralCodeGen);
-    llvm::Value* valeurArgument = _contextGenCode->valeurTemporaire;
+    llvm::Value* valeurArgument = _contextGenCode->valeurTemporaire.adresse;
+    IType* typeArgument = _contextGenCode->valeurTemporaire.type;
     
     if (valeurArgument == nullptr) {
         throw std::runtime_error("Erreur : L'argument de print n'a pas généré de valeur.");
     }
 
     char tag = 'i';
-    llvm::Type* typeArg = valeurArgument->getType();
     auto& builder = _contextGenCode->backend->getBuilder();
 
-    if (typeArg->isFloatTy()) {
+    // Déterminer le type de l'argument via le type Prysma
+    if (typeArgument != nullptr && typeArgument->estFlottant()) {
         tag = 'f';
         valeurArgument = builder.CreateFPExt(valeurArgument, builder.getDoubleTy());
     } 
-    else if (typeArg->isIntegerTy(1)) {
+    else if (typeArgument != nullptr && typeArgument->estBooleen()) {
         tag = 'b';
         valeurArgument = builder.CreateZExt(valeurArgument, builder.getInt32Ty());
     } 
-    else if (typeArg->isPointerTy()) {
+    else if (typeArgument != nullptr && typeArgument->estChaine()) {
         tag = 's';
     }
 
     llvm::Value* llvmTag = builder.getInt8(tag);
-    llvm::Function* fonctionPrint = obtenirFonction("print");
-    builder.CreateCall(fonctionPrint, { llvmTag, valeurArgument });
+    SymboleFonction symbolePrint = obtenirFonction("print");
+    builder.CreateCall(symbolePrint.fonction, { llvmTag, valeurArgument });
     
-    _contextGenCode->valeurTemporaire = nullptr;
+    _contextGenCode->valeurTemporaire.adresse = nullptr;
 }

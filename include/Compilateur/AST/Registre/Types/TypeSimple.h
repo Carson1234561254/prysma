@@ -12,6 +12,10 @@ public:
     ~TypeSimple() override = default;
 
     llvm::Type* genererTypeLLVM(llvm::LLVMContext& context) override;
+    
+    bool estFlottant() const override;
+    bool estBooleen() const override;
+    bool estChaine() const override;
 };
 
 #endif /* D3CF3339_1CBC_4EEE_9EE7_B2E99140A4CB */

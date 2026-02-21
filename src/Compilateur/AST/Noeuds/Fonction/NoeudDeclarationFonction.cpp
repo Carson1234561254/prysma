@@ -1,13 +1,19 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
+#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/AST/Noeuds/NoeudScope.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
-#include <llvm-18/llvm/IR/BasicBlock.h>
-#include <llvm-18/llvm/IR/DerivedTypes.h>
-#include <llvm-18/llvm/IR/Function.h>
-#include <memory>
 #include <utility>
 
-NoeudDeclarationFonction::NoeudDeclarationFonction(std::string nom, IType* typeRetour)
-    : _nom(std::move(nom)), _typeRetour(typeRetour)
+NoeudDeclarationFonction::NoeudDeclarationFonction(
+    std::string nom,
+    IType* typeRetour,
+    const std::vector<NoeudArgFonction*>& arguments,
+    NoeudScope* corps
+)
+    : _nom(std::move(nom)),
+      _typeRetour(typeRetour),
+      _arguments(arguments),
+      _corps(corps)
 {
 }
 

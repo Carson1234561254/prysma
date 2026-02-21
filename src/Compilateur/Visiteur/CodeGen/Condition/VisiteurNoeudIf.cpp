@@ -11,7 +11,7 @@ void VisiteurGeneralGenCode::visiter(NoeudIf* noeudIf)
 
     // Évaluer la condition
     noeudCondition->accept(this);
-    llvm::Value* cmp = _contextGenCode->valeurTemporaire; 
+    llvm::Value* cmp = _contextGenCode->valeurTemporaire.adresse; 
 
     llvm::Function* fonctionEnCours = _contextGenCode->backend->getBuilder().GetInsertBlock()->getParent();
 
@@ -42,6 +42,6 @@ void VisiteurGeneralGenCode::visiter(NoeudIf* noeudIf)
     _contextGenCode->backend->getBuilder().SetInsertPoint(blocFin);
     
     // Car plus de noeud devrait traiter cette valeur temporaire après le if
-    _contextGenCode->valeurTemporaire = nullptr;
+    _contextGenCode->valeurTemporaire.adresse = nullptr;
 
 }

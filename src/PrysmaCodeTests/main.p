@@ -4,7 +4,7 @@ scope {
    {
       dec int64 a = 10; 
 
-      dec string[] tableau = "a, b, c, d, e, f, g, h, i, j".split(",");
+      dec string[] tableau = "a, b, c, d, e, f, g, h, i, j";
 
       call print(ref tableau);
       call print(10);

@@ -5,13 +5,14 @@
 void VisiteurGeneralGenCode::visiter(NoeudAffectationTableau* noeudAffectationTableau)
 {
     // Évaluer l'expression de l'index
-    llvm::Value* indexValue = evaluerExpression(noeudAffectationTableau->getExpressionIndex());
+    llvm::Value* indexValue = evaluerExpression(noeudAffectationTableau->getExpressionIndex()).adresse;
   
     // Évaluer l'expression à affecter
-    llvm::Value* expressionResult = evaluerExpression(noeudAffectationTableau->getExpression());
+    llvm::Value* expressionResult = evaluerExpression(noeudAffectationTableau->getExpression()).adresse;
 
     // Récupérer le tableau
-    llvm::Value* valeur = _contextGenCode->registreVariable->recupererVariables(noeudAffectationTableau->getToken());
+    Symbole symbole = _contextGenCode->registreVariable->recupererVariables(noeudAffectationTableau->getToken());
+    llvm::Value* valeur = symbole.adresse;
 
     // Affectation à un élément du tableau avec l'index
     std::vector<llvm::Value*> indices = { 
@@ -33,5 +34,5 @@ void VisiteurGeneralGenCode::visiter(NoeudAffectationTableau* noeudAffectationTa
     _contextGenCode->backend->getBuilder().CreateStore(expressionResult, ptrCase);
     
     // Reset la valeur pour éviter des problèmes
-    _contextGenCode->valeurTemporaire = nullptr;
+    _contextGenCode->valeurTemporaire.adresse = nullptr;
 }

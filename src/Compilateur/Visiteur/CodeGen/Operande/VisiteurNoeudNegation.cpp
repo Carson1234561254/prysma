@@ -1,12 +1,19 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/AST/Noeuds/Operande/NoeudNegation.h"
+#include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include <llvm/IR/Instructions.h>
+#include <stdexcept>
 
 void VisiteurGeneralGenCode::visiter(NoeudNegation* noeud)
 {
+    // Vérification de sécurité
+    if (noeud == nullptr || noeud->getOperande() == nullptr) {
+        throw std::runtime_error("Erreur : NoeudNegation ou opérande invalide");
+    }
+    
     // Évaluer l'opérande (doit être un booléen)
     noeud->getOperande()->accept(this);
-    llvm::Value* valOperande = _contextGenCode->valeurTemporaire;
+    llvm::Value* valOperande = _contextGenCode->valeurTemporaire.adresse;
 
     auto& builder = _contextGenCode->backend->getBuilder();
     llvm::LLVMContext& context = _contextGenCode->backend->getContext();
@@ -19,5 +26,6 @@ void VisiteurGeneralGenCode::visiter(NoeudNegation* noeud)
     // Créer la négation logique avec NOT
     llvm::Value* resultat = builder.CreateNot(valOperande, "not");
 
-    _contextGenCode->valeurTemporaire = resultat;
+    _contextGenCode->valeurTemporaire.adresse = resultat;
+    _contextGenCode->valeurTemporaire.type = new (_contextGenCode->arena->Allocate<TypeSimple>()) TypeSimple(llvm::Type::getInt1Ty(context));
 }
