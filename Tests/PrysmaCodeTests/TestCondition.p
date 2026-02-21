@@ -4,7 +4,7 @@ scope {
     fn bool testIntSup()
     {
         dec string[] fonctionnalite = "1.testIntSup : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 a = 5; 
         if (a > 3) {
             return true;
@@ -18,7 +18,7 @@ scope {
     fn bool testFloatInf()
     {
         dec string[] fonctionnalite = "2.testFloatInf : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec float a = 2.5;
         if (a < 5.0) {
             return true;
@@ -32,7 +32,7 @@ scope {
     fn bool testIntEgal()
     {
         dec string[] fonctionnalite = "3.testIntEgal : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 a = 10;
         if (a == 10) {
             return true;
@@ -46,7 +46,7 @@ scope {
     fn bool testFloatEgal()
     {
         dec string[] fonctionnalite = "4.testFloatEgal : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec float a = 25.5;
         if (a == 25.5) {
             return true;
@@ -60,7 +60,7 @@ scope {
     fn bool testAndSimple()
     {
         dec string[] fonctionnalite = "5.testAndSimple : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 a = 1;
         dec int32 b = 1;
         
@@ -76,7 +76,7 @@ scope {
     fn bool testOrSimple()
     {
         dec string[] fonctionnalite = "6.testOrSimple : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 a = 0;
         dec int32 b = 1;
         
@@ -93,7 +93,7 @@ scope {
     fn bool testParentheses()
     {
         dec string[] fonctionnalite = "7.testParentheses : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 a = 10;
         dec float b = 25.5;
 
@@ -109,7 +109,7 @@ scope {
     fn bool testArgDansIf(arg int32 val)
     {
         dec string[] fonctionnalite = "8.testArgDansIf : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         if (val == 100) {
             return true;
         } else {
@@ -122,7 +122,7 @@ scope {
     fn bool testImbrique()
     {
         dec string[] fonctionnalite = "9.testImbrique : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 x = 50;
         
         if (x > 10) {
@@ -139,20 +139,20 @@ scope {
 
     fn int32 main()
     {
-        call printBool(call testIntSup());   call backSlashN();   // true 
-        call printBool(call testFloatInf());    call backSlashN(); // true
-        call printBool(call testIntEgal());     call backSlashN(); // true
-        call printBool(call testFloatEgal());   call backSlashN(); // true
+        call print(call testIntSup());   call backSlashN();   // true 
+        call print(call testFloatInf());    call backSlashN(); // true
+        call print(call testIntEgal());     call backSlashN(); // true
+        call print(call testFloatEgal());   call backSlashN(); // true
         
-        call printBool(call testAndSimple());   call backSlashN(); // true
-        call printBool(call testOrSimple());    call backSlashN(); // true
+        call print(call testAndSimple());   call backSlashN(); // true
+        call print(call testOrSimple());    call backSlashN(); // true
         
-        call printBool(call testParentheses()); call backSlashN(); // true 
+        call print(call testParentheses()); call backSlashN(); // true 
         
         dec int32 param = 100;
-        call printBool(call testArgDansIf(param)); call backSlashN(); // true
+        call print(call testArgDansIf(param)); call backSlashN(); // true
 
-        call printBool(call testImbrique());    call backSlashN(); // true
+        call print(call testImbrique());    call backSlashN(); // true
     
         return 1; 
     }

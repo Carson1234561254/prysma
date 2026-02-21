@@ -6,7 +6,7 @@ scope {
    fn bool testPrioriteSimple()
    {
       dec string[] fonctionnalite = "1.testPrioriteSimple : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 a = 10;
       dec int32 b = 2;
       dec int32 c = 5;
@@ -25,7 +25,7 @@ scope {
    fn bool testPrioriteComplexe()
    {
       dec string[] fonctionnalite = "2.testPrioriteComplexe : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 a = 2;
       dec int32 b = 3;
       dec int32 c = 4;
@@ -47,7 +47,7 @@ scope {
    fn bool testMiseAJourEtat()
    {
       dec string[] fonctionnalite = "3.testMiseAJourEtat : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 a = 1;
       dec int32 b = 5;
       
@@ -67,7 +67,7 @@ scope {
    fn bool testPassArgFonction(arg int32 a, arg float b)
    {  
       dec string[] fonctionnalite = "4.testPassArgFonction : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       if ((a == 10) && (b == 25.5)) {
          return true;
       } else {
@@ -81,7 +81,7 @@ scope {
    fn bool testProfondeurEquation()
    {
       dec string[] fonctionnalite = "5.testProfondeurEquation : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec float equation = ((1.0+2.0)*(3.0+4.0))/(5.0-6.0-7.0*(8.0-9.0));
       if (equation == 3.5) {
          return true;
@@ -94,7 +94,7 @@ scope {
    fn bool testAffectation()
    {
       dec string[] fonctionnalite = "6.testAffectation : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 a = 5;
       aff a = 10; 
       if (a == 10) {
@@ -110,7 +110,7 @@ scope {
    fn bool testAutoIncrement()
    {
       dec string[] fonctionnalite = "7.testAutoIncrement : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 a = 10;
       aff a = a + 1; // Si le load/store est mal ordonné, ça plante ou donne 1
 
@@ -127,7 +127,7 @@ scope {
    fn bool testCopieVariable()
    {
         dec string[] fonctionnalite = "8.testCopieVariable : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
       dec int32 a = 50;
       dec int32 b = a; // Doit copier 50 dans b
       
@@ -144,7 +144,7 @@ scope {
    fn bool testImbrication()
    {
         dec string[] fonctionnalite = "9.testImbrication : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
       dec int32 a = 1;
       dec int32 b = 2;
 
@@ -162,22 +162,22 @@ scope {
 
    fn int32 main()
    {
-      call printBool(call testPrioriteSimple()); call backSlashN();
-      call printBool(call testPrioriteComplexe()); call backSlashN();
-      call printBool(call testMiseAJourEtat()); call backSlashN();
+      call print(call testPrioriteSimple()); call backSlashN();
+      call print(call testPrioriteComplexe()); call backSlashN();
+      call print(call testMiseAJourEtat()); call backSlashN();
 
-      call printBool(call testPassArgFonction(10,25.5)); call backSlashN();
+      call print(call testPassArgFonction(10,25.5)); call backSlashN();
       
       // Appeler la méthode de nouveau pour voir si le contexte n'a pas changé
-      call printBool(call testPassArgFonction(10,25.5)); call backSlashN();
-      call printBool(call testProfondeurEquation()); call backSlashN();
+      call print(call testPassArgFonction(10,25.5)); call backSlashN();
+      call print(call testProfondeurEquation()); call backSlashN();
 
-      call printBool(call testAffectation()); call backSlashN();
+      call print(call testAffectation()); call backSlashN();
 
-      call printBool(call testAutoIncrement()); call backSlashN();
-      call printBool(call testCopieVariable()); call backSlashN();
+      call print(call testAutoIncrement()); call backSlashN();
+      call print(call testCopieVariable()); call backSlashN();
 
-      call printBool(call testImbrication()); call backSlashN();
+      call print(call testImbrication()); call backSlashN();
    
       return 1;
    }

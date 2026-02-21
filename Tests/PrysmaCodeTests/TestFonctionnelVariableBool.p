@@ -3,7 +3,7 @@ scope {
    fn bool testEtLogique()
    {
       dec string[] fonctionnalite = "1.testEtLogique : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = true && true; 
 
       if (a == true) {
@@ -18,7 +18,7 @@ scope {
    fn bool testOuLogique()
    {
       dec string[] fonctionnalite = "2.testOuLogique : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = true || false; 
 
       if (a == true) {
@@ -33,7 +33,7 @@ scope {
    fn bool testNonLogique()
    {
       dec string[] fonctionnalite = "3.testNonLogique : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = true; 
       dec bool b = !a; 
 
@@ -49,7 +49,7 @@ scope {
    fn bool testNonLogiqueFaux()
    {
       dec string[] fonctionnalite = "4.testNonLogiqueFaux : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = !false; 
 
       if (a == true) {
@@ -64,7 +64,7 @@ scope {
    fn bool testOuLogiqueVariable()
    {
       dec string[] fonctionnalite = "5.testOuLogiqueVariable : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = true; 
       dec bool b = false;
 
@@ -82,7 +82,7 @@ scope {
    fn bool testEtLogiqueVariable()
    {
       dec string[] fonctionnalite = "6.testEtLogiqueVariable : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = true; 
       dec bool b = false;
 
@@ -100,7 +100,7 @@ scope {
    fn bool testNonEtLogiqueVariable()
    {
       dec string[] fonctionnalite = "7.testNonEtLogiqueVariable : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec bool a = true; 
       dec bool b = false;
 
@@ -118,13 +118,13 @@ scope {
    fn int32 main()
    {
       // Tester les bool 
-      call printBool(call testEtLogique()); call backSlashN();
-      call printBool(call testOuLogique()); call backSlashN();
-      call printBool(call testNonLogique()); call backSlashN();
-      call printBool(call testNonLogiqueFaux()); call backSlashN();
-      call printBool(call testOuLogiqueVariable()); call backSlashN();
-      call printBool(call testEtLogiqueVariable()); call backSlashN();
-      call printBool(call testNonEtLogiqueVariable()); call backSlashN();
+      call print(call testEtLogique()); call backSlashN();
+      call print(call testOuLogique()); call backSlashN();
+      call print(call testNonLogique()); call backSlashN();
+      call print(call testNonLogiqueFaux()); call backSlashN();
+      call print(call testOuLogiqueVariable()); call backSlashN();
+      call print(call testEtLogiqueVariable()); call backSlashN();
+      call print(call testNonEtLogiqueVariable()); call backSlashN();
 
       return 1;
    }

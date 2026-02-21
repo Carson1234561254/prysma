@@ -203,7 +203,50 @@ void GestionFonction::declarerFonction()
 
 void GestionFonction::genererAppelFonction(NoeudAppelFonction* noeudAppelFonction)
 {
+    std::string nomFonction = noeudAppelFonction->getNomFonction().value;
+
+    if (nomFonction == "print") {
+        genererBuiltInPrint(noeudAppelFonction);
+        return; 
+    }
+
     passArguments(noeudAppelFonction);
-    llvm::Function* fonction = obtenirFonction(noeudAppelFonction->getNomFonction().value);
+    llvm::Function* fonction = obtenirFonction(nomFonction);
     genererAppelFonction(fonction);
+}
+
+void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction)
+{
+    if (noeudAppelFonction->getEnfants().empty()) {
+        return;
+    }
+
+    noeudAppelFonction->getEnfants()[0]->accept(_visiteurGeneralCodeGen);
+    llvm::Value* valeurArgument = _contextGenCode->valeurTemporaire;
+    
+    if (valeurArgument == nullptr) {
+        throw std::runtime_error("Erreur : L'argument de print n'a pas généré de valeur.");
+    }
+
+    char tag = 'i';
+    llvm::Type* typeArg = valeurArgument->getType();
+    auto& builder = _contextGenCode->backend->getBuilder();
+
+    if (typeArg->isFloatTy()) {
+        tag = 'f';
+        valeurArgument = builder.CreateFPExt(valeurArgument, builder.getDoubleTy());
+    } 
+    else if (typeArg->isIntegerTy(1)) {
+        tag = 'b';
+        valeurArgument = builder.CreateZExt(valeurArgument, builder.getInt32Ty());
+    } 
+    else if (typeArg->isPointerTy()) {
+        tag = 's';
+    }
+
+    llvm::Value* llvmTag = builder.getInt8(tag);
+    llvm::Function* fonctionPrint = obtenirFonction("print");
+    builder.CreateCall(fonctionPrint, { llvmTag, valeurArgument });
+    
+    _contextGenCode->valeurTemporaire = nullptr;
 }

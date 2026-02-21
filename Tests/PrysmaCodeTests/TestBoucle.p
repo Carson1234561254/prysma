@@ -3,7 +3,7 @@ scope {
     fn bool testBoucleConditionExtern()
     {
         dec string[] fonctionnalite = "1.testBoucleConditionExtern : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 i = 0; 
 
         dec bool condition = i < 5;
@@ -23,7 +23,7 @@ scope {
    fn bool testBoucleNesPasEgale()
    {
         dec string[] fonctionnalite = "2.testBoucleNesPasEgale : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 i = 0; 
         while(i != 5)
         {
@@ -39,7 +39,7 @@ scope {
    fn bool testBoucle()
     {
         dec string[] fonctionnalite = "3.testBoucle : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 i = 0;
 
         while (i < 5) {
@@ -55,7 +55,7 @@ scope {
    fn bool testBoucleImbrique()
    {
         dec string[] fonctionnalite = "4.testBoucleImbrique : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 i = 0;
         dec int32 j = 0;
         dec int32 total = 0;
@@ -79,7 +79,7 @@ scope {
    fn bool testBoucleConditionComplexe()
    {
         dec string[] fonctionnalite = "5.testBoucleConditionComplexe : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
         dec int32 i = 0;
         dec int32 j = 10;
         while(i < 5 && j > 5)
@@ -97,7 +97,7 @@ scope {
    fn bool testBoucleNonExecute()
    {
         dec string[] fonctionnalite = "6.testBoucleNonExecute : ";
-        call printString(ref fonctionnalite);
+        call print(ref fonctionnalite);
        dec int32 i = 5;
        while(i < 5)
        {
@@ -112,12 +112,12 @@ scope {
 
    fn int32 main()
    {
-        call printBool(call testBoucle()); call backSlashN();
-        call printBool(call testBoucleNesPasEgale()); call backSlashN();
-        call printBool(call testBoucleConditionExtern()); call backSlashN();
-        call printBool(call testBoucleImbrique()); call backSlashN();
-        call printBool(call testBoucleConditionComplexe()); call backSlashN();
-        call printBool(call testBoucleNonExecute()); call backSlashN();
+        call print(call testBoucle()); call backSlashN();
+        call print(call testBoucleNesPasEgale()); call backSlashN();
+        call print(call testBoucleConditionExtern()); call backSlashN();
+        call print(call testBoucleImbrique()); call backSlashN();
+        call print(call testBoucleConditionComplexe()); call backSlashN();
+        call print(call testBoucleNonExecute()); call backSlashN();
 
       return 1;
    }

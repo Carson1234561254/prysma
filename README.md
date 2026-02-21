@@ -121,9 +121,9 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
 - supporter les  opérantes && || == != % #12
 - Supporter l'instruction if, 
 - Supporter l'instruction while, passer par la pile avec alloca
-- Supporter la boucle for
 - Supporter les tableaux programmés en LLVM IR 
 - Supporter le type string
+- Supporter les includes, en utilisant les techniques du langage de programmation C #include "racine/fichier.h"
 
 ### Itération 3 du projet fonctionnalités à réaliser en 2 semaines ?
 

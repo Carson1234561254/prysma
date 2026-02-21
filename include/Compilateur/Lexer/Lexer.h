@@ -32,7 +32,6 @@ class Lexer {
         {"return", TOKEN_RETOUR},
         {"true", TOKEN_VRAI},
         {"false", TOKEN_FAUX},
-        {"print", TOKEN_PRINT},
         {"scope", TOKEN_SCOPE},
         {"aff", TOKEN_AFF},
         {"dec", TOKEN_DEC},

@@ -48,7 +48,6 @@ namespace TokenCategories {
         TOKEN_TANT_QUE,
         TOKEN_POUR,
         TOKEN_RETOUR,
-        TOKEN_PRINT,
         TOKEN_SCOPE,
         TOKEN_AFF,
         TOKEN_DEC

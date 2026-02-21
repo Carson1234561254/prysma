@@ -100,29 +100,13 @@ int main(int argc, char* argv[])
         context->backend->declarerExterne("backSlashN", llvm::Type::getVoidTy(context->backend->getContext()), {});
         context->registreFonction->enregistrer("backSlashN", context->backend->getModule().getFunction("backSlashN"));      
 
-        // PrintInt
-        IntegerType* intTy = llvm::Type::getInt64Ty(context->backend->getContext());
-        std::vector<llvm::Type*> printIntArgs = {intTy};
-        context->backend->declarerExterne("printInt", intTy, printIntArgs);
-        context->registreFonction->enregistrer("printInt", context->backend->getModule().getFunction("printInt"));
+        // print
+        std::vector<llvm::Type*> print_args;
+        print_args.push_back(llvm::Type::getInt8Ty(context->backend->getContext()));
+        llvm::FunctionType* print_type = llvm::FunctionType::get(llvm::Type::getVoidTy(context->backend->getContext()), print_args, true);
+        llvm::Function* printFunc = llvm::Function::Create(print_type, llvm::Function::ExternalLinkage, "print", context->backend->getModule());
+        context->registreFonction->enregistrer("print", printFunc);
 
-        // PrintFloat 
-        llvm::Type* floatTy = llvm::Type::getFloatTy(context->backend->getContext());
-        std::vector<llvm::Type*> printFloatArgs = {floatTy};
-        context->backend->declarerExterne("printFloat", floatTy, printFloatArgs);
-        context->registreFonction->enregistrer("printFloat", context->backend->getModule().getFunction("printFloat"));
-
-        // PrintBool
-        llvm::Type* boolTy = llvm::Type::getInt1Ty(context->backend->getContext());
-        std::vector<llvm::Type*> printBoolArgs = {boolTy};
-        context->backend->declarerExterne("printBool", boolTy, printBoolArgs);
-        context->registreFonction->enregistrer("printBool", context->backend->getModule().getFunction("printBool"));
-        
-        // printString 
-        llvm::Type* stringTy = llvm::PointerType::getUnqual(context->backend->getContext());
-        std::vector<llvm::Type*> printStringArgs = {stringTy};
-        context->backend->declarerExterne("printString", llvm::Type::getVoidTy(context->backend->getContext()), printStringArgs);
-        context->registreFonction->enregistrer("printString", context->backend->getModule().getFunction("printString"));
         // Enregistrer les types de base
         context->registreType->enregistrer(TOKEN_TYPE_STRING,llvm::Type::getInt8Ty(context->backend->getContext()));
         context->registreType->enregistrer(TOKEN_TYPE_CHAR, llvm::Type::getInt8Ty(context->backend->getContext()));

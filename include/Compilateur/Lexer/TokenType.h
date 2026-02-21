@@ -50,7 +50,6 @@ enum TokenType {
     TOKEN_RETOUR,
     TOKEN_VRAI,
     TOKEN_FAUX,
-    TOKEN_PRINT,
     TOKEN_SCOPE,
     TOKEN_CALL,
     TOKEN_PASS,

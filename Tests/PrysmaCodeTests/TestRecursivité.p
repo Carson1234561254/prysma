@@ -3,7 +3,7 @@ scope {
    fn int32 fact(arg int32 n)
    {
       dec string[] fonctionnalite = "1.fact : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       if (n <= 1) {
          return 1;
       }
@@ -15,7 +15,7 @@ scope {
    fn bool testFact()
    {
       dec string[] fonctionnalite = "2.testFact : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 fib = call fact(5);
       if (fib == 120) {
          return true;
@@ -28,7 +28,7 @@ scope {
    // Test 2 : fibonaci (fib(7) = 13) - Récursion multiple
    fn int32 fib(arg int32 n) {
       dec string[] fonctionnalite = "3.fib : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       if (n <= 1) {
          return n;
       }
@@ -43,7 +43,7 @@ scope {
    fn bool testFib()
    {
       dec string[] fonctionnalite = "4.testFib : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 fib = call fib(7);
       if (fib == 13) {
          return true;
@@ -56,7 +56,7 @@ scope {
    fn bool testRecursivite()
    {
       dec string[] fonctionnalite = "5.testRecursivite : ";
-      call printString(ref fonctionnalite);
+      call print(ref fonctionnalite);
       dec int32 fact = call fact(5);
       dec int32 fib = call fib(7);
       if ((fact == 120) && (fib == 13)) {
@@ -69,9 +69,9 @@ scope {
 
    fn int32 main()
    {
-      call printBool(call testFact()); call backSlashN();
-      call printBool(call testFib()); call backSlashN();
-      call printBool(call testRecursivite()); call backSlashN();
+      call print(call testFact()); call backSlashN();
+      call print(call testFib()); call backSlashN();
+      call print(call testRecursivite()); call backSlashN();
 
       return 1;
    }
