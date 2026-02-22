@@ -1,7 +1,6 @@
 #include "Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/AST/Registre/RegistreSymbole.h"
-#include <utility>
 
 ServiceParenthese::ServiceParenthese(RegistreSymbole* registreSymbole)
     : _registreSymbole(registreSymbole) {
@@ -59,13 +58,13 @@ bool ServiceParenthese::estEnglobante(const vector<Token>& equation) {
 int ServiceParenthese::trouverDernierAuNiveauZero(const vector<Token>& equation, Token operateur) {
     int profondeurParen = 0;
     int profondeurCrochet = 0;
-    for (int i = equation.size() - 1; i >= 0; i--) {
-        Token token = equation[i];
+    for (int i = static_cast<int>(equation.size()) - 1; i >= 0; i--) {
+        Token token = equation[static_cast<size_t>(i)];
         profondeurParen += (token.type == TOKEN_PAREN_FERMEE ? 1 : token.type == TOKEN_PAREN_OUVERTE ? -1 : 0);
         profondeurCrochet += (token.type == TOKEN_CROCHET_FERME ? 1 : token.type == TOKEN_CROCHET_OUVERT ? -1 : 0);
         
         if (token.type == operateur.type && profondeurParen == 0 && profondeurCrochet == 0 && !estSigneUnaire(equation, i)) {
-            if (i > 0 && operateur.type == equation[i - 1].type) {
+            if (i > 0 && operateur.type == equation[static_cast<size_t>(i - 1)].type) {
                 return i - 1;
             }
             return i;
@@ -78,6 +77,6 @@ bool ServiceParenthese::estSigneUnaire(const vector<Token>& equation, int indice
     if (indice == 0) {
         return true;
     }
-    Token precedent = equation[indice - 1];
+    Token precedent = equation[static_cast<size_t>(indice - 1)];
     return _registreSymbole->estOperateur(precedent.type) || precedent.type == TOKEN_PAREN_OUVERTE;
 }

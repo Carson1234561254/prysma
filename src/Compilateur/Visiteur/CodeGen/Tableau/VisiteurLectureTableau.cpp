@@ -12,6 +12,9 @@ void VisiteurGeneralGenCode::visiter(NoeudLectureTableau* noeudLectureTableau)
 
     // Faire une allocaInstance pour récupérer le type, on dyn cast le type llvm::Value 
     llvm::AllocaInst* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(adresseTableau);
+    if (allocaInst == nullptr) {
+        throw std::runtime_error("L'adresse du tableau n'est pas une instruction d'allocation");
+    }
     llvm::Type* typeTableau = allocaInst->getAllocatedType();
     
     // Calculer l'index à partir de l'équation 

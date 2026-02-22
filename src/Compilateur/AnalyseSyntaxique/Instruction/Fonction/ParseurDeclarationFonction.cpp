@@ -4,11 +4,7 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/Lexer/TokenCategories.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.h"
-#include "Compilateur/GestionnaireErreur.h"
-#include <memory>
-#include <utility>
 #include <vector>
 
 ParseurDeclarationFonction::ParseurDeclarationFonction(IConstructeurArbre* constructeurArbreInstruction, ParseurType* parseurType)
@@ -23,10 +19,10 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
 {
     consommer(tokens, index, TOKEN_FONCTION, "Erreur: ce n'est pas le bon token ! 'fn'");
 
-    Token tokenTypeRetour = tokens[index];
+    Token tokenTypeRetour = tokens[static_cast<size_t>(index)];
     IType* typeRetour = _parseurType->parser(tokens, index);
     
-    Token tokenNomFonction = tokens[index];
+    Token tokenNomFonction = tokens[static_cast<size_t>(index)];
     std::string nomFonction = tokenNomFonction.value;
     consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur: identifiant invalide, ce dois être un nom de fonction ");
 
@@ -34,9 +30,9 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
     consommer(tokens, index, TOKEN_PAREN_OUVERTE, "Erreur: ce n'est pas une parenthèse ouverte '('");
     
     std::vector<NoeudArgFonction*> arguments;
-    while(index < (int)tokens.size() && tokens[index].type != TOKEN_PAREN_FERMEE)
+    while(index < static_cast<int>(tokens.size()) && tokens[static_cast<size_t>(index)].type != TOKEN_PAREN_FERMEE)
     {
-        if(tokens[index].type == TOKEN_VIRGULE)
+        if(tokens[static_cast<size_t>(index)].type == TOKEN_VIRGULE)
         {
             index++;
             continue;

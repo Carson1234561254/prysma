@@ -4,7 +4,6 @@
 #include "Compilateur/AST/Interfaces/IConstructeurArbre.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IInstruction.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include <memory>
 #include <vector>
 #include <string>
 

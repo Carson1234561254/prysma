@@ -6,8 +6,6 @@
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
-#include <memory>
-
 
 CLASS_NOEUD
 
@@ -21,7 +19,7 @@ private:
     
 public:
     VisiteurGeneralGenCode(ContextGenCode* contextGenCode);
-    ~VisiteurGeneralGenCode();
+    virtual ~VisiteurGeneralGenCode();
     void parcourirEnfant(NoeudInstruction* noeud);
     
     Symbole evaluerExpression(INoeud* expression);

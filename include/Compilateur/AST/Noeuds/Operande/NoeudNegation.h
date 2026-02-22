@@ -3,7 +3,7 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include <memory>
+
 
 
 class NoeudNegation : public INoeud {
@@ -12,8 +12,8 @@ private:
     Token operateur;
 
 public:
-    explicit NoeudNegation(const Token& operateur, INoeud* expr)
-        : operande(expr), operateur(operateur) {}
+    explicit NoeudNegation(const Token& p_operateur, INoeud* p_expr)
+        : operande(p_expr), operateur(p_operateur) {}
 
     void accept(IVisiteur* visiteur) override;
 

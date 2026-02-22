@@ -2,7 +2,6 @@
 #define E962F97C_7F79_445E_9F65_097981CC00B4
 
 #include <map>
-#include <memory>
 #include <set>
 #include <stdexcept>
 #include <string>

@@ -14,28 +14,28 @@ ParseurType::ParseurType(RegistreType* registreType, IConstructeurArbre* constru
 IType* ParseurType::parser(std::vector<Token>& tokens, int& index)
 {
     // Vérifier que le token courant est un type valide
-    if (TokenCategories::TYPES.find(tokens[index].type) == TokenCategories::TYPES.end()) {
-        throw ErreurCompilation("Erreur : type attendu", tokens[index].ligne, tokens[index].colonne);
+    if (TokenCategories::TYPES.find(tokens[static_cast<size_t>(index)].type) == TokenCategories::TYPES.end()) {
+        throw ErreurCompilation("Erreur : type attendu", tokens[static_cast<size_t>(index)].ligne, tokens[static_cast<size_t>(index)].colonne);
     }
 
     // Récupérer le type LLVM depuis le registre et créer un TypeSimple
-    llvm::Type* typeLLVM = _registreType->recuperer(tokens[index].type);
+    llvm::Type* typeLLVM = _registreType->recuperer(tokens[static_cast<size_t>(index)].type);
     IType* type = _constructeurArbre->allouer<TypeSimple>(typeLLVM);
     index++;
 
-    if (tokens[index].type == TOKEN_CROCHET_OUVERT) {
+    if (tokens[static_cast<size_t>(index)].type == TOKEN_CROCHET_OUVERT) {
     
         index++; // Consommer le crochet ouvert
 
         INoeud* tailleEquation = nullptr;
         
         // Vérifier si la taille est spécifiée ou si les crochets sont vides
-        if (tokens[index].type != TOKEN_CROCHET_FERME) {
+        if (tokens[static_cast<size_t>(index)].type != TOKEN_CROCHET_FERME) {
             tailleEquation = _constructeurArbre->construire(tokens, index);
         }
 
-        if (index >= static_cast<int>(tokens.size()) || tokens[index].type != TOKEN_CROCHET_FERME) {
-            throw ErreurCompilation("Erreur : ']' attendu après la taille du tableau", tokens[index].ligne, tokens[index].colonne);
+        if (index >= static_cast<int>(tokens.size()) || tokens[static_cast<size_t>(index)].type != TOKEN_CROCHET_FERME) {
+            throw ErreurCompilation("Erreur : ']' attendu après la taille du tableau", tokens[static_cast<size_t>(index)].ligne, tokens[static_cast<size_t>(index)].colonne);
         }
         index++; // Consommer le crochet fermant
 

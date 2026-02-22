@@ -26,6 +26,7 @@ class NoeudLectureTableau;
 class IVisiteur
 {
 public:
+    virtual ~IVisiteur() = default;
     virtual void visiter(NoeudScope* NoeudScope) = 0;
     virtual void visiter(NoeudAffectationVariable* noeudAffectationVariable) = 0;
     virtual void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) = 0; 

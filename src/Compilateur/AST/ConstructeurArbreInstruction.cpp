@@ -16,10 +16,10 @@ ConstructeurArbreInstruction::~ConstructeurArbreInstruction()
 
 INoeud* ConstructeurArbreInstruction::construire(std::vector<Token>& tokens, int& index)
 {
-    if (!_registreInstructions->existe(tokens[index].type)) {
-        throw ErreurCompilation("Instruction inconnue : '" + tokens[index].value + "'", tokens[index].ligne, tokens[index].colonne);
+    if (!_registreInstructions->existe(tokens[static_cast<size_t>(index)].type)) {
+        throw ErreurCompilation("Instruction inconnue : '" + tokens[static_cast<size_t>(index)].value + "'", tokens[static_cast<size_t>(index)].ligne, tokens[static_cast<size_t>(index)].colonne);
     }
-    IParseur* ParentNoeud = _registreInstructions->recuperer(tokens[index].type);
+    IParseur* ParentNoeud = _registreInstructions->recuperer(tokens[static_cast<size_t>(index)].type);
     INoeud* enfant = ParentNoeud->parser(tokens, index);
     return enfant;
 }

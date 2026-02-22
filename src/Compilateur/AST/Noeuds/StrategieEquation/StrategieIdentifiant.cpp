@@ -12,12 +12,12 @@ StrategieIdentifiant::~StrategieIdentifiant()
 
 INoeud* StrategieIdentifiant::construire(std::vector<Token>& equation) {
     bool isTableau = false;
-    int indexCrochet = 0;
+    size_t indexCrochet = 0;
     std::vector<Token> EquationIndex;
 
     // Utilisation d'une technique de contexte, regarder en avant pour voir si il y a un []
     // Parcourir l'équation pour trouver le token crochet ouvrant
-    for (int i = 0; i < equation.size(); i++) {
+    for (size_t i = 0; i < equation.size(); i++) {
         if (equation[i].type == TOKEN_CROCHET_OUVERT) {
             indexCrochet = i;
             isTableau = true;
@@ -27,11 +27,11 @@ INoeud* StrategieIdentifiant::construire(std::vector<Token>& equation) {
 
     if (isTableau) {
         // remplir le tableau de l'équation de l'index du crochet ouvrant jusqu'au crochet fermant correspondant
-        for (int i = indexCrochet; i < equation.size(); i++) {
+        for (size_t i = indexCrochet; i < equation.size(); i++) {
             if (equation[i].type == TOKEN_CROCHET_FERME) {
                 break;
             }
-            if (i != indexCrochet) { // ne pas ajouter le crochet ouvrant
+            if (i != static_cast<size_t>(indexCrochet)) { // ne pas ajouter le crochet ouvrant
                 EquationIndex.push_back(equation[i]);
             }
         }

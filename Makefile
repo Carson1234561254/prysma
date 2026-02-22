@@ -3,12 +3,13 @@ CXX = g++
 
 # 1. Récupération des flags LLVM
 LLVM_CXXFLAGS := $(shell llvm-config --cxxflags)
+LLVM_CXXFLAGS := $(subst -I/,-isystem /,$(LLVM_CXXFLAGS)) 
 LLVM_LDFLAGS  := $(shell llvm-config --ldflags --system-libs --libs core support irreader native)
 
 # 2. Configuration des flags
 # -fexceptions : Force l'activation des exceptions (écrase le -fno-exceptions de LLVM)
 # -Wno-unused-parameter : Cache les warnings inutiles dans les headers LLVM
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O2 -Iinclude $(LLVM_CXXFLAGS) -fexceptions -Wno-unused-parameter
+PRYSMA_CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O3 -Iinclude $(LLVM_CXXFLAGS) -fexceptions -Wno-unused-parameter
 
 SRC_DIR = src
 OBJ_DIR = build/obj
@@ -25,12 +26,12 @@ all: $(TARGET)
 # Édition de liens
 $(TARGET): $(OBJS)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LLVM_LDFLAGS)
+	$(CXX) $(PRYSMA_CXXFLAGS) $(CXXFLAGS) -o $@ $^ $(LLVM_LDFLAGS)
 
 # Compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(PRYSMA_CXXFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # Nettoyage
 clean:

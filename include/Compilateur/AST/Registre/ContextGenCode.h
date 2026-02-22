@@ -1,7 +1,6 @@
 #ifndef C2537ED8_1CCF_4242_BDB0_B5ED5F2AD08F
 #define C2537ED8_1CCF_4242_BDB0_B5ED5F2AD08F
 
-#include <memory>
 #include <iostream>
 #include <stdexcept>
 #include "RegistreInstruction.h"
@@ -26,63 +25,56 @@ struct ContextGenCode
     llvm::BumpPtrAllocator* arena;
 
     ContextGenCode(
-        LlvmBackend* backend,
-        RegistreInstruction* registreInstruction,
-        RegistreVariable* registreVariable,
-        RegistreFonction* registreFonction,
-        RegistreType* registreType,
-        RetourContexteCompilation* returnContextCompilation,
-        RegistreArgument* registreArgument,
-        Symbole valeurTemporaire,
-        llvm::BumpPtrAllocator* arena
+        LlvmBackend* p_backend,
+        RegistreInstruction* p_registreInstruction,
+        RegistreVariable* p_registreVariable,
+        RegistreFonction* p_registreFonction,
+        RegistreType* p_registreType,
+        RetourContexteCompilation* p_returnContextCompilation,
+        RegistreArgument* p_registreArgument,
+        Symbole p_valeurTemporaire,
+        llvm::BumpPtrAllocator* p_arena
     ) 
     {
         try {
-            if (backend == nullptr) {
+            if (p_backend == nullptr) {
                 throw std::invalid_argument("Le backend LLVM ne peut pas être null");
             }
-            if (registreInstruction == nullptr) {
+            if (p_registreInstruction == nullptr) {
                 throw std::invalid_argument("Le registre d'instruction ne peut pas être null");
             }
-            if (registreVariable == nullptr) {
+            if (p_registreVariable == nullptr) {
                 throw std::invalid_argument("Le registre de variable ne peut pas être null");
             }
-            if (registreFonction == nullptr) {
+            if (p_registreFonction == nullptr) {
                 throw std::invalid_argument("Le registre de fonction ne peut pas être null");
             }
-            if (registreType == nullptr) {
+            if (p_registreType == nullptr) {
                 throw std::invalid_argument("Le registre de type ne peut pas être null");
             }
-            if (returnContextCompilation == nullptr) {
+            if (p_returnContextCompilation == nullptr) {
                 throw std::invalid_argument("Le contexte de retour de compilation ne peut pas être null");
             }
-            if (registreArgument == nullptr) {
+            if (p_registreArgument == nullptr) {
                 throw std::invalid_argument("Le registre d'argument ne peut pas être null");
             }
-            if (arena == nullptr) {
-                throw std::invalid_argument("L'arène d'allocation ne peut pas être null");
+            if (p_arena == nullptr) {
+                throw std::invalid_argument("L'arène ne peut pas être null");
             }
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Erreur lors de la création du contexte de génération de code : " << e.what() << std::endl;
+            throw;
+        }
 
-            this->valeurTemporaire = valeurTemporaire;
-            this->backend = backend;
-            this->registreInstruction = registreInstruction;
-            this->registreVariable = registreVariable;
-            this->registreFonction = registreFonction;
-            this->registreType = registreType;
-            this->returnContextCompilation = returnContextCompilation;
-            this->registreArgument = registreArgument;
-            this->arena = arena;
-        }
-        catch (const std::invalid_argument& e) {
-            std::cerr << "Erreur lors de l'initialisation du contexte de génération de code : " 
-                      << e.what() << std::endl;
-            throw;
-        }
-        catch (const std::exception& e) {
-            std::cerr << "Erreur inattendue lors de l'initialisation du contexte : " 
-                      << e.what() << std::endl;
-            throw;
-        }
+        this->backend = p_backend;
+        this->registreInstruction = p_registreInstruction;
+        this->registreVariable = p_registreVariable;
+        this->registreFonction = p_registreFonction;
+        this->registreType = p_registreType;
+        this->returnContextCompilation = p_returnContextCompilation;
+        this->registreArgument = p_registreArgument;
+        this->valeurTemporaire = p_valeurTemporaire;
+        this->arena = p_arena;
     }
 };
 

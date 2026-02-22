@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
         // backSlashN
         context->backend->declarerExterne("backSlashN", llvm::Type::getVoidTy(context->backend->getContext()), {});
         {
-            SymboleFonction symBackSlashN;
+            SymboleFonction symBackSlashN{};
             symBackSlashN.fonction = context->backend->getModule().getFunction("backSlashN");
             symBackSlashN.typeRetour = nullptr;  
             context->registreFonction->enregistrer("backSlashN", symBackSlashN);
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
         llvm::FunctionType* print_type = llvm::FunctionType::get(llvm::Type::getVoidTy(context->backend->getContext()), print_args, true);
         llvm::Function* printFunc = llvm::Function::Create(print_type, llvm::Function::ExternalLinkage, "print", context->backend->getModule());
         {
-            SymboleFonction symPrint;
+            SymboleFonction symPrint{};
             symPrint.fonction = printFunc;
             symPrint.typeRetour = nullptr;  
             context->registreFonction->enregistrer("print", symPrint);
@@ -220,7 +220,9 @@ int main(int argc, char* argv[])
         arbre->accept(&visiteurGraphViz);
         visiteurGraphViz.generer();
 
-        (void)system("dot -Tpng output.dot -o ast_graph.png");
+        if (system("dot -Tpng output.dot -o ast_graph.png") != 0) {
+            std::cerr << "Erreur lors de la génération du graphe AST." << std::endl;
+        }
 
         LlvmSerializer serializer(context->backend->getContext(), context->backend->getModule());
         serializer.SauvegarderCodeLLVM("output.ll");

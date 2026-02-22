@@ -6,6 +6,7 @@
 class ISortie
 {
     public : 
+        virtual ~ISortie() = default;
         virtual void sort(const std::string& data) = 0;
 };
 

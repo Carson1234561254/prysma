@@ -30,7 +30,10 @@ Ce fichier permet à **clangd** d'analyser correctement votre code.
 ```bash
 mkdir -p build && bear --output build/compile_commands.json -- make -j$(nproc)
 ```
-
+### Pour activer les warnings et les traiter comme des erreurs, utilisez cette commande :
+```bash
+mkdir -p build && bear --output build/compile_commands.json -- make -j$(nproc) CXXFLAGS="-Wall -Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wnull-dereference -Wformat=2 -Werror"
+```
 ## 3. Visualisation des graphes
 
 Pour convertir un graphe au format PNG :

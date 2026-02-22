@@ -52,7 +52,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         for (size_t i = 0; i < tableauInit->getElements().size(); ++i) {
             std::vector<llvm::Value*> indices = {
                 _contextGenCode->backend->getBuilder().getInt32(0),
-                _contextGenCode->backend->getBuilder().getInt32(i)
+                _contextGenCode->backend->getBuilder().getInt32(static_cast<uint32_t>(i))
             }; 
             llvm::Value* ptrCase = _contextGenCode->backend->getBuilder().CreateGEP(typeTableauLLVM, allocaInstTableau, indices, "ptr_case");
             

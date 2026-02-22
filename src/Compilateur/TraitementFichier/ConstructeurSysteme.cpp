@@ -1,4 +1,5 @@
 #include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
+#include <iostream>
 #include <filesystem>
 #include <cstdlib>
 #include <sstream>
@@ -44,7 +45,9 @@ void ConstructeurSysteme::compilerLib()
         command += fichier;
         command += " -o ";
         command += objectFile;
-        (void)system(command.c_str());
+        if (system(command.c_str()) != 0) {
+            std::cerr << "Erreur lors de la compilation de la lib." << std::endl;
+        }
     }
 }
 
@@ -53,5 +56,7 @@ void ConstructeurSysteme::lierLibExecutable()
     std::string objectFiles = ConstructeurSysteme::parcourirEtCollecterFichiers(_libObjDir, ".o");
 
     std::string command = "clang++ " + _outputLL + objectFiles + " -o " + _executable;
-    (void)system(command.c_str());
+    if (system(command.c_str()) != 0) {
+        std::cerr << "Erreur lors de la liaison de la lib à l'exécutable." << std::endl;
+    }
 }

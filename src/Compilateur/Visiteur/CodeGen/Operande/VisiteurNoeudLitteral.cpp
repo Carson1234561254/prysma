@@ -17,12 +17,12 @@ void VisiteurGeneralGenCode::visiter(NoeudLitteral* noeudLitteral)
     }
     else if (token.type == TOKEN_LIT_BOLEEN) {
         int valeur = std::stoi(token.value); // "1" pour true, "0" pour false
-        _contextGenCode->valeurTemporaire.adresse = llvm::ConstantInt::get(llvm::Type::getInt1Ty(context), valeur);
+        _contextGenCode->valeurTemporaire.adresse = llvm::ConstantInt::get(llvm::Type::getInt1Ty(context), static_cast<uint64_t>(valeur));
         _contextGenCode->valeurTemporaire.type = new (_contextGenCode->arena->Allocate<TypeSimple>()) TypeSimple(llvm::Type::getInt1Ty(context));
     }
     else if (token.type == TOKEN_LIT_INT) { 
         int valeur = std::stoi(token.value); 
-        _contextGenCode->valeurTemporaire.adresse = llvm::ConstantInt::get(llvm::Type::getInt32Ty(context), valeur);
+        _contextGenCode->valeurTemporaire.adresse = llvm::ConstantInt::get(llvm::Type::getInt32Ty(context), static_cast<uint64_t>(valeur));
         _contextGenCode->valeurTemporaire.type = new (_contextGenCode->arena->Allocate<TypeSimple>()) TypeSimple(llvm::Type::getInt32Ty(context));
     }
     else {

@@ -3,7 +3,6 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include <memory>
 ParseurIf::ParseurIf(IConstructeurArbre* constructeurArbreEquation, IConstructeurArbre* constructeurArbreInstruction) 
     : _constructeurArbreEquation(constructeurArbreEquation), _constructeurArbreInstruction(constructeurArbreInstruction)
 {
@@ -32,7 +31,7 @@ INoeud* ParseurIf::parser(std::vector<Token>& tokens, int& index)
 
     // Créer le noeud bloc ELSE s'il existe
     NoeudInstruction* noeudBlocElse = nullptr;
-    if (index < (int)tokens.size() && tokens[index].type == TOKEN_SINON) {
+    if (index < static_cast<int>(tokens.size()) && tokens[static_cast<size_t>(index)].type == TOKEN_SINON) {
         consommer(tokens,index,TOKEN_SINON,"Erreur, le token n'est pas 'else'! ");
         noeudBlocElse = _constructeurArbreInstruction->allouer<NoeudInstruction>();
         consommer(tokens,index,TOKEN_ACCOLADE_OUVERTE, "Erreur, le token n'est pas '{'");

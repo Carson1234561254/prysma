@@ -3,7 +3,6 @@
 #include "Compilateur/AST/Registre/RegistreGeneric.h"
 #include "Compilateur/AST/Registre/Interfaces/IRegistreSymbole.h"
 #include <functional>
-#include <memory>
 
 
 class IExpression;
@@ -38,7 +37,8 @@ public:
 
 protected:
    
-    [[nodiscard]] std::string genererMessageErreur(TokenType cle) const  {
+    using RegistreGeneric<TokenType, std::function<IExpression*(Token)>>::genererMessageErreur;
+    [[nodiscard]] std::string genererMessageErreur(const TokenType& cle) const override {
         return RegistreGeneric::genererMessageErreur(cle);
     }
 };

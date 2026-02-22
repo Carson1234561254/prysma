@@ -21,7 +21,7 @@ INoeud* ParseurAffectationVariable::parser(std::vector<Token>& tokens, int& inde
 
     INoeud* expressionIndex = nullptr;
 
-    if (tokens[index].type == TOKEN_CROCHET_OUVERT) {
+    if (tokens[static_cast<size_t>(index)].type == TOKEN_CROCHET_OUVERT) {
  
         consommer(tokens, index, TOKEN_CROCHET_OUVERT, "Erreur '['");
         expressionIndex = _constructeurEquation->construire(tokens, index);

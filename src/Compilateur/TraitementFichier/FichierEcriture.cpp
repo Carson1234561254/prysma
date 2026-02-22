@@ -8,6 +8,13 @@ FichierEcriture::FichierEcriture(const std::string& path)
 {
 }
 
+FichierEcriture::~FichierEcriture()
+{
+    if (_fichier.is_open()) {
+        _fichier.close();
+    }
+}
+
 void FichierEcriture::sort(const std::string& data)
 {
     if (!_fichier) {

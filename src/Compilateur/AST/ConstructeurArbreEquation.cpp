@@ -43,7 +43,7 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
         throw std::runtime_error("Erreur: token non reconnu dans l'équation");
     }
     
-    IExpression* noeud = _registreSymbole->recupererNoeud(equation[indice]);
+    IExpression* noeud = _registreSymbole->recupererNoeud(equation[static_cast<size_t>(indice)]);
     std::vector<Token> gauche(equation.begin(), equation.begin() + indice); 
     std::vector<Token> droite(equation.begin() + indice + 1, equation.end());
     
@@ -63,8 +63,8 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token>& tokens, int& i
     int parenProfondeur = 0;
     int crochetProfondeur = 0;
 
-    while(index < (int)tokens.size()) {
-        TokenType type = tokens[index].type;
+    while(index < static_cast<int>(tokens.size())) {
+        TokenType type = tokens[static_cast<size_t>(index)].type;
 
         if (type == TOKEN_PAREN_OUVERTE) {
             parenProfondeur++;
@@ -93,7 +93,7 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token>& tokens, int& i
             }
         }
 
-        equationTokens.push_back(tokens[index]);
+        equationTokens.push_back(tokens[static_cast<size_t>(index)]);
         index++;
     }
 

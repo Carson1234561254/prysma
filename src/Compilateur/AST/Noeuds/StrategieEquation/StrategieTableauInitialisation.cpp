@@ -16,9 +16,9 @@ INoeud* StrategieTableauInitialisation::construire(std::vector<Token>& equation)
     std::vector<INoeud*> elementsTableau;
     std::vector<Token> sousEquation;
     
-    int index = 1;  // Commencer après le '['
+    size_t index = 1;  // Commencer après le '['
     // Parcourir les éléments jusqu'au ']'
-    while (index < static_cast<int>(equation.size()) && equation[index].type != TOKEN_CROCHET_FERME) {
+    while (index < equation.size() && equation[index].type != TOKEN_CROCHET_FERME) {
         if (equation[index].type == TOKEN_VIRGULE) {
             index++;
             INoeud* element = _constructeurArbreEquation->construire(sousEquation);

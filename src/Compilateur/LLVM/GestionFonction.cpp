@@ -71,7 +71,7 @@ void GestionFonction::traiterArgumentsConstruit(llvm::Function* function, const 
 {
     size_t argIndex = 0;
     for (auto* noeudArg : argumentsCodeGen.arguments) {
-        llvm::Argument* arg = function->getArg(argIndex);
+        llvm::Argument* arg = function->getArg(static_cast<unsigned int>(argIndex));
         arg->setName(noeudArg->getNom());
         
         llvm::Type* argType = arg->getType();
@@ -177,7 +177,6 @@ void GestionFonction::genererAppelFonction(SymboleFonction symboleFonction)
         args, 
         "resultat_appel"
     );
-    // IMPORTANT: Affecter le type retour Prysma
     _contextGenCode->valeurTemporaire.type = symboleFonction.typeRetour;
 }
 
@@ -197,12 +196,15 @@ void GestionFonction::declarerFonction()
     // Si la fonction est void et que le bloc courant n'a pas de terminateur,
     // on insère un ret void pour que le code LLVM IR soit valide.
     llvm::BasicBlock* blocCourant = _contextGenCode->backend->getBuilder().GetInsertBlock();
-    if (blocCourant && !blocCourant->getTerminator())
+    if (blocCourant != nullptr && typeDeRetour->isVoidTy())
     {
-        if (typeDeRetour->isVoidTy())
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnull-dereference"
+        if (blocCourant->getTerminator() == nullptr)
         {
             _contextGenCode->backend->getBuilder().CreateRetVoid();
         }
+#pragma GCC diagnostic pop
     }
 
     finaliserContexte();
@@ -254,7 +256,7 @@ void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction
         tag = 's';
     }
 
-    llvm::Value* llvmTag = builder.getInt8(tag);
+    llvm::Value* llvmTag = builder.getInt8(static_cast<uint8_t>(tag));
     SymboleFonction symbolePrint = obtenirFonction("print");
     builder.CreateCall(symbolePrint.fonction, { llvmTag, valeurArgument });
     
