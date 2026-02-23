@@ -41,6 +41,7 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
+#include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
 #include "llvm/Support/Allocator.h"
 #include <cstdlib>
 
@@ -220,6 +221,9 @@ int main(int argc, char* argv[])
         // Construire l'arbre syntaxique 
         INoeud* arbre = rawConstructeurArbreInstruction->construire(tokens);
 
+        VisiteurRemplissageRegistre visiteurRemplissageRegistre(context);
+        arbre->accept(&visiteurRemplissageRegistre);
+        
         VisiteurGeneralGenCode visiteur(context);
         arbre->accept(&visiteur);
 

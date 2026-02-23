@@ -2,28 +2,23 @@
 #define EF0EE0D7_D8CD_4A7D_BB3B_78249CA1F8AB
 
 #include <llvm-18/llvm/IR/Value.h>
-#include "Compilateur/AST/Registre/ContextGenCode.h"
-#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
-#include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
-#include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
 #include "Compilateur/GrapheVisuel/SortieGrapheVisuelTexte.h"
+#include "Compilateur/Visiteur/VisiteurBaseGenerale.h"
+#include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
 
-
-//Outils 
 CLASS_NOEUD
-
-class VisiteurGeneralGraphViz : public IVisiteur
+class VisiteurGeneralGraphViz : public VisiteurBaseGenerale
 { 
 private:
  SortieGrapheVisuelTexte _sortieGrapheVisuel;
  int _dernierId;
     
 public:
+    DECLARER_METHODES_VISITEUR
     VisiteurGeneralGraphViz(SortieGrapheVisuelTexte sortieGrapheVisuel);
     ~VisiteurGeneralGraphViz();
     void generer();
         
-    DECLARER_METHODES_VISITEUR
 };
 
 #endif /* FDDB5968_6DEF_49B0_AD11_8791D523278A */

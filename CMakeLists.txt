@@ -103,6 +103,11 @@ set(SOURCES
     src/Compilateur/TraitementFichier/ConstructeurSysteme.cpp
     src/Compilateur/TraitementFichier/FichierEcriture.cpp
     src/Compilateur/TraitementFichier/FichierLecture.cpp
+    # visiteur de base 
+    src/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
+    #visiteur de remplissage registre
+    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/RemplissageVariable.cpp
+    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.cpp
     # Visiteur code gen
     src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurAppelFonction.cpp
     src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp

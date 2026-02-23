@@ -6,10 +6,12 @@
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include "Compilateur/Visiteur/VisiteurBaseGenerale.h"
+#include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
 
 
 class RegistreVariable; 
 class LlvmBackend; 
+CLASS_NOEUD
 
 class VisiteurGeneralGenCode : public VisiteurBaseGenerale
 {
@@ -17,6 +19,7 @@ private:
     ContextGenCode* _contextGenCode;
     
 public:
+    DECLARER_METHODES_VISITEUR
     VisiteurGeneralGenCode(ContextGenCode* contextGenCode);
     virtual ~VisiteurGeneralGenCode();
     void parcourirEnfant(NoeudInstruction* noeud);

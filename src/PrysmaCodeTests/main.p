@@ -1,5 +1,4 @@
 scope {
-  
    fn void teste()
    {
       call print(1);

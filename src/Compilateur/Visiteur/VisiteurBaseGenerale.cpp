@@ -100,7 +100,7 @@ void VisiteurBaseGenerale::visiter(NoeudUnRefVariable* noeudUnRefVariable [[mayb
 {
 }
 
-void VisiteurBaseGenerale::visiter(NoeudRefVariable* noeudRefVariable)
+void VisiteurBaseGenerale::visiter(NoeudRefVariable* noeudRefVariable [[maybe_unused]])
 {
 }
 
