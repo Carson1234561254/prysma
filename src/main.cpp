@@ -56,6 +56,23 @@
 // Utilisation d'un système multi thread pour la compilation, un thread par fichier source. 
 // Transformer la structure de l'arbre syntaxique abstrait en "SoA" (Structure of Arrays) amélioration de la localité du cache et de la performance d'exécution. 
 
+
+// Explication du fonctionnnement pour la nouvelle refactorisation des registres pour supporter le multi thread: 
+// Je vais faire une première passe qui va construire des registres globaux pour les fonctions, et les variables
+// Ce registre contiendra une initialisation nullptr pour les objets de llvm llmv::Value llvm::allocainstance. 
+// Ensuite je vais faire une classe locale pour l'initialisation des objets nullptr en mémoire dans le registre. 
+// Cette façon de procéder est utilisée pour éviter les conflit entre les threads de mon programme. 
+
+// Niveau de la génération du code locale je vais pouvoir faire du multi thread pour générer le code en parallèle pour chaque fichier. Chaque fichier 
+// sera traité avec leur propre thread pour la génération du code et au final tout les fichier généré seront rassemblé pour faire un lien final. 
+
+// Les variables globales devront être initialisé dans le visiteur 2 non avec un nullptr car elle sont global dans une fonction précise donc pas de problème au niveau 
+// des autres thread. 
+
+// Le premier visiteur est seulement un éclaireur pour remplir les registres de fonction et de variable il remplit les registres avec des valeur    
+// nullptr pour les fonction et les variables
+
+
 int main(int argc, char* argv[])
 {
 

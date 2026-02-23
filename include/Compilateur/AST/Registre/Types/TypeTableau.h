@@ -3,7 +3,6 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "IType.h"
-#include <memory>
 
 class TypeTableau : public IType {
 private:
