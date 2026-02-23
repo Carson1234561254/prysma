@@ -50,6 +50,10 @@ public:
         return cles;
     }
 
+    const std::map<TKey, TValeur>& getElements() const {
+        return _elements;
+    }
+
 protected:
  
    virtual std::string genererMessageErreur(const TKey& cle) const {

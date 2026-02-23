@@ -12,6 +12,10 @@ namespace llvm { class AllocaInst; }
 struct Symbole {
     llvm::Value* adresse;
     IType* type;
+
+    Symbole() : adresse(nullptr), type(nullptr) {}
+
+    Symbole(llvm::Value* adresse, IType* type) : adresse(adresse), type(type) {}
 };
 
 class RegistreVariable 
@@ -33,6 +37,10 @@ public:
     
     void piler();
     void depiler();
+
+    std::map<std::string, Symbole>& getGlobalVariables() {
+        return _variables.top();
+    }
 };
 
 #endif /* F7F44FF6_77D4_456C_A897_1A52149FDE53 */
