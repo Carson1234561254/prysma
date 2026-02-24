@@ -1,7 +1,8 @@
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
-#include "Compilateur/AST/Registre/Types/IType.h"
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
-
+#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
+#include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
+#include "Compilateur/AST/Registre/Types/IType.h"
+#include "Compilateur/Lexer/Lexer.h"
 
 void VisiteurRemplissageRegistre::visiter(NoeudDeclarationVariable* noeudDeclarationVariable)
 {
@@ -9,5 +10,5 @@ void VisiteurRemplissageRegistre::visiter(NoeudDeclarationVariable* noeudDeclara
     IType* type = noeudDeclarationVariable->getType();
     token.value = noeudDeclarationVariable->getNom();
    
-    Symbole symboleVariable(nullptr, type);
+    _contextGenCode->registreVariable->enregistrer(token, Symbole(nullptr, type));
 }

@@ -108,9 +108,9 @@ set(SOURCES
     # visiteur de base 
     src/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
     #visiteur de remplissage registre
-    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/RemplissageVariable.cpp
+    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageVariable.cpp
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.cpp
-    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/RemplissageFonction.cpp
+    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageFonction.cpp
     # Visiteur code gen
     src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurAppelFonction.cpp
     src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp

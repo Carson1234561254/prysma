@@ -14,7 +14,7 @@ INoeud* ParseurScope::parser(std::vector<Token>& tokens, int& index)
     consommer(tokens, index, TOKEN_SCOPE, "Erreur : 'scope' attendu");
     consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Erreur : '{' attendu après 'scope'");
     consommerEnfantCorps(tokens,index,noeudScope,_constructeurArbreInstruction, TOKEN_ACCOLADE_FERMEE);
-     
+    consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Erreur : '}' attendu à la fin du scope");
     return noeudScope;
 }
 

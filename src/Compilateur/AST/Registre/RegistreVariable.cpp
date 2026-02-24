@@ -60,3 +60,10 @@ void RegistreVariable::depiler()
         _variables.pop();
     }
 }
+
+void RegistreVariable::viderTop()
+{
+    if (!_variables.empty()) {
+        _variables.top().clear();
+    }
+}

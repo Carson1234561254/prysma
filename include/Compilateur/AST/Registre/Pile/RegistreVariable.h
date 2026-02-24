@@ -37,6 +37,7 @@ public:
     
     void piler();
     void depiler();
+    void viderTop();
 
     std::map<std::string, Symbole>& getGlobalVariables() {
         return _variables.top();

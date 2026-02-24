@@ -11,7 +11,8 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
 {
     GestionVariable gestionVariable(_contextGenCode);
     INoeud* expression = noeudDeclarationVariable->getExpression();
-     // L'utilisation de dynamic_cast ici est un peu délicate, 
+    
+      // L'utilisation de dynamic_cast ici est un peu délicate, 
     // pour le moment je n'ai pas trouvé de solution optimal pour retirer ça, sinon je dois dépendre de llvm dans les INoeud, ce qui n'est pas idéal.
     // Le double dispatch est compliqué à mettre en place et ajouter une dépendance dans le context de génération du code 
     // Je dois trouver une solution pour éviter ce dynamic_cast, sans avoir c'est problème architectural. 
@@ -21,6 +22,8 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
     // Vérifier si l'expression est une initialisation de tableau
     NoeudTableauInitialisation* tableauInit = dynamic_cast<NoeudTableauInitialisation*>(expression);
     
+    llvm::AllocaInst* allocaCree = nullptr; 
+    
     if (tableauInit != nullptr) {
         // Déterminer le type LLVM du tableau
         llvm::Type* typeVariable = nullptr;
@@ -29,12 +32,10 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         TypeTableau* typeTableauDecl = dynamic_cast<TypeTableau*>(noeudDeclarationVariable->getType());
         
         if (typeTableauDecl != nullptr && typeTableauDecl->getTaille() == nullptr) {
-            // Taille implicite : calculer depuis l'initialisation
             size_t tailleReelle = tableauInit->getElements().size();
             typeElement = typeTableauDecl->getTypeEnfant()->genererTypeLLVM(_contextGenCode->backend->getContext());
             typeVariable = llvm::ArrayType::get(typeElement, tailleReelle);
         } else {
-            // Taille explicite : utiliser le type déclaré
             typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
             auto* typeTableauLLVM = llvm::dyn_cast<llvm::ArrayType>(typeVariable);
             if (typeTableauLLVM == nullptr) {
@@ -45,6 +46,9 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         
         // Allouer et enregistrer le tableau
         llvm::AllocaInst* allocaInstTableau = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
+        
+        allocaCree = allocaInstTableau;
+
         // Initialiser chaque élément du tableau
         auto* typeTableauLLVM = llvm::dyn_cast<llvm::ArrayType>(typeVariable);
         for (size_t i = 0; i < tableauInit->getElements().size(); ++i) {
@@ -63,6 +67,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         // Variable simple (non-tableau)
         llvm::Type* typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
         llvm::AllocaInst* allocaInst = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
+        allocaCree = allocaInst;
         
         llvm::Value* valeurCalculee = evaluerExpression(expression).adresse;
         if (valeurCalculee == nullptr) {
@@ -71,5 +76,11 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
 
         llvm::Value* valeurCastee = _contextGenCode->backend->creerAutoCast(valeurCalculee, typeVariable);
         gestionVariable.stockerVariable(valeurCastee, allocaInst);
+    }
+
+    if (allocaCree != nullptr) {
+        Token token;
+        token.value = noeudDeclarationVariable->getNom();
+        _contextGenCode->registreVariable->enregistrer(token, Symbole(allocaCree, noeudDeclarationVariable->getType()));
     }
 }

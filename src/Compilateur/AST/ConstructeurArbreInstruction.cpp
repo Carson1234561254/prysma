@@ -1,13 +1,13 @@
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
+#include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/GestionnaireErreur.h"
 #include <vector>
 
-
 ConstructeurArbreInstruction::ConstructeurArbreInstruction(RegistreInstruction* registreInstructions, llvm::BumpPtrAllocator& arena)
-	: _arena(arena)
+    : _arena(arena)
 {
-	_registreInstructions = registreInstructions;
+    _registreInstructions = registreInstructions;
 }
 
 ConstructeurArbreInstruction::~ConstructeurArbreInstruction()
@@ -24,10 +24,20 @@ INoeud* ConstructeurArbreInstruction::construire(std::vector<Token>& tokens, int
     return enfant;
 }
 
+
 INoeud* ConstructeurArbreInstruction::construire(std::vector<Token>& tokens)
 {
     int index = 0; 
-    return construire(tokens, index);
+    // On crée un conteneur global pour tout le fichier
+    NoeudInstruction* programmeGlobal = allouer<NoeudInstruction>();
+    
+    while (index < static_cast<int>(tokens.size()) && tokens[static_cast<size_t>(index)].type != TOKEN_EOF) {
+        INoeud* enfant = construire(tokens, index);
+        if (enfant != nullptr) {
+            programmeGlobal->ajouterInstruction(enfant);
+        }
+    }
+    return programmeGlobal;
 }
 
 llvm::BumpPtrAllocator& ConstructeurArbreInstruction::getArena()

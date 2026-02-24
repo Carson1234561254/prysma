@@ -1,5 +1,6 @@
 #include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieString.h"
+#include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
@@ -130,12 +131,15 @@ int main(int argc, char* argv[])
 
         // Enregistrer des fonctions externes
 
+        // Créer un vrai type Void pour Prysma
+        IType* typeVoidPrysma = new (arena.Allocate<TypeSimple>()) TypeSimple(llvm::Type::getVoidTy(context->backend->getContext()));
+
         // backSlashN
         context->backend->declarerExterne("backSlashN", llvm::Type::getVoidTy(context->backend->getContext()), {});
         {
             SymboleFonction symBackSlashN{};
             symBackSlashN.fonction = context->backend->getModule().getFunction("backSlashN");
-            symBackSlashN.typeRetour = nullptr;  
+            symBackSlashN.typeRetour = typeVoidPrysma; 
             context->registreFonction->enregistrer("backSlashN", symBackSlashN);
         }
 
@@ -147,7 +151,7 @@ int main(int argc, char* argv[])
         {
             SymboleFonction symPrint{};
             symPrint.fonction = printFunc;
-            symPrint.typeRetour = nullptr;  
+            symPrint.typeRetour = typeVoidPrysma;  
             context->registreFonction->enregistrer("print", symPrint);
         }
 

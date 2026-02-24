@@ -1,5 +1,4 @@
 scope {
-
     // 1. Test de base : Supériorité Entier
     fn bool testIntSup()
     {

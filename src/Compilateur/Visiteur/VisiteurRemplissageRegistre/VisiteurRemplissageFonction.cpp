@@ -1,6 +1,8 @@
-#include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
+#include "Compilateur/AST/Registre/RegistreFonction.h"
+#include "Compilateur/AST/Registre/Types/IType.h"
+#include "Compilateur/Lexer/Lexer.h"
 
 void VisiteurRemplissageRegistre::visiter(NoeudDeclarationFonction* noeudDeclarationFonction)
 {
@@ -8,5 +10,5 @@ void VisiteurRemplissageRegistre::visiter(NoeudDeclarationFonction* noeudDeclara
     Token token; 
     token.value = noeudDeclarationFonction->getNom();
     
-    SymboleFonction symboleFonction(nullptr, typeRetour, noeudDeclarationFonction);
+    _contextGenCode->registreFonction->enregistrer(token.value, SymboleFonction(nullptr, typeRetour, noeudDeclarationFonction));
 }

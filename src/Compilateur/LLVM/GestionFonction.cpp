@@ -35,14 +35,8 @@ GestionFonction::ArgumentsCodeGen GestionFonction::chargerArguments()
 
 llvm::Function* GestionFonction::creerFonction(llvm::Type* typeDeRetour, const ArgumentsCodeGen& argumentsCodeGen)
 {
-    llvm::FunctionType* funcType = llvm::FunctionType::get(typeDeRetour, argumentsCodeGen.argTypes, false);
-
-    llvm::Function* function = llvm::Function::Create(
-        funcType,
-        llvm::Function::ExternalLinkage,
-        _noeudDeclarationFonction->getNom(),
-        &_contextGenCode->backend->getModule()
-    );
+    SymboleFonction symbole = _contextGenCode->registreFonction->recuperer(_noeudDeclarationFonction->getNom());
+    llvm::Function* function = symbole.fonction;
 
     llvm::BasicBlock* entryBlock = llvm::BasicBlock::Create(_contextGenCode->backend->getContext(), "entry", function);
     _contextGenCode->backend->getBuilder().SetInsertPoint(entryBlock);
@@ -187,6 +181,8 @@ void GestionFonction::declarerFonction()
     GestionFonction::ArgumentsCodeGen argumentsCodeGen = chargerArguments();
 
     // Étapes logiques de génération
+
+    // retirer les args
     llvm::Function* function = creerFonction(typeDeRetour, argumentsCodeGen);
     enregistrerFonction(function);
     initialiserContexte();

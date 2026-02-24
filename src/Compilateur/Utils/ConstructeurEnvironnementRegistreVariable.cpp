@@ -5,20 +5,17 @@
 #include "llvm/IR/GlobalVariable.h"
 
 ConstructeurEnvironnementRegistreVariable::ConstructeurEnvironnementRegistreVariable(ContextGenCode* contextGenCode)
-    : _contextGenCode(contextGenCode)
-{
-}
+    : _contextGenCode(contextGenCode) {}
 
-ConstructeurEnvironnementRegistreVariable::~ConstructeurEnvironnementRegistreVariable()
-{
-}
+ConstructeurEnvironnementRegistreVariable::~ConstructeurEnvironnementRegistreVariable() {}
 
 void ConstructeurEnvironnementRegistreVariable::remplir()
 {   
-    auto* nouveauRegistre = new RegistreVariable();
-    nouveauRegistre->piler();
+    auto variablesGlobalesPasse1 = _contextGenCode->registreVariable->getGlobalVariables();
 
-    for(auto const& [nom, symbole] : _contextGenCode->registreVariable->getGlobalVariables())
+    _contextGenCode->registreVariable->viderTop(); 
+
+    for(auto const& [nom, symbole] : variablesGlobalesPasse1)
     {
         llvm::Type* typeLLVM = symbole.type->genererTypeLLVM(_contextGenCode->backend->getContext());
         
@@ -33,9 +30,7 @@ void ConstructeurEnvironnementRegistreVariable::remplir()
 
         Token token;
         token.value = nom;
-        nouveauRegistre->enregistrer(token, Symbole(variableGlobale, symbole.type));
+        
+        _contextGenCode->registreVariable->enregistrer(token, Symbole(variableGlobale, symbole.type));
     }
-    
-    delete _contextGenCode->registreVariable;
-    _contextGenCode->registreVariable = nouveauRegistre;
 }
