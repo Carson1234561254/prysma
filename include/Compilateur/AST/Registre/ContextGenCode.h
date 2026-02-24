@@ -18,7 +18,8 @@ struct ContextGenCode
     LlvmBackend* backend;
     RegistreInstruction* registreInstruction;
     RegistreVariable* registreVariable;
-    RegistreFonction* registreFonction;
+    RegistreFonction* registreFonctionGlobale;
+    RegistreFonction* registreFonctionLocale;
     RegistreType* registreType;
     RetourContexteCompilation* returnContextCompilation;
     RegistreArgument* registreArgument;
@@ -28,7 +29,8 @@ struct ContextGenCode
         LlvmBackend* p_backend,
         RegistreInstruction* p_registreInstruction,
         RegistreVariable* p_registreVariable,
-        RegistreFonction* p_registreFonction,
+        RegistreFonction* p_registreFonctionGlobale,
+        RegistreFonction* p_registreFonctionLocale,
         RegistreType* p_registreType,
         RetourContexteCompilation* p_returnContextCompilation,
         RegistreArgument* p_registreArgument,
@@ -46,8 +48,11 @@ struct ContextGenCode
             if (p_registreVariable == nullptr) {
                 throw std::invalid_argument("Le registre de variable ne peut pas être null");
             }
-            if (p_registreFonction == nullptr) {
-                throw std::invalid_argument("Le registre de fonction ne peut pas être null");
+            if (p_registreFonctionGlobale == nullptr) {
+                throw std::invalid_argument("Le registre de fonction globale ne peut pas être null");
+            }
+            if (p_registreFonctionLocale == nullptr) {
+                throw std::invalid_argument("Le registre de fonction locale ne peut pas être null");
             }
             if (p_registreType == nullptr) {
                 throw std::invalid_argument("Le registre de type ne peut pas être null");
@@ -69,7 +74,8 @@ struct ContextGenCode
         this->backend = p_backend;
         this->registreInstruction = p_registreInstruction;
         this->registreVariable = p_registreVariable;
-        this->registreFonction = p_registreFonction;
+        this->registreFonctionGlobale = p_registreFonctionGlobale;
+        this->registreFonctionLocale = p_registreFonctionLocale;
         this->registreType = p_registreType;
         this->returnContextCompilation = p_returnContextCompilation;
         this->registreArgument = p_registreArgument;

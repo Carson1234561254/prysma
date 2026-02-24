@@ -4,22 +4,35 @@
 #include "RegistreGeneric.h"
 #include <llvm-18/llvm/IR/Function.h>
 #include <string>
+#include <memory>
 
 class IType;
 class NoeudDeclarationFonction;
 
-struct SymboleFonction {
-    llvm::Function* fonction;
-    IType* typeRetour;
-    NoeudDeclarationFonction* noeud;
-
-    SymboleFonction() : fonction(nullptr), typeRetour(nullptr), noeud(nullptr) {}
-
-    SymboleFonction(llvm::Function* fonction, IType* typeRetour, NoeudDeclarationFonction* noeud)
-        : fonction(fonction), typeRetour(typeRetour), noeud(noeud) {}
+class ISymboleRegistreFonction
+{
+    public:
+        virtual ~ISymboleRegistreFonction() = default;
 };
 
-class RegistreFonction : public RegistreGeneric<std::string, SymboleFonction>
+// Fait office de struct pour stocker les fonctions globales donc 
+// Je met en public 
+// Pas de llvm::Function* ici, thread safe pour le registre global
+class SymboleFonctionGlobale : public ISymboleRegistreFonction {
+public: 
+    IType* typeRetour = nullptr;
+    NoeudDeclarationFonction* noeud = nullptr;
+};
+
+// Registre local avec llvm::Function* pour la génération de code dans un thread
+class SymboleFonctionLocale : public ISymboleRegistreFonction {
+public:
+    llvm::Function* fonction = nullptr;
+    IType* typeRetour = nullptr;
+    NoeudDeclarationFonction* noeud = nullptr;
+};
+
+class RegistreFonction : public RegistreGeneric<std::string, std::unique_ptr<ISymboleRegistreFonction>>
 {
 public:
     RegistreFonction() = default;

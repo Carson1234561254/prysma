@@ -24,11 +24,11 @@ public:
     }
 
    
-    void enregistrer(TKey cle, TValeur valeur) {
+    void enregistrer(const TKey& cle, TValeur valeur) {
         _elements[cle] = std::move(valeur);
     }
 
-    TValeur recuperer(TKey cle) {
+    const TValeur& recuperer(const TKey& cle) const {
         auto iterator = _elements.find(cle);
         if (iterator == _elements.end()) {
             std::string message = genererMessageErreur(cle);

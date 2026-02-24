@@ -35,22 +35,15 @@ GestionFonction::ArgumentsCodeGen GestionFonction::chargerArguments()
 
 llvm::Function* GestionFonction::creerFonction()
 {
-    SymboleFonction symbole = _contextGenCode->registreFonction->recuperer(_noeudDeclarationFonction->getNom());
-    llvm::Function* function = symbole.fonction;
+    // Récupérer la fonction LLVM depuis le registre local (thread-privé)
+    const auto& symbolePtr = _contextGenCode->registreFonctionLocale->recuperer(_noeudDeclarationFonction->getNom());
+    const auto* symbole = static_cast<const SymboleFonctionLocale*>(symbolePtr.get());
+    llvm::Function* function = symbole->fonction;
 
     llvm::BasicBlock* entryBlock = llvm::BasicBlock::Create(_contextGenCode->backend->getContext(), "entry", function);
     _contextGenCode->backend->getBuilder().SetInsertPoint(entryBlock);
 
     return function;
-}
-
-void GestionFonction::enregistrerFonction(llvm::Function* function)
-{
-    SymboleFonction symboleFonction;
-    symboleFonction.fonction = function;
-    symboleFonction.typeRetour = _noeudDeclarationFonction->getTypeRetour();
-    symboleFonction.noeud = _noeudDeclarationFonction;
-  
 }
 
 
@@ -107,8 +100,9 @@ void GestionFonction::passArguments(NoeudAppelFonction* noeudAppelFonction)
     _contextGenCode->registreArgument->vider();
 
     std::string nomFonction = noeudAppelFonction->getNomFonction().value;
-    SymboleFonction symboleFonction = _contextGenCode->registreFonction->recuperer(nomFonction);
-    llvm::Function* fonctionCible = symboleFonction.fonction;
+    const auto& symbolePtr = _contextGenCode->registreFonctionLocale->recuperer(nomFonction);
+    const auto* symboleFonction = static_cast<const SymboleFonctionLocale*>(symbolePtr.get());
+    llvm::Function* fonctionCible = symboleFonction->fonction;
 
     llvm::FunctionType* typeFonction = fonctionCible->getFunctionType();
     
@@ -140,24 +134,25 @@ void GestionFonction::passArguments(NoeudAppelFonction* noeudAppelFonction)
 }
 
 
-SymboleFonction GestionFonction::obtenirFonction(const std::string& nomFonction)
+const SymboleFonctionLocale* GestionFonction::obtenirFonctionLocale(const std::string& nomFonction)
 {
-    SymboleFonction symboleFonction = _contextGenCode->registreFonction->recuperer(nomFonction);
+    const auto& symbolePtr = _contextGenCode->registreFonctionLocale->recuperer(nomFonction);
+    const auto* symboleFonction = static_cast<const SymboleFonctionLocale*>(symbolePtr.get());
 
-    if (symboleFonction.fonction == nullptr) {
-        throw std::runtime_error("Fonction introuvable : " + nomFonction);
+    if (symboleFonction->fonction == nullptr) {
+        throw std::runtime_error("Fonction introuvable dans le registre local : " + nomFonction);
     }
 
     return symboleFonction;
 }
 
 
-void GestionFonction::genererAppelFonction(SymboleFonction symboleFonction)
+void GestionFonction::genererAppelFonction(const SymboleFonctionLocale* symboleFonction)
 {
     std::vector<llvm::Value*> args = _contextGenCode->registreArgument->recuperer();
     _contextGenCode->registreArgument->vider();
 
-    llvm::Function* fonction = symboleFonction.fonction;
+    llvm::Function* fonction = symboleFonction->fonction;
     
     if(fonction->getReturnType()->isVoidTy())
     {
@@ -171,7 +166,7 @@ void GestionFonction::genererAppelFonction(SymboleFonction symboleFonction)
         args, 
         "resultat_appel"
     );
-    _contextGenCode->valeurTemporaire.type = symboleFonction.typeRetour;
+    _contextGenCode->valeurTemporaire.type = symboleFonction->typeRetour;
 }
 
 void GestionFonction::declarerFonction()
@@ -184,7 +179,6 @@ void GestionFonction::declarerFonction()
 
     // retirer les args
     llvm::Function* function = creerFonction();
-    enregistrerFonction(function);
     initialiserContexte();
     traiterArgumentsConstruit(function, argumentsCodeGen);
     traiterCorpsFonction();
@@ -218,7 +212,7 @@ void GestionFonction::genererAppelFonction(NoeudAppelFonction* noeudAppelFonctio
     }
 
     passArguments(noeudAppelFonction);
-    SymboleFonction symboleFonction = obtenirFonction(nomFonction);
+    const SymboleFonctionLocale* symboleFonction = obtenirFonctionLocale(nomFonction);
     genererAppelFonction(symboleFonction);
 }
 
@@ -253,8 +247,8 @@ void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction
     }
 
     llvm::Value* llvmTag = builder.getInt8(static_cast<uint8_t>(tag));
-    SymboleFonction symbolePrint = obtenirFonction("print");
-    builder.CreateCall(symbolePrint.fonction, { llvmTag, valeurArgument });
+    const SymboleFonctionLocale* symbolePrint = obtenirFonctionLocale("print");
+    builder.CreateCall(symbolePrint->fonction, { llvmTag, valeurArgument });
     
     _contextGenCode->valeurTemporaire.adresse = nullptr;
 }

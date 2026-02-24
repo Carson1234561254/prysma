@@ -1,4 +1,5 @@
 #include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
+#include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieString.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/Registre/ContextGenCode.h"
@@ -102,8 +103,13 @@ int main(int argc, char* argv[])
     try {
         auto* backend = new (arena.Allocate<LlvmBackend>()) LlvmBackend();
         auto* registreInstruction = new (arena.Allocate<RegistreInstruction>()) RegistreInstruction();
+        // note la différence entre le registre de fonction globale et locale, c'est que le globale ce sont tout les fonctions de tout les fichier sans 
+        // de llvm::Fonction qui cause problème pour le multi thread, alors que le local c'est les fonctions d'un fichier local courent du thread
         auto* registreVariable = new (arena.Allocate<RegistreVariable>()) RegistreVariable();
-        auto* registreFonction = new (arena.Allocate<RegistreFonction>()) RegistreFonction();
+        // Le seule registre qui sera utilisée globalement par tout le monde
+        auto* registreFonctionGlobale = new (arena.Allocate<RegistreFonction>()) RegistreFonction();
+        
+        auto* registreFonctionLocale = new (arena.Allocate<RegistreFonction>()) RegistreFonction();
         auto* registreType = new (arena.Allocate<RegistreType>()) RegistreType();
         auto* returnContextCompilation = new (arena.Allocate<RetourContexteCompilation>()) RetourContexteCompilation();
         auto* registreArgument = new (arena.Allocate<RegistreArgument>()) RegistreArgument();
@@ -115,7 +121,8 @@ int main(int argc, char* argv[])
             backend,
             registreInstruction,
             registreVariable,
-            registreFonction,
+            registreFonctionGlobale,
+            registreFonctionLocale,
             registreType,
             returnContextCompilation,
             registreArgument,
@@ -137,10 +144,18 @@ int main(int argc, char* argv[])
         // backSlashN
         context->backend->declarerExterne("backSlashN", llvm::Type::getVoidTy(context->backend->getContext()), {});
         {
-            SymboleFonction symBackSlashN{};
-            symBackSlashN.fonction = context->backend->getModule().getFunction("backSlashN");
-            symBackSlashN.typeRetour = typeVoidPrysma; 
-            context->registreFonction->enregistrer("backSlashN", symBackSlashN);
+            // Registre global (thread safe, pas de llvm::Function*)
+            auto symBackSlashNGlobal = std::make_unique<SymboleFonctionGlobale>();
+            symBackSlashNGlobal->typeRetour = typeVoidPrysma;
+            symBackSlashNGlobal->noeud = nullptr;
+            context->registreFonctionGlobale->enregistrer("backSlashN", std::move(symBackSlashNGlobal));
+
+            // Registre local (avec llvm::Function* pour la génération de code)
+            auto symBackSlashNLocal = std::make_unique<SymboleFonctionLocale>();
+            symBackSlashNLocal->fonction = context->backend->getModule().getFunction("backSlashN");
+            symBackSlashNLocal->typeRetour = typeVoidPrysma;
+            symBackSlashNLocal->noeud = nullptr;
+            context->registreFonctionLocale->enregistrer("backSlashN", std::move(symBackSlashNLocal));
         }
 
         // print
@@ -149,10 +164,18 @@ int main(int argc, char* argv[])
         llvm::FunctionType* print_type = llvm::FunctionType::get(llvm::Type::getVoidTy(context->backend->getContext()), print_args, true);
         llvm::Function* printFunc = llvm::Function::Create(print_type, llvm::Function::ExternalLinkage, "print", context->backend->getModule());
         {
-            SymboleFonction symPrint{};
-            symPrint.fonction = printFunc;
-            symPrint.typeRetour = typeVoidPrysma;  
-            context->registreFonction->enregistrer("print", symPrint);
+            // Registre global (thread safe, pas de llvm::Function*)
+            auto symPrintGlobal = std::make_unique<SymboleFonctionGlobale>();
+            symPrintGlobal->typeRetour = typeVoidPrysma;
+            symPrintGlobal->noeud = nullptr;
+            context->registreFonctionGlobale->enregistrer("print", std::move(symPrintGlobal));
+
+            // Registre local (avec llvm::Function* pour la génération de code)
+            auto symPrintLocal = std::make_unique<SymboleFonctionLocale>();
+            symPrintLocal->fonction = printFunc;
+            symPrintLocal->typeRetour = typeVoidPrysma;
+            symPrintLocal->noeud = nullptr;
+            context->registreFonctionLocale->enregistrer("print", std::move(symPrintLocal));
         }
 
         // Enregistrer les types de base

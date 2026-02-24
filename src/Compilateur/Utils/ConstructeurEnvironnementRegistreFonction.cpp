@@ -8,23 +8,25 @@ ConstructeurEnvironnementRegistreFonction::ConstructeurEnvironnementRegistreFonc
 
 ConstructeurEnvironnementRegistreFonction::~ConstructeurEnvironnementRegistreFonction() {}
 
+
+// Je vais jetter ça, plus besoins car je vais opter pour un système de stockage unique du noeud dans le registre global 
+// multi thread, c'est les thread qui ce chargera de reconstruire les fonctions llvm à partir du noeud dans le registre global
 void ConstructeurEnvironnementRegistreFonction::remplir()
 {   
-    auto* nouveauRegistre = new (_contextGenCode->arena->Allocate<RegistreFonction>()) RegistreFonction();
-
-    for(const auto& cle : _contextGenCode->registreFonction->obtenirCles())
+    for(const auto& cle : _contextGenCode->registreFonctionGlobale->obtenirCles())
     {
-        auto ancienSymbole = _contextGenCode->registreFonction->recuperer(cle);
+        const auto& ancienSymboleUniquePtr = _contextGenCode->registreFonctionGlobale->recuperer(cle);
+        const auto* ancienSymbole = static_cast<const SymboleFonctionGlobale*>(ancienSymboleUniquePtr.get());
         
-        if (ancienSymbole.noeud == nullptr) {
-            nouveauRegistre->enregistrer(cle, ancienSymbole);
+        if (ancienSymbole->noeud == nullptr) {
+            // Ne devrait pas arriver avec la nouvelle logique, mais par sécurité
             continue;
         }
 
-        llvm::Type* retType = ancienSymbole.typeRetour->genererTypeLLVM(_contextGenCode->backend->getContext());
+        llvm::Type* retType = ancienSymbole->typeRetour->genererTypeLLVM(_contextGenCode->backend->getContext());
         
         std::vector<llvm::Type*> paramTypes;
-        for (auto* arg : ancienSymbole.noeud->getArguments()) {
+        for (auto* arg : ancienSymbole->noeud->getArguments()) {
             paramTypes.push_back(arg->getType()->genererTypeLLVM(_contextGenCode->backend->getContext()));
         }
 
@@ -37,13 +39,11 @@ void ConstructeurEnvironnementRegistreFonction::remplir()
             _contextGenCode->backend->getModule()
         );
 
-        SymboleFonction nouveauSymbole;
-        nouveauSymbole.fonction = vraieFonction;
-        nouveauSymbole.typeRetour = ancienSymbole.typeRetour;
-        nouveauSymbole.noeud = ancienSymbole.noeud;
+        auto nouveauSymbole = std::make_unique<SymboleFonctionLocale>();
+        nouveauSymbole->fonction = vraieFonction;
+        nouveauSymbole->typeRetour = ancienSymbole->typeRetour;
+        nouveauSymbole->noeud = ancienSymbole->noeud;
         
-        nouveauRegistre->enregistrer(cle, nouveauSymbole);        
+        _contextGenCode->registreFonctionLocale->enregistrer(cle, std::move(nouveauSymbole));        
     }
-    
-    _contextGenCode->registreFonction = nouveauRegistre;
 }

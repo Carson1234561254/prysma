@@ -6,8 +6,14 @@
 void VisiteurGeneralGenCode::visiter(NoeudAppelFonction* noeudAppelFonction)
 {
     std::string nomFonction = noeudAppelFonction->getNomFonction().value;
-    SymboleFonction symbole = _contextGenCode->registreFonction->recuperer(nomFonction);
     
-    GestionFonction gestionnaireFonction(_contextGenCode, symbole.noeud, this);
+    // Récupérer le noeud depuis le registre global (thread safe, pas de llvm::Function*)
+    const auto& symbolePtr = _contextGenCode->registreFonctionGlobale->recuperer(nomFonction);
+    const auto* symbole = static_cast<const SymboleFonctionGlobale*>(symbolePtr.get());
+    
+    // Pour les fonctions externes (print, backSlashN...), noeud est nullptr
+    NoeudDeclarationFonction* noeud = symbole->noeud;
+    
+    GestionFonction gestionnaireFonction(_contextGenCode, noeud, this);
     gestionnaireFonction.genererAppelFonction(noeudAppelFonction);
 }

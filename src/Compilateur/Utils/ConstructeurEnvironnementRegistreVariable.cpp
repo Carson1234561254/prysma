@@ -9,6 +9,18 @@ ConstructeurEnvironnementRegistreVariable::ConstructeurEnvironnementRegistreVari
 
 ConstructeurEnvironnementRegistreVariable::~ConstructeurEnvironnementRegistreVariable() {}
 
+// Actuellement inutilisée, c'est pour le future, un autre ittération de développement, elle existe pour le moment mais elle n'est pas encore testé
+// Une fonctionnalité bonus 
+// Cette classe a pour but de remplir le registre de variable global ce trouvant à l'extérieur d'une fonction 
+// exemple : 
+// scope {
+//     dec int64 a = 10;
+//     dec string b = "string";
+//     fn void teste()
+//     {
+//     }
+// }
+
 void ConstructeurEnvironnementRegistreVariable::remplir()
 {   
     auto variablesGlobalesPasse1 = _contextGenCode->registreVariable->getGlobalVariables();

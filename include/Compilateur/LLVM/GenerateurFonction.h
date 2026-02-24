@@ -24,7 +24,6 @@ class GestionFonction
         
         // Étapes logiques de génération
         llvm::Function* creerFonction();
-        void enregistrerFonction(llvm::Function* function);
         void initialiserContexte();
         void traiterArgumentsConstruit(llvm::Function* function, const ArgumentsCodeGen& argumentsCodeGen);
         void traiterCorpsFonction();
@@ -34,8 +33,8 @@ class GestionFonction
 
         // Appel de fonction
         void passArguments(NoeudAppelFonction* noeudAppelFonction);
-        SymboleFonction obtenirFonction(const std::string& nomFonction);
-        void genererAppelFonction(SymboleFonction symboleFonction);
+        const SymboleFonctionLocale* obtenirFonctionLocale(const std::string& nomFonction);
+        void genererAppelFonction(const SymboleFonctionLocale* symboleFonction);
       
     public: 
 
