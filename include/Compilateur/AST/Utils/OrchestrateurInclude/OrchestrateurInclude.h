@@ -2,6 +2,7 @@
 #define D2577958_A8A8_4878_AFA0_2B3478129911
 
 #include "Compilateur/AST/Utils/OrchestrateurInclude/FacadeConfigurationEnvironnement.h"
+#include "Compilateur/Registre/RegistreFichier.h"
 
 
 class OrchestrateurInclude
@@ -9,9 +10,10 @@ class OrchestrateurInclude
 private: 
    FacadeConfigurationEnvironnement* _facadeConfigurationEnvironnement;
    RegistreFonction* _registreFonctionGlobale;
+   RegistreFichier* _registreFichier;
 
 public:
-    OrchestrateurInclude(FacadeConfigurationEnvironnement* facadeConfigurationEnvironnement, RegistreFonction* registreFonctionGlobale);
+    OrchestrateurInclude(FacadeConfigurationEnvironnement* facadeConfigurationEnvironnement, RegistreFonction* registreFonctionGlobale, RegistreFichier* registreFichier);
     ~OrchestrateurInclude();
 
    void nouvelleInstance(const std::string& cheminFichier);

@@ -4,6 +4,7 @@
 #include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include "Compilateur/GestionnaireErreur.h"
+#include "Compilateur/Registre/RegistreFichier.h"
 #include <iostream>
 #include <llvm-18/llvm/IR/DerivedTypes.h>
 #include <llvm-18/llvm/IR/Instructions.h>
@@ -65,20 +66,24 @@ int main(int argc, char* argv[])
     std::string cheminFichier = argv[1];
     std::string nomFichier = std::filesystem::path(cheminFichier).string(); 
     
-    try {
-        
+    // Ensure output directories exist
+    std::filesystem::create_directory("programme");
+    std::filesystem::create_directory("graphe");
+
+    try {  
         // Le seule registre qui sera utilisée globalement par tout le monde
         std::unique_ptr<RegistreFonction> registreFonctionGlobale = std::make_unique<RegistreFonction>();
         std::unique_ptr<FacadeConfigurationEnvironnement> facadeConfigurationEnvironnement = std::make_unique<FacadeConfigurationEnvironnement>(registreFonctionGlobale.get());
         
-        OrchestrateurInclude orchestrateurInclude(facadeConfigurationEnvironnement.get(), registreFonctionGlobale.get());
+        std::unique_ptr<RegistreFichier> registreFichiers = std::make_unique<RegistreFichier>();
+
+        OrchestrateurInclude orchestrateurInclude(facadeConfigurationEnvironnement.get(), registreFonctionGlobale.get(), registreFichiers.get());
         orchestrateurInclude.nouvelleInstance(cheminFichier);
 
         // Link les fichiers ensemble 
-        ConstructeurSysteme constructeur("../src/Lib", "Lib", "output.ll", "programme");
+        ConstructeurSysteme constructeur("../src/Lib", "Lib", ".", registreFichiers->obtenirTousLesFichiers(), "executable");
         constructeur.compilerLib();
         constructeur.lierLibExecutable();
-
     }
     catch (const ErreurCompilation& erreur) {
         std::cerr << nomFichier << ":" 

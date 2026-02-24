@@ -4,7 +4,6 @@
 #include "Compilateur/AST/Utils/ConstructeurEnvironnementRegistreFonction.h"
 #include "Compilateur/AST/Utils/ConstructeurEnvironnementRegistreVariable.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
-#include "Compilateur/TraitementFichier/ConstructeurSysteme.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/GrapheVisuel/SortieGrapheVisuelTexte.h"
 #include "Compilateur/LLVM/LlvmSerializer.h"
@@ -17,15 +16,25 @@
 #include <cstdlib>
 #include <string>
 
-OrchestrateurInclude::OrchestrateurInclude(FacadeConfigurationEnvironnement* facadeConfigurationEnvironnement, RegistreFonction* registreFonctionGlobale) : 
+OrchestrateurInclude::OrchestrateurInclude(FacadeConfigurationEnvironnement* facadeConfigurationEnvironnement, RegistreFonction* registreFonctionGlobale, RegistreFichier* registreFichier) : 
 _facadeConfigurationEnvironnement(facadeConfigurationEnvironnement),
-_registreFonctionGlobale(registreFonctionGlobale)
+_registreFonctionGlobale(registreFonctionGlobale),
+_registreFichier(registreFichier)
 {}
 
 OrchestrateurInclude::~OrchestrateurInclude()
 {}
 
 void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
+
+    std::string pathProgramme = "programme/";
+    std::string pathGraphe = "graphe/";
+    
+    std::string nomFichier = cheminFichier.substr(cheminFichier.find_last_of("/\\") + 1);
+    nomFichier = nomFichier.substr(0, nomFichier.find_last_of('.'));
+
+    _registreFichier->ajouterFichier(pathProgramme + nomFichier + ".ll");
+
     _facadeConfigurationEnvironnement->initialiser();
 
     ContextGenCode* context = _facadeConfigurationEnvironnement->getContext();
@@ -51,15 +60,20 @@ void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
     VisiteurGeneralGenCode visiteur(context);
     arbre->accept(&visiteur);
 
-    SortieGrapheVisuelTexte sortieGrapheVisuel("output.dot");
+    SortieGrapheVisuelTexte sortieGrapheVisuel(pathGraphe+nomFichier+".dot");
     VisiteurGeneralGraphViz visiteurGraphViz(std::move(sortieGrapheVisuel));
     arbre->accept(&visiteurGraphViz);
     visiteurGraphViz.generer();
 
-    if (system("dot -Tpng output.dot -o ast_graph.png") != 0) {
-        std::cerr << "Erreur lors de la génération du graphe AST." << std::endl;
+    if (system(("dot -Tsvg " + pathGraphe + nomFichier + ".dot -o " + pathGraphe + nomFichier + ".svg").c_str()) != 0) {
+        std::cerr << "Erreur lors de la génération du graphe." << std::endl;
+    }
+
+    // Supprimer le fichier .dot intermédiaire
+    if (system(("rm " + pathGraphe + nomFichier + ".dot").c_str()) != 0) {
+        std::cerr << "Erreur lors de la suppression du fichier .dot." << std::endl;
     }
 
     LlvmSerializer serializer(context->backend->getContext(), context->backend->getModule());
-    serializer.SauvegarderCodeLLVM("output.ll"); 
+    serializer.SauvegarderCodeLLVM(pathProgramme + nomFichier + ".ll"); 
 }

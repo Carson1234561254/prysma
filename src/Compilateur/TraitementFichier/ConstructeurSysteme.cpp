@@ -2,28 +2,28 @@
 #include <iostream>
 #include <filesystem>
 #include <cstdlib>
-#include <sstream>
 
 namespace fs = std::filesystem;
 
-ConstructeurSysteme::ConstructeurSysteme(std::string pathLib, std::string libObjDir, std::string outputLL, std::string executable) 
+ConstructeurSysteme::ConstructeurSysteme(std::string pathLib, std::string libObjDir, std::string buildDir, std::vector<std::string> outputLL, std::string executable) 
     : _pathLib(std::move(pathLib)), 
-      _libObjDir(std::move(libObjDir)), 
+      _libObjDir(std::move(libObjDir)),
+      _buildDir(std::move(buildDir)), 
       _outputLL(std::move(outputLL)), 
       _executable(std::move(executable)) 
 {}
 
 ConstructeurSysteme::~ConstructeurSysteme() {}
 
-std::string ConstructeurSysteme::parcourirEtCollecterFichiers(const std::string& repertoire, const std::string& extension)
+std::vector<std::string> ConstructeurSysteme::parcourirEtCollecterFichiers(const std::string& repertoire, const std::string& extension)
 {
-    std::string fichiers;
+    std::vector<std::string> fichiers;
     if (!fs::exists(repertoire)) {
         return fichiers;
     }
     for (const auto& entry : fs::directory_iterator(repertoire)) {
         if (entry.is_regular_file() && entry.path().extension() == extension) {
-            fichiers += " " + entry.path().string();
+            fichiers.push_back(entry.path().string());
         }
     }
     return fichiers;
@@ -35,10 +35,8 @@ void ConstructeurSysteme::compilerLib()
         fs::create_directory(_libObjDir);
     }
 
-    std::string fichiersCpp = ConstructeurSysteme::parcourirEtCollecterFichiers(_pathLib, ".cpp");
-    std::stringstream stream(fichiersCpp);
-    std::string fichier;
-    while (stream >> fichier) {
+    std::vector<std::string> fichiersCpp = ConstructeurSysteme::parcourirEtCollecterFichiers(_pathLib, ".cpp");
+    for (const auto& fichier : fichiersCpp) {
         const fs::path filePath(fichier);
         std::string objectFile = (fs::path(_libObjDir) / filePath.filename()).replace_extension(".o").string();
         std::string command = "clang++ -c ";
@@ -53,9 +51,18 @@ void ConstructeurSysteme::compilerLib()
 
 void ConstructeurSysteme::lierLibExecutable()
 {
-    std::string objectFiles = ConstructeurSysteme::parcourirEtCollecterFichiers(_libObjDir, ".o");
+    std::vector<std::string> objectFilesVec = ConstructeurSysteme::parcourirEtCollecterFichiers(_libObjDir, ".o");
+    std::string objectFiles;
+    for(const auto& file : objectFilesVec) {
+        objectFiles += " " + file;
+    }
 
-    std::string command = "clang++ " + _outputLL + objectFiles + " -o " + _executable;
+    std::string llFiles;
+    for (const auto& llFile : _outputLL) {
+        llFiles += " " + llFile;
+    }
+
+    std::string command = "clang++ " + llFiles + objectFiles + " -o " + _executable;
     if (system(command.c_str()) != 0) {
         std::cerr << "Erreur lors de la liaison de la lib à l'exécutable." << std::endl;
     }

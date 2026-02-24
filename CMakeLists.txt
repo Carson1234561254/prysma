@@ -48,6 +48,7 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.cpp
+    src/Compilateur/Registre/RegistreFichier.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.cpp
