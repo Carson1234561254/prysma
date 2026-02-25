@@ -1,6 +1,6 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
-#include "Compilateur/AST/Noeuds/NoeudScope.h"
+#include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
 #include "Compilateur/Lexer/TokenType.h"
@@ -48,7 +48,7 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
     // Parser le corps dans un NoeudScope strict
     consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Erreur: ce n'est pas une accolade ouverte '{' ");
 
-    NoeudScope* corps = _constructeurArbreInstruction->allouer<NoeudScope>();
+    NoeudInstruction* corps = _constructeurArbreInstruction->allouer<NoeudInstruction>();
     consommerEnfantCorps(tokens, index, corps, _constructeurArbreInstruction, TOKEN_ACCOLADE_FERMEE);
 
     consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Erreur: ce n'est pas une accolade fermée '}'");

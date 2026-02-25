@@ -21,7 +21,6 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieAppelFonction.h"
 
 // Parseurs d'instructions
-#include "Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.h"
@@ -193,9 +192,6 @@ void FacadeConfigurationEnvironnement::enregistrerStrategiesEquation()
 
 void FacadeConfigurationEnvironnement::enregistrerInstructions()
 {
-    auto* parsScope = new (_arena.Allocate<ParseurScope>()) ParseurScope(_constructeurArbreInstruction);
-    _context->registreInstruction->enregistrer(TOKEN_SCOPE, parsScope);
-
     auto* parsFonc = new (_arena.Allocate<ParseurDeclarationFonction>()) ParseurDeclarationFonction(_constructeurArbreInstruction, _parseurType);
     _context->registreInstruction->enregistrer(TOKEN_FONCTION, parsFonc);
 

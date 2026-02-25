@@ -1,7 +1,6 @@
 #ifndef B9A25031_6CA1_409A_879D_68D43CAC9945
 #define B9A25031_6CA1_409A_879D_68D43CAC9945
 
-class NoeudScope;
 class NoeudAffectationVariable;
 class NoeudDeclarationVariable;
 class NoeudVariable;
@@ -28,7 +27,6 @@ class IVisiteur
 {
 public:
     virtual ~IVisiteur() = default;
-    virtual void visiter(NoeudScope* NoeudScope) = 0;
     virtual void visiter(NoeudAffectationVariable* noeudAffectationVariable) = 0;
     virtual void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) = 0; 
     virtual void visiter(NoeudAppelFonction* noeudAppelFonction) = 0;

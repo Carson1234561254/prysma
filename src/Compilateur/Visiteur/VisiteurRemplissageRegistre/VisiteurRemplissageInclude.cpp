@@ -5,6 +5,6 @@
 
 void VisiteurRemplissageRegistre::visiter(NoeudInclude* noeudInclude)
 {
-    _orchestrateur->inclureFichier(noeudInclude->getPath(), _contextGenCode);
+    _orchestrateur->inclureFichier(noeudInclude->getPath());
 }
 

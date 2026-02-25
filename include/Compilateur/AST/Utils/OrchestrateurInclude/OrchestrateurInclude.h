@@ -20,7 +20,7 @@ public:
     ~OrchestrateurInclude();
 
    void nouvelleInstance(const std::string& cheminFichier);
-   void inclureFichier(const std::string& cheminAbsolu, ContextGenCode* contextAppelant);
+   void inclureFichier(const std::string& cheminAbsolu);
    std::string getRepertoireCourant() const { return _repertoireCourant; }
 };
 

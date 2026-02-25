@@ -2,7 +2,6 @@
 #define D2023444_D6C2_4302_89E4_57775CF04AD5
 
 #define DECLARER_METHODES_VISITEUR \
-    void visiter(NoeudScope* NoeudScope) override; \
     void visiter(NoeudAffectationVariable* noeudAffectationVariable) override; \
     void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) override; \
     void visiter(NoeudAppelFonction* noeudAppelFonction) override; \
@@ -23,7 +22,6 @@
 
 #define CLASS_NOEUD \
     class NoeudInstruction; \
-    class NoeudScope; \
     class NoeudAffectationVariable; \
     class NoeudDeclarationVariable; \
     class NoeudAppelFonction; \

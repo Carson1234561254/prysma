@@ -67,7 +67,6 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
     src/Compilateur/AST/Noeuds/Fonction/NoeudRetour.cpp
     src/Compilateur/AST/Noeuds/NoeudInstruction.cpp
-    src/Compilateur/AST/Noeuds/NoeudScope.cpp
     src/Compilateur/AST/Noeuds/Equation/NoeudOperation.cpp
     src/Compilateur/AST/Noeuds/Operande/NoeudLitteral.cpp
     src/Compilateur/AST/Noeuds/Operande/NoeudNegation.cpp

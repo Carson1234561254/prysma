@@ -97,9 +97,9 @@ void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
     _repertoireCourant = ancienRepertoire;
 }
 
-void OrchestrateurInclude::inclureFichier(const std::string& cheminAbsolu, ContextGenCode* contextAppelant) {
+void OrchestrateurInclude::inclureFichier(const std::string& cheminAbsolu) {
     
-    // Sécurité pour éviter de compiler en boucle infinie
+    // Sécurité pour éviter de compiler en boucle infinie, évite d'inclure plusieurs fois le même fichier
     if (_registreFichier->verifierFichier(cheminAbsolu)) {
         return; 
     }
@@ -118,6 +118,5 @@ void OrchestrateurInclude::inclureFichier(const std::string& cheminAbsolu, Conte
     _facadeConfigurationEnvironnement = ancienneFacade;
 
     // Sauvegarder la mémoire de l'environnement enfant
-    _facadesEnfants.push_back(std::move(facadeInclude));
     _facadesEnfants.push_back(std::move(facadeInclude));
 }

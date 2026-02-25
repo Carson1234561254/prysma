@@ -7,7 +7,7 @@
 #include <vector>
 
 class NoeudArgFonction;
-class NoeudScope;
+class NoeudInstruction;
 class IVisiteur;
 
 class NoeudDeclarationFonction : public INoeud
@@ -16,14 +16,14 @@ private:
     std::string _nom;
     IType* _typeRetour;
     std::vector<NoeudArgFonction*> _arguments;
-    NoeudScope* _corps;
+    NoeudInstruction* _corps;
 
 public:
     NoeudDeclarationFonction(
         std::string nom,
         IType* typeRetour,
         const std::vector<NoeudArgFonction*>& arguments,
-        NoeudScope* corps
+        NoeudInstruction* corps
     );
     
     ~NoeudDeclarationFonction() = default;
@@ -34,7 +34,7 @@ public:
     IType* getTypeRetour() const { return _typeRetour; }
 
     const std::vector<NoeudArgFonction*>& getArguments() const { return _arguments; }
-    NoeudScope* getCorps() const { return _corps; }
+    NoeudInstruction* getCorps() const { return _corps; }
 };
 
 #endif /* A2837407_B466_49AE_8A29_4BFC0A5D0461 */
