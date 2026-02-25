@@ -47,7 +47,6 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurScope.cpp
     src/Compilateur/Registre/RegistreFichier.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.cpp
@@ -131,7 +130,6 @@ set(SOURCES
     src/Compilateur/Visiteur/CodeGen/Variable/VisiteurUnRefVariable.cpp
     src/Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.cpp
     src/Compilateur/Visiteur/CodeGen/VisiteurInstruction.cpp
-    src/Compilateur/Visiteur/CodeGen/VisiteurScope.cpp
     src/Compilateur/Visiteur/CodeGen/Condition/VisiteurNoeudIf.cpp
     src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp
     # Tableau - code gen
@@ -153,7 +151,6 @@ set(SOURCES
     src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurUnRefVariable.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
-    src/Compilateur/Visiteur/ASTGraphViz/VisiteurScope.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Include/VisiteurNoeudInclude.cpp
     # Tableau - graphviz dump
     src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurAffectationTableau.cpp

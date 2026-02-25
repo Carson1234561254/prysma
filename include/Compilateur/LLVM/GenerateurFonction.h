@@ -26,7 +26,6 @@ class GestionFonction
         llvm::Function* creerFonction();
         void initialiserContexte();
         void traiterArgumentsConstruit(llvm::Function* function, const ArgumentsCodeGen& argumentsCodeGen);
-        void traiterCorpsFonction();
         void finaliserContexte();
         void genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction);
 

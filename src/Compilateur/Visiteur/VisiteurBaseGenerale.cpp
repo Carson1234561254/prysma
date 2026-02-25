@@ -1,5 +1,4 @@
 #include "Compilateur/Visiteur/VisiteurBaseGenerale.h"
-#include "Compilateur/AST/Noeuds/NoeudScope.h"
 #include "Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.h"
 #include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
@@ -20,16 +19,7 @@
 #include "Compilateur/AST/Noeuds/Include/NoeudInclude.h"
 
 // Implémentations des méthodes visiter de base générale par défaut (ne font rien)
-void VisiteurBaseGenerale::visiter(NoeudScope* NoeudScope)
-{
-    for (auto* instruction : NoeudScope->getEnfants()) 
-    {
-        if (instruction != nullptr) 
-        {
-            instruction->accept(this);
-        }
-    }
-}
+
 void VisiteurBaseGenerale::visiter(NoeudAffectationVariable* noeudAffectationVariable)
 {
     noeudAffectationVariable->getExpression()->accept(this);

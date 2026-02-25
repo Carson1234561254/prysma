@@ -4,7 +4,6 @@
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
-#include "Compilateur/AST/Noeuds/NoeudScope.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 
 GestionFonction::GestionFonction(ContextGenCode* contextGenCode, NoeudDeclarationFonction* noeudDeclarationFonction, IVisiteur* visiteurGeneralCodeGen) 
@@ -75,15 +74,6 @@ void GestionFonction::traiterArgumentsConstruit(llvm::Function* function, const 
         _contextGenCode->registreVariable->enregistrer(argumentToken, symbole);
         
         argIndex++;
-    }
-}
-
-
-void GestionFonction::traiterCorpsFonction()
-{
-    NoeudScope* corps = _noeudDeclarationFonction->getCorps();
-    if (corps != nullptr) {
-        corps->accept(_visiteurGeneralCodeGen);
     }
 }
 
@@ -181,7 +171,8 @@ void GestionFonction::declarerFonction()
     llvm::Function* function = creerFonction();
     initialiserContexte();
     traiterArgumentsConstruit(function, argumentsCodeGen);
-    traiterCorpsFonction();
+
+    _noeudDeclarationFonction->getCorps()->accept(_visiteurGeneralCodeGen);
 
     // Si la fonction est void et que le bloc courant n'a pas de terminateur,
     // on insère un ret void pour que le code LLVM IR soit valide.
