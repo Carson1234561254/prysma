@@ -2,7 +2,7 @@
 // Test 1 : Priorité standard (* gagne sur +)
 // Calcul : 10 + (2 * 5) = 20
 // Si la priorité est fausse (gauche vers droite) : (10 + 2) * 5 = 60
-fn bool testPrioriteSimple()
+fn bool testPrioriteSimple_int()
 {
    dec string[] fonctionnalite = "1.testPrioriteSimple : ";
    call print(ref fonctionnalite);
@@ -21,7 +21,7 @@ fn bool testPrioriteSimple()
 // Test 2 : Priorité complexe avec 4 variables
 // Calcul : (2 * 3) + (4 * 5) = 6 + 20 = 26
 // Si faux : 2 * 3 + 4 = 10, puis 10 * 5 = 50
-fn bool testPrioriteComplexe()
+fn bool testPrioriteComplexe_int()
 {
    dec string[] fonctionnalite = "2.testPrioriteComplexe : ";
    call print(ref fonctionnalite);
@@ -43,7 +43,7 @@ fn bool testPrioriteComplexe()
 // Test 3 : Vérification de la mise à jour d'état (aff) avant calcul
 // On initialise a à 1, puis on le change à 10 avant le calcul
 // Calcul : 10 + 5 = 15
-fn bool testMiseAJourEtat()
+fn bool testMiseAJourEtat_int()
 {
    dec string[] fonctionnalite = "3.testMiseAJourEtat : ";
    call print(ref fonctionnalite);
@@ -63,7 +63,7 @@ fn bool testMiseAJourEtat()
 }
 
 // Test 4 : Vérifier que les arguments peuvent passer dans une fonction 
-fn bool testPassArgFonction(arg int32 a, arg float b)
+fn bool testPassArgFonction_int(arg int32 a, arg float b)
 {  
    dec string[] fonctionnalite = "4.testPassArgFonction : ";
    call print(ref fonctionnalite);
@@ -77,7 +77,7 @@ fn bool testPassArgFonction(arg int32 a, arg float b)
 }
 
 // Test 5 : Vérifier que les parenthèses sont respectées dans une expression complexe
-fn bool testProfondeurEquation()
+fn bool testProfondeurEquation_int()
 {
    dec string[] fonctionnalite = "5.testProfondeurEquation : ";
    call print(ref fonctionnalite);
@@ -90,7 +90,7 @@ fn bool testProfondeurEquation()
    return false;
 }
 
-fn bool testAffectation()
+fn bool testAffectation_int()
 {
    dec string[] fonctionnalite = "6.testAffectation : ";
    call print(ref fonctionnalite);
@@ -106,7 +106,7 @@ fn bool testAffectation()
 
 // Test critique : Auto-référence (a = a + 1)
 // Vérifie que le compilateur charge 'a' avant d'écraser 'a'
-fn bool testAutoIncrement()
+fn bool testAutoIncrement_int()
 {
    dec string[] fonctionnalite = "7.testAutoIncrement : ";
    call print(ref fonctionnalite);
@@ -123,7 +123,7 @@ fn bool testAutoIncrement()
 
 // Test critique : Variable vers Variable
 // Vérifie que la valeur est bien copiée, pas juste liée
-fn bool testCopieVariable()
+fn bool testCopieVariable_int()
 {
       dec string[] fonctionnalite = "8.testCopieVariable : ";
       call print(ref fonctionnalite);
@@ -140,7 +140,7 @@ fn bool testCopieVariable()
    return false;
 }
 
-fn bool testImbrication()
+fn bool testImbrication_int()
 {
       dec string[] fonctionnalite = "9.testImbrication : ";
       call print(ref fonctionnalite);
@@ -159,24 +159,24 @@ fn bool testImbrication()
    return false;
 }
 
-fn int32 main()
+fn int32 testFonctionnelVariableInt()
 {
-   call print(call testPrioriteSimple()); call backSlashN();
-   call print(call testPrioriteComplexe()); call backSlashN();
-   call print(call testMiseAJourEtat()); call backSlashN();
+   call print(call testPrioriteSimple_int()); call backSlashN();
+   call print(call testPrioriteComplexe_int()); call backSlashN();
+   call print(call testMiseAJourEtat_int()); call backSlashN();
 
-   call print(call testPassArgFonction(10,25.5)); call backSlashN();
+   call print(call testPassArgFonction_int(10,25.5)); call backSlashN();
    
    // Appeler la méthode de nouveau pour voir si le contexte n'a pas changé
-   call print(call testPassArgFonction(10,25.5)); call backSlashN();
-   call print(call testProfondeurEquation()); call backSlashN();
+   call print(call testPassArgFonction_int(10,25.5)); call backSlashN();
+   call print(call testProfondeurEquation_int()); call backSlashN();
 
-   call print(call testAffectation()); call backSlashN();
+   call print(call testAffectation_int()); call backSlashN();
 
-   call print(call testAutoIncrement()); call backSlashN();
-   call print(call testCopieVariable()); call backSlashN();
+   call print(call testAutoIncrement_int()); call backSlashN();
+   call print(call testCopieVariable_int()); call backSlashN();
 
-   call print(call testImbrication()); call backSlashN();
+   call print(call testImbrication_int()); call backSlashN();
 
    return 1;
 }

@@ -1,5 +1,5 @@
 
-fn bool tableauTestLecture()
+fn bool tableauTestLecture_bool()
 {
     dec string[] fonctionnalite = "1.tableauTestLecture : ";
     call print(ref fonctionnalite);
@@ -20,7 +20,7 @@ fn bool tableauTestLecture()
     return true;
 }
 
-fn bool tableauTestAffectation()
+fn bool tableauTestAffectation_bool()
 {
     dec string[] fonctionnalite = "2.tableauTestAffectation : ";
     call print(ref fonctionnalite);
@@ -46,7 +46,7 @@ fn bool tableauTestAffectation()
     return true;
 }
 
-fn bool tableauTestSortieHorsLimite()
+fn bool tableauTestSortieHorsLimite_bool()
 {
     dec string[] fonctionnalite = "3.tableauTestSortieHorsLimite : ";
     call print(ref fonctionnalite);
@@ -56,7 +56,7 @@ fn bool tableauTestSortieHorsLimite()
         return true; // Ne doit pas être atteint
 }
 
-fn bool tableauVariableTest()
+fn bool tableauVariableTest_bool()
 {
     dec string[] fonctionnalite = "4.tableauVariableTest : ";
     call print(ref fonctionnalite);
@@ -101,7 +101,7 @@ fn bool tableauVariableTest()
 //    return true;
 //}
 
-fn bool tableauTestIntegritePile()
+fn bool tableauTestIntegritePile_bool()
 {
     dec string[] fonctionnalite = "5.tableauTestIntegritePile : ";
     call print(ref fonctionnalite);
@@ -118,7 +118,7 @@ fn bool tableauTestIntegritePile()
     return true;
 }
 
-fn bool tableauTestIteration()
+fn bool tableauTestIteration_bool()
 {
     dec string[] fonctionnalite = "6.tableauTestIteration : ";
     call print(ref fonctionnalite);
@@ -144,7 +144,7 @@ fn bool tableauTestIteration()
     return true;
 }
 
-fn bool[4] tableauTestRetour()
+fn bool[4] tableauTestRetour_bool()
 {
     dec string[] fonctionnalite = "7.tableauTestRetour : ";
     call print(ref fonctionnalite);
@@ -152,11 +152,11 @@ fn bool[4] tableauTestRetour()
     return tableau;
 }
 
-fn bool tableauTestRetourLecture()
+fn bool tableauTestRetourLecture_bool()
 {
     dec string[] fonctionnalite = "8.tableauTestRetourLecture : ";
     call print(ref fonctionnalite);
-    dec bool[4] tableau = call tableauTestRetour();
+    dec bool[4] tableau = call tableauTestRetour_bool();
 
         if (tableau[0] != true) {
             return false;
@@ -173,7 +173,7 @@ fn bool tableauTestRetourLecture()
     return true;
 }
 
-fn bool tableauInjectionArgument(arg bool[3] tableau)
+fn bool tableauInjectionArgument_bool(arg bool[3] tableau)
 {
     dec string[] fonctionnalite = "9.tableauInjectionArgument : ";
     call print(ref fonctionnalite);
@@ -189,25 +189,25 @@ fn bool tableauInjectionArgument(arg bool[3] tableau)
     return true;
 }
 
-fn bool tableauTestArgument()
+fn bool tableauTestArgument_bool()
 {
     dec string[] fonctionnalite = "10.tableauTestArgument : ";
     call print(ref fonctionnalite);
     dec bool[3] tableau = [true, false, true];
-    return call tableauInjectionArgument(tableau);
+    return call tableauInjectionArgument_bool(tableau);
 }
 
-fn int32 main()
+fn int32 testTableauBool()
 {
-    call print(call tableauTestLecture()); call backSlashN();
-    call print(call tableauTestAffectation()); call backSlashN();
-    //call print(call tableauTestSortieHorsLimite()); true
-    call print(call tableauVariableTest()); call backSlashN();
+    call print(call tableauTestLecture_bool()); call backSlashN();
+    call print(call tableauTestAffectation_bool()); call backSlashN();
+    //call print(call tableauTestSortieHorsLimite_bool()); true
+    call print(call tableauVariableTest_bool()); call backSlashN();
     //call print(call tableauTestIndexDynamique()); // false
-    call print(call tableauTestIntegritePile()); call backSlashN();
-    call print(call tableauTestIteration()); call backSlashN();
-    call print(call tableauTestRetourLecture()); call backSlashN();
-    call print(call tableauTestArgument()); call backSlashN();
+    call print(call tableauTestIntegritePile_bool()); call backSlashN();
+    call print(call tableauTestIteration_bool()); call backSlashN();
+    call print(call tableauTestRetourLecture_bool()); call backSlashN();
+    call print(call tableauTestArgument_bool()); call backSlashN();
 
     return 0; 
 }

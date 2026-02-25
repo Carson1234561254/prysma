@@ -15,6 +15,8 @@
 #include <llvm-18/llvm/IR/Value.h>
 #include <cstdlib>
 #include <string>
+#include <filesystem>
+#include <iostream>
 
 OrchestrateurInclude::OrchestrateurInclude(FacadeConfigurationEnvironnement* facadeConfigurationEnvironnement, RegistreFonction* registreFonctionGlobale, RegistreFichier* registreFichier) : 
 _facadeConfigurationEnvironnement(facadeConfigurationEnvironnement),
@@ -27,10 +29,24 @@ OrchestrateurInclude::~OrchestrateurInclude()
 
 void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
 
+    // Résoudre le chemin absolu du fichier
+    std::filesystem::path cheminAbsolu = std::filesystem::absolute(cheminFichier);
+    
+    // Si le chemin est relatif et qu'on a un répertoire courant, résoudre par rapport à celui-ci
+    if (!std::filesystem::exists(cheminAbsolu) && !_repertoireCourant.empty()) {
+        cheminAbsolu = std::filesystem::path(_repertoireCourant) / cheminFichier;
+    }
+    
+    std::string cheminResolu = cheminAbsolu.string();
+    
+    // Sauvegarder le répertoire courant pour les includes imbriqués
+    std::string ancienRepertoire = _repertoireCourant;
+    _repertoireCourant = cheminAbsolu.parent_path().string();
+
     std::string pathProgramme = "programme/";
     std::string pathGraphe = "graphe/";
     
-    std::string nomFichier = cheminFichier.substr(cheminFichier.find_last_of("/\\") + 1);
+    std::string nomFichier = cheminResolu.substr(cheminResolu.find_last_of("/\\") + 1);
     nomFichier = nomFichier.substr(0, nomFichier.find_last_of('.'));
 
     _registreFichier->ajouterFichier(pathProgramme + nomFichier + ".ll");
@@ -40,7 +56,7 @@ void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
     ContextGenCode* context = _facadeConfigurationEnvironnement->getContext();
     ConstructeurArbreInstruction* constructeurArbreInstruction = _facadeConfigurationEnvironnement->getConstructeurArbreInstruction();
 
-    FichierLecture fichierLecture(cheminFichier);
+    FichierLecture fichierLecture(cheminResolu);
     std::string document = fichierLecture.entrer();
 
     Lexer lexer;
@@ -48,7 +64,7 @@ void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
 
     INoeud* arbre = constructeurArbreInstruction->construire(tokens);
 
-    VisiteurRemplissageRegistre visiteurRemplissageRegistre(context);
+    VisiteurRemplissageRegistre visiteurRemplissageRegistre(context, this);
     arbre->accept(&visiteurRemplissageRegistre);
 
     ConstructeurEnvironnementRegistreFonction constructeurEnvironnementRegistreFonction(context);
@@ -57,7 +73,7 @@ void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
     ConstructeurEnvironnementRegistreVariable constructeurEnvironnementRegistreVariable(context);
     constructeurEnvironnementRegistreVariable.remplir();
 
-    VisiteurGeneralGenCode visiteur(context);
+    VisiteurGeneralGenCode visiteur(context, this);
     arbre->accept(&visiteur);
 
     SortieGrapheVisuelTexte sortieGrapheVisuel(pathGraphe+nomFichier+".dot");
@@ -76,4 +92,32 @@ void OrchestrateurInclude::nouvelleInstance(const std::string& cheminFichier) {
 
     LlvmSerializer serializer(context->backend->getContext(), context->backend->getModule());
     serializer.SauvegarderCodeLLVM(pathProgramme + nomFichier + ".ll"); 
+
+    // Restaurer le répertoire courant pour les includes au même niveau
+    _repertoireCourant = ancienRepertoire;
+}
+
+void OrchestrateurInclude::inclureFichier(const std::string& cheminAbsolu, ContextGenCode* contextAppelant) {
+    
+    // Sécurité pour éviter de compiler en boucle infinie
+    if (_registreFichier->verifierFichier(cheminAbsolu)) {
+        return; 
+    }
+
+    // Créer un environnement indépendant pour ne pas corrompre celui du parent
+    auto facadeInclude = std::make_unique<FacadeConfigurationEnvironnement>(_registreFonctionGlobale, _registreFichier);
+
+    // Substituer temporairement la facade
+    FacadeConfigurationEnvironnement* ancienneFacade = _facadeConfigurationEnvironnement;
+    _facadeConfigurationEnvironnement = facadeInclude.get();
+
+    // Réutiliser nouvelleInstance avec la facade temporaire
+    nouvelleInstance(cheminAbsolu);
+
+    // Restaurer la facade du parent
+    _facadeConfigurationEnvironnement = ancienneFacade;
+
+    // Sauvegarder la mémoire de l'environnement enfant
+    _facadesEnfants.push_back(std::move(facadeInclude));
+    _facadesEnfants.push_back(std::move(facadeInclude));
 }

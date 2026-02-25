@@ -57,6 +57,7 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/ParseurType.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Condition/ParseurIf.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.cpp
     # ConstructeurArbre
     src/Compilateur/AST/ConstructeurArbreEquation.cpp
     src/Compilateur/AST/ConstructeurArbreInstruction.cpp
@@ -77,6 +78,7 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
     src/Compilateur/AST/Noeuds/Condition/NoeudIf.cpp
     src/Compilateur/AST/Noeuds/Boucle/NoeudWhile.cpp
+    src/Compilateur/AST/Noeuds/Include/NoeudInclude.cpp
     # Tableau 
     src/Compilateur/AST/Noeuds/Tableau/NoeudAffectationTableau.cpp
     src/Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.cpp
@@ -89,6 +91,7 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.cpp
     src/Compilateur/AST/Noeuds/StrategieEquation/StrategieIdentifiant.cpp
     src/Compilateur/AST/Noeuds/StrategieEquation/StrategieString.cpp
+    # Visiteur
     # Arbre syntaxique abstrait
     src/Compilateur/AST/Registre/RegistreArgument.cpp
     src/Compilateur/AST/Registre/RegistreVariable.cpp
@@ -152,6 +155,7 @@ set(SOURCES
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
     src/Compilateur/Visiteur/ASTGraphViz/VisiteurScope.cpp
+    src/Compilateur/Visiteur/ASTGraphViz/Include/VisiteurNoeudInclude.cpp
     # Tableau - graphviz dump
     src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurAffectationTableau.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurLectureTableau.cpp

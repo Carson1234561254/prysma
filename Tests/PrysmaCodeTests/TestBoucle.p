@@ -35,7 +35,7 @@ fn bool testBoucleNesPasEgale()
     return false; 
 }
 
-fn bool testBoucle()
+fn bool testBoucleSimple()
 {
     dec string[] fonctionnalite = "3.testBoucle : ";
     call print(ref fonctionnalite);
@@ -109,9 +109,9 @@ fn bool testBoucleNonExecute()
     return false;
 }
 
-fn int32 main()
+fn int32 testBoucle()
 {
-    call print(call testBoucle()); call backSlashN();
+    call print(call testBoucleSimple()); call backSlashN();
     call print(call testBoucleNesPasEgale()); call backSlashN();
     call print(call testBoucleConditionExtern()); call backSlashN();
     call print(call testBoucleImbrique()); call backSlashN();

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include "Compilateur/Registre/RegistreFichier.h"
 #include "RegistreInstruction.h"
 #include "Pile/RegistreVariable.h"
 #include "RegistreFonction.h"
@@ -14,6 +15,7 @@
 
 struct ContextGenCode
 {
+    RegistreFichier* registreFichier;
     Symbole valeurTemporaire;
     LlvmBackend* backend;
     RegistreInstruction* registreInstruction;
@@ -26,6 +28,7 @@ struct ContextGenCode
     llvm::BumpPtrAllocator* arena;
 
     ContextGenCode(
+        RegistreFichier* p_registreFichier,
         LlvmBackend* p_backend,
         RegistreInstruction* p_registreInstruction,
         RegistreVariable* p_registreVariable,
@@ -39,6 +42,10 @@ struct ContextGenCode
     ) 
     {
         try {
+            if (p_registreFichier == nullptr)
+            {
+                throw std::invalid_argument("Le registre de fichier ne peux pas être null");
+            }
             if (p_backend == nullptr) {
                 throw std::invalid_argument("Le backend LLVM ne peut pas être null");
             }

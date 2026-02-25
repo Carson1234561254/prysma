@@ -113,7 +113,7 @@ fn bool testNonEtLogiqueVariable()
    return false;
 }
 
-fn int32 main()
+fn int32 testFonctionnelVariableBool()
 {
    // Tester les bool 
    call print(call testEtLogique()); call backSlashN();

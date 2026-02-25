@@ -6,6 +6,7 @@
 #include "Compilateur/AST/Registre/RegistreStrategieEquation.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
+#include "Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.h"
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 
@@ -38,8 +39,9 @@
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
 
-FacadeConfigurationEnvironnement::FacadeConfigurationEnvironnement(RegistreFonction* registreFonctionGlobale)
+FacadeConfigurationEnvironnement::FacadeConfigurationEnvironnement(RegistreFonction* registreFonctionGlobale, RegistreFichier* registreFichier)
     : _registreFonctionGlobale(registreFonctionGlobale),
+      _registreFichier(registreFichier),
       _registreStrategieEquation(nullptr),
       _constructeurArbreInstruction(nullptr),
       _constructeurEquation(nullptr),
@@ -75,6 +77,7 @@ void FacadeConfigurationEnvironnement::creerContexte()
     valeurTemporaire.type = nullptr;
 
     _context = std::make_unique<ContextGenCode>(
+        _registreFichier,
         _backend.get(),
         _registreInstruction.get(),
         _registreVariable.get(),
@@ -222,6 +225,9 @@ void FacadeConfigurationEnvironnement::enregistrerInstructions()
 
     auto* parsWhile = new (_arena.Allocate<ParseurWhile>()) ParseurWhile(_constructeurEquation->recupererConstructeurArbre(), _constructeurArbreInstruction);
     _context->registreInstruction->enregistrer(TOKEN_TANT_QUE, parsWhile);
+
+    auto* parsInclude = new (_arena.Allocate<ParseurInclude>()) ParseurInclude(_arena);
+    _context->registreInstruction->enregistrer(TOKEN_INCLUDE, parsInclude);
 }
 
 ContextGenCode* FacadeConfigurationEnvironnement::getContext() const

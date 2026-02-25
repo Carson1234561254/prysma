@@ -53,9 +53,9 @@ fn bool testFib()
    return false;
 }
 
-fn bool testRecursivite()
+fn bool testRecursiviteSimple()
 {
-   dec string[] fonctionnalite = "5.testRecursivite : ";
+   dec string[] fonctionnalite = "5.testRecursiviteSimple : ";
    call print(ref fonctionnalite);
    dec int32 fact = call fact(5);
    dec int32 fib = call fib(7);
@@ -67,11 +67,11 @@ fn bool testRecursivite()
    return false;
 }
 
-fn int32 main()
+fn int32 testRecursivite()
 {
    call print(call testFact()); call backSlashN();
    call print(call testFib()); call backSlashN();
-   call print(call testRecursivite()); call backSlashN();
+   call print(call testRecursiviteSimple()); call backSlashN();
 
    return 1;
 }

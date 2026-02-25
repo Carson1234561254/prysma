@@ -1,5 +1,6 @@
 #ifndef E5CE13D3_6823_4DDE_BB20_5311A0E477B6
 #define E5CE13D3_6823_4DDE_BB20_5311A0E477B6
+#include "Compilateur/AST/Noeuds/Include/NoeudInclude.h"
 #include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/Visiteur/VisiteurBaseGenerale.h"
@@ -8,16 +9,20 @@
 // Il va parcourir l'arbre syntaxique abstrait pour remplir les registres avec des valeur nullptr pour les fonction et les variables
 // Cela permet d'avoir une première passe pour remplir les registres. 
 
+class OrchestrateurInclude;
+
 class VisiteurRemplissageRegistre : public VisiteurBaseGenerale
 {
 private:
     ContextGenCode* _contextGenCode;
+    OrchestrateurInclude* _orchestrateur;
     
 public:
-    VisiteurRemplissageRegistre(ContextGenCode* contextGenCode);
+    VisiteurRemplissageRegistre(ContextGenCode* contextGenCode, OrchestrateurInclude* orchestrateur);
     virtual ~VisiteurRemplissageRegistre();
     void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) override;
     void visiter(NoeudDeclarationFonction* noeudDeclarationFonction) override;
+    void visiter(NoeudInclude* noeudInclude) override;
 };
 
 #endif /* E5CE13D3_6823_4DDE_BB20_5311A0E477B6 */

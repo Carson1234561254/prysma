@@ -7,12 +7,14 @@
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 #include "Compilateur/LLVM/LlvmBackend.h"
+#include "Compilateur/Registre/RegistreFichier.h"
 #include <memory>
 
 class FacadeConfigurationEnvironnement
 {
 private:
     RegistreFonction* _registreFonctionGlobale;
+    RegistreFichier* _registreFichier;
 
     llvm::BumpPtrAllocator _arena;
 
@@ -38,7 +40,7 @@ private:
     void enregistrerInstructions();
 
 public:
-    explicit FacadeConfigurationEnvironnement(RegistreFonction* registreFonctionGlobale);
+    explicit FacadeConfigurationEnvironnement(RegistreFonction* registreFonctionGlobale, RegistreFichier* registreFichier);
     ~FacadeConfigurationEnvironnement() = default;
 
     /// Initialise tout l'environnement de compilation en une seule étape

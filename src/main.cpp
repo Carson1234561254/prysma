@@ -73,10 +73,9 @@ int main(int argc, char* argv[])
     try {  
         // Le seule registre qui sera utilisée globalement par tout le monde
         std::unique_ptr<RegistreFonction> registreFonctionGlobale = std::make_unique<RegistreFonction>();
-        std::unique_ptr<FacadeConfigurationEnvironnement> facadeConfigurationEnvironnement = std::make_unique<FacadeConfigurationEnvironnement>(registreFonctionGlobale.get());
-        
         std::unique_ptr<RegistreFichier> registreFichiers = std::make_unique<RegistreFichier>();
-
+        std::unique_ptr<FacadeConfigurationEnvironnement> facadeConfigurationEnvironnement = std::make_unique<FacadeConfigurationEnvironnement>(registreFonctionGlobale.get(), registreFichiers.get());
+        
         OrchestrateurInclude orchestrateurInclude(facadeConfigurationEnvironnement.get(), registreFonctionGlobale.get(), registreFichiers.get());
         orchestrateurInclude.nouvelleInstance(cheminFichier);
 

@@ -7,6 +7,8 @@
 #include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
 
 CLASS_NOEUD
+class NoeudInclude;
+
 class VisiteurGeneralGraphViz : public VisiteurBaseGenerale
 { 
 private:
@@ -15,6 +17,7 @@ private:
     
 public:
     DECLARER_METHODES_VISITEUR
+    void visiter(NoeudInclude* noeudInclude) override;  
     VisiteurGeneralGraphViz(SortieGrapheVisuelTexte sortieGrapheVisuel);
     ~VisiteurGeneralGraphViz();
     void generer();

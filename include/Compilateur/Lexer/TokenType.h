@@ -67,7 +67,10 @@ enum TokenType {
     TOKEN_TYPE_VOID,
     TOKEN_TYPE_CHAR,
     TOKEN_TYPE_INT64,
-    TOKEN_TYPE_INT32
+    TOKEN_TYPE_INT32,
+
+    // include 
+    TOKEN_INCLUDE
 };
 
 #endif /* F738FE90_52E0_4F82_9BB5_5833C5E4D2CB */

@@ -118,7 +118,7 @@ fn bool testArgDansIf(arg int32 val)
 }
 
 // 9. Test If Imbriqué (Nested)
-fn bool testImbrique()
+fn bool testImbrique_cond()
 {
     dec string[] fonctionnalite = "9.testImbrique : ";
     call print(ref fonctionnalite);
@@ -136,7 +136,7 @@ fn bool testImbrique()
     return false;
 }
 
-fn int32 main()
+fn int32 testCondition()
 {
     call print(call testIntSup());   call backSlashN();   // true 
     call print(call testFloatInf());    call backSlashN(); // true
@@ -151,7 +151,7 @@ fn int32 main()
     dec int32 param = 100;
     call print(call testArgDansIf(param)); call backSlashN(); // true
 
-    call print(call testImbrique());    call backSlashN(); // true
+    call print(call testImbrique_cond());    call backSlashN(); // true
 
     return 1; 
 }

@@ -1,4 +1,4 @@
-fn bool tableauTestLecture()
+fn bool tableauTestLecture_int()
 {
     dec string[] fonctionnalite = "1.tableauTestLecture : ";
     call print(ref fonctionnalite);
@@ -20,7 +20,7 @@ fn bool tableauTestLecture()
     return true;
 }
 
-fn bool tableauTestAffectation()
+fn bool tableauTestAffectation_int()
 {
     dec string[] fonctionnalite = "2.tableauTestAffectation : ";
     call print(ref fonctionnalite);
@@ -47,7 +47,7 @@ fn bool tableauTestAffectation()
     return true;
 }
 
-fn bool tableauTestSortieHorsLimite()
+fn bool tableauTestSortieHorsLimite_int()
 {
     dec string[] fonctionnalite = "3.tableauTestSortieHorsLimite : ";
     call print(ref fonctionnalite);
@@ -58,7 +58,7 @@ fn bool tableauTestSortieHorsLimite()
         return true; // Ne doit pas être atteint
 }
 
-fn bool tableauVariableTest()
+fn bool tableauVariableTest_int()
 {
     dec string[] fonctionnalite = "4.tableauVariableTest : ";
     call print(ref fonctionnalite);
@@ -85,7 +85,7 @@ fn bool tableauVariableTest()
     return true;
 }
 
-fn bool tableauTestIndexDynamique()
+fn bool tableauTestIndexDynamique_int()
 {
     dec string[] fonctionnalite = "5.tableauTestIndexDynamique : ";
     call print(ref fonctionnalite);
@@ -102,7 +102,7 @@ fn bool tableauTestIndexDynamique()
     return true;
 }
 
-fn bool tableauTestIntegritePile()
+fn bool tableauTestIntegritePile_int()
 {
     dec string[] fonctionnalite = "6.tableauTestIntegritePile : ";
     call print(ref fonctionnalite);
@@ -120,7 +120,7 @@ fn bool tableauTestIntegritePile()
     return true;
 }
 
-fn bool tableauTestIteration()
+fn bool tableauTestIteration_int()
 {
     dec string[] fonctionnalite = "7.tableauTestIteration : ";
     call print(ref fonctionnalite);
@@ -167,7 +167,7 @@ fn bool tableauTestIteration()
 //}
 
 
-fn int32[4] tableauTestRetour()
+fn int32[4] tableauTestRetour_int()
 {
     dec string[] fonctionnalite = "8.tableauTestRetour : ";
     call print(ref fonctionnalite);
@@ -176,12 +176,12 @@ fn int32[4] tableauTestRetour()
     return tableau;
 }
 
-fn bool tableauTestRetourLecture()
+fn bool tableauTestRetourLecture_int()
 {
     dec string[] fonctionnalite = "9.tableauTestRetourLecture : ";
     call print(ref fonctionnalite);
 
-    dec int32[4] tableau = call tableauTestRetour();
+    dec int32[4] tableau = call tableauTestRetour_int();
 
         if (tableau[0] != 0) {
             return false;
@@ -198,7 +198,7 @@ fn bool tableauTestRetourLecture()
     return true;
 }
 
-fn bool tableauInjectionArgument(arg int32[3] tableau)
+fn bool tableauInjectionArgument_int(arg int32[3] tableau)
 {
     dec string[] fonctionnalite = "10.tableauInjectionArgument : ";
     call print(ref fonctionnalite);
@@ -215,27 +215,27 @@ fn bool tableauInjectionArgument(arg int32[3] tableau)
     return true;
 }
 
-fn bool tableauTestArgument()
+fn bool tableauTestArgument_int()
 {
     dec string[] fonctionnalite = "11.tableauTestArgument : ";
     call print(ref fonctionnalite);
 
     dec int32[3] tableau = [0, 1, 2];
-    return call tableauInjectionArgument(tableau);
+    return call tableauInjectionArgument_int(tableau);
 }
 
-fn int32 main()
+fn int32 testTableauInt()
 {   
-    call print(call tableauTestLecture());  call backSlashN();
-    call print(call tableauTestAffectation());  call backSlashN();
-    //call print(call tableauTestSortieHorsLimite()); true
-    call print(call tableauVariableTest());  call backSlashN();
-    call print(call tableauTestIndexDynamique());  call backSlashN(); 
-    call print(call tableauTestIntegritePile());  call backSlashN();
-    call print(call tableauTestIteration());  call backSlashN();
+    call print(call tableauTestLecture_int());  call backSlashN();
+    call print(call tableauTestAffectation_int());  call backSlashN();
+    //call print(call tableauTestSortieHorsLimite_int()); true
+    call print(call tableauVariableTest_int());  call backSlashN();
+    call print(call tableauTestIndexDynamique_int());  call backSlashN(); 
+    call print(call tableauTestIntegritePile_int());  call backSlashN();
+    call print(call tableauTestIteration_int());  call backSlashN();
     //call print(call testeEquationScopeTableau());
-    call print(call tableauTestRetourLecture());  call backSlashN();
-    call print(call tableauTestArgument());  call backSlashN();
+    call print(call tableauTestRetourLecture_int());  call backSlashN();
+    call print(call tableauTestArgument_int());  call backSlashN();
     return 0; 
 }
 

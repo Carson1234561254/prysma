@@ -17,6 +17,7 @@
 #include "Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.h"
 #include "Compilateur/AST/Noeuds/Tableau/NoeudAffectationTableau.h"
 #include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h"
+#include "Compilateur/AST/Noeuds/Include/NoeudInclude.h"
 
 // Implémentations des méthodes visiter de base générale par défaut (ne font rien)
 void VisiteurBaseGenerale::visiter(NoeudScope* NoeudScope)
@@ -45,6 +46,11 @@ void VisiteurBaseGenerale::visiter(NoeudDeclarationVariable* noeudDeclarationVar
 void VisiteurBaseGenerale::visiter(NoeudAppelFonction* noeudAppelFonction [[maybe_unused]])
 {
     
+}
+
+void VisiteurBaseGenerale::visiter(NoeudInclude* noeudInclude[[maybe_unused]])
+{
+  
 }
 
 void VisiteurBaseGenerale::visiter(NoeudRetour* noeudReturn)

@@ -2,7 +2,8 @@
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include <llvm/IR/Constants.h>
 
-VisiteurGeneralGenCode::VisiteurGeneralGenCode(ContextGenCode* contextGenCode) : _contextGenCode(contextGenCode)
+VisiteurGeneralGenCode::VisiteurGeneralGenCode(ContextGenCode* contextGenCode, OrchestrateurInclude* orchestrateurInclude) 
+: _contextGenCode(contextGenCode), _orchestrateurInclude(orchestrateurInclude)
 {}
 
 VisiteurGeneralGenCode::~VisiteurGeneralGenCode()
