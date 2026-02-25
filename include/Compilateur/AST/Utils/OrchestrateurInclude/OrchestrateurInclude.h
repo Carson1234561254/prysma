@@ -1,34 +1,38 @@
 #ifndef D2577958_A8A8_4878_AFA0_2B3478129911
 #define D2577958_A8A8_4878_AFA0_2B3478129911
 
-#include "Compilateur/AST/Utils/OrchestrateurInclude/FacadeConfigurationEnvironnement.h"
-#include "Compilateur/Registre/RegistreFichier.h"
+#include "Compilateur/AST/Utils/OrchestrateurInclude/UniteCompilation.h"
+#include <mutex>
 #include <string>
-#include <tuple>
+#include <thread>
+#include <vector>
+#include <set>
+#include <memory>
 
 struct ContextGenCode;
 class INoeud;
+class RegistreFonctionGlobale;
+class RegistreFichier;
 
 class OrchestrateurInclude
 {
 private: 
-   FacadeConfigurationEnvironnement* _facadeConfigurationEnvironnement;
+   std::mutex* _mutex;
    RegistreFonctionGlobale* _registreFonctionGlobale;
    RegistreFichier* _registreFichier;
-   std::string _repertoireCourant;
-   std::vector<std::unique_ptr<FacadeConfigurationEnvironnement>> _facadesEnfants;
+   std::vector<std::thread> _threads;
+   std::vector<std::unique_ptr<UniteCompilation>> _unitesCompilation;
+   
+   // Un registre dédié aux fichiers sources (.p)
+   std::set<std::string> _fichiersDejaInclus; 
 
 public:
-    OrchestrateurInclude(FacadeConfigurationEnvironnement* facadeConfigurationEnvironnement, RegistreFonctionGlobale* registreFonctionGlobale, RegistreFichier* registreFichier);
+    OrchestrateurInclude(RegistreFonctionGlobale* registreFonctionGlobale, RegistreFichier* registreFichier, std::mutex* mutex);
     ~OrchestrateurInclude();
 
-   void nouvelleInstance(const std::string& cheminFichier);
+   void compilerProjet(const std::string& cheminFichier);
    void inclureFichier(const std::string& cheminAbsolu);
-   void attendreFinPasse1();
-
-private:
-    std::tuple<ContextGenCode*, INoeud*, std::string, std::string> passe1(const std::string& cheminFichier);
-    void passe2(ContextGenCode* context, INoeud* arbre, const std::string& nomFichier, const std::string& ancienRepertoire);
+   static void attendreFinPass(std::vector<std::thread>& threads);
 };
 
 #endif /* D2577958_A8A8_4878_AFA0_2B3478129911 */

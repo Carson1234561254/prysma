@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <cstdlib>
 #include <memory>
+#include <mutex>
 
 // Améliorations possibles performance : 
 // DFA pour le lexer permet de gagner 10 à 20 fois supérieur en vitesse de tokenisation par rapport à l'approche de base 
@@ -45,9 +46,7 @@
 
 // Ne pas oblier les contexte objet llvm sont strictement privé et ne peuvent pas être partagé entre eux
 
-
-
- // Faire un système d'héritage pour les visiteur, une classe de base qui contient toute les définition de visiteur 
+// Faire un système d'héritage pour les visiteur, une classe de base qui contient toute les définition de visiteur 
 // ça va éviter d'avoir une dupplication de code, ou une définition de contrat pour les visiteur que je veux seulement faire une action précise, 
 // exemple remplir un registre de fonction, ou remplir un registre de variable, tout les registres peuvent être rempli en avance puis ensuite 
 // utiliser une technique de multi threade pour faire la génération de code en parallèle, le but est d'avoir un système découplé pour ne pas 
@@ -61,8 +60,7 @@ int main(int argc, char* argv[])
         std::cerr << "Erreur: Aucun fichier spécifié" << std::endl;
         return 1;
     }
-    
-  
+    std::unique_ptr<std::mutex> mutex = std::make_unique<std::mutex>();
     std::string cheminFichier = argv[1];
     std::string nomFichier = std::filesystem::path(cheminFichier).string(); 
     
@@ -76,8 +74,8 @@ int main(int argc, char* argv[])
         std::unique_ptr<RegistreFichier> registreFichiers = std::make_unique<RegistreFichier>();
         std::unique_ptr<FacadeConfigurationEnvironnement> facadeConfigurationEnvironnement = std::make_unique<FacadeConfigurationEnvironnement>(registreFonctionGlobale.get(), registreFichiers.get());
         
-        OrchestrateurInclude orchestrateurInclude(facadeConfigurationEnvironnement.get(), registreFonctionGlobale.get(), registreFichiers.get());
-        orchestrateurInclude.nouvelleInstance(cheminFichier);
+        OrchestrateurInclude orchestrateurInclude(registreFonctionGlobale.get(), registreFichiers.get(), mutex.get());
+        orchestrateurInclude.compilerProjet(cheminFichier);
 
         // Link les fichiers ensemble 
         ConstructeurSysteme constructeur("../src/Lib", "Lib", ".", registreFichiers->obtenirTousLesFichiers(), "executable");
