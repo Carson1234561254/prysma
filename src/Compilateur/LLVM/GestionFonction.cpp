@@ -5,6 +5,7 @@
 #include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
 #include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
+#include <llvm/IR/Instructions.h>
 
 GestionFonction::GestionFonction(ContextGenCode* contextGenCode, NoeudDeclarationFonction* noeudDeclarationFonction, IVisiteur* visiteurGeneralCodeGen) 
 :   _contextGenCode(contextGenCode),
@@ -235,6 +236,9 @@ void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction
     } 
     else if (typeArgument != nullptr && typeArgument->estChaine()) {
         tag = 's';
+        if (auto* loadInst = llvm::dyn_cast<llvm::LoadInst>(valeurArgument)) {
+            valeurArgument = loadInst->getPointerOperand();
+        }
     }
 
     llvm::Value* llvmTag = builder.getInt32(static_cast<uint32_t>(tag));

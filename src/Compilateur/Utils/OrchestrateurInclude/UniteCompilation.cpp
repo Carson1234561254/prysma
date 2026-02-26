@@ -47,8 +47,12 @@ void UniteCompilation::passe1() {
     _ancienRepertoire = _repertoireCourant;
     _repertoireCourant = cheminAbsolu.parent_path().string();
 
-    _nomFichier = cheminResolu.substr(cheminResolu.find_last_of("/\\") + 1);
-    _nomFichier = _nomFichier.substr(0, _nomFichier.find_last_of('.'));
+    // Construire un nom de fichier unique en incluant le nom du dossier parent 
+    // pour éviter les collisions quand plusieurs fichiers ont le même nom dans des dossiers différents
+    // Ex: ParentA/EnfantA.p -> "ParentA_EnfantA", ParentB/EnfantA.p -> "ParentB_EnfantA"
+    std::string nomBase = cheminAbsolu.stem().string();
+    std::string nomParent = cheminAbsolu.parent_path().filename().string();
+    _nomFichier = nomParent + "_" + nomBase;
 
     _registreFichier->ajouterFichier("programme/" + _nomFichier + ".ll");
 
@@ -98,9 +102,7 @@ void UniteCompilation::passe2() {
     }
 
     // Supprimer le fichier .dot intermédiaire
-    if (system(("rm " + pathGraphe + _nomFichier + ".dot").c_str()) != 0) {
-        std::cerr << "Erreur lors de la suppression du fichier .dot." << std::endl;
-    }
+    std::filesystem::remove(pathGraphe + _nomFichier + ".dot");
 
     LlvmSerializer serializer(_context->backend->getContext(), _context->backend->getModule());
     serializer.SauvegarderCodeLLVM(pathProgramme + _nomFichier + ".ll"); 

@@ -8,6 +8,7 @@
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/IR/Value.h>
 #include <cstdlib>
+#include <filesystem>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -55,14 +56,16 @@ void OrchestrateurInclude::compilerProjet(const std::string& cheminFichier)
     std::vector<std::thread> threadsPasse2;
     threadsPasse2.reserve(_unitesCompilation.size());
     for (const auto& unite : _unitesCompilation) {
-        threadsPasse2.emplace_back([unite = unite.get()]() {
+        threadsPasse2.emplace_back([this, unite = unite.get()]() {
             try
             {
                 unite->passe2();
             }
             catch (const std::exception& e)
             {
-                std::cerr << "Erreur (Passe 2) dans le fichier " << unite->getChemin() << " : " << e.what() << std::endl;
+                std::string nomFichier = std::filesystem::path(unite->getChemin()).filename().string();
+                std::cerr << "Erreur (Passe 2) dans le fichier " << nomFichier << " : " << e.what() << std::endl;
+                _aDesErreurs = true;
             }
         });
     }
@@ -84,14 +87,21 @@ void OrchestrateurInclude::inclureFichier(const std::string& cheminAbsolu)
     // Lancer un thread pour la passe 1 : ce sont les thread que nous allons utilisée pour faire le traitement en parallèle des différents include
     // Je vais avoir un vecteur de thread utilisable pour faire le travail 
 
-    std::thread threadCourent = std::thread([uniteCompilation, cheminAbsolu]() {
+    std::thread threadCourent = std::thread([this, uniteCompilation, cheminAbsolu]() {
         try {
             uniteCompilation->passe1();
         } catch (const std::exception& e) {
-          std::cerr << "Erreur lors de la compilation du fichier " + cheminAbsolu + " : " + e.what() << std::endl;
+          std::string nomFichier = std::filesystem::path(cheminAbsolu).filename().string();
+          std::cerr << "Erreur lors de la compilation du fichier " + nomFichier + " : " + e.what() << std::endl;
+          _aDesErreurs = true;
         }
     });
    
     // Le stocker dans un vecteur pour pouvoir faire un join à la fin de la compilation pour attendre que tout les thread de la passe 1 soit terminée
     _threads.push_back(std::move(threadCourent)); 
+}
+
+bool OrchestrateurInclude::aDesErreurs() const
+{
+    return _aDesErreurs.load();
 }

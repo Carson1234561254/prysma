@@ -52,6 +52,17 @@
 // utiliser une technique de multi threade pour faire la génération de code en parallèle, le but est d'avoir un système découplé pour ne pas 
 // avoir de problème de race condition. 
 
+// Bon actuellement j'ai un problème au niveau des threads si j'ai 20 000 fichier je vais avoir 20 000 thread ce qui 
+// Est un volume de thread énorme abusé, juste 2000 thread consomme 16 go de ram juste pour exister 
+// C'est un problème pour les gros projet car cela fera crash l'ordinateur, je vais devoir dans le future 
+// faire un système de pool de thread pour limiter le nombre de thread au nombre de coeur de la machine. 
+// Dans le context de mon ordinateur actuelle par exemple j'ai 32 coeurs ce qui serait optimal 32 thread pour compiler en 
+// parallèle les fichiers source. 
+// Une solution pourrait être d'avoir un pool de thread et envoyer une stack de fichier à compiler pour les threads 
+// Ce qui évite de faire planter le pc pour la compilation d'un gros projet avec beaucoup de fichier source. 
+// Une solution à implémenter dans le future 
+
+
 #include <llvm/Support/TargetSelect.h>
 
 
@@ -62,7 +73,7 @@ int main(int argc, char* argv[])
         return 1;
     }
     std::string cheminFichier = argv[1];
-    std::string nomFichier = std::filesystem::path(cheminFichier).string(); 
+    std::string nomFichier = std::filesystem::path(cheminFichier).filename().string(); 
     try {  
         
         llvm::InitializeAllTargetInfos();
@@ -88,6 +99,11 @@ int main(int argc, char* argv[])
         
         OrchestrateurInclude orchestrateurInclude(registreFonctionGlobale.get(), registreFichiers.get(), mutex.get());
         orchestrateurInclude.compilerProjet(cheminFichier);
+
+        if (orchestrateurInclude.aDesErreurs()) {
+            std::cerr << "Erreur: La compilation a échoué, arrêt du processus." << std::endl;
+            return 1;
+        }
 
         std::string nomExecutable = std::filesystem::path(cheminFichier).stem().string();
 
