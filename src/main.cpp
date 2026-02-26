@@ -52,24 +52,36 @@
 // utiliser une technique de multi threade pour faire la génération de code en parallèle, le but est d'avoir un système découplé pour ne pas 
 // avoir de problème de race condition. 
 
+#include <llvm/Support/TargetSelect.h>
+
+
 int main(int argc, char* argv[])
 {
-
-   
     if (argc < 2) {
         std::cerr << "Erreur: Aucun fichier spécifié" << std::endl;
         return 1;
     }
-    std::unique_ptr<std::mutex> mutex = std::make_unique<std::mutex>();
     std::string cheminFichier = argv[1];
     std::string nomFichier = std::filesystem::path(cheminFichier).string(); 
-    
-    // Ensure output directories exist
-    std::filesystem::create_directory("programme");
-    std::filesystem::create_directory("graphe");
-
     try {  
-        // Le seule registre qui sera utilisée globalement par tout le monde
+        
+        llvm::InitializeAllTargetInfos();
+        llvm::InitializeAllTargets();
+        llvm::InitializeAllTargetMCs();
+        llvm::InitializeAllAsmPrinters();
+        
+        std::unique_ptr<std::mutex> mutex = std::make_unique<std::mutex>();
+      
+        std::filesystem::path exePath = std::filesystem::canonical("/proc/self/exe");
+        std::filesystem::path buildDir = exePath.parent_path();
+        std::filesystem::path racineProjet = buildDir.parent_path();
+
+        std::filesystem::create_directories(buildDir / "programme");
+        std::filesystem::create_directories(buildDir / "graphe");
+
+        std::string srcLib = (racineProjet / "src" / "Lib").string();
+        std::string objLib = (buildDir / "obj" / "Lib").string();
+
         std::unique_ptr<RegistreFonctionGlobale> registreFonctionGlobale = std::make_unique<RegistreFonctionGlobale>();
         std::unique_ptr<RegistreFichier> registreFichiers = std::make_unique<RegistreFichier>();
         std::unique_ptr<FacadeConfigurationEnvironnement> facadeConfigurationEnvironnement = std::make_unique<FacadeConfigurationEnvironnement>(registreFonctionGlobale.get(), registreFichiers.get());
@@ -77,8 +89,9 @@ int main(int argc, char* argv[])
         OrchestrateurInclude orchestrateurInclude(registreFonctionGlobale.get(), registreFichiers.get(), mutex.get());
         orchestrateurInclude.compilerProjet(cheminFichier);
 
-        // Link les fichiers ensemble 
-        ConstructeurSysteme constructeur("../src/Lib", "Lib", ".", registreFichiers->obtenirTousLesFichiers(), "executable");
+        std::string nomExecutable = std::filesystem::path(cheminFichier).stem().string();
+
+        ConstructeurSysteme constructeur(srcLib, objLib, buildDir.string(), registreFichiers->obtenirTousLesFichiers(), nomExecutable);
         constructeur.compilerLib();
         constructeur.lierLibExecutable();
     }

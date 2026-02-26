@@ -14,12 +14,6 @@ LlvmBackend::LlvmBackend() {
     _module = std::make_unique<Module>("output", *_context);
     _builder = std::make_unique<IRBuilder<NoFolder>>(*_context);
 
-    // Initialisation de la cible (évite d'avoir des adresses mémoire aléatoires)
-    InitializeAllTargetInfos();
-    InitializeAllTargets();
-    InitializeAllTargetMCs();
-    InitializeAllAsmPrinters();
-
     std::string targetTriple = sys::getDefaultTargetTriple();
     _module->setTargetTriple(targetTriple);
     

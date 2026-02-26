@@ -1,10 +1,13 @@
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
 #include "Compilateur/AST/Utils/OrchestrateurInclude/OrchestrateurInclude.h" 
 #include "Compilateur/AST/Noeuds/Include/NoeudInclude.h" 
-
+#include <filesystem>
 
 void VisiteurRemplissageRegistre::visiter(NoeudInclude* noeudInclude)
 {
-    _orchestrateur->inclureFichier(noeudInclude->getPath());
+    std::filesystem::path cheminFichierParent(_contextGenCode->cheminFichierCourant);
+    std::filesystem::path repertoireParent = cheminFichierParent.parent_path();
+    std::filesystem::path cheminAbsolu = repertoireParent / noeudInclude->getPath();
+    _orchestrateur->inclureFichier(cheminAbsolu.string());
 }
 

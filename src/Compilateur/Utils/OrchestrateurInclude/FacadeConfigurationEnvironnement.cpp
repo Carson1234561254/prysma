@@ -48,10 +48,10 @@ FacadeConfigurationEnvironnement::FacadeConfigurationEnvironnement(RegistreFonct
 {
 }
 
-void FacadeConfigurationEnvironnement::initialiser()
+void FacadeConfigurationEnvironnement::initialiser(const std::string& cheminFichier)
 {
     creerRegistres();
-    creerContexte();
+    creerContexte(cheminFichier);
     enregistrerFonctionsExternes();
     enregistrerTypesDeBase();
     enregistrerStrategiesEquation();
@@ -69,7 +69,7 @@ void FacadeConfigurationEnvironnement::creerRegistres()
     _registreArgument = std::make_unique<RegistreArgument>();
 }
 
-void FacadeConfigurationEnvironnement::creerContexte()
+void FacadeConfigurationEnvironnement::creerContexte(const std::string& cheminFichier)
 {
     Symbole valeurTemporaire;
     valeurTemporaire.adresse = nullptr;
@@ -86,7 +86,8 @@ void FacadeConfigurationEnvironnement::creerContexte()
         _returnContextCompilation.get(),
         _registreArgument.get(),
         valeurTemporaire,
-        &_arena
+        &_arena,
+        cheminFichier
     );
 }
 
@@ -112,7 +113,7 @@ void FacadeConfigurationEnvironnement::enregistrerFonctionsExternes()
 
     // print
     std::vector<llvm::Type*> print_args;
-    print_args.push_back(llvm::Type::getInt8Ty(_context->backend->getContext()));
+    print_args.push_back(llvm::Type::getInt32Ty(_context->backend->getContext()));
     llvm::FunctionType* print_type = llvm::FunctionType::get(llvm::Type::getVoidTy(_context->backend->getContext()), print_args, true);
     llvm::Function* printFunc = llvm::Function::Create(print_type, llvm::Function::ExternalLinkage, "print", _context->backend->getModule());
     {
@@ -146,16 +147,16 @@ void FacadeConfigurationEnvironnement::enregistrerStrategiesEquation()
     _constructeurArbreInstruction = new (_arena)
         ConstructeurArbreInstruction(_context->registreInstruction, _arena);
 
+    _registreStrategieEquation = new (_arena.Allocate<RegistreStrategieEquation>()) RegistreStrategieEquation();
+
     _constructeurEquation = new (_arena)
-        ConstructeurEquationFlottante(_constructeurArbreInstruction, _arena);
+        ConstructeurEquationFlottante(_constructeurArbreInstruction, _registreStrategieEquation, _arena);
 
     // Créer le ParseurType avec le registre
     _parseurType = new (_arena.Allocate<ParseurType>())
         ParseurType(_context->registreType, _constructeurEquation->recupererConstructeurArbre());
 
     // Enregistrer les stratégies d'équation
-    _registreStrategieEquation = new (_arena.Allocate<RegistreStrategieEquation>()) RegistreStrategieEquation();
-
     auto* stratLitInt = new (_arena.Allocate<StrategieLitteral>()) StrategieLitteral(_arena);
     _registreStrategieEquation->enregistrer(TOKEN_LIT_INT, stratLitInt);
 
@@ -186,8 +187,6 @@ void FacadeConfigurationEnvironnement::enregistrerStrategiesEquation()
     // Ajouter la stratégie TOKEN_CALL
     auto* stratCall = new (_arena.Allocate<StrategieAppelFonction>()) StrategieAppelFonction(_constructeurEquation->recupererConstructeurArbre());
     _registreStrategieEquation->enregistrer(TOKEN_CALL, stratCall);
-
-    ConstructeurEquationFlottante::setRegistreStrategieEquation(_registreStrategieEquation);
 }
 
 void FacadeConfigurationEnvironnement::enregistrerInstructions()

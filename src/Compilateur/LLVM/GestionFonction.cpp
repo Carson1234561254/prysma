@@ -237,7 +237,7 @@ void GestionFonction::genererBuiltInPrint(NoeudAppelFonction* noeudAppelFonction
         tag = 's';
     }
 
-    llvm::Value* llvmTag = builder.getInt8(static_cast<uint8_t>(tag));
+    llvm::Value* llvmTag = builder.getInt32(static_cast<uint32_t>(tag));
     const SymboleFonctionLocale* symbolePrint = obtenirFonctionLocale("print");
     builder.CreateCall(symbolePrint->fonction, { llvmTag, valeurArgument });
     

@@ -144,6 +144,7 @@ fn bool tableauTestIteration_int()
 
     return (somme == 6);
 }
+
 // Ne fonctionne pas, bug dans la gestion de l'équation du tableau dans les braquettes []
 //fn bool testeEquationScopeTableau()
 //{

@@ -3,7 +3,6 @@
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 
 ConstructeurArbreEquation::ConstructeurArbreEquation(
     ChaineResponsabilite* chaineResponsabilite,
@@ -34,10 +33,8 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
     if (indice == -1) {
         TokenType type = equation[0].type;
 
-        // Use the static registre from ConstructeurEquationFlottante, not the instance variable
-        auto *strategieEquationRegistry = ConstructeurEquationFlottante::getRegistreStrategieEquation();
-        if ((strategieEquationRegistry != nullptr) && strategieEquationRegistry->existe(type)) {
-            return strategieEquationRegistry->recuperer(type)->construire(equation);
+        if ((_registreStrategieEquation != nullptr) && _registreStrategieEquation->existe(type)) {
+            return _registreStrategieEquation->recuperer(type)->construire(equation);
         }
 
         throw std::runtime_error("Erreur: token non reconnu dans l'équation");

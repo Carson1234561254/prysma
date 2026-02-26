@@ -36,28 +36,23 @@ UniteCompilation::~UniteCompilation()
 }
 
 void UniteCompilation::passe1() {
-    // Résoudre le chemin absolu du fichier
     std::filesystem::path cheminAbsolu = std::filesystem::absolute(_cheminFichierOriginal);
     
-    // Si le chemin est relatif et qu'on a un répertoire courant, résoudre par rapport à celui-ci
     if (!std::filesystem::exists(cheminAbsolu) && !_repertoireCourant.empty()) {
         cheminAbsolu = std::filesystem::path(_repertoireCourant) / _cheminFichierOriginal;
     }
     
     std::string cheminResolu = cheminAbsolu.string();
     
-    // Sauvegarder le répertoire courant pour les includes imbriqués
     _ancienRepertoire = _repertoireCourant;
     _repertoireCourant = cheminAbsolu.parent_path().string();
 
-    std::string pathProgramme = "programme/";
-    
     _nomFichier = cheminResolu.substr(cheminResolu.find_last_of("/\\") + 1);
     _nomFichier = _nomFichier.substr(0, _nomFichier.find_last_of('.'));
 
-    _registreFichier->ajouterFichier(pathProgramme + _nomFichier + ".ll");
+    _registreFichier->ajouterFichier("programme/" + _nomFichier + ".ll");
 
-    _facadeConfigurationEnvironnement->initialiser();
+    _facadeConfigurationEnvironnement->initialiser(cheminResolu);
 
     _context = _facadeConfigurationEnvironnement->getContext();
     ConstructeurArbreInstruction* constructeurArbreInstruction = _facadeConfigurationEnvironnement->getConstructeurArbreInstruction();
@@ -72,17 +67,23 @@ void UniteCompilation::passe1() {
 
     VisiteurRemplissageRegistre visiteurRemplissageRegistre(_context, _orchestrateur);
     _arbre->accept(&visiteurRemplissageRegistre);
+}
+
+void UniteCompilation::passe2() {
+    if (_arbre == nullptr) 
+    {
+        return;
+    }
 
     ConstructeurEnvironnementRegistreFonction constructeurEnvironnementRegistreFonction(_context);
     constructeurEnvironnementRegistreFonction.remplir();
 
     ConstructeurEnvironnementRegistreVariable constructeurEnvironnementRegistreVariable(_context);
     constructeurEnvironnementRegistreVariable.remplir();
-}
 
-void UniteCompilation::passe2() {
-    std::string pathProgramme = "programme/";
-    std::string pathGraphe = "graphe/";
+    std::filesystem::path buildDir = std::filesystem::canonical("/proc/self/exe").parent_path();
+    std::string pathProgramme = (buildDir / "programme/").string();
+    std::string pathGraphe = (buildDir / "graphe/").string();
 
     VisiteurGeneralGenCode visiteur(_context, _orchestrateur);
     _arbre->accept(&visiteur);
@@ -106,4 +107,9 @@ void UniteCompilation::passe2() {
 
     // Restaurer le répertoire courant pour les includes au même niveau
     _repertoireCourant = _ancienRepertoire;
+}
+
+std::string UniteCompilation::getChemin() const
+{
+    return _cheminFichierOriginal;
 }

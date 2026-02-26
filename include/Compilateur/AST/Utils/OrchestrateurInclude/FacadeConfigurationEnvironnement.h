@@ -33,7 +33,7 @@ private:
     ParseurType* _parseurType;
 
     void creerRegistres();
-    void creerContexte();
+    void creerContexte(const std::string& cheminFichier);
     void enregistrerFonctionsExternes();
     void enregistrerTypesDeBase();
     void enregistrerStrategiesEquation();
@@ -44,7 +44,7 @@ public:
     ~FacadeConfigurationEnvironnement() = default;
 
     /// Initialise tout l'environnement de compilation en une seule étape
-    void initialiser();
+    void initialiser(const std::string& cheminFichier);
 
     ContextGenCode* getContext() const;
     llvm::BumpPtrAllocator& getArena();

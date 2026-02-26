@@ -11,11 +11,8 @@
 
 class LlvmBackend {
 private:
-    // L'ordre de déclaration est CRUCIAL ici (C++ détruit dans l'ordre inverse)
     std::unique_ptr<llvm::LLVMContext> _context;
-
     std::unique_ptr<llvm::Module> _module;
-    
     std::unique_ptr<llvm::IRBuilder<llvm::NoFolder>> _builder;
 
 public:

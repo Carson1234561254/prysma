@@ -42,6 +42,8 @@ public:
     // Appelée APRÈS que tous les threads passe1 soient terminés.
     // Remplit les registres locaux (fonction, variable) à partir du registre global complet.
     void passe2();
+
+    std::string getChemin() const;
 };
 
 #endif /* DB7C496D_6A43_4B78_B490_52A0C21C5224 */

@@ -31,21 +31,21 @@ void OrchestrateurInclude::compilerProjet(const std::string& cheminFichier)
 {
     inclureFichier(cheminFichier);
     // Obligatoire d'utiliser ça pour éviter un race condition entre les thread de la passe 1 et la passe 2 
-    size_t i = 0;
+    size_t index = 0;
     while (true) {
         std::thread threadExtrait;
         {
             std::lock_guard<std::mutex> guard(*_mutex); 
-            if (i >= _threads.size()) {
+            if (index >= _threads.size()) {
                 break; 
             }
-            threadExtrait = std::move(_threads[i]);
+            threadExtrait = std::move(_threads[index]);
         } 
         
         if (threadExtrait.joinable()) {
             threadExtrait.join();
         }
-        i++;
+        index++;
     }
     // Il faut netoyer l'équipe de la passe un
     // Car après le travail des threads on ne peux pas relancer un thread mort on dois en refaire des nouveaux pour la passe 2 
@@ -55,14 +55,14 @@ void OrchestrateurInclude::compilerProjet(const std::string& cheminFichier)
     std::vector<std::thread> threadsPasse2;
     threadsPasse2.reserve(_unitesCompilation.size());
     for (const auto& unite : _unitesCompilation) {
-        threadsPasse2.emplace_back([unite = unite.get(), cheminFichier]() {
+        threadsPasse2.emplace_back([unite = unite.get()]() {
             try
             {
                 unite->passe2();
             }
             catch (const std::exception& e)
             {
-                std::cerr << "Erreur lors de la compilation du fichier " + cheminFichier + " : " + e.what() << std::endl;
+                std::cerr << "Erreur (Passe 2) dans le fichier " << unite->getChemin() << " : " << e.what() << std::endl;
             }
         });
     }

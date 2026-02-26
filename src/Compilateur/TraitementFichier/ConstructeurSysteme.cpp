@@ -59,10 +59,10 @@ void ConstructeurSysteme::lierLibExecutable()
 
     std::string llFiles;
     for (const auto& llFile : _outputLL) {
-        llFiles += " " + llFile;
+        llFiles += " " + (fs::path(_buildDir) / llFile).string();
     }
 
-    std::string command = "clang++ " + llFiles + objectFiles + " -o " + _executable;
+    std::string command = "clang++ " + llFiles + objectFiles + " -o " + (fs::path(_buildDir) / _executable).string();
     if (system(command.c_str()) != 0) {
         std::cerr << "Erreur lors de la liaison de la lib à l'exécutable." << std::endl;
     }

@@ -3,10 +3,8 @@
 #include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 #include "Compilateur/Lexer/TokenType.h"
 
-RegistreStrategieEquation* ConstructeurEquationFlottante::_registreStrategieEquation = nullptr;
-
-ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder, llvm::BumpPtrAllocator& arena)
-    : _instructionBuilder(instructionBuilder), _arena(arena)
+ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder, RegistreStrategieEquation* registreStrategieEquation, llvm::BumpPtrAllocator& arena)
+    : _instructionBuilder(instructionBuilder), _arena(arena), _registreStrategieEquation(registreStrategieEquation)
 {
     _registreSymbole = new (_arena.Allocate(sizeof(RegistreSymbole), alignof(RegistreSymbole))) RegistreSymbole();
 
@@ -59,46 +57,46 @@ ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre*
 void ConstructeurEquationFlottante::initialiserRegistre()
 {
     _registreSymbole->enregistrer(TOKEN_PLUS, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
 
     _registreSymbole->enregistrer(TOKEN_MOINS, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
 
     _registreSymbole->enregistrer(TOKEN_ETOILE, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
 
     _registreSymbole->enregistrer(TOKEN_SLASH, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
     _registreSymbole->enregistrer(TOKEN_PLUS_PETIT, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
     _registreSymbole->enregistrer(TOKEN_PLUS_GRAND, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
     _registreSymbole->enregistrer(TOKEN_PLUS_GRAND_EGAL, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token); 
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token)); 
     });
     _registreSymbole->enregistrer(TOKEN_PLUS_PETIT_EGAL, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token);
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token));
     });
     _registreSymbole->enregistrer(TOKEN_MODULO, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token);
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token));
     });
     _registreSymbole->enregistrer(TOKEN_EGAL_EGAL, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token);
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token));
     });
     _registreSymbole->enregistrer(TOKEN_DIFFERENT, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token);
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token));
     });
     _registreSymbole->enregistrer(TOKEN_ET, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token);
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token));
     });
     _registreSymbole->enregistrer(TOKEN_OU, [this](Token token) -> IExpression* { 
-        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(token);
+        return new (_arena.Allocate(sizeof(NoeudOperation), alignof(NoeudOperation))) NoeudOperation(std::move(token));
     });
 }
 
@@ -117,16 +115,6 @@ IConstructeurArbre* ConstructeurEquationFlottante::recupererConstructeurArbre() 
 INoeud* ConstructeurEquationFlottante::construire(std::vector<Token>& tokens, int& index)
 {
     return _constructeurArbre->construire(tokens, index);
-}
-
-void ConstructeurEquationFlottante::setRegistreStrategieEquation(RegistreStrategieEquation* registre)
-{
-    _registreStrategieEquation = registre;
-}
-
-RegistreStrategieEquation* ConstructeurEquationFlottante::getRegistreStrategieEquation()
-{
-    return _registreStrategieEquation;
 }
 
 llvm::BumpPtrAllocator& ConstructeurEquationFlottante::getArena()

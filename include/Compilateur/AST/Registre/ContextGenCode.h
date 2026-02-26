@@ -26,6 +26,7 @@ struct ContextGenCode
     RetourContexteCompilation* returnContextCompilation;
     RegistreArgument* registreArgument;
     llvm::BumpPtrAllocator* arena;
+    std::string cheminFichierCourant;
 
     ContextGenCode(
         RegistreFichier* p_registreFichier,
@@ -38,10 +39,14 @@ struct ContextGenCode
         RetourContexteCompilation* p_returnContextCompilation,
         RegistreArgument* p_registreArgument,
         Symbole p_valeurTemporaire,
-        llvm::BumpPtrAllocator* p_arena
+        llvm::BumpPtrAllocator* p_arena,
+        std::string p_cheminFichierCourant
     ) 
     {
         try {
+            if (p_cheminFichierCourant.empty()) {
+                throw std::invalid_argument("Le chemin du fichier courant ne peut pas être vide");
+            }
             if (p_registreFichier == nullptr)
             {
                 throw std::invalid_argument("Le registre de fichier ne peux pas être null");
@@ -77,7 +82,7 @@ struct ContextGenCode
             std::cerr << "Erreur lors de la création du contexte de génération de code : " << e.what() << std::endl;
             throw;
         }
-
+        this->cheminFichierCourant = std::move(p_cheminFichierCourant);
         this->backend = p_backend;
         this->registreInstruction = p_registreInstruction;
         this->registreVariable = p_registreVariable;
