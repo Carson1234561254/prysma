@@ -24,7 +24,6 @@ protected:
 public:
     RegistreGeneric() = default;
     virtual ~RegistreGeneric() = default;
-
    
     void setMessageErreur(std::function<std::string(TKey)>&& callback) {
         std::lock_guard<TLock> guard(_lock);

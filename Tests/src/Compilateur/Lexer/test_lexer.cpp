@@ -18,7 +18,7 @@ void afficherTokens(const vector<Token>& tokens) {
     }
 }
 
-void testerLexerIdentifiants() {
+TEST_CASE("Tester Lexer Identifiants", "[Lexer]") {
     cout << "\nTest 1 - Identifiants simples" << endl;
     Lexer lexer;
     string code = "x y z variable_test";
@@ -33,7 +33,7 @@ void testerLexerIdentifiants() {
     cout << "Les identifiants ont ete correctement reconnus et separes." << endl;
 }
 
-void testerLexerNombres() {
+TEST_CASE("Tester Lexer Nombres", "[Lexer]") {
     cout << "\nTest 2 - Nombres entiers et flottants" << endl;
     Lexer lexer;
     string code = "42 -15 3.14 -2.5";
@@ -48,10 +48,10 @@ void testerLexerNombres() {
     cout << "Les nombres ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerChaines() {
+TEST_CASE("Tester Lexer Chaines de caracteres", "[Lexer]") {
     cout << "\nTest 3 - Chaines de caracteres" << endl;
     Lexer lexer;
-    string code = "\"Salut\" \"Mot avec espaces\"";
+    string code = R"("Salut" "Mot avec espaces")";
     vector<Token> tokens = lexer.tokenizer(code);
     afficherTokens(tokens);
     
@@ -61,7 +61,7 @@ void testerLexerChaines() {
     cout << "Les chaines de caracteres ont ete correctement reconnues." << endl;
 }
 
-void testerLexerMotsCles() {
+TEST_CASE("Tester Lexer Mots-cles", "[Lexer]") {
     cout << "\nTest 4 - Mots-cles du langage Prysma" << endl;
     Lexer lexer;
     string code = "fn if else while for return true false print";
@@ -75,7 +75,7 @@ void testerLexerMotsCles() {
     cout << "Les mots-cles ont ete correctement reconnus." << endl;
 }
 
-void testerLexerOperateurs() {
+TEST_CASE("Tester Lexer Operateurs", "[Lexer]") {
     cout << "\nTest 5 - Operateurs mathematiques et de comparaison" << endl;
     Lexer lexer;
     string code = "a + b - c * d / e == f != g <= h >= i";
@@ -90,7 +90,7 @@ void testerLexerOperateurs() {
     cout << "Les operateurs ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerDelimiteurs() {
+TEST_CASE("Tester Lexer Delimiteurs", "[Lexer]") {
     cout << "\nTest 6 - Delimiteurs et ponctuation" << endl;
     Lexer lexer;
     string code = "( ) { } [ ] ; ,";
@@ -105,7 +105,7 @@ void testerLexerDelimiteurs() {
     cout << "Les delimiteurs ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerCommentaires() {
+TEST_CASE("Tester Lexer Commentaires", "[Lexer]") {
     cout << "\nTest 7 - Commentaires de ligne" << endl;
     Lexer lexer;
     string code = "x // ceci est un commentaire\ny";
@@ -118,10 +118,10 @@ void testerLexerCommentaires() {
     cout << "Les commentaires ont ete correctement ignores." << endl;
 }
 
-void testerLexerCodeComplet() {
+TEST_CASE("Tester Lexer Code Complet", "[Lexer]") {
     cout << "\nTest 8 - Code complet et mixte" << endl;
     Lexer lexer;
-    string code = "fn main(x: int) { y = 42 + 3.14; }";
+    string code = "fn main(x: int64) { y = 42 + 3.14; }";
     vector<Token> tokens = lexer.tokenizer(code);
     afficherTokens(tokens);
     
@@ -132,7 +132,7 @@ void testerLexerCodeComplet() {
     cout << "Le code complet a ete correctement tokenize." << endl;
 }
 
-void testerLexerBooleans() {
+TEST_CASE("Tester Lexer Booleans", "[Lexer]") {
     cout << "\nTest 9 - Litteraux booleens" << endl;
     Lexer lexer;
     string code = "true false";
@@ -147,11 +147,10 @@ void testerLexerBooleans() {
     cout << "Les booleens ont ete correctement tokenizes et convertis." << endl;
 }
 
-void testerLexerDeclarationSimple()
-{
+TEST_CASE("Tester Lexer Declaration Simple", "[Lexer]") {
     cout << "\nTest 10 - Declaration de variable simple" << endl;
     Lexer lexer;
-    string code = "dec int teste1 = 10;";
+    string code = "dec int64 teste1 = 10;";
     vector<Token> tokens = lexer.tokenizer(code);
     afficherTokens(tokens);
 
@@ -164,19 +163,17 @@ void testerLexerDeclarationSimple()
     cout << "La declaration de variable a ete correctement tokenizee." << endl;
 }
 
-void testerLexerCodeVide()
-{
+TEST_CASE("Tester Lexer Code Vide", "[Lexer]") {
     cout << "\nTest 11 - Cas limite code vide" << endl;
     Lexer lexer;
-    string code = "";
+    string code;
     vector<Token> tokens = lexer.tokenizer(code);
     afficherTokens(tokens);
     
     cout << "Un code vide a ete correctement traite." << endl;
 }
 
-void testerLexerEspacesUniquement()
-{
+TEST_CASE("Tester Lexer Espaces Uniquement", "[Lexer]") {
     cout << "\nTest 12 - Cas limite espaces et tabulations uniquement" << endl;
     Lexer lexer;
     string code = "     \t\t  \n  ";
@@ -186,8 +183,7 @@ void testerLexerEspacesUniquement()
     cout << "Les espaces et tabulations ont ete correctement ignores." << endl;
 }
 
-void testerLexerCommentairesUniquement()
-{
+TEST_CASE("Tester Lexer Commentaires Uniquement", "[Lexer]") {
     cout << "\nTest 13 - Cas limite commentaires uniquement" << endl;
     Lexer lexer;
     string code = "// ceci est un commentaire\n// ceci aussi";
@@ -197,8 +193,7 @@ void testerLexerCommentairesUniquement()
     cout << "Les commentaires uniquement ont ete correctement traites." << endl;
 }
 
-void testerLexerNombresNegatifs()
-{
+TEST_CASE("Tester Lexer Nombres Negatifs", "[Lexer]") {
     cout << "\nTest 14 - Cas limite nombres negatifs complexes" << endl;
     Lexer lexer;
     string code = "-0 -0.0 -999 -3.14159";
@@ -211,8 +206,7 @@ void testerLexerNombresNegatifs()
     cout << "Les nombres negatifs ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerIdentifiantsUnderscore()
-{
+TEST_CASE("Tester Lexer Identifiants avec Underscores", "[Lexer]") {
     cout << "\nTest 15 - Cas limite identifiants avec underscores" << endl;
     Lexer lexer;
     string code = "_var __double__ _123 __";
@@ -227,8 +221,7 @@ void testerLexerIdentifiantsUnderscore()
     cout << "Les identifiants avec underscores ont ete correctement reconnus." << endl;
 }
 
-void testerLexerChaineMalformee()
-{
+TEST_CASE("Tester Lexer Chaine Malformee", "[Lexer]") {
     cout << "\nTest 16 - Cas limite chaine sans guillemet fermant" << endl;
     Lexer lexer;
     string code = "\"chaine non fermee";
@@ -238,8 +231,7 @@ void testerLexerChaineMalformee()
     cout << "Une chaine mal formee a ete traitee par le lexer." << endl;
 }
 
-void testerLexerCommentairesBlocs()
-{
+TEST_CASE("Tester Lexer Commentaires Blocs", "[Lexer]") {
     cout << "\nTest 17 - Cas limite commentaires bloc /* */" << endl;
     Lexer lexer;
     string code = "a /* commentaire bloc */ b /* nested /* comment */ end */";
@@ -251,8 +243,7 @@ void testerLexerCommentairesBlocs()
     cout << "Les commentaires bloc ont ete correctement ignores." << endl;
 }
 
-void testerLexerOperatorsComposites()
-{
+TEST_CASE("Tester Lexer Operators Composites", "[Lexer]") {
     cout << "\nTest 18 - Cas limite operateurs composites" << endl;
     Lexer lexer;
     string code = "a == b != c >= d <= e";
@@ -265,8 +256,7 @@ void testerLexerOperatorsComposites()
     cout << "Les operateurs composites ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerLignesMultiples()
-{
+TEST_CASE("Tester Lexer Lignes Multiples", "[Lexer]") {
     cout << "\nTest 19 - Cas limite suivi des lignes et colonnes" << endl;
     Lexer lexer;
     string code = "a\nb\nc";
@@ -280,11 +270,10 @@ void testerLexerLignesMultiples()
     cout << "Le suivi des lignes et colonnes est correct." << endl;
 }
 
-void testerLexerTypesValides()
-{
+TEST_CASE("Tester Lexer Types Valides", "[Lexer]") {
     cout << "\nTest 20 - Cas limite tous les types valides" << endl;
     Lexer lexer;
-    string code = "int float bool";
+    string code = "int64 float bool";
     vector<Token> tokens = lexer.tokenizer(code);
     afficherTokens(tokens);
     
@@ -295,8 +284,7 @@ void testerLexerTypesValides()
     cout << "Tous les types ont ete correctement reconnus." << endl;
 }
 
-void testerLexerConcatenationSansEspace()
-{
+TEST_CASE("Tester Lexer Concatenation Sans Espace", "[Lexer]") {
     cout << "\nTest 21 - Cas limite tokens sans espaces de separation" << endl;
     Lexer lexer;
     string code = "a+b-c*d/e";
@@ -310,8 +298,7 @@ void testerLexerConcatenationSansEspace()
     cout << "Les tokens sans espaces ont ete correctement separes." << endl;
 }
 
-void testerLexerAccoladesParentheses()
-{
+TEST_CASE("Tester Lexer Accolades et Parentheses", "[Lexer]") {
     cout << "\nTest 22 - Cas limite imbrication accolades et parentheses" << endl;
     Lexer lexer;
     string code = "{ { ( ( ) ) } }";
@@ -324,8 +311,7 @@ void testerLexerAccoladesParentheses()
     cout << "L'imbrication a ete correctement tokenizee." << endl;
 }
 
-void testerLexerZerosMultiples()
-{
+TEST_CASE("Tester Lexer Zeros Multiples", "[Lexer]") {
     cout << "\nTest 23 - Cas limite nombres avec zeros multiples" << endl;
     Lexer lexer;
     string code = "0 00 000.000 0.0";
@@ -337,8 +323,7 @@ void testerLexerZerosMultiples()
     cout << "Les nombres avec zeros ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerNombresGrands()
-{
+TEST_CASE("Tester Lexer Nombres Grands", "[Lexer]") {
     cout << "\nTest 24 - Cas limite tres grands nombres" << endl;
     Lexer lexer;
     string code = "999999999 123456789.987654321";
@@ -350,8 +335,7 @@ void testerLexerNombresGrands()
     cout << "Les grands nombres ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerCharactersSpeciaux()
-{
+TEST_CASE("Tester Lexer Characters Speciaux", "[Lexer]") {
     cout << "\nTest 25 - Cas limite caracteres speciaux dans les chaines" << endl;
     Lexer lexer;
     string code = "\"!@#$%^&*()\" \"avec\\nnouvelle\\nligne\"";
@@ -362,8 +346,7 @@ void testerLexerCharactersSpeciaux()
     cout << "Les caracteres speciaux dans les chaines ont ete correctement traites." << endl;
 }
 
-void testerLexerFonctionsEtRetour()
-{
+TEST_CASE("Tester Lexer Fonctions et Retour", "[Lexer]") {
     cout << "\nTest 26 - Cas limite fonction avec retour" << endl;
     Lexer lexer;
     string code = "fn test() { return 42; }";
@@ -375,8 +358,7 @@ void testerLexerFonctionsEtRetour()
     cout << "La fonction avec retour a ete correctement tokenizee." << endl;
 }
 
-void testerLexerControlFlow()
-{
+TEST_CASE("Tester Lexer Control Flow", "[Lexer]") {
     cout << "\nTest 27 - Cas limite structures de controle imbriquees" << endl;
     Lexer lexer;
     string code = "if (x > 0) { while (true) { } }";
@@ -388,8 +370,7 @@ void testerLexerControlFlow()
     cout << "Les structures de controle ont ete correctement tokenizees." << endl;
 }
 
-void testerLexerTousOperateurs()
-{
+TEST_CASE("Tester Lexer Tous Operateurs", "[Lexer]") {
     cout << "\nTest 28 - Cas limite tous les operateurs supportes" << endl;
     Lexer lexer;
     string code = "+ - * / % == != < > <= >=";
@@ -400,8 +381,7 @@ void testerLexerTousOperateurs()
     cout << "Tous les operateurs ont ete correctement tokenizes." << endl;
 }
 
-void testerLexerAssignmentMultiple()
-{
+TEST_CASE("Tester Lexer Assignment Multiple", "[Lexer]") {
     cout << "\nTest 29 - Cas limite affectations multiples en cascade" << endl;
     Lexer lexer;
     string code = "a = b = c = 10";
@@ -413,8 +393,7 @@ void testerLexerAssignmentMultiple()
     cout << "Les affectations multiples ont ete correctement tokenizees." << endl;
 }
 
-void testerLexerDeclarationComplexe()
-{
+TEST_CASE("Tester Lexer Declaration Complexe", "[Lexer]") {
     cout << "\nTest 30 - Cas limite declaration complexe avec tous les elements" << endl;
     Lexer lexer;
     string code = "dec float _var123 = -45.67;";
@@ -425,41 +404,4 @@ void testerLexerDeclarationComplexe()
     CHECK(tokens[0].type == TOKEN_DEC);
     CHECK(tokens[1].type == TOKEN_TYPE_FLOAT);
     cout << "La declaration complexe a ete correctement tokenizee." << endl;
-}
-
-void testerTousLesTestsLexer() {
-    testerLexerIdentifiants();
-    testerLexerNombres();
-    testerLexerChaines();
-    testerLexerMotsCles();
-    testerLexerOperateurs();
-    testerLexerDelimiteurs();
-    testerLexerCommentaires();
-    testerLexerCodeComplet();
-    testerLexerBooleans();
-    testerLexerDeclarationSimple();
-    testerLexerCodeVide();
-    testerLexerEspacesUniquement();
-    testerLexerCommentairesUniquement();
-    testerLexerNombresNegatifs();
-    testerLexerIdentifiantsUnderscore();
-    testerLexerChaineMalformee();
-    testerLexerCommentairesBlocs();
-    testerLexerOperatorsComposites();
-    testerLexerLignesMultiples();
-    testerLexerTypesValides();
-    testerLexerConcatenationSansEspace();
-    testerLexerAccoladesParentheses();
-    testerLexerZerosMultiples();
-    testerLexerNombresGrands();
-    testerLexerCharactersSpeciaux();
-    testerLexerFonctionsEtRetour();
-    testerLexerControlFlow();
-    testerLexerTousOperateurs();
-    testerLexerAssignmentMultiple();
-    testerLexerDeclarationComplexe();
-}
-
-TEST_CASE("Execution Suite Lexer", "[lexer_all]") {
-    testerTousLesTestsLexer();
 }

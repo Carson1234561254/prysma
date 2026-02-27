@@ -1,9 +1,10 @@
-include "test.p";
+
 
 fn int64 main() 
 {
-   dec int64 a = 42;
+   dec int64 a = 40 / 2 + 10 - 5 * 3;
+   
    call print(a);
-   call test();
+   
    return 0;
 }

@@ -1,7 +1,4 @@
-scope
+fn void teste()
 {
-    fn void teste()
-    {
-       call print(101001);
-    }
+    call print(101001);
 }

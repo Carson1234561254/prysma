@@ -46,6 +46,7 @@ fn bool tableauTestAffectation_float()
     return true;
 }
 
+// Problème actuelle gènère true même si l'affectation est hors limite, bug dans la gestion de l'équation du tableau dans les braquettes []
 fn bool tableauTestSortieHorsLimite_float()
 {
     dec string[] fonctionnalite = "3.tableauTestSortieHorsLimite : ";
@@ -219,9 +220,9 @@ fn int32 testTableauFloat()
     call print(call tableauTestAffectation_float()); call backSlashN();
     //call print(call tableauTestSortieHorsLimite_float()); true
     call print(call tableauVariableTest_float()); call backSlashN();
-    call print(call tableauTestIndexDynamique_float()); call backSlashN(); // false 
+    call print(call tableauTestIndexDynamique_float()); call backSlashN();  
     call print(call tableauTestIntegritePile_float()); call backSlashN();
-    call print(call tableauTestIteration_float()); call backSlashN(); // false
+    call print(call tableauTestIteration_float()); call backSlashN(); 
     //call print(call testeEquationScopeTableau());
     call print(call tableauTestRetourLecture_float()); call backSlashN();
     call print(call tableauTestArgument_float()); call backSlashN();
