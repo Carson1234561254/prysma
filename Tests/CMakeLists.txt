@@ -179,6 +179,9 @@ set(MAIN_SOURCES
 add_executable(PrysmaTests
     src/Compilateur/Lexer/test_lexer.cpp
     src/Compilateur/AST/test_ast.cpp
+    src/Compilateur/AST/Registre/test_registre_fonction.cpp
+    src/Compilateur/AST/Registre/test_registre_globale.cpp
+    src/Compilateur/AST/Registre/test_registre_variable.cpp
     ${MAIN_SOURCES}
 )
 
@@ -197,4 +200,13 @@ target_compile_options(PrysmaTests PRIVATE
     $<$<CONFIG:Debug>:-g;-O0;-fno-omit-frame-pointer>
     $<$<NOT:$<CONFIG:Debug>>:-O2>
     -Wall -Wextra -Wpedantic
+    -Wno-sign-conversion
+    -Wno-conversion
+)
+
+# Supprimez les avertissements LLVM seulement pour les tests
+set_source_files_properties(
+    ${MAIN_SOURCES}
+    PROPERTIES
+    COMPILE_FLAGS "-Wno-sign-conversion -Wno-conversion"
 )

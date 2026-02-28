@@ -58,3 +58,10 @@
 
 /Tools-*/
 /Tools/
+
+# Python compiled files
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python

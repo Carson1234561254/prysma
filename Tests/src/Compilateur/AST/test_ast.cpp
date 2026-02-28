@@ -59,10 +59,16 @@ struct EnvironnementAST {
         registreType = std::make_unique<RegistreType>();
 
         // Constructeur d'arbre d'instruction 
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wmismatched-new-delete"
         constructeurArbre = new (arena) ConstructeurArbreInstruction(registreInstruction.get(), arena);
+        #pragma GCC diagnostic pop
 
         //  Strategie d'équation 
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wmismatched-new-delete"
         constructeurEquation = new (arena) ConstructeurEquationFlottante(constructeurArbre, registreStrategieEquation.get(), arena);
+        #pragma GCC diagnostic pop
 
         parseurType = new (arena.Allocate<ParseurType>()) ParseurType(registreType.get(), constructeurEquation->recupererConstructeurArbre());
 
