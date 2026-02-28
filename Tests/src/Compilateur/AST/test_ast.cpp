@@ -15,6 +15,8 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
 #include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
+#include "Compilateur/AST/Noeuds/Condition/NoeudIf.h"
+#include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
 
 // Stratégies d'équation
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.h"
@@ -293,4 +295,213 @@ TEST_CASE("Constructeur Arbre equation profondeur parenthèse", "[AST]")
     auto* litteral2 = dynamic_cast<NoeudLitteral*>(noeudDivision->getDroite());
     REQUIRE(litteral2 != nullptr);
     REQUIRE(litteral2->getToken().value == "2");
+}
+
+
+// Début des tests pour l'arbre d'instruction 
+
+// Test de branchement if simple avec else
+TEST_CASE("Construction Arbre If simple avec else", "[AST][Branch]")
+{
+    cout << "\nTest 4 - Arbre if/else simple" << endl;
+    EnvironnementAST env;
+
+    // Code Prysma : if avec condition et deux branches
+    INoeud* arbre = construireArbreDepuisString(env,
+        "if (a > 5) { aff x = 1; } else { aff x = 2; }"
+    );
+
+    REQUIRE(arbre != nullptr);
+
+    // 1. Racine = NoeudInstruction qui contient le if
+    auto* racine = dynamic_cast<NoeudInstruction*>(arbre);
+    REQUIRE(racine != nullptr);
+    REQUIRE(racine->getEnfants().size() == 1);
+
+    // 2. Premier enfant = NoeudIf
+    auto* noeudIf = dynamic_cast<NoeudIf*>(racine->getEnfants()[0]);
+    REQUIRE(noeudIf != nullptr);
+
+    // 3. Condition pas nulle
+    REQUIRE(noeudIf->getNoeudCondition() != nullptr);
+
+    // 4. Vérifier condition : opération '>'
+    auto* condition = dynamic_cast<NoeudOperation*>(noeudIf->getNoeudCondition());
+    REQUIRE(condition != nullptr);
+    REQUIRE(condition->getToken().type == TOKEN_PLUS_GRAND);
+
+    // 5. Bloc if existe et contient 1 instruction
+    auto* blocIf = dynamic_cast<NoeudInstruction*>(noeudIf->getNoeudBlocIf());
+    REQUIRE(blocIf != nullptr);
+    REQUIRE(blocIf->getEnfants().size() == 1);
+
+    // 6. Bloc else existe et contient 1 instruction
+    auto* blocElse = dynamic_cast<NoeudInstruction*>(noeudIf->getNoeudBlocElse());
+    REQUIRE(blocElse != nullptr);
+    REQUIRE(blocElse->getEnfants().size() == 1);
+
+    // 7. Bloc endif existe (noeud de sortie)
+    REQUIRE(noeudIf->getNoeudBlocEndif() != nullptr);
+}
+
+// Test if sans else
+TEST_CASE("Construction Arbre If sans else", "[AST][Branch]")
+{
+    cout << "\nTest 5 - Arbre if sans else" << endl;
+    EnvironnementAST env;
+
+    INoeud* arbre = construireArbreDepuisString(env,
+        "if (a == 10) { aff y = 42; }"
+    );
+
+    REQUIRE(arbre != nullptr);
+
+    auto* racine = dynamic_cast<NoeudInstruction*>(arbre);
+    REQUIRE(racine != nullptr);
+
+    // 1. NoeudIf
+    auto* noeudIf = dynamic_cast<NoeudIf*>(racine->getEnfants()[0]);
+    REQUIRE(noeudIf != nullptr);
+
+    // 2. Condition == 
+    auto* condition = dynamic_cast<NoeudOperation*>(noeudIf->getNoeudCondition());
+    REQUIRE(condition != nullptr);
+    REQUIRE(condition->getToken().type == TOKEN_EGAL_EGAL);
+
+    // 3. Bloc if a 1 enfant
+    auto* blocIf = dynamic_cast<NoeudInstruction*>(noeudIf->getNoeudBlocIf());
+    REQUIRE(blocIf != nullptr);
+    REQUIRE(blocIf->getEnfants().size() == 1);
+
+    // 4. Pas de else
+    REQUIRE(noeudIf->getNoeudBlocElse() == nullptr);
+
+    // 5. Endif existe quand même
+    REQUIRE(noeudIf->getNoeudBlocEndif() != nullptr);
+}
+
+// Test if avec condition logique && 
+TEST_CASE("Construction Arbre If condition logique ET", "[AST][Branch]")
+{
+    cout << "\nTest 6 - Arbre if avec &&" << endl;
+    EnvironnementAST env;
+
+    INoeud* arbre = construireArbreDepuisString(env,
+        "if (a > 1 && b < 10) { aff z = 0; }"
+    );
+
+    REQUIRE(arbre != nullptr);
+
+    auto* racine = dynamic_cast<NoeudInstruction*>(arbre);
+    REQUIRE(racine != nullptr);
+
+    auto* noeudIf = dynamic_cast<NoeudIf*>(racine->getEnfants()[0]);
+    REQUIRE(noeudIf != nullptr);
+
+    // Condition racine = &&
+    auto* condition = dynamic_cast<NoeudOperation*>(noeudIf->getNoeudCondition());
+    REQUIRE(condition != nullptr);
+    REQUIRE(condition->getToken().type == TOKEN_ET);
+
+    // Gauche du && = '>'
+    auto* gauche = dynamic_cast<NoeudOperation*>(condition->getGauche());
+    REQUIRE(gauche != nullptr);
+    REQUIRE(gauche->getToken().type == TOKEN_PLUS_GRAND);
+
+    // Droite du && = '<'
+    auto* droite = dynamic_cast<NoeudOperation*>(condition->getDroite());
+    REQUIRE(droite != nullptr);
+    REQUIRE(droite->getToken().type == TOKEN_PLUS_PETIT);
+}
+
+// Test while simple
+TEST_CASE("Construction Arbre While simple", "[AST][Branch]")
+{
+    cout << "\nTest 7 - Arbre while simple" << endl;
+    EnvironnementAST env;
+
+    INoeud* arbre = construireArbreDepuisString(env,
+        "while (i < 10) { aff i = i + 1; }"
+    );
+
+    REQUIRE(arbre != nullptr);
+
+    auto* racine = dynamic_cast<NoeudInstruction*>(arbre);
+    REQUIRE(racine != nullptr);
+    REQUIRE(racine->getEnfants().size() == 1);
+
+    // 1. NoeudWhile
+    auto* noeudWhile = dynamic_cast<NoeudWhile*>(racine->getEnfants()[0]);
+    REQUIRE(noeudWhile != nullptr);
+
+    // 2. Condition '<'
+    auto* condition = dynamic_cast<NoeudOperation*>(noeudWhile->getNoeudCondition());
+    REQUIRE(condition != nullptr);
+    REQUIRE(condition->getToken().type == TOKEN_PLUS_PETIT);
+
+    // 3. Bloc while a 1 instruction
+    auto* blocWhile = dynamic_cast<NoeudInstruction*>(noeudWhile->getNoeudBlocWhile());
+    REQUIRE(blocWhile != nullptr);
+    REQUIRE(blocWhile->getEnfants().size() == 1);
+
+    // 4. Bloc fin while existe
+    REQUIRE(noeudWhile->getNoeudBlocFinWhile() != nullptr);
+}
+
+// Test while avec condition logique ||
+TEST_CASE("Construction Arbre While condition OU", "[AST][Branch]")
+{
+    cout << "\nTest 8 - Arbre while avec ||" << endl;
+    EnvironnementAST env;
+
+    INoeud* arbre = construireArbreDepuisString(env,
+        "while (x == 0 || y == 0) { aff x = 1; }"
+    );
+
+    REQUIRE(arbre != nullptr);
+
+    auto* racine = dynamic_cast<NoeudInstruction*>(arbre);
+    REQUIRE(racine != nullptr);
+
+    auto* noeudWhile = dynamic_cast<NoeudWhile*>(racine->getEnfants()[0]);
+    REQUIRE(noeudWhile != nullptr);
+
+    // Condition racine = ||
+    auto* condition = dynamic_cast<NoeudOperation*>(noeudWhile->getNoeudCondition());
+    REQUIRE(condition != nullptr);
+    REQUIRE(condition->getToken().type == TOKEN_OU);
+
+    // Gauche du || = '=='
+    auto* gauche = dynamic_cast<NoeudOperation*>(condition->getGauche());
+    REQUIRE(gauche != nullptr);
+    REQUIRE(gauche->getToken().type == TOKEN_EGAL_EGAL);
+
+    // Droite du || = '=='
+    auto* droite = dynamic_cast<NoeudOperation*>(condition->getDroite());
+    REQUIRE(droite != nullptr);
+    REQUIRE(droite->getToken().type == TOKEN_EGAL_EGAL);
+}
+
+// Test while avec plusieurs instructions dans le corps
+TEST_CASE("Construction Arbre While plusieurs instructions", "[AST][Branch]")
+{
+    cout << "\nTest 9 - Arbre while avec plusieurs instructions" << endl;
+    EnvironnementAST env;
+
+    INoeud* arbre = construireArbreDepuisString(env,
+        "while (i < 5) { aff a = 0; aff i = i + 1; }"
+    );
+
+    REQUIRE(arbre != nullptr);
+
+    auto* racine = dynamic_cast<NoeudInstruction*>(arbre);
+    REQUIRE(racine != nullptr);
+
+    auto* noeudWhile = dynamic_cast<NoeudWhile*>(racine->getEnfants()[0]);
+    REQUIRE(noeudWhile != nullptr);
+
+    // Bloc while contient 2 instructions (aff + aff)
+    auto* blocWhile = dynamic_cast<NoeudInstruction*>(noeudWhile->getNoeudBlocWhile());
+    REQUIRE(blocWhile != nullptr);
+    REQUIRE(blocWhile->getEnfants().size() == 2);
 }
