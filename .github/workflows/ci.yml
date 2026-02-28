@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer LLVM 18
+        run: |
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" | sudo tee /etc/apt/sources.list.d/llvm.list
+          sudo apt-get update
+          sudo apt-get install -y llvm-18-dev cmake g++ make python3 bear
+
+      - name: Configurer LLVM
+        run: |
+          export LLVM_DIR=/usr/lib/llvm-18/lib/cmake/llvm
+          echo "LLVM_DIR=$LLVM_DIR" >> $GITHUB_ENV
+
+      - name: Lancer tests
+        working-directory: Tests
+        run: python3 main.py
