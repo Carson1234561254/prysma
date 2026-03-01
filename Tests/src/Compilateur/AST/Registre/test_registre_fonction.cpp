@@ -77,3 +77,28 @@ TEST_CASE("Registre local fonctionne independamment du global", "[RegistreFoncti
     CHECK(dynamic_cast<SymboleFonctionGlobale*>(globale.get()) != nullptr);
     CHECK(dynamic_cast<SymboleFonctionLocale*>(locale.get()) != nullptr);
 }
+
+// ========== CAS NON-FONCTIONNELS (SAD TEST) ==========
+
+TEST_CASE("RegistreFonction - Enregistrer null et recuperer ne plante pas", "[RegistreFonction][SadTest]") {
+    RegistreFonctionLocale registre;
+
+    registre.enregistrer("fn1", make_unique<SymboleFonctionLocale>());
+    registre.enregistrer("fn2", make_unique<SymboleFonctionLocale>());
+
+    CHECK(registre.existe("fn1"));
+    CHECK(registre.existe("fn2"));
+    CHECK(registre.obtenirCles().size() == 2);
+
+    auto fnUpdate = make_unique<SymboleFonctionLocale>();
+    fnUpdate->fonction = reinterpret_cast<llvm::Function*>(0xABCD);
+    registre.enregistrer("fn1", std::move(fnUpdate));
+
+    const auto& recupere = registre.recuperer("fn1");
+    auto* symbole = dynamic_cast<SymboleFonctionLocale*>(recupere.get());
+    REQUIRE(symbole != nullptr);
+    CHECK(symbole->fonction == reinterpret_cast<llvm::Function*>(0xABCD));
+
+    CHECK(registre.obtenirCles().size() == 2);
+    CHECK_THROWS_AS(registre.recuperer("fn_inexistante"), std::invalid_argument);
+}

@@ -4,6 +4,7 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include <string>
 #include <vector>
+#include <random>
 
 using namespace std;
 
@@ -159,4 +160,85 @@ TEST_CASE("Tester Lexer Tokens sans espaces", "[Lexer]") {
     CHECK(tokens[2].value == "b");
     CHECK(tokens[3].type == TOKEN_MOINS);
     CHECK(tokens[4].value == "c");
+}
+
+// Cas non fonctionnel sad test pour verifier que le lexer ne plante pas et termine correctement avec EOF
+
+TEST_CASE("Tester Lexer Commentaire bloc non ferme", "[Lexer][SadTest]") {
+    Lexer lexer;
+    string code = "a /* commentaire non ferme";
+    vector<Token> tokens = lexer.tokenizer(code);
+
+
+    CHECK(tokens.size() > 0);
+    CHECK(tokens[tokens.size() - 1].type == TOKEN_EOF);
+}
+
+TEST_CASE("Tester Lexer Nombre flottant invalide", "[Lexer][SadTest]") {
+    Lexer lexer;
+    string code = "3.14.15 2.";
+    vector<Token> tokens = lexer.tokenizer(code);
+
+    CHECK(tokens.size() > 0);
+    CHECK(tokens[tokens.size() - 1].type == TOKEN_EOF);
+}
+
+TEST_CASE("Tester Lexer Identifiant commence par chiffre", "[Lexer][SadTest]") {
+    Lexer lexer;
+    string code = "123abc 456_var";
+    vector<Token> tokens = lexer.tokenizer(code);
+
+    CHECK(tokens[0].type == TOKEN_LIT_INT);
+    CHECK(tokens[0].value == "123");
+    REQUIRE(tokens.size() >= 2);
+    CHECK(tokens[1].type == TOKEN_IDENTIFIANT);
+}
+
+TEST_CASE("Tester Lexer Caracteres speciaux non reconnues", "[Lexer][SadTest]") {
+    Lexer lexer;
+    string code = "a @ b # c $ d";
+    vector<Token> tokens = lexer.tokenizer(code);
+
+    CHECK(tokens.size() > 0);
+    CHECK(tokens[tokens.size() - 1].type == TOKEN_EOF);
+}
+
+TEST_CASE("Tester Lexer Chaine de caracteres non fermee", "[Lexer][SadTest]") {
+    Lexer lexer;
+    string code = R"("Chaîne non fermée)";
+    vector<Token> tokens = lexer.tokenizer(code);
+
+    CHECK(tokens.size() > 0);
+    CHECK(tokens[tokens.size() - 1].type == TOKEN_EOF);
+}
+
+
+TEST_CASE("Tester Lexer Fuzzing - Garbage aleatoire", "[Lexer][SadTest][Fuzzing]") {
+    Lexer lexer;
+    
+    // Generateur aleatoire
+    mt19937 gen(12345); // Seed fixe pour reproductibilite
+    uniform_int_distribution<> dis(0, 255);
+    
+    // Generer du garbage aleatoire
+    string garbage;
+    for (int i = 0; i < 5000; ++i) {
+        garbage += static_cast<char>(dis(gen));
+    }
+    
+    // Il doit toujours retourner un vecteur avec au moins EOF
+    try {
+        vector<Token> tokens = lexer.tokenizer(garbage);
+        
+        // Verifications robustes
+        CHECK(tokens.size() > 0);
+        CHECK(tokens[tokens.size() - 1].type == TOKEN_EOF);
+        
+        // S'assurer que le dernier token avant EOF est valide
+        if (tokens.size() > 1) {
+            CHECK(tokens[tokens.size() - 2].type != TOKEN_EOF);
+        }
+    } catch (...) {
+        FAIL("Le lexer a lance une exception sur du garbage - Ne doit jamais crasher!");
+    }
 }

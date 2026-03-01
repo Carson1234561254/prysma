@@ -52,3 +52,24 @@ TEST_CASE("Registre global message erreur contient la cle", "[RegistreGlobal]") 
         CHECK(msg.find("fantome") != string::npos);
     }
 }
+
+//  cas non fonctionnel sad test pour verifier que le registre global ne plante pas et termine correctement avec des acces concurrents a la meme cle
+
+TEST_CASE("RegistreGlobal - Acces concurrent a la meme cle ne plante pas", "[RegistreGlobal][SadTest]") {
+    RegistreFonctionGlobale registre;
+
+    registre.enregistrer("fn", make_unique<SymboleFonctionGlobale>());
+
+    CHECK_NOTHROW(registre.recuperer("fn"));
+    CHECK_NOTHROW(registre.recuperer("fn"));
+    CHECK_NOTHROW(registre.recuperer("fn"));
+
+    registre.enregistrer("fn", make_unique<SymboleFonctionGlobale>());
+    CHECK_NOTHROW(registre.recuperer("fn"));
+
+    CHECK(registre.existe("fn"));
+    auto cles = registre.obtenirCles();
+    CHECK(cles.size() == 1);
+    
+    CHECK_THROWS_AS(registre.recuperer("cle_invalide"), std::invalid_argument);
+}

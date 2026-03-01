@@ -20,5 +20,5 @@ fn int64 main()
     call testTableauFloat();
     call testTableauInt();
     
-   return 0;
+    return 0;
 }

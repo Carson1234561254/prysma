@@ -146,3 +146,22 @@ TEST_CASE("ViderTop puis re-enregistrer dans le meme scope", "[RegistreVariable]
     CHECK_NOTHROW(registre.enregistrer(tok, creerSymbole(0x200)));
     CHECK(registre.recupererVariables(tok).adresse == reinterpret_cast<llvm::Value*>(0x200));
 }
+
+TEST_CASE("RegistreVariable - Depilation excessive sans planter", "[RegistreVariable][SadTest]") {
+    RegistreVariable registre;
+
+    Token tok = creerToken("var");
+    registre.enregistrer(tok, creerSymbole(0x100));
+
+    registre.piler();
+    registre.piler();
+    registre.depiler();
+    registre.depiler();
+
+    CHECK_NOTHROW(registre.recupererVariables(tok));
+    CHECK(registre.recupererVariables(tok).adresse == reinterpret_cast<llvm::Value*>(0x100));
+
+    CHECK_NOTHROW(registre.depiler());
+
+    CHECK_NOTHROW(registre.recupererVariables(tok));
+}
