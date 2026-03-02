@@ -1,6 +1,7 @@
 #include <memory>
 #include <string>
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <llvm-18/llvm/Support/Allocator.h>
 #include "Compilateur/Lexer/TokenType.h"
@@ -42,6 +43,8 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.h"
 
 using namespace std;
+
+
 
 
 struct EnvironnementAST {
@@ -139,6 +142,10 @@ struct EnvironnementAST {
     }
 };
 
+
+
+
+
 /// Construit un arbre d'équation à partir d'une string de code source.
 INoeud* construireEquationDepuisString(EnvironnementAST& env, const std::string& code) {
     Lexer lexer;
@@ -159,6 +166,63 @@ INoeud* construireArbreDepuisString(EnvironnementAST& env, const std::string& co
     return env.constructeurArbre->construire(tokens);
 }
 
+template<typename TypeAttendu, typename TypeEntrer>
+
+TypeAttendu* verifierTypeEtCaster(TypeEntrer* noeud) {
+    auto* noeudCast = dynamic_cast<TypeAttendu*>(noeud);
+    REQUIRE(noeudCast != nullptr);
+    return noeudCast;
+}
+
+
+template<typename TypeAttendu, typename TypeValeur>
+struct matcherNoeud
+{
+    TypeValeur valeurAttendue;
+    matcherNoeud<TypeAttendu, TypeValeur>(TypeValeur p_valeurAttendue) : valeurAttendue(std::move(p_valeurAttendue)) {}
+
+    template<typename typeBase>
+    void operator()(typeBase* noeud) {
+   
+        verifierTypeEtCaster<TypeAttendu>(noeud);
+    }
+};
+
+// Utilisation de la technique fonctor
+template<typename TypeCible,typename Gauche, typename Droite>
+struct matcherGeneral
+{
+    Gauche verificateurGauche;
+    Droite verificateurDroite;
+
+    matcherGeneral(Gauche p_noeudGaucheAttendu, Droite p_noeudDroiteAttendu) 
+        : verificateurGauche(std::move(p_noeudGaucheAttendu)), verificateurDroite(std::move(p_noeudDroiteAttendu)) {}
+
+    template<typename typeBase>
+    void operator()(typeBase* noeud) {
+        auto* noeudOperation = verifierTypeEtCaster<TypeCible>(noeud);
+        
+        verificateurDroite(noeudOperation->getDroite());
+        verificateurGauche(noeudOperation->getGauche());
+    
+    }
+};
+
+// Faire les helper pour éviter d'avoir beaucoup de syntaxe dans les tests template 
+
+auto Litteral(const std::string& valeur) {
+    return matcherNoeud<NoeudLitteral, std::string>(valeur);
+}
+
+// Helper pour les opérations
+auto operateur() {
+    return [](const std::string& type, auto gauche, auto droite) {
+        return matcherGeneral<NoeudOperation, decltype(gauche), decltype(droite)>(
+            gauche, droite
+        );
+    };
+}
+
 // C'est un fichier de test exclusif à l'arbre syntaxique abstrait première partie du test sera de vérifier la construction de l'arbre 
 // d'equation et de tester des operations de base comme l'addition, la soustraction, la multiplication et la division.
 
@@ -168,33 +232,18 @@ TEST_CASE("Construction Arbre Equation Simple", "[AST]")
     
     EnvironnementAST env;
     INoeud* arbre = construireEquationDepuisString(env, "1 + 10 * 50");
+
+    auto verificateur = 
+    operateur()(
+        "+", 
+        Litteral("1"), 
+        operateur()(
+            "*", 
+            Litteral("10"), 
+            Litteral("50")
+        ));
     
-    // 1. Vérifier que l'arbre n'est pas nul
-    REQUIRE(arbre != nullptr);
-
-    // 2. Vérifier la Racine (doit être une Addition)
-    auto* racineOperation = dynamic_cast<NoeudOperation*>(arbre);
-    REQUIRE(racineOperation != nullptr);
-    REQUIRE(racineOperation->getToken().type == TOKEN_PLUS); 
-
-    // 3. Vérifier l'enfant gauche de l'Addition (doit être le nombre 1)
-    auto* valeurGauche = dynamic_cast<NoeudLitteral*>(racineOperation->getGauche());
-    REQUIRE(valeurGauche != nullptr);
-    REQUIRE(valeurGauche->getToken().value == "1");
-
-    // 4. Vérifier l'enfant droit de l'Addition (doit être une Multiplication)
-    auto* operationDroite = dynamic_cast<NoeudOperation*>(racineOperation->getDroite());
-    REQUIRE(operationDroite != nullptr);
-    REQUIRE(operationDroite->getToken().type == TOKEN_ETOILE);
-
-    // 5. Vérifier les enfants de la Multiplication (doivent être 10 et 50)
-    auto* multiplicateurGauche = dynamic_cast<NoeudLitteral*>(operationDroite->getGauche());
-    REQUIRE(multiplicateurGauche != nullptr);
-    REQUIRE(multiplicateurGauche->getToken().value == "10");
-
-    auto* multiplicateurDroit = dynamic_cast<NoeudLitteral*>(operationDroite->getDroite());
-    REQUIRE(multiplicateurDroit != nullptr);
-    REQUIRE(multiplicateurDroit->getToken().value == "50");
+    verificateur(arbre);
 }
 
 TEST_CASE("Constructeur Arbre equation priorite", "[AST]")
@@ -203,47 +252,25 @@ TEST_CASE("Constructeur Arbre equation priorite", "[AST]")
     EnvironnementAST env;
     INoeud* arbre = construireEquationDepuisString(env, "40 / 2 + 10 - 5 * 3");
     
-    REQUIRE(arbre != nullptr);
-
-    // 1. racine : addition (+)
-    auto* noeudAddition = dynamic_cast<NoeudOperation*>(arbre);
-    REQUIRE(noeudAddition != nullptr);
-    REQUIRE(noeudAddition->getToken().type == TOKEN_PLUS); // 6 == 6 !
-
-    // 2. branche gauche : division (40 / 2)
-    auto* noeudDivision = dynamic_cast<NoeudOperation*>(noeudAddition->getGauche());
-    REQUIRE(noeudDivision != nullptr);
-    REQUIRE(noeudDivision->getToken().type == TOKEN_SLASH);
-
-    auto* noeudLitteral40 = dynamic_cast<NoeudLitteral*>(noeudDivision->getGauche());
-    REQUIRE(noeudLitteral40 != nullptr);
-    REQUIRE(noeudLitteral40->getToken().value == "40");
-
-    auto* noeudLitteral2 = dynamic_cast<NoeudLitteral*>(noeudDivision->getDroite());
-    REQUIRE(noeudLitteral2 != nullptr);
-    REQUIRE(noeudLitteral2->getToken().value == "2");
-
-    // 3. branche droite : soustraction (10 - 5 * 3)
-    auto* noeudSoustraction = dynamic_cast<NoeudOperation*>(noeudAddition->getDroite());
-    REQUIRE(noeudSoustraction != nullptr);
-    REQUIRE(noeudSoustraction->getToken().type == TOKEN_MOINS);
-
-    auto* noeudLitteral10 = dynamic_cast<NoeudLitteral*>(noeudSoustraction->getGauche());
-    REQUIRE(noeudLitteral10 != nullptr);
-    REQUIRE(noeudLitteral10->getToken().value == "10");
-
-    // 4. branche droite de la soustraction : multiplication (5 * 3)
-    auto* noeudMultiplication = dynamic_cast<NoeudOperation*>(noeudSoustraction->getDroite());
-    REQUIRE(noeudMultiplication != nullptr);
-    REQUIRE(noeudMultiplication->getToken().type == TOKEN_ETOILE);
-
-    auto* noeudLitteral5 = dynamic_cast<NoeudLitteral*>(noeudMultiplication->getGauche());
-    REQUIRE(noeudLitteral5 != nullptr);
-    REQUIRE(noeudLitteral5->getToken().value == "5");
-
-    auto* noeudLitteral3 = dynamic_cast<NoeudLitteral*>(noeudMultiplication->getDroite());
-    REQUIRE(noeudLitteral3 != nullptr);
-    REQUIRE(noeudLitteral3->getToken().value == "3");
+    auto verificateur = 
+    operateur()(
+        "+", 
+        operateur()(
+            "/", 
+            Litteral("40"), 
+            Litteral("2")
+        ), 
+        operateur()(
+            "-", 
+            Litteral("10"), 
+            operateur()(
+                "*", 
+                Litteral("5"), 
+                Litteral("3")
+            )
+        )
+    );
+    verificateur(arbre);
 }
 
 TEST_CASE("Constructeur Arbre equation profondeur parenthèse", "[AST]")
@@ -252,57 +279,31 @@ TEST_CASE("Constructeur Arbre equation profondeur parenthèse", "[AST]")
     EnvironnementAST env;
     INoeud* arbre = construireEquationDepuisString(env, "(((40/2 +10)+ 5 * 3)+10)");
 
-    // 1. racine : addition (+)
-    auto* noeudAddition1 = dynamic_cast<NoeudOperation*>(arbre);
-    REQUIRE(noeudAddition1 != nullptr);
-    REQUIRE(noeudAddition1->getToken().type == TOKEN_PLUS);
+    auto verificateur = 
+    operateur()(
+        "+", 
+        operateur()(
+            "+", 
+            operateur()(
+                "+", 
+                operateur()(
+                    "/", 
+                    Litteral("40"), 
+                    Litteral("2")
+                ), 
+                Litteral("10")
+            ), 
+            operateur()(
+                "*", 
+                Litteral("5"), 
+                Litteral("3")
+            )
+        ), 
+        Litteral("10")
+    );
 
-    auto* litteral10_1_droite = dynamic_cast<NoeudLitteral*>(noeudAddition1->getDroite());
-    REQUIRE(litteral10_1_droite != nullptr);
-    REQUIRE(litteral10_1_droite->getToken().value == "10");
-
-    auto* noeudAdditionGauche = dynamic_cast<NoeudOperation*>(noeudAddition1->getGauche());
-    REQUIRE(noeudAdditionGauche != nullptr);
-    REQUIRE(noeudAdditionGauche->getToken().type == TOKEN_PLUS);
-
-    // 2. branche gauche de la racine : addition ((40/2 +10) + 5 * 3)
-
-    // 2a. droite de noeudAdditionGauche : multiplication (5 * 3)
-    auto* noeudMultiplication = dynamic_cast<NoeudOperation*>(noeudAdditionGauche->getDroite());
-    REQUIRE(noeudMultiplication != nullptr);
-    REQUIRE(noeudMultiplication->getToken().type == TOKEN_ETOILE);
-
-    auto* litteral5 = dynamic_cast<NoeudLitteral*>(noeudMultiplication->getGauche());
-    REQUIRE(litteral5 != nullptr);
-    REQUIRE(litteral5->getToken().value == "5");
-
-    auto* litteral3 = dynamic_cast<NoeudLitteral*>(noeudMultiplication->getDroite());
-    REQUIRE(litteral3 != nullptr);
-    REQUIRE(litteral3->getToken().value == "3");
-
-    // 2b. gauche de noeudAdditionGauche : addition (40/2 + 10)
-    auto* noeudAddition2 = dynamic_cast<NoeudOperation*>(noeudAdditionGauche->getGauche());
-    REQUIRE(noeudAddition2 != nullptr);
-    REQUIRE(noeudAddition2->getToken().type == TOKEN_PLUS);
-
-    auto* litteral10_2 = dynamic_cast<NoeudLitteral*>(noeudAddition2->getDroite());
-    REQUIRE(litteral10_2 != nullptr);
-    REQUIRE(litteral10_2->getToken().value == "10");
-
-    // 2c. gauche de noeudAddition2 : division (40 / 2)
-    auto* noeudDivision = dynamic_cast<NoeudOperation*>(noeudAddition2->getGauche());
-    REQUIRE(noeudDivision != nullptr);
-    REQUIRE(noeudDivision->getToken().type == TOKEN_SLASH);
-
-    auto* litteral40 = dynamic_cast<NoeudLitteral*>(noeudDivision->getGauche());
-    REQUIRE(litteral40 != nullptr);
-    REQUIRE(litteral40->getToken().value == "40");
-
-    auto* litteral2 = dynamic_cast<NoeudLitteral*>(noeudDivision->getDroite());
-    REQUIRE(litteral2 != nullptr);
-    REQUIRE(litteral2->getToken().value == "2");
+    verificateur(arbre);
 }
-
 
 // Début des tests pour l'arbre d'instruction 
 

@@ -118,12 +118,14 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
 ### Itération 2 du projet fonctionnalités à réaliser en 2 semaines ?
 
 - Exporter l'AST en format texte et graphique (Graphviz) pour faciliter le débogage
+- Refonte complète de la gestion mémoire pour une performance maximale
 - supporter les  opérantes && || == != % 
 - Supporter l'instruction if, 
 - Supporter l'instruction while, passer par la pile avec alloca
 - Supporter les tableaux programmés en LLVM IR 
 - Supporter le type string
 - Supporter les includes, en utilisant les techniques du langage de programmation C #include "racine/fichier.h"
+- Mettre en place un système de compilation multi-thread performant
 
 ### Itération 3 du projet fonctionnalités à réaliser en 2 semaines ?
 
@@ -134,6 +136,7 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
  - Le Cycle de Vie (Constructeurs & Destructeurs)
  - L' Héritage (La Hiérarchie de Classes) 
  - Le Polymorphisme (La VTable)
+
 
 - Analyse syntaxique abstraite pour la logique du langage Prysma, ce qui évitera les problèmes de logique sémantique exemple : declare int a = "string"; 
 - Écrire une bibliothèque de structures de données (listes chaînées, arbres binaires, piles, files) 
