@@ -71,8 +71,8 @@ Défis techniques pour mener à terme la réalisation :
 C'est la représentation d'un arbre syntaxique abstrait pour le langage Prysma. Pour le code suivant :
 
 ```
-fn void afficher_nombre_pair(int limite) {
-    for (int i = 0; i < limite; i = i + 1) {
+fn void afficher_nombre_pair(int32 limite) {
+    for (int32 i = 0; i < limite; i = i + 1) {
         if (i % 2 == 0) {
             // Est un nombre pair
             print(i)
