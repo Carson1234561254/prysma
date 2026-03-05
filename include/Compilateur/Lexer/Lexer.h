@@ -1,9 +1,9 @@
 #ifndef F2D02E97_AF62_409B_84AD_90905E9BE240
 #define F2D02E97_AF62_409B_84AD_90905E9BE240
-#include <map>
 #include "TokenType.h"
 #include <string>
 #include <vector>
+#include <string_view>
 
 using namespace std;
 // lexer utilisé pour la tokenization du code source prysma
@@ -21,7 +21,7 @@ class Lexer {
 
     // Dictionnaire pour les mots réservés du langage de programmation prysma
     // Permet de différencier les identifiants des mots-clés
-    map<string, TokenType> motsCles = {
+    static constexpr std::pair<std::string_view, TokenType> motsClesArray[] = {
         {"char", TOKEN_TYPE_CHAR},
         {"arg", TOKEN_ARG},
         {"fn", TOKEN_FONCTION},

@@ -90,9 +90,14 @@ void Lexer::ajouterMotCourant(const string& motCourant, vector<Token>& tokens, i
         return;
     }
 
+    TokenType type = TOKEN_IDENTIFIANT;
+    for (const auto& [keyword, tokenType] : motsClesArray) {
+        if (keyword == motCourant) {
+            type = tokenType;
+            break;
+        }
+    }
     Token token;
-    TokenType type = motsCles.find(motCourant) != motsCles.end() ? 
-                     motsCles[motCourant] : TOKEN_IDENTIFIANT;
     
     // Convertir les booléens true/false en littéraux numériques
     if (type == TOKEN_VRAI) {
