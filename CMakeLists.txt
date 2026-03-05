@@ -57,6 +57,7 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Instruction/Condition/ParseurIf.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/New/ParseurNew.cpp
     # ConstructeurArbre
     src/Compilateur/AST/ConstructeurArbreEquation.cpp
     src/Compilateur/AST/ConstructeurArbreInstruction.cpp
@@ -77,6 +78,7 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Condition/NoeudIf.cpp
     src/Compilateur/AST/Noeuds/Boucle/NoeudWhile.cpp
     src/Compilateur/AST/Noeuds/Include/NoeudInclude.cpp
+    src/Compilateur/AST/Noeuds/new/NoeudNew.cpp
     # Tableau 
     src/Compilateur/AST/Noeuds/Tableau/NoeudAffectationTableau.cpp
     src/Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.cpp
@@ -109,7 +111,7 @@ set(SOURCES
     src/Compilateur/TraitementFichier/FichierLecture.cpp
     # visiteur de base 
     src/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
-    #visiteur de remplissage registre
+    # visiteur de remplissage registre
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageVariable.cpp
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.cpp
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageFonction.cpp
@@ -137,6 +139,7 @@ set(SOURCES
     src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurAffectationTableau.cpp
     src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurLectureTableau.cpp
     # Visiteur ast graphviz dump 
+    src/Compilateur/Visiteur/ASTGraphViz/New/VisiteurNew.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Boucle/VisiteurNoeudWhile.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Condition/VisiteurNoeudIf.cpp
     src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurAppelFonction.cpp

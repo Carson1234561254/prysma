@@ -141,6 +141,10 @@ code généré en sortie du compilateur Prysma pour cette équation : 2.0*3.0-(2
 - Analyse syntaxique abstraite pour la logique du langage Prysma, ce qui évitera les problèmes de logique sémantique exemple : declare int a = "string"; 
 - Écrire une bibliothèque de structures de données (listes chaînées, arbres binaires, piles, files) 
 
+- Utiliser le malloc pour la gestion de la mémoire dynamique et le free libération de la mémoire, depuis la librairie standard de C 
+- Faire un système d'import pour permettre d'importer des bibliothèques externes du langage C dans le langage Prysma, c'est une automatisation au lieu de le faire manuellement. 
+
+
 ### Fonctionnalités Bonus (Si le temps le permet)
 
 - Ajouter la gestion manuelle de la mémoire avec les pointeurs pour un contrôle bas niveau

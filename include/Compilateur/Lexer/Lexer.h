@@ -45,7 +45,8 @@ class Lexer {
         {"pass", TOKEN_PASS},
         {"ref", TOKEN_REF},
         {"unref", TOKEN_UNREF},
-        {"include", TOKEN_INCLUDE}
+        {"include", TOKEN_INCLUDE},
+        {"new", TOKEN_NEW}
         
     };
 

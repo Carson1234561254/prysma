@@ -171,3 +171,8 @@ void VisiteurBaseGenerale::visiter(NoeudLectureTableau* noeudLectureTableau)
         noeudLectureTableau->getIndexEquation()->accept(this);
     }
 }
+
+void VisiteurBaseGenerale::visiter(NoeudNew* noeudNew [[maybe_unused]])
+{
+
+}

@@ -69,6 +69,9 @@ enum TokenType {
     TOKEN_TYPE_INT64,
     TOKEN_TYPE_INT32,
 
+    // new
+    TOKEN_NEW,
+
     // include 
     TOKEN_INCLUDE
 };

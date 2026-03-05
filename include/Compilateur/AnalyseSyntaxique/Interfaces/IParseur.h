@@ -3,7 +3,6 @@
 
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Lexer/Lexer.h"
-#include <memory>
 
 class IParseur
 {
