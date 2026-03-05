@@ -144,6 +144,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.cpp
     ../src/Compilateur/Visiteur/CodeGen/VisiteurInstruction.cpp
     ../src/Compilateur/Visiteur/CodeGen/Condition/VisiteurNoeudIf.cpp
+    ../src/Compilateur/Visiteur/CodeGen/New/VisiteurNew.cpp
     # Tableau code gen
     ../src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurAffectationTableau.cpp
     ../src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurLectureTableau.cpp
@@ -164,6 +165,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
     ../src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
     ../src/Compilateur/Visiteur/ASTGraphViz/Include/VisiteurNoeudInclude.cpp
+    ../src/Compilateur/Visiteur/ASTGraphViz/New/VisiteurNew.cpp
     # Tableau graphviz
     ../src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurAffectationTableau.cpp
     ../src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurLectureTableau.cpp
