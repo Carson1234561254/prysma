@@ -99,6 +99,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.cpp
     ../src/Compilateur/AST/Noeuds/StrategieEquation/StrategieIdentifiant.cpp
     ../src/Compilateur/AST/Noeuds/StrategieEquation/StrategieString.cpp
+    ../src/Compilateur/AST/Noeuds/StrategieEquation/StrategieNew.cpp
     # Registres
     ../src/Compilateur/AST/Registre/RegistreArgument.cpp
     ../src/Compilateur/AST/Registre/RegistreVariable.cpp
