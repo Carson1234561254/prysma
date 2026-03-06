@@ -37,6 +37,9 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
             typeVariable = llvm::ArrayType::get(typeElement, tailleReelle);
         } else {
             typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
+            if (typeVariable == nullptr) {
+                throw std::runtime_error("Erreur : impossible de déterminer la taille du tableau");
+            }
             auto* typeTableauLLVM = llvm::dyn_cast<llvm::ArrayType>(typeVariable);
             if (typeTableauLLVM == nullptr) {
                 throw std::runtime_error("Erreur : le type de la variable n'est pas un tableau pour une initialisation de tableau");
@@ -83,6 +86,20 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         
         // Créer le symbole avec le type pointé si c'est un pointeur
         llvm::Type* typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
+        
+        // Si on a un tableau avec taille dynamique (nullptr), on doit utiliser le type réel qu'on a calculé
+        if (typeVariable == nullptr) {
+            TypeTableau* typeTableauDecl = dynamic_cast<TypeTableau*>(noeudDeclarationVariable->getType());
+            if (typeTableauDecl != nullptr && tableauInit != nullptr) {
+                // On peut recalculer à partir de l'initialisation
+                size_t tailleReelle = tableauInit->getElements().size();
+                llvm::Type* typeElement = typeTableauDecl->getTypeEnfant()->genererTypeLLVM(_contextGenCode->backend->getContext());
+                typeVariable = llvm::ArrayType::get(typeElement, tailleReelle);
+            } else {
+                throw std::runtime_error("Erreur : impossible de déterminer le type de la variable");
+            }
+        }
+        
         llvm::Type* typePointeElement = nullptr;
         
         if (typeVariable->isPointerTy()) {
