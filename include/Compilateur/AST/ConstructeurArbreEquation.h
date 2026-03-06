@@ -20,6 +20,7 @@ private:
     IGestionnaireParenthese* _gestionnaireParenthese;
     IConstructeurArbre* _instructionBuilder;
     llvm::BumpPtrAllocator& _arena;
+    Token _dernierToken;
 
 public:
   

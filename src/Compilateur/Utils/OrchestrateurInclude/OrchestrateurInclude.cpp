@@ -1,6 +1,7 @@
 #include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/AST/Utils/OrchestrateurInclude/OrchestrateurInclude.h"
 #include "Compilateur/AST/Utils/OrchestrateurInclude/UniteCompilation.h"
+#include "Compilateur/GestionnaireErreur.h"
 #include "Compilateur/TraitementFichier/FichierLecture.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
@@ -61,6 +62,12 @@ void OrchestrateurInclude::compilerProjet(const std::string& cheminFichier)
             {
                 unite->passe2();
             }
+            catch (const ErreurCompilation& erreur)
+            {
+                std::string nomFichier = std::filesystem::path(unite->getChemin()).filename().string();
+                std::cerr << nomFichier << ":" << erreur.ligne << ":" << erreur.colonne << ": " << erreur.what() << std::endl;
+                _aDesErreurs = true;
+            }
             catch (const std::exception& e)
             {
                 std::string nomFichier = std::filesystem::path(unite->getChemin()).filename().string();
@@ -90,6 +97,10 @@ void OrchestrateurInclude::inclureFichier(const std::string& cheminAbsolu)
     std::thread threadCourent = std::thread([this, uniteCompilation, cheminAbsolu]() {
         try {
             uniteCompilation->passe1();
+        } catch (const ErreurCompilation& erreur) {
+          std::string nomFichier = std::filesystem::path(cheminAbsolu).filename().string();
+          std::cerr << nomFichier << ":" << erreur.ligne << ":" << erreur.colonne << ": " << erreur.what() << std::endl;
+          _aDesErreurs = true;
         } catch (const std::exception& e) {
           std::string nomFichier = std::filesystem::path(cheminAbsolu).filename().string();
           std::cerr << "Erreur lors de la compilation du fichier " + nomFichier + " : " + e.what() << std::endl;

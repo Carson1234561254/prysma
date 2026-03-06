@@ -19,6 +19,7 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieTableauInitialisation.h"
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieString.h"
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieAppelFonction.h"
+#include "Compilateur/AST/Noeuds/StrategieEquation/StrategieNew.h"
 
 // Parseurs d'instructions
 #include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.h"
@@ -206,6 +207,10 @@ void FacadeConfigurationEnvironnement::enregistrerStrategiesEquation()
     // Ajouter la stratégie TOKEN_CALL
     auto* stratCall = new (_arena.Allocate<StrategieAppelFonction>()) StrategieAppelFonction(_constructeurEquation->recupererConstructeurArbre());
     _registreStrategieEquation->enregistrer(TOKEN_CALL, stratCall);
+
+    // Ajouter la stratégie TOKEN_NEW
+    auto* stratNew = new (_arena.Allocate<StrategieNew>()) StrategieNew(_arena);
+    _registreStrategieEquation->enregistrer(TOKEN_NEW, stratNew);
 }
 
 void FacadeConfigurationEnvironnement::enregistrerInstructions()

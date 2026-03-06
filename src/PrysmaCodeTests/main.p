@@ -1,10 +1,17 @@
 
-
-fn int64 main() 
+fn void test(arg int32 test)
 {
-   dec int64 a = (((40/2 +10)+ 5 * 3)+10);
-   
-   call print(a);
-   
+   call print(test);
+}
+
+
+fn int32 main() 
+{
+   dec ptr monPtr = new int32;
+
+   aff monPtr = 120; 
+
+   call test(monPtr);
+
    return 0;
 }

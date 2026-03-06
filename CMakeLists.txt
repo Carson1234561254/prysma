@@ -57,7 +57,6 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Instruction/Condition/ParseurIf.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.cpp
     src/Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/New/ParseurNew.cpp
     # ConstructeurArbre
     src/Compilateur/AST/ConstructeurArbreEquation.cpp
     src/Compilateur/AST/ConstructeurArbreInstruction.cpp
@@ -91,6 +90,7 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.cpp
     src/Compilateur/AST/Noeuds/StrategieEquation/StrategieIdentifiant.cpp
     src/Compilateur/AST/Noeuds/StrategieEquation/StrategieString.cpp
+    src/Compilateur/AST/Noeuds/StrategieEquation/StrategieNew.cpp
     # Visiteur
     # Arbre syntaxique abstrait
     src/Compilateur/AST/Registre/RegistreArgument.cpp
@@ -135,6 +135,8 @@ set(SOURCES
     src/Compilateur/Visiteur/CodeGen/VisiteurInstruction.cpp
     src/Compilateur/Visiteur/CodeGen/Condition/VisiteurNoeudIf.cpp
     src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp
+    # New - code gen
+    src/Compilateur/Visiteur/CodeGen/New/VisiteurNew.cpp
     # Tableau - code gen
     src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurAffectationTableau.cpp
     src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurLectureTableau.cpp

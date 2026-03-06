@@ -1,6 +1,7 @@
 #include "Compilateur/AST/ConstructeurArbreEquation.h"
 #include <vector>
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
+#include "Compilateur/GestionnaireErreur.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
 
@@ -16,7 +17,8 @@ ConstructeurArbreEquation::ConstructeurArbreEquation(
       _registreStrategieEquation(registreStrategieEquation),
       _gestionnaireParenthese(gestionnaireParenthese),
       _instructionBuilder(instructionBuilder),
-      _arena(arena)
+      _arena(arena),
+      _dernierToken{TOKEN_EOF, "", 1, 1}
 {
 }
 
@@ -25,7 +27,7 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
     equation = equationSansParentheses;
     
     if (equation.empty()) {
-        throw std::runtime_error("Erreur: équation vide");
+        throw ErreurCompilation("Erreur: équation vide", _dernierToken.ligne, _dernierToken.colonne);
     }
     
     int indice = _chaineResponsabilite->trouverOperateur(equation);
@@ -37,7 +39,7 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
             return _registreStrategieEquation->recuperer(type)->construire(equation);
         }
 
-        throw std::runtime_error("Erreur: token non reconnu dans l'équation");
+        throw ErreurCompilation("Erreur: token non reconnu dans l'équation", equation[0].ligne, equation[0].colonne);
     }
     
     IExpression* noeud = _registreSymbole->recupererNoeud(equation[static_cast<size_t>(indice)]);
@@ -52,6 +54,11 @@ INoeud* ConstructeurArbreEquation::construire(std::vector<Token> &equation) {
 }
 
 INoeud* ConstructeurArbreEquation::construire(std::vector<Token>& tokens, int& index) {
+
+    // Sauvegarder la position du token courant pour les messages d'erreur
+    if (index < static_cast<int>(tokens.size())) {
+        _dernierToken = tokens[static_cast<size_t>(index)];
+    }
 
     // Système de niveau pour calculer la profondeur, c'est obligatoire pour ne pas avoir de problème au niveau de la séparation 34+4)) sinon le 
     // Système ne sais pas quoi faire avec les deux parenthèses restante. 
