@@ -1,7 +1,7 @@
 
-fn void test(arg int32 test)
+fn void test(arg ptr test)
 {
-   call print(test);
+   call print(unref test);
 }
 
 

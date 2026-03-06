@@ -19,6 +19,8 @@ class GestionVariable
 
         Symbole chargerVariable(const std::string& nomVariable);
 
+        Symbole chargerVariableUnref(const std::string& nomVariable);
+
         llvm::AllocaInst* allouerVariable(llvm::Type* type, const std::string& nomVariable);
 
         void stockerVariable(llvm::Value* valeur, llvm::AllocaInst* allocaInst);

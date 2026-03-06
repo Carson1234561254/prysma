@@ -77,10 +77,22 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         llvm::Value* valeurCastee = _contextGenCode->backend->creerAutoCast(valeurCalculee, typeVariable);
         gestionVariable.stockerVariable(valeurCastee, allocaInst);
     }
-
     if (allocaCree != nullptr) {
         Token token;
         token.value = noeudDeclarationVariable->getNom();
-        _contextGenCode->registreVariable->enregistrer(token, Symbole(allocaCree, noeudDeclarationVariable->getType()));
+        
+        // Créer le symbole avec le type pointé si c'est un pointeur
+        llvm::Type* typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
+        llvm::Type* typePointeElement = nullptr;
+        
+        if (typeVariable->isPointerTy()) {
+            // Pour un pointeur, on récupère le type pointé qui a été mémorisé lors de l'évaluation de l'expression (new)
+            typePointeElement = _contextGenCode->valeurTemporaire.typePointeElement;
+        }
+        
+        _contextGenCode->registreVariable->enregistrer(
+            token, 
+            Symbole(allocaCree, noeudDeclarationVariable->getType(), typePointeElement)
+        );
     }
 }

@@ -30,4 +30,5 @@ void VisiteurGeneralGenCode::visiter(NoeudNew* noeudNew)
     llvm::Value* adresseAllouee = builder.CreateCall(mallocFunc, {tailleLLVM}, "memoire_new");
 
     _contextGenCode->valeurTemporaire.adresse = adresseAllouee;
+    _contextGenCode->valeurTemporaire.typePointeElement = typeCible;
 }

@@ -12,10 +12,14 @@ namespace llvm { class AllocaInst; }
 struct Symbole {
     llvm::Value* adresse;
     IType* type;
+    llvm::Type* typePointeElement;  
 
-    Symbole() : adresse(nullptr), type(nullptr) {}
+    Symbole() : adresse(nullptr), type(nullptr), typePointeElement(nullptr) {}
 
-    Symbole(llvm::Value* pAdresse, IType* pType) : adresse(pAdresse), type(pType) {}
+    Symbole(llvm::Value* pAdresse, IType* pType) : adresse(pAdresse), type(pType), typePointeElement(nullptr) {}
+
+    Symbole(llvm::Value* pAdresse, IType* pType, llvm::Type* pTypePointeElement) 
+        : adresse(pAdresse), type(pType), typePointeElement(pTypePointeElement) {}
 };
 
 class RegistreVariable 
