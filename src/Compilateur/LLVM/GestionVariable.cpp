@@ -1,4 +1,5 @@
 #include "Compilateur/LLVM/GestionVariable.h"
+#include <llvm-18/llvm/IR/Type.h>
 #include <stdexcept>
 
 GestionVariable::GestionVariable(ContextGenCode* contextGenCode)
@@ -30,20 +31,43 @@ Symbole GestionVariable::chargerVariable(const std::string& nomVariable)
 
     Symbole symbole = _contextGenCode->registreVariable->recupererVariables(tokenRecherche);
     llvm::Value* adresseMemoire = symbole.adresse;
+    
+    llvm::Type* typeDonnee = extraireTypeDonnee(adresseMemoire);
 
-    if (adresseMemoire == nullptr) {
+    if (adresseMemoire == nullptr) 
+    {
         throw std::runtime_error("Erreur sémantique : La variable '" + nomVariable + "' n'est pas déclarée.");
     }
 
-    llvm::Type* typeDonnee = extraireTypeDonnee(adresseMemoire);
+    if(typeDonnee->isPointerTy())
+    {   
+        llvm::Value* valeurChargePremierSaut = _contextGenCode->backend->getBuilder().CreateLoad(
+            typeDonnee,
+            adresseMemoire,
+            nomVariable
+        );
+        llvm::Type* typeDonnePremierSaut = valeurChargePremierSaut->getType();
 
-    llvm::Value* valeurChargee = _contextGenCode->backend->getBuilder().CreateLoad(
-        typeDonnee,
-        adresseMemoire,
-        nomVariable
-    );
+        llvm::Value* valeurChargeDeuxiemeSaut = _contextGenCode->backend->getBuilder().CreateLoad(
+            typeDonnePremierSaut,
+            valeurChargePremierSaut,
+            nomVariable
+        );
 
-    symbole.adresse = valeurChargee;
+        symbole.adresse = valeurChargeDeuxiemeSaut;
+    }
+    else {
+        
+        llvm::Value* valeurChargee = _contextGenCode->backend->getBuilder().CreateLoad(
+            typeDonnee,
+            adresseMemoire,
+            nomVariable
+        );
+
+        symbole.adresse = valeurChargee;
+    }
+
+ 
     return symbole;
 }
 
@@ -66,6 +90,19 @@ void GestionVariable::stockerVariable(llvm::Value* valeur, llvm::AllocaInst* all
 
 void GestionVariable::affecterVariable(llvm::AllocaInst* allocaInst, llvm::Value* valeur)
 {
+    llvm::Type* typeAllouer = allocaInst->getAllocatedType();
     llvm::Value* valeurCast = _contextGenCode->backend->creerAutoCast(valeur, allocaInst->getAllocatedType());
-    _contextGenCode->backend->getBuilder().CreateStore(valeurCast, allocaInst);
+
+    // Si c'est un pointeur alors nous devons accéder à la valeur stocké au pointeur sinon la valeur ce trouve directement dans l'allocaInst
+    if(typeAllouer->isPointerTy())
+    {
+        // Charger la valeur 
+        llvm::Value* valeurCharger = _contextGenCode->backend->getBuilder().CreateLoad(_contextGenCode->backend->getBuilder().getPtrTy(),allocaInst,"ptr_chargé");
+        _contextGenCode->backend->getBuilder().CreateStore(valeurCast,valeurCharger);
+    }
+    else
+    {
+        _contextGenCode->backend->getBuilder().CreateStore(valeurCast, allocaInst);
+    }
+   
 }
