@@ -1,8 +1,8 @@
 import os
 from Tests.Orchestration.build_manager import BuildManager
-from Tests.Orchestration.generation.generateur_ast import GenerateurAST
-from Tests.Orchestration.generation.generateur_visiteur import GenerateurVisiteur
-from Tests.Orchestration.generation.generateur_visiteur_cpp import GenerateurVisiteurCpp
+from generation.generateur_ast import GenerateurAST
+from generation.generateur_visiteur import GenerateurVisiteur
+from generation.generateur_visiteur_cpp import GenerateurVisiteurCpp
 
 
 def main():
