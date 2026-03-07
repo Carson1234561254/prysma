@@ -1,4 +1,4 @@
-#include "Compilateur/AST/Noeuds/Variable/NoeudRefVariable.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
 
 void VisiteurGeneralGraphViz::visiter(NoeudRefVariable* noeudRefVariable) 

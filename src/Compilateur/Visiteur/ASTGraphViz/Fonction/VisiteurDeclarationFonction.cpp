@@ -1,6 +1,5 @@
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 
 void VisiteurGeneralGraphViz::visiter(NoeudDeclarationFonction* noeudDeclarationFonction) 
@@ -8,7 +7,7 @@ void VisiteurGeneralGraphViz::visiter(NoeudDeclarationFonction* noeudDeclaration
     int idNoeud = _sortieGrapheVisuel.ajouterNoeud("Declaration Fonction: " + noeudDeclarationFonction->getNom());
 
     // Visiter les arguments
-    for (NoeudArgFonction* arg : noeudDeclarationFonction->getArguments()) {
+    for (auto* arg : noeudDeclarationFonction->getArguments()) {
         arg->accept(this);
         _sortieGrapheVisuel.ajouterArete(idNoeud, _dernierId);
     }

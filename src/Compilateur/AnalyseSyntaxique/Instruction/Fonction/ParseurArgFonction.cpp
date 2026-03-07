@@ -2,7 +2,7 @@
 #include "Compilateur/AST/Registre/Types/IType.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 
 ParseurArgFonction::ParseurArgFonction(ParseurType* constructeurType, llvm::BumpPtrAllocator& arena) 
     : _constructeurType(constructeurType), _arena(arena)

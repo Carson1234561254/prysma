@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/LLVM/GestionVariable.h"
 
 void VisiteurGeneralGraphViz::visiter(NoeudDeclarationVariable* noeudDeclarationVariable) 

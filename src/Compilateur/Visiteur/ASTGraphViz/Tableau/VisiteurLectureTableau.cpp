@@ -1,6 +1,6 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
-#include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include <memory>
 
 void VisiteurGeneralGraphViz::visiter(NoeudLectureTableau* noeudLectureTableau)

@@ -1,5 +1,5 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.h"
-#include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/Lexer/TokenType.h"

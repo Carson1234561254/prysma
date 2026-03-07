@@ -1,5 +1,5 @@
 #include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.h"
 
 ParseurAppelFonction::ParseurAppelFonction(IConstructeurArbre* constructeurArbreEquation) : _constructeurArbreEquation(constructeurArbreEquation)

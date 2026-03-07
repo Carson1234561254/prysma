@@ -1,5 +1,5 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.h"
-#include "Compilateur/AST/Noeuds/Include/NoeudInclude.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 
 ParseurInclude::ParseurInclude(llvm::BumpPtrAllocator& arena) : _arena(arena)

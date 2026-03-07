@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <memory>
 #include <mutex>
+#include <llvm/Support/TargetSelect.h>
 
 // Améliorations possibles performance : 
 // DFA pour le lexer permet de gagner 10 à 20 fois supérieur en vitesse de tokenisation par rapport à l'approche de base 
@@ -63,8 +64,6 @@
 // Ce qui évite de faire planter le pc pour la compilation d'un gros projet avec beaucoup de fichier source. 
 // Une solution à implémenter dans le future 
 
-
-#include <llvm/Support/TargetSelect.h>
 
 
 int main(int argc, char* argv[])

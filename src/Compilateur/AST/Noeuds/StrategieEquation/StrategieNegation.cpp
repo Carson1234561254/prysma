@@ -1,5 +1,5 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieNegation.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudNegation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include <stdexcept>
 
 StrategieNegation::StrategieNegation(IConstructeurArbre* constructeurArbre) : _constructeurArbre(constructeurArbre) {}

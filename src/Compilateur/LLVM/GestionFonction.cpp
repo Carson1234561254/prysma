@@ -1,9 +1,7 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/LLVM/GenerateurFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/ContextGenCode.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
 #include <llvm/IR/Instructions.h>
 
@@ -24,7 +22,8 @@ GestionFonction::ArgumentsCodeGen GestionFonction::chargerArguments()
     std::vector<NoeudArgFonction*> arguments;
     
     // Utiliser directement la liste stricte d'arguments
-    for (NoeudArgFonction* arg : _noeudDeclarationFonction->getArguments()) {
+    for (INoeud* noeud : _noeudDeclarationFonction->getArguments()) {
+        auto* arg = static_cast<NoeudArgFonction*>(noeud);
         arguments.push_back(arg);
         llvm::Type* argType = arg->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
         argTypes.push_back(argType);

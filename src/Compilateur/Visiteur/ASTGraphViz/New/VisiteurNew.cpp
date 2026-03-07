@@ -1,4 +1,4 @@
-#include "Compilateur/AST/Noeuds/New/NoeudNew.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
 
 void VisiteurGeneralGraphViz::visiter(NoeudNew* noeudNew)

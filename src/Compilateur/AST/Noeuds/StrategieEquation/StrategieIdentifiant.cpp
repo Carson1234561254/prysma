@@ -1,7 +1,5 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieIdentifiant.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
-#include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h" 
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <vector>
 

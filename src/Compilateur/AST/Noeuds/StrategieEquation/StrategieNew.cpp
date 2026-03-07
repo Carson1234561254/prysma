@@ -1,5 +1,5 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieNew.h"
-#include "Compilateur/AST/Noeuds/New/NoeudNew.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/GestionnaireErreur.h"
 #include "Compilateur/Lexer/TokenCategories.h"
 #include "Compilateur/Lexer/TokenType.h"

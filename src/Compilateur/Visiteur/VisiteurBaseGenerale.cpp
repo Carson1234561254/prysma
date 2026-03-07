@@ -1,22 +1,6 @@
 #include "Compilateur/Visiteur/VisiteurBaseGenerale.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
-#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
-#include "Compilateur/AST/Noeuds/NoeudInstruction.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudRefVariable.h"
-#include "Compilateur/AST/Noeuds/Condition/NoeudIf.h"
-#include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudNegation.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.h"
-#include "Compilateur/AST/Noeuds/Tableau/NoeudAffectationTableau.h"
-#include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h"
-#include "Compilateur/AST/Noeuds/Include/NoeudInclude.h"
+#include "Compilateur/AST/AST_Genere.h"
+
 
 // Implémentations des méthodes visiter de base générale par défaut (ne font rien)
 

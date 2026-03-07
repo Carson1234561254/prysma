@@ -1,6 +1,6 @@
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
 #include "Compilateur/AST/Utils/OrchestrateurInclude/OrchestrateurInclude.h" 
-#include "Compilateur/AST/Noeuds/Include/NoeudInclude.h" 
+#include "Compilateur/AST/AST_Genere.h" 
 #include <filesystem>
 
 void VisiteurRemplissageRegistre::visiter(NoeudInclude* noeudInclude)

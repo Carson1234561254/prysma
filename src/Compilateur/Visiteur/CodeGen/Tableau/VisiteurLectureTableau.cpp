@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/Support/Casting.h>

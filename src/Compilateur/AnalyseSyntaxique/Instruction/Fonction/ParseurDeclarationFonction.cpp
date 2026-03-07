@@ -1,5 +1,4 @@
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Noeuds/NoeudInstruction.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
@@ -29,7 +28,7 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
     // Parser les arguments entre parenthèses
     consommer(tokens, index, TOKEN_PAREN_OUVERTE, "Erreur: ce n'est pas une parenthèse ouverte '('");
     
-    std::vector<NoeudArgFonction*> arguments;
+    std::vector<INoeud*> arguments;
     while(index < static_cast<int>(tokens.size()) && tokens[static_cast<size_t>(index)].type != TOKEN_PAREN_FERMEE)
     {
         if(tokens[static_cast<size_t>(index)].type == TOKEN_VIRGULE)
@@ -39,8 +38,7 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
         }
         
         INoeud* enfant = _constructeurArbreInstruction->construire(tokens, index);
-        NoeudArgFonction* argument = static_cast<NoeudArgFonction*>(enfant);
-        arguments.push_back(argument);
+        arguments.push_back(enfant);
     }
 
     consommer(tokens, index, TOKEN_PAREN_FERMEE, "Erreur: ce n'est pas une parenthèse fermée ')'");
@@ -54,7 +52,7 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
     consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Erreur: ce n'est pas une accolade fermée '}'");
 
     NoeudDeclarationFonction* noeudFonction = 
-        _constructeurArbreInstruction->allouer<NoeudDeclarationFonction>(nomFonction, typeRetour, arguments, corps);
+        _constructeurArbreInstruction->allouer<NoeudDeclarationFonction>(typeRetour, nomFonction, arguments, corps);
 
     return noeudFonction; 
 }

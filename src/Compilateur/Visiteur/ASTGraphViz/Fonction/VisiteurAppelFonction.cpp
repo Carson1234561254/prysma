@@ -1,7 +1,7 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/LLVM/GenerateurFonction.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include <memory>
 
 void VisiteurGeneralGraphViz::visiter(NoeudAppelFonction* noeudAppelFonction)

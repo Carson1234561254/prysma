@@ -1,6 +1,5 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.h"
-#include "Compilateur/AST/Noeuds/Tableau/NoeudAffectationTableau.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 

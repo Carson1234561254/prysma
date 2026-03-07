@@ -1,6 +1,6 @@
 #include "Compilateur/LLVM/GenerateurFonction.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 
 #include <memory>
 

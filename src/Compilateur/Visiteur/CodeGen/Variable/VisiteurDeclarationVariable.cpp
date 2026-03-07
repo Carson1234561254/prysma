@@ -1,7 +1,6 @@
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/LLVM/GestionVariable.h"
 #include "Compilateur/AST/Registre/Types/TypeTableau.h"
 #include <llvm-18/llvm/IR/DerivedTypes.h>

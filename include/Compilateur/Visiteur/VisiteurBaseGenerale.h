@@ -3,6 +3,8 @@
 
 #include "Compilateur/Visiteur/MacroGenerationVisiteur.h"
 #include "Compilateur/Visiteur/Interfaces/IVisiteur.h"
+#include "Compilateur/AST/AST_Genere.h"
+
 
 CLASS_NOEUD
 class NoeudInclude;

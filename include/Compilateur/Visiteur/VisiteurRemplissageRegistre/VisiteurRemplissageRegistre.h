@@ -1,7 +1,6 @@
 #ifndef E5CE13D3_6823_4DDE_BB20_5311A0E477B6
 #define E5CE13D3_6823_4DDE_BB20_5311A0E477B6
-#include "Compilateur/AST/Noeuds/Include/NoeudInclude.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/ContextGenCode.h"
 #include "Compilateur/Visiteur/VisiteurBaseGenerale.h"
 

@@ -1,5 +1,5 @@
 #include "Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudRefVariable.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 
 ParseurRefVariable::ParseurRefVariable(llvm::BumpPtrAllocator& arena)

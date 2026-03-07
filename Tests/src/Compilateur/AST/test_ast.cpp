@@ -14,10 +14,7 @@
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
-#include "Compilateur/AST/Noeuds/Condition/NoeudIf.h"
-#include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
+#include "Compilateur/AST/AST_Genere.h"
 
 // Stratégies d'équation
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.h"

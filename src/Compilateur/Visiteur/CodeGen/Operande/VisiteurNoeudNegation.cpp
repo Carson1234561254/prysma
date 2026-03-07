@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudNegation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include <llvm/IR/Instructions.h>
 #include <stdexcept>

@@ -1,5 +1,5 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieLitteral.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
+#include "Compilateur/AST/AST_Genere.h"
 
 StrategieLitteral::StrategieLitteral(llvm::BumpPtrAllocator& arena) : _arena(arena) {}
 

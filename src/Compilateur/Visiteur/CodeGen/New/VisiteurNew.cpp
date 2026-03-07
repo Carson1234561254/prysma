@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/New/NoeudNew.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include <stdexcept>
 
 void VisiteurGeneralGenCode::visiter(NoeudNew* noeudNew)

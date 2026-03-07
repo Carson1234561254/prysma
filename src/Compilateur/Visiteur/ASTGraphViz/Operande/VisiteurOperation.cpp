@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
-#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <llvm/IR/Type.h>
 #include <memory>

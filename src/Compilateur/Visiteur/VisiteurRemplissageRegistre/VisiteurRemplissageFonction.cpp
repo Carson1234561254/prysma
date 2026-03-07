@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
 

@@ -1,6 +1,6 @@
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AST/Noeuds/Interfaces/IExpression.h"
-#include "Compilateur/AST/Noeuds/Equation/NoeudOperation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 
 ConstructeurEquationFlottante::ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder, RegistreStrategieEquation* registreStrategieEquation, llvm::BumpPtrAllocator& arena)

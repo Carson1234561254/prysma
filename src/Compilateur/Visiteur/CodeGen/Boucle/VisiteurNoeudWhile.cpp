@@ -1,4 +1,4 @@
-#include "Compilateur/AST/Noeuds/Boucle/NoeudWhile.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 
 void VisiteurGeneralGenCode::visiter(NoeudWhile* noeudWhile) 

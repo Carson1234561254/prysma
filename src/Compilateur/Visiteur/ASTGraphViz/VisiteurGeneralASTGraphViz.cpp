@@ -1,6 +1,6 @@
 #include "Compilateur/GrapheVisuel/SortieGrapheVisuelTexte.h"
 #include "Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
+#include "Compilateur/AST/AST_Genere.h"
 
 
 VisiteurGeneralGraphViz::VisiteurGeneralGraphViz(SortieGrapheVisuelTexte sortieGrapheVisuel) : _sortieGrapheVisuel(std::move(sortieGrapheVisuel)), _dernierId(0)

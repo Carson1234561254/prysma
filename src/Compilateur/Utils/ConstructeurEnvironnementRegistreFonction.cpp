@@ -1,7 +1,6 @@
 #include "Compilateur/AST/Utils/ConstructeurEnvironnementRegistreFonction.h"
 #include "Compilateur/AST/Registre/RegistreFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.h"
+#include "Compilateur/AST/AST_Genere.h"
 
 ConstructeurEnvironnementRegistreFonction::ConstructeurEnvironnementRegistreFonction(ContextGenCode* contextGenCode)
     : _contextGenCode(contextGenCode) {}
@@ -27,7 +26,8 @@ void ConstructeurEnvironnementRegistreFonction::remplir()
         
         std::vector<llvm::Type*> paramTypes;
         for (auto* arg : ancienSymbole->noeud->getArguments()) {
-            paramTypes.push_back(arg->getType()->genererTypeLLVM(_contextGenCode->backend->getContext()));
+            auto* argFonction = static_cast<NoeudArgFonction*>(arg);
+            paramTypes.push_back(argFonction->getType()->genererTypeLLVM(_contextGenCode->backend->getContext()));
         }
 
         llvm::FunctionType* funcType = llvm::FunctionType::get(retType, paramTypes, false);

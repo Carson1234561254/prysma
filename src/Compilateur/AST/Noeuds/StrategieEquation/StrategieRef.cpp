@@ -1,5 +1,5 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieRef.h"
-#include "Compilateur/AST/Noeuds/Variable/NoeudRefVariable.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <stdexcept>
 

@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Fonction/NoeudRetour.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
 
 void VisiteurGeneralGenCode::visiter(NoeudRetour* noeudReturn)

@@ -1,5 +1,5 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include <llvm/IR/Constants.h>
 
 void VisiteurGeneralGenCode::visiter(NoeudTableauInitialisation* noeudTableauInit)

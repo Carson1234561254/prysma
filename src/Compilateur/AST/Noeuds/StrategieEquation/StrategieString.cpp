@@ -1,13 +1,12 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieString.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <cstddef>
 #include <llvm-18/llvm/Support/Allocator.h>
 #include <vector>
 #include <string>
-#include "Compilateur/AST/Noeuds/Operande/NoeudLitteral.h"
 
 
 StrategieString::StrategieString(llvm::BumpPtrAllocator& allocator) 

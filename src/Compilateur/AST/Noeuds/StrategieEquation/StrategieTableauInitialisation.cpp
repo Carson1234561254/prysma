@@ -1,7 +1,7 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieTableauInitialisation.h"
 #include "Compilateur/AST/Interfaces/IConstructeurArbre.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include "Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.h"
+#include "Compilateur/AST/AST_Genere.h"
 #include <vector>
 
 StrategieTableauInitialisation::StrategieTableauInitialisation(IConstructeurArbre* constructeurArbreEquation)
