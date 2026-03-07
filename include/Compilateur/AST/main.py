@@ -11,7 +11,6 @@ def analyser_parametre(type_c):
     return type_c, "{nom}"
 
 def valeur_defaut_parametre(type_c):
-    """Retourne la valeur par défaut pour un type donné, ou None si pas de défaut."""
     if "std::vector" in type_c:
         return "{}"
     if "*" in type_c:

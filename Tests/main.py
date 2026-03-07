@@ -12,12 +12,13 @@ import Orchestration.test_cpp_unittest
 def main():
 
     tableau_tests_prysma = []
+
+    #Compilation du compilateur (génère AST_Genere.h nécessaire aux tests)
+    build_manager.BuildManager.executer_commande(["python3", "../build.py"])
+
     # Compilation des tests 
     build_manager.BuildManager.executer_commande(["cmake", "-S", ".", "-B", "build"])
     build_manager.BuildManager.executer_commande(["cmake", "--build", "build", "-j", str(os.cpu_count() or 1)])
-
-    #Compilation du compilateur 
-    build_manager.BuildManager.executer_commande(["python3", "../build.py"])
 
     test_cpp = Orchestration.test_cpp_unittest.TestCppUnittest()
     ok_cpp = test_cpp.executer_tests()

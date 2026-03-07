@@ -13,7 +13,7 @@ def main():
 
     ast_path = os.path.join(script_dir, "include", "Compilateur", "AST")
     os.chdir(ast_path)
-    BuildManager.executer_commande(["python3", "GenerationAST.py"])
+    BuildManager.executer_commande(["python3", "main.py"])
     os.chdir(script_dir)
 
     nb_coeurs = str(os.cpu_count() or 1)
