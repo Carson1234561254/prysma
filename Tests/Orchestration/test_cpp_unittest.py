@@ -4,15 +4,15 @@ import os
 class TestCppUnittest:
     
     def __init__(self, build_dirname="build", test_executable="PrysmaTests"):
+        
         # Chemins relatifs à l'emplacement du script
         self.script_dir = os.path.dirname(os.path.abspath(__file__))
         self.project_root = os.path.abspath(os.path.join(self.script_dir, "../../"))
         self.build_dir = os.path.join(self.project_root, "Tests", build_dirname)
         self.test_executable_path = os.path.join(self.build_dir, test_executable)
 
-    def executer_tests(self):
-        """Exécute tous les tests unitaires C++"""
-        
+    def executer_tests(self):  
+
         if not os.path.exists(self.test_executable_path):
             print(f" Erreur: L'exécutable de test n'existe pas: {self.test_executable_path}")
             return False
@@ -33,8 +33,7 @@ class TestCppUnittest:
             return False
 
     def __afficher_resultats(self, result):
-        """Affiche les résultats des tests avec couleurs"""
-        
+
         # Code couleur ANSI
         VERT = "\033[92m"
         ROUGE = "\033[91m"

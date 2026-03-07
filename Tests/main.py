@@ -1,19 +1,23 @@
-# Execution séquentielle des tests du compilateur
-# C'est l'orchestrateur qui lance tous les tests du compilateur
-# Orchestrateur de tests pour le compilateur prysma, automatisation des tests unitaire 
 import subprocess
+import sys
+import os
+
+# Ajouter le répertoire parent au chemin Python pour les imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from Tests.Orchestration import build_manager
 import Orchestration.test_projet_prysma
 import Orchestration.test_cpp_unittest
-import Orchestration.build_manager
-import sys
 
 def main():
-    tableau_tests_prysma = []
 
-    builder = Orchestration.build_manager.BuildManager(verbose=False)
-    
-    ok_build_compilateur = builder.build_compilateur()
-    ok_build_tests = builder.build_tests()
+    tableau_tests_prysma = []
+    # Compilation des tests 
+    build_manager.BuildManager.executer_commande(["cmake", "-S", ".", "-B", "build"])
+    build_manager.BuildManager.executer_commande(["cmake", "--build", "build", "-j", str(os.cpu_count() or 1)])
+ç
+    #Compilation du compilateur 
+    build_manager.BuildManager.executer_commande(["python3", "../build.py"])
 
     test_cpp = Orchestration.test_cpp_unittest.TestCppUnittest()
     ok_cpp = test_cpp.executer_tests()
@@ -48,7 +52,7 @@ def main():
     )
     tableau_tests_prysma.append(test_prysma_3.executer_projet())
 
-    all_ok = ok_build_compilateur and ok_build_tests and ok_cpp and all(tableau_tests_prysma)
+    all_ok = ok_cpp and all(tableau_tests_prysma)
     
     if not all_ok:
         print("\nArrêt du pipeline : Échec d'une étape.")

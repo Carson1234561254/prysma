@@ -71,26 +71,8 @@ set(MAIN_SOURCES
     ../src/Compilateur/AST/ConstructeurArbreEquation.cpp
     ../src/Compilateur/AST/ConstructeurArbreInstruction.cpp
     # Noeuds
-    ../src/Compilateur/AST/Noeuds/Fonction/NoeudAppelFonction.cpp
-    ../src/Compilateur/AST/Noeuds/Fonction/NoeudArgFonction.cpp
-    ../src/Compilateur/AST/Noeuds/Fonction/NoeudDeclarationFonction.cpp
-    ../src/Compilateur/AST/Noeuds/Fonction/NoeudRetour.cpp
     ../src/Compilateur/AST/Noeuds/NoeudInstruction.cpp
-    ../src/Compilateur/AST/Noeuds/Equation/NoeudOperation.cpp
-    ../src/Compilateur/AST/Noeuds/Operande/NoeudLitteral.cpp
-    ../src/Compilateur/AST/Noeuds/Operande/NoeudNegation.cpp
-    ../src/Compilateur/AST/Noeuds/Operande/NoeudTableauInitialisation.cpp
-    ../src/Compilateur/AST/Noeuds/Variable/NoeudAffectationVariable.cpp
-    ../src/Compilateur/AST/Noeuds/Variable/NoeudDeclarationVariable.cpp
-    ../src/Compilateur/AST/Noeuds/Variable/NoeudRefVariable.cpp
-    ../src/Compilateur/AST/Noeuds/Variable/NoeudUnRefVariable.cpp
-    ../src/Compilateur/AST/Noeuds/Condition/NoeudIf.cpp
-    ../src/Compilateur/AST/Noeuds/Boucle/NoeudWhile.cpp
-    ../src/Compilateur/AST/Noeuds/Include/NoeudInclude.cpp
-    ../src/Compilateur/AST/Noeuds/new/NoeudNew.cpp
     # Tableau
-    ../src/Compilateur/AST/Noeuds/Tableau/NoeudAffectationTableau.cpp
-    ../src/Compilateur/AST/Noeuds/Tableau/NoeudLectureTableau.cpp
     # StrategieEquation
     ../src/Compilateur/AST/Noeuds/StrategieEquation/StrategieAppelFonction.cpp
     ../src/Compilateur/AST/Noeuds/StrategieEquation/StrategieRef.cpp

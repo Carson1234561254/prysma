@@ -41,7 +41,6 @@ class TestProjetPrysma:
         return self.__afficher_resultats(result, exec_command)
 
     def __afficher_resultats(self, result, command):
-        """Affiche les résultats avec couleurs et retourne True si succès"""
         
         VERT = "\033[92m"
         ROUGE = "\033[91m"
