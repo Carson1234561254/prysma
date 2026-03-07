@@ -66,5 +66,6 @@ class GenerateurVisiteur:
 
     @staticmethod
     def _ecrire_fichier(chemin, contenu):
+        os.makedirs(os.path.dirname(chemin), exist_ok=True)
         with open(chemin, "w", encoding="utf-8") as f:
             f.write(contenu)

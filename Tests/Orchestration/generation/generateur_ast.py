@@ -143,5 +143,6 @@ class GenerateurAST:
         return f"const {type_c}&"
 
     def _ecrire_fichier(self, contenu):
+        os.makedirs(os.path.dirname(self._fichier_sortie), exist_ok=True)
         with open(self._fichier_sortie, "w", encoding="utf-8") as f:
             f.write(contenu)
