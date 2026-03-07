@@ -8,8 +8,8 @@ class GenerateurVisiteur:
     def __init__(self, racine_projet):
         self._racine = racine_projet
         self._fichier_yaml = os.path.join(racine_projet, "include", "Compilateur", "AST", "YamelAST", "ast.yaml")
-        self._fichier_ivisiteur = os.path.join(racine_projet, "include", "Compilateur", "Visiteur", "Interfaces", "IVisiteur.h")
-        self._fichier_base = os.path.join(racine_projet, "include", "Compilateur", "Visiteur", "VisiteurBaseGenerale.h")
+        self._fichier_ivisiteur = os.path.join(racine_projet, "build", "generationCode", "Compilateur", "Visiteur", "Interfaces", "IVisiteur.h")
+        self._fichier_base = os.path.join(racine_projet, "build", "generationCode", "Compilateur", "Visiteur", "VisiteurBaseGenerale.h")
 
     def generer(self):
         noeuds = self._charger_noeuds()

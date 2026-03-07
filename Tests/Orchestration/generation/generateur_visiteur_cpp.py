@@ -7,7 +7,7 @@ class GenerateurVisiteurCpp:
     def __init__(self, racine_projet):
         self._racine = racine_projet
         self._fichier_yaml = os.path.join(racine_projet, "include", "Compilateur", "AST", "YamelAST", "ast.yaml")
-        self._fichier_sortie = os.path.join(racine_projet, "src", "Compilateur", "Visiteur", "VisiteurBaseGenerale.cpp")
+        self._fichier_sortie = os.path.join(racine_projet, "build", "generationCode", "Compilateur", "Visiteur", "VisiteurBaseGenerale.cpp")
 
     def generer(self):
         noeuds = self._charger_noeuds()

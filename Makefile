@@ -9,27 +9,35 @@ LLVM_LDFLAGS  := $(shell llvm-config --ldflags --system-libs --libs core support
 # 2. Configuration des flags
 # -fexceptions : Force l'activation des exceptions (écrase le -fno-exceptions de LLVM)
 # -Wno-unused-parameter : Cache les warnings inutiles dans les headers LLVM
-PRYSMA_CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O3 -Iinclude $(LLVM_CXXFLAGS) -fexceptions -Wno-unused-parameter
+PRYSMA_CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O3 -Iinclude -Ibuild/generationCode $(LLVM_CXXFLAGS) -fexceptions -Wno-unused-parameter
 
 SRC_DIR = src
+GEN_DIR = build/generationCode
 OBJ_DIR = build/obj
 BIN_DIR = build
 TARGET = $(BIN_DIR)/Prysma
 
 # Trouver tous les fichiers .cpp
 SRCS := $(shell find $(SRC_DIR) -name "*.cpp")
+GEN_SRCS := $(shell find $(GEN_DIR) -name "*.cpp" 2>/dev/null)
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+GEN_OBJS := $(GEN_SRCS:$(GEN_DIR)/%.cpp=$(OBJ_DIR)/gen/%.o)
 
 # Règle par défaut
 all: $(TARGET)
 
 # Édition de liens
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(GEN_OBJS)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(PRYSMA_CXXFLAGS) $(CXXFLAGS) -o $@ $^ $(LLVM_LDFLAGS)
 
-# Compilation
+# Compilation des sources
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(PRYSMA_CXXFLAGS) $(CXXFLAGS) -c $< -o $@
+
+# Compilation des fichiers générés
+$(OBJ_DIR)/gen/%.o: $(GEN_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(PRYSMA_CXXFLAGS) $(CXXFLAGS) -c $< -o $@
 

@@ -6,7 +6,7 @@ class GenerateurAST:
     def __init__(self, racine_projet):
         self._racine = racine_projet
         self._fichier_yaml = os.path.join(racine_projet, "include", "Compilateur", "AST", "YamelAST", "ast.yaml")
-        self._fichier_sortie = os.path.join(racine_projet, "include", "Compilateur", "AST", "AST_Genere.h")
+        self._fichier_sortie = os.path.join(racine_projet, "build", "generationCode", "Compilateur", "AST", "AST_Genere.h")
 
     def generer(self):
         noeuds = self._charger_yaml()

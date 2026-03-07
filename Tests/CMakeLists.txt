@@ -35,7 +35,7 @@ llvm_map_components_to_libnames(llvm_libs
 # ------------------------
 
 # Dossiers include (Ajout de ${LLVM_INCLUDE_DIRS})
-include_directories(${CMAKE_SOURCE_DIR}/../include ${CMAKE_SOURCE_DIR}/include ${LLVM_INCLUDE_DIRS})
+include_directories(${CMAKE_SOURCE_DIR}/../include ${CMAKE_SOURCE_DIR}/../build/generationCode ${CMAKE_SOURCE_DIR}/include ${LLVM_INCLUDE_DIRS})
 
 # Sources
 set(SOURCES
@@ -105,7 +105,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/TraitementFichier/FichierEcriture.cpp
     ../src/Compilateur/TraitementFichier/FichierLecture.cpp
     # Visiteur de base
-    ../src/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
+    ../build/generationCode/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
     # Visiteur remplissage registre
     ../src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageVariable.cpp
     ../src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.cpp
