@@ -15,7 +15,7 @@ def main():
     # Compilation des tests 
     build_manager.BuildManager.executer_commande(["cmake", "-S", ".", "-B", "build"])
     build_manager.BuildManager.executer_commande(["cmake", "--build", "build", "-j", str(os.cpu_count() or 1)])
-ç
+
     #Compilation du compilateur 
     build_manager.BuildManager.executer_commande(["python3", "../build.py"])
 
