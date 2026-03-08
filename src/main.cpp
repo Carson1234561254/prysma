@@ -15,6 +15,9 @@
 #include <mutex>
 #include <llvm/Support/TargetSelect.h>
 
+// Prouver mathématiquement que mon système est infaillible pour la compilation comme Coq, Isabelle/HOL ou TLA+, reécrire le compilateur dans un langage mathématique
+// Moteur de Réflexion LLVM génération automatique du code llvm 
+
 // Améliorations possibles performance : 
 // DFA pour le lexer permet de gagner 10 à 20 fois supérieur en vitesse de tokenisation par rapport à l'approche de base 
 // Pour un gain de 20 pourcents en vitesse 
@@ -28,33 +31,7 @@
 // La Sharded Map pour les registre de fonction afin de retirer le golo d'étranglement du mutex pour les registres de fonction, chaque thread aura sa propre 
 // shard de la map pour les fonctions. Pour un gain d'environ 70 pourcents en vitesse d'exécution pour les projet avec beaucoup de fonction.
 
-// Explication du fonctionnnement pour la nouvelle refactorisation des registres pour supporter le multi thread: 
-// Je vais faire une première passe qui va construire des registres globaux pour les fonctions, et les variables
-// Ce registre contiendra une initialisation nullptr pour les objets de llvm llmv::Value llvm::allocainstance. 
-// Ensuite je vais faire une classe locale pour l'initialisation des objets nullptr en mémoire dans le registre. 
-// Cette façon de procéder est utilisée pour éviter les conflit entre les threads de mon programme. 
-
-// Niveau de la génération du code locale je vais pouvoir faire du multi thread pour générer le code en parallèle pour chaque fichier. Chaque fichier 
-// sera traité avec leur propre thread pour la génération du code et au final tout les fichier généré seront rassemblé pour faire un lien final. 
-
-// Les variables globales devront être initialisé dans le visiteur 2 non avec un nullptr car elle sont global dans une fonction précise donc pas de problème au niveau 
-// des autres thread. 
-
-// Le premier visiteur est seulement un éclaireur pour remplir les registres de fonction et de variable il remplit les registres avec des valeur    
-// nullptr pour les fonction et les variables
-
-
-// Le premier visiteur c'est le visiteur de remplissage de registre, VisiteurRemplissageRegistre.cpp
-
-// Ne pas oblier les contexte objet llvm sont strictement privé et ne peuvent pas être partagé entre eux
-
-// Faire un système d'héritage pour les visiteur, une classe de base qui contient toute les définition de visiteur 
-// ça va éviter d'avoir une dupplication de code, ou une définition de contrat pour les visiteur que je veux seulement faire une action précise, 
-// exemple remplir un registre de fonction, ou remplir un registre de variable, tout les registres peuvent être rempli en avance puis ensuite 
-// utiliser une technique de multi threade pour faire la génération de code en parallèle, le but est d'avoir un système découplé pour ne pas 
-// avoir de problème de race condition. 
-
-// Bon actuellement j'ai un problème au niveau des threads si j'ai 20 000 fichier je vais avoir 20 000 thread ce qui 
+// Actuellement j'ai un problème au niveau des threads si j'ai 20 000 fichier je vais avoir 20 000 thread ce qui 
 // Est un volume de thread énorme abusé, juste 2000 thread consomme 16 go de ram juste pour exister 
 // C'est un problème pour les gros projet car cela fera crash l'ordinateur, je vais devoir dans le future 
 // faire un système de pool de thread pour limiter le nombre de thread au nombre de coeur de la machine. 
@@ -64,9 +41,8 @@
 // Ce qui évite de faire planter le pc pour la compilation d'un gros projet avec beaucoup de fichier source. 
 // Une solution à implémenter dans le future 
 
-
-
 // Jinja2 pour la génération du code source 
+
 
 int main(int argc, char* argv[])
 {

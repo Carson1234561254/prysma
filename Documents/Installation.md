@@ -17,14 +17,28 @@ sudo apt-get update && sudo apt-get install -y bear
 sudo apt install graphviz
 ```
 
-## 2. Configuration du projet
+## 2. Environnement virtuel Python
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+## 3. Prérequis Python
+Assurez-vous d'avoir Python 3 installé, ainsi que les dépendances nécessaires pour le projet
+
+```bash
+uv pip install -r requirements.txt
+```
+
+## 4. Configuration du projet
 
 ### Compilation du projet 
  ```bash
  python3 build.py
  ```
  
-## 3. Configuration de VS Code (tasks.json)
+## 5. Configuration de VS Code (tasks.json)
 
 Incluez cette tâche dans votre `tasks.json` pour activer la vérification des erreurs lors de `Ctrl+Shift+B` :
 
@@ -66,7 +80,7 @@ Cette configuration permet à VS Code de :
 - Naviguer rapidement vers les erreurs
 - Afficher les messages diagnostiques pertinents
 
-## 5. Configuration de la coloration syntaxique Prysma
+## 6. Configuration de la coloration syntaxique Prysma
 
 ### Installation des prérequis Node.js
 Vous devez avoir Node.js installé pour générer la grammaire de coloration syntaxique.
