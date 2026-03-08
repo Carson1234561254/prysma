@@ -66,6 +66,8 @@
 
 
 
+// Jinja2 pour la génération du code source 
+
 int main(int argc, char* argv[])
 {
     if (argc < 2) {

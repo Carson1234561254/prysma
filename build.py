@@ -3,6 +3,7 @@ from Tests.Orchestration.build_manager import BuildManager
 from generation.generateur_ast import GenerateurAST
 from generation.generateur_interface_visiteur import GenerateurInterfaceVisiteur
 from generation.generateur_visiteur_base_generale import GenerateurVisiteurBaseGenerale
+from generation.generateur_graphe_viz import GenerateurGrapheViz
 
 
 def main():
@@ -12,6 +13,7 @@ def main():
     GenerateurAST(script_dir).generer()
     GenerateurInterfaceVisiteur(script_dir).generer()
     GenerateurVisiteurBaseGenerale(script_dir).generer()
+    GenerateurGrapheViz(script_dir).generer()
 
     BuildManager.executer_commande(["cmake", "-S", ".", "-B", "build"])
     os.makedirs("build", exist_ok=True)

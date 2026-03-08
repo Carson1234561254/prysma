@@ -133,26 +133,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurAffectationTableau.cpp
     ../src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurLectureTableau.cpp
     # Visiteur AST GraphViz
-    ../src/Compilateur/Visiteur/ASTGraphViz/Boucle/VisiteurNoeudWhile.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Condition/VisiteurNoeudIf.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurAppelFonction.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurArgFonction.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurDeclarationFonction.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Fonction/VisiteurRetour.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Operande/VisiteurOperation.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Operande/VisiteurNoeudNegation.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Operande/VisiteurTableauInitialisation.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurAffectationVariable.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurDeclarationVariable.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurRefVariable.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Variable/VisiteurUnRefVariable.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralASTGraphViz.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/VisiteurInstruction.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Include/VisiteurNoeudInclude.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/New/VisiteurNew.cpp
-    # Tableau graphviz
-    ../src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurAffectationTableau.cpp
-    ../src/Compilateur/Visiteur/ASTGraphViz/Tableau/VisiteurLectureTableau.cpp
+    ../build/generationCode/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.cpp
     # Graph visuel
     ../src/Compilateur/GrapheVisuel/SortieArbreVisuelTexte.cpp
     # Orchestrateur include

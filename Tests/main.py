@@ -7,6 +7,7 @@ from Tests.Orchestration import build_manager
 from generation.generateur_ast import GenerateurAST
 from generation.generateur_interface_visiteur import GenerateurInterfaceVisiteur
 from generation.generateur_visiteur_base_generale import GenerateurVisiteurBaseGenerale
+from generation.generateur_graphe_viz import GenerateurGrapheViz
 import Orchestration.test_projet_prysma
 import Orchestration.test_cpp_unittest
 
@@ -18,6 +19,7 @@ def main():
     GenerateurAST(racine).generer()
     GenerateurInterfaceVisiteur(racine).generer()
     GenerateurVisiteurBaseGenerale(racine).generer()
+    GenerateurGrapheViz(racine).generer()
 
     build_manager.BuildManager.executer_commande(["python3", "../build.py"])
 
