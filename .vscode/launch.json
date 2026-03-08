@@ -42,6 +42,22 @@
             },
             "MIMode": "gdb",
             "preLaunchTask": "CMake: build"
+        },
+        {
+            "name": "Build Python",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/build.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Test Python",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/Tests/main.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
