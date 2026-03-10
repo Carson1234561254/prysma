@@ -1,11 +1,11 @@
 #ifndef PARSEUR_{{nom | upper}}_CPP
 #define PARSEUR_{{nom | upper}}_CPP
 
-#include "Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.h"
+#include "{{ include_parseur }}"
 
 
 Parseur{{nom}}::Parseur{{nom}}(ContextParseur& contextParseur) 
-    : _constructeurArbreEquation(contextParseur), _constructeurArbreInstruction(contextParseur)
+    : _contextParseur(contextParseur)
 {}
 
 Parseur{{nom}}::~Parseur{{nom}}()
@@ -14,6 +14,9 @@ Parseur{{nom}}::~Parseur{{nom}}()
 INoeud* Parseur{{nom}}::parser(std::vector<Token>& tokens, int& index)
 {
   // TODO: Implémenter le parseur pour {{nom}}
+  (void)tokens;
+  (void)index;
+  return nullptr;
 }
 
 #endif /* PARSEUR_{{nom | upper}}_CPP */

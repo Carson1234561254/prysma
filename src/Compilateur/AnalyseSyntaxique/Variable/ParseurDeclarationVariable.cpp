@@ -1,14 +1,16 @@
-#include "Compilateur/AnalyseSyntaxique/ParseurDeclarationVariable.h"
+#ifndef PARSEUR_DECLARATIONVARIABLE_CPP
+#define PARSEUR_DECLARATIONVARIABLE_CPP
+
+#include "Compilateur/Variable/ParseurDeclarationVariable.h"
 #include "Compilateur/AST/AST_Genere.h"
 
 
-ParseurDeclarationVariable::ParseurDeclarationVariable(ContextParseur& contextParseur)
+ParseurDeclarationVariable::ParseurDeclarationVariable(ContextParseur& contextParseur) 
     : _contextParseur(contextParseur)
 {}
 
 ParseurDeclarationVariable::~ParseurDeclarationVariable()
-{
-}
+{}
 
 INoeud* ParseurDeclarationVariable::parser(std::vector<Token>& tokens, int& index)
 {
@@ -32,3 +34,8 @@ INoeud* ParseurDeclarationVariable::parser(std::vector<Token>& tokens, int& inde
         expression
     );
 }
+#endif /* PARSEUR_DECLARATIONVARIABLE_CPP */
+
+
+
+

@@ -9,7 +9,7 @@ LLVM_LDFLAGS  := $(shell llvm-config --ldflags --system-libs --libs core support
 # 2. Configuration des flags
 # -fexceptions : Force l'activation des exceptions (écrase le -fno-exceptions de LLVM)
 # -Wno-unused-parameter : Cache les warnings inutiles dans les headers LLVM
-PRYSMA_CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O3 -Iinclude -Ibuild/generationCode $(LLVM_CXXFLAGS) -fexceptions -Wno-unused-parameter
+PRYSMA_CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O3 -Iinclude -Ibuild/generationCode/include $(LLVM_CXXFLAGS) -fexceptions -Wno-unused-parameter
 
 SRC_DIR = src
 GEN_DIR = build/generationCode
@@ -19,7 +19,7 @@ TARGET = $(BIN_DIR)/Prysma
 
 # Trouver tous les fichiers .cpp
 SRCS := $(shell find $(SRC_DIR) -name "*.cpp")
-GEN_SRCS := $(shell find $(GEN_DIR) -name "*.cpp" 2>/dev/null)
+GEN_SRCS := $(shell find $(GEN_DIR)/src -name "*.cpp" 2>/dev/null)
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 GEN_OBJS := $(GEN_SRCS:$(GEN_DIR)/%.cpp=$(OBJ_DIR)/gen/%.o)
 

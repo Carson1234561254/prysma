@@ -6,11 +6,12 @@ class GenerateurVisiteurBaseGenerale(MoteurGeneration):
 
     def __init__(self, racine_projet):
         super().__init__(racine_projet)
-        dossier = os.path.join(
-            racine_projet, "build", "generationCode", "Compilateur", "Visiteur"
+        self._fichier_entete = self._chemin_generation_include(
+            "Compilateur", "Visiteur", "VisiteurBaseGenerale.h"
         )
-        self._fichier_entete = os.path.join(dossier, "VisiteurBaseGenerale.h")
-        self._fichier_source = os.path.join(dossier, "VisiteurBaseGenerale.cpp")
+        self._fichier_source = self._chemin_generation_src(
+            "Compilateur", "Visiteur", "VisiteurBaseGenerale.cpp"
+        )
 
     def generer(self):
         noeuds = self._charger_noeuds_yaml()

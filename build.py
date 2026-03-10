@@ -1,4 +1,5 @@
 import os
+import shutil
 from Tests.Orchestration.build_manager import BuildManager
 from generation.generateur_ast import GenerateurAST
 from generation.generateur_interface_visiteur import GenerateurInterfaceVisiteur
@@ -19,6 +20,7 @@ def main():
 
     BuildManager.executer_commande(["cmake", "-S", ".", "-B", "build"])
     os.makedirs("build", exist_ok=True)
+    shutil.rmtree(os.path.join("build", "obj"), ignore_errors=True)
 
     nb_coeurs = str(os.cpu_count() or 1)
     cxxflags = "-Wall -Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wnull-dereference -Wformat=2 -Werror"

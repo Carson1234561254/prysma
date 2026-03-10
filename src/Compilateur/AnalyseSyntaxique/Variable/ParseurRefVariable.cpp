@@ -1,18 +1,16 @@
-#include "Compilateur/AnalyseSyntaxique/ParseurRefVariable.h"
-#include "Compilateur/AST/Registre/ContextParseur.h"
-#include "Compilateur/AST/AST_Genere.h"
-#include "Compilateur/Lexer/TokenType.h"
-#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
-#include <vector>
+#ifndef PARSEUR_REFVARIABLE_CPP
+#define PARSEUR_REFVARIABLE_CPP
 
-ParseurRefVariable::ParseurRefVariable(ContextParseur& contextParseur)
+#include "Compilateur/Variable/ParseurRefVariable.h"
+#include "Compilateur/AST/AST_Genere.h"
+
+
+ParseurRefVariable::ParseurRefVariable(ContextParseur& contextParseur) 
     : _contextParseur(contextParseur)
-{
-}
+{}
 
 ParseurRefVariable::~ParseurRefVariable()
-{
-}
+{}
 
 // Exemple ref variable
 INoeud* ParseurRefVariable::parser(std::vector<Token>& tokens, int& index) 
@@ -24,3 +22,9 @@ INoeud* ParseurRefVariable::parser(std::vector<Token>& tokens, int& index)
     
     return _contextParseur.constructeurArbreEquation->allouer<NoeudRefVariable>(nomVariable);
 }
+
+#endif /* PARSEUR_REFVARIABLE_CPP */
+
+
+
+

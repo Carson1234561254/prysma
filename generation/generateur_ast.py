@@ -6,8 +6,8 @@ class GenerateurAST(MoteurGeneration):
 
     def __init__(self, racine_projet):
         super().__init__(racine_projet)
-        self._fichier_sortie = os.path.join(
-            racine_projet, "build", "generationCode", "Compilateur", "AST", "AST_Genere.h"
+        self._fichier_sortie = self._chemin_generation_include(
+            "Compilateur", "AST", "AST_Genere.h"
         )
 
     def generer(self):

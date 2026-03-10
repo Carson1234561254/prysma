@@ -6,7 +6,7 @@ class GenerateurInterfaceVisiteur(MoteurGeneration):
 
     def __init__(self, racine_projet):
         super().__init__(racine_projet)
-        dossier = os.path.join(racine_projet, "build", "generationCode", "Compilateur", "Visiteur")
+        dossier = self._chemin_generation_include("Compilateur", "Visiteur")
         self._fichier_ivisiteur = os.path.join(dossier, "Interfaces", "IVisiteur.h")
 
     def generer(self):

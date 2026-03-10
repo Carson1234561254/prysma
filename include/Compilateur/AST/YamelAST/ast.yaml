@@ -35,9 +35,6 @@ Noeud:
     UnRefVariable:
       champs:
         nomVariable: "std::string"
-    Include:
-      champs:
-        path: "std::string"
 
   Tableau:
     AffectationTableau:
@@ -75,6 +72,9 @@ Noeud:
     Delete:
       champs:
         nomType: "Token"
+    Include:
+      champs:
+        path: "std::string"
         
   Math:
     Operation:
@@ -92,3 +92,6 @@ Noeud:
       champs:
         operateur: "Token"
         operande: "INoeud*"
+
+# moteur : strategie 
+# moteur : parseur

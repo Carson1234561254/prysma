@@ -10,8 +10,11 @@ class GenerateurGrapheViz(MoteurGeneration):
         self._fichier_graphviz_yaml = os.path.join(
             racine_projet, "include", "Compilateur", "AST", "YamelAST", "graphviz.yaml"
         )
-        self._dossier_sortie = os.path.join(
-            racine_projet, "build", "generationCode", "Compilateur", "Visiteur", "ASTGraphViz"
+        self._dossier_entete = self._chemin_generation_include(
+            "Compilateur", "Visiteur", "ASTGraphViz"
+        )
+        self._dossier_source = self._chemin_generation_src(
+            "Compilateur", "Visiteur", "ASTGraphViz"
         )
 
     def generer(self):
@@ -20,7 +23,7 @@ class GenerateurGrapheViz(MoteurGeneration):
         noms = list(noeuds.keys()) + ["Instruction"]
         self._rendre_et_ecrire(
             "visiteur_graphviz.h.j2",
-            os.path.join(self._dossier_sortie, "VisiteurGeneralGraphViz.h"),
+            os.path.join(self._dossier_entete, "VisiteurGeneralGraphViz.h"),
             noeuds=noms
         )
         methodes = []
@@ -34,7 +37,7 @@ class GenerateurGrapheViz(MoteurGeneration):
             methodes.append((nom, label, traversables))
         self._rendre_et_ecrire(
             "visiteur_graphviz.cpp.j2",
-            os.path.join(self._dossier_sortie, "VisiteurGeneralGraphViz.cpp"),
+            os.path.join(self._dossier_source, "VisiteurGeneralGraphViz.cpp"),
             methodes=methodes
         )
 

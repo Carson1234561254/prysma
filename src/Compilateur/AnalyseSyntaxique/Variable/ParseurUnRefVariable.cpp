@@ -1,14 +1,16 @@
-#include "Compilateur/AnalyseSyntaxique/ParseurUnRefVariable.h"
+#ifndef PARSEUR_UNREFVARIABLE_CPP
+#define PARSEUR_UNREFVARIABLE_CPP
+
+#include "Compilateur/Variable/ParseurUnRefVariable.h"
 #include "Compilateur/AST/AST_Genere.h"
 
-ParseurUnRefVariable::ParseurUnRefVariable(ContextParseur& contextParseur)
+
+ParseurUnRefVariable::ParseurUnRefVariable(ContextParseur& contextParseur) 
     : _contextParseur(contextParseur)
-{
-}
+{}
 
 ParseurUnRefVariable::~ParseurUnRefVariable()
-{
-}
+{}
 
 // Exemple unref variable
 INoeud* ParseurUnRefVariable::parser(std::vector<Token>& tokens, int& index) 
@@ -20,3 +22,9 @@ INoeud* ParseurUnRefVariable::parser(std::vector<Token>& tokens, int& index)
     
     return _contextParseur.constructeurArbreEquation->allouer<NoeudUnRefVariable>(nomVariable);
 }
+
+#endif /* PARSEUR_UNREFVARIABLE_CPP */
+
+
+
+

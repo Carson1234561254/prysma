@@ -1,15 +1,16 @@
-#include "Compilateur/AnalyseSyntaxique/ParseurAffectationVariable.h"
+#ifndef PARSEUR_AFFECTATIONVARIABLE_CPP
+#define PARSEUR_AFFECTATIONVARIABLE_CPP
+
+#include "Compilateur/Variable/ParseurAffectationVariable.h"
 #include "Compilateur/AST/AST_Genere.h"
 
 
-ParseurAffectationVariable::ParseurAffectationVariable(ContextParseur& contextParseur)
+ParseurAffectationVariable::ParseurAffectationVariable(ContextParseur& contextParseur) 
     : _contextParseur(contextParseur)
-{
-}
+{}
 
 ParseurAffectationVariable::~ParseurAffectationVariable()
-{
-}
+{}
 
 INoeud* ParseurAffectationVariable::parser(std::vector<Token>& tokens, int& index)
 {
@@ -36,3 +37,9 @@ INoeud* ParseurAffectationVariable::parser(std::vector<Token>& tokens, int& inde
     
     return _contextParseur.constructeurArbreEquation->allouer<NoeudAffectationVariable>(nomVariable, expression, nomToken);
 }
+
+#endif /* PARSEUR_AFFECTATIONVARIABLE_CPP */
+
+
+
+

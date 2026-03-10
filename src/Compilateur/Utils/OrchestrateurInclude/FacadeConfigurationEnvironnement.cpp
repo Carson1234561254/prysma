@@ -7,7 +7,7 @@
 #include "Compilateur/AST/Registre/RegistreStrategieEquation.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurInclude.h"
+#include "Compilateur/Instruction/ParseurInclude.h"
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
 
@@ -23,16 +23,16 @@
 #include "Compilateur/AST/Noeuds/StrategieEquation/StrategieNew.h"
 
 // Parseurs d'instructions
-#include "Compilateur/AnalyseSyntaxique/ParseurDeclarationFonction.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurAffectationVariable.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurAppelFonction.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurDeclarationVariable.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurRefVariable.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurUnRefVariable.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurRetour.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurArgFonction.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurIf.h"
-#include "Compilateur/AnalyseSyntaxique/ParseurWhile.h"
+#include "Compilateur/Fonction/ParseurDeclarationFonction.h"
+#include "Compilateur/Variable/ParseurAffectationVariable.h"
+#include "Compilateur/Fonction/ParseurAppelFonction.h"
+#include "Compilateur/Variable/ParseurDeclarationVariable.h"
+#include "Compilateur/Variable/ParseurRefVariable.h"
+#include "Compilateur/Variable/ParseurUnRefVariable.h"
+#include "Compilateur/Fonction/ParseurRetour.h"
+#include "Compilateur/Fonction/ParseurArgFonction.h"
+#include "Compilateur/Instruction/ParseurIf.h"
+#include "Compilateur/Instruction/ParseurWhile.h"
 
 #include "Compilateur/Lexer/TokenType.h"
 

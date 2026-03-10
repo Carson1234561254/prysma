@@ -33,29 +33,29 @@ llvm_map_components_to_libnames(llvm_libs
 # ------------------------
 
 # Dossiers include (Ajout de ${LLVM_INCLUDE_DIRS})
-include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/build/generationCode ${LLVM_INCLUDE_DIRS})
+include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/build/generationCode/include ${LLVM_INCLUDE_DIRS})
 
 # Sources
 set(SOURCES
     # AnalyseSyntaxique 
     src/Compilateur/AnalyseSyntaxique/Equation/ChaineResponsabilite.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/GestionnaireOperateur.cpp
-    src/Compilateur/AnalyseSyntaxique/Equation/ParseurEquation.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurEquation.cpp
     src/Compilateur/AnalyseSyntaxique/Equation/ServiceParenthese.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurAppelFonction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurArgFonction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurDeclarationFonction.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Fonction/ParseurRetour.cpp
+    src/Compilateur/AnalyseSyntaxique/Fonction/ParseurAppelFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/Fonction/ParseurArgFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/Fonction/ParseurDeclarationFonction.cpp
+    src/Compilateur/AnalyseSyntaxique/Fonction/ParseurRetour.cpp
     src/Compilateur/Registre/RegistreFichier.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurAffectationVariable.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurDeclarationVariable.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurRefVariable.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Variable/ParseurUnRefVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Variable/ParseurAffectationVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Variable/ParseurDeclarationVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Variable/ParseurRefVariable.cpp
+    src/Compilateur/AnalyseSyntaxique/Variable/ParseurUnRefVariable.cpp
     src/Compilateur/AnalyseSyntaxique/ParseurBase.cpp
     src/Compilateur/AnalyseSyntaxique/ParseurType.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Condition/ParseurIf.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Boucle/ParseurWhile.cpp
-    src/Compilateur/AnalyseSyntaxique/Instruction/Include/ParseurInclude.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurIf.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurWhile.cpp
+    src/Compilateur/AnalyseSyntaxique/Instruction/ParseurInclude.cpp
     # ConstructeurArbre
     src/Compilateur/AST/ConstructeurArbreEquation.cpp
     src/Compilateur/AST/ConstructeurArbreInstruction.cpp
@@ -90,7 +90,7 @@ set(SOURCES
     src/Compilateur/TraitementFichier/FichierEcriture.cpp
     src/Compilateur/TraitementFichier/FichierLecture.cpp
     # visiteur de base 
-    build/generationCode/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
+    build/generationCode/src/Compilateur/Visiteur/VisiteurBaseGenerale.cpp
     # visiteur de remplissage registre
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageVariable.cpp
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.cpp
@@ -121,7 +121,7 @@ set(SOURCES
     src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurAffectationTableau.cpp
     src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurLectureTableau.cpp
     # Visiteur ast graphviz dump 
-    build/generationCode/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.cpp
+    build/generationCode/src/Compilateur/Visiteur/ASTGraphViz/VisiteurGeneralGraphViz.cpp
     # Graph visuel 
     src/Compilateur/GrapheVisuel/SortieArbreVisuelTexte.cpp
     # Orchestrateur include 

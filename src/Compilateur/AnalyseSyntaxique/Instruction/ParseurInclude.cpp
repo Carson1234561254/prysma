@@ -1,14 +1,16 @@
-#include "Compilateur/AnalyseSyntaxique/ParseurInclude.h"
-#include "Compilateur/AST/AST_Genere.h"
-#include "Compilateur/Lexer/TokenType.h"
+#ifndef PARSEUR_INCLUDE_CPP
+#define PARSEUR_INCLUDE_CPP
 
-ParseurInclude::ParseurInclude(ContextParseur& contextParseur) : _contextParseur(contextParseur)
-{
-}
+#include "Compilateur/Instruction/ParseurInclude.h"
+#include "Compilateur/AST/AST_Genere.h"
+
+
+ParseurInclude::ParseurInclude(ContextParseur& contextParseur) 
+    : _contextParseur(contextParseur)
+{}
 
 ParseurInclude::~ParseurInclude()
-{
-}
+{}
 
 // Exemple : include "path"
 INoeud* ParseurInclude::parser(std::vector<Token>& tokens, int& index)
@@ -21,3 +23,9 @@ INoeud* ParseurInclude::parser(std::vector<Token>& tokens, int& index)
 
     return _contextParseur.constructeurArbreEquation->allouer<NoeudInclude>(tokenPath.value);
 }
+
+#endif /* PARSEUR_INCLUDE_CPP */
+
+
+
+

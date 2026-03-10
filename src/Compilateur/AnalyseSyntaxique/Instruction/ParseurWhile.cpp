@@ -1,7 +1,10 @@
-#include "Compilateur/AnalyseSyntaxique/ParseurWhile.h"
-#include "Compilateur/AST/Noeuds/NoeudInstruction.h"
+#ifndef PARSEUR_WHILE_CPP
+#define PARSEUR_WHILE_CPP
+
+#include "Compilateur/Instruction/ParseurWhile.h"
 #include "Compilateur/AST/AST_Genere.h"
-#include "Compilateur/Lexer/TokenType.h"
+#include "Compilateur/AST/Noeuds/NoeudInstruction.h"
+
 
 ParseurWhile::ParseurWhile(ContextParseur& contextParseur) 
     : _contextParseur(contextParseur)
@@ -9,9 +12,6 @@ ParseurWhile::ParseurWhile(ContextParseur& contextParseur)
 
 ParseurWhile::~ParseurWhile()
 {}
-
-// exemple : while()
-//{}
 
 INoeud* ParseurWhile::parser(std::vector<Token>& tokens, int& index)
 {
@@ -35,3 +35,9 @@ INoeud* ParseurWhile::parser(std::vector<Token>& tokens, int& index)
 
     return noeudWhile;
 }
+
+#endif /* PARSEUR_WHILE_CPP */
+
+
+
+
