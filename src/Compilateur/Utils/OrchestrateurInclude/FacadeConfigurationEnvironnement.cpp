@@ -8,6 +8,7 @@
 #include "Compilateur/AST/Registre/RegistreExpression.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
+#include "Compilateur/Instruction/ParseurDelete.h"
 #include "Compilateur/Instruction/ParseurInclude.h"
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
@@ -151,6 +152,24 @@ void FacadeConfigurationEnvironnement::enregistrerFonctionsExternes()
         symMallocLocal->noeud = nullptr;
         _context->registreFonctionLocale->enregistrer("prysma_malloc", std::move(symMallocLocal));
     }
+
+    // prysma_free
+    std::vector<llvm::Type*> free_args;
+    free_args.push_back(llvm::PointerType::getUnqual(_context->backend->getContext()));
+    llvm::FunctionType* free_type = llvm::FunctionType::get(llvm::Type::getVoidTy(_context->backend->getContext()), free_args, false);
+    llvm::Function* freeFunc = llvm::Function::Create(free_type, llvm::Function::ExternalLinkage, "prysma_free", _context->backend->getModule());
+    {
+        auto symFreeGlobal = std::make_unique<SymboleFonctionGlobale>();
+        symFreeGlobal->typeRetour = typeVoidPrysma;
+        symFreeGlobal->noeud = nullptr;
+        _context->registreFonctionGlobale->enregistrer("prysma_free", std::move(symFreeGlobal));
+
+        auto symFreeLocal = std::make_unique<SymboleFonctionLocale>();
+        symFreeLocal->fonction = freeFunc;
+        symFreeLocal->typeRetour = typeVoidPrysma;
+        symFreeLocal->noeud = nullptr;
+        _context->registreFonctionLocale->enregistrer("prysma_free", std::move(symFreeLocal));
+    }
 }
 
 void FacadeConfigurationEnvironnement::enregistrerTypesDeBase()
@@ -175,7 +194,6 @@ void FacadeConfigurationEnvironnement::creerContextParseur()
         _constructeurEquation->recupererConstructeurArbre(),
         _constructeurArbreInstruction,
         _parseurType,
-        _arena,
         _registreVariable.get(),
         _registreType.get()
     );
@@ -279,6 +297,9 @@ void FacadeConfigurationEnvironnement::enregistrerInstructions()
 
     auto* parsInclude = new (_arena.Allocate<ParseurInclude>()) ParseurInclude(*_contextParseur);
     _context->registreInstruction->enregistrer(TOKEN_INCLUDE, parsInclude);
+
+    auto* parsDelete = new (_arena.Allocate<ParseurDelete>()) ParseurDelete(*_contextParseur);
+    _context->registreInstruction->enregistrer(TOKEN_DELETE, parsDelete);
 }
 
 ContextGenCode* FacadeConfigurationEnvironnement::getContext() const

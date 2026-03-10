@@ -12,5 +12,7 @@ fn int32 main()
 
    call test(monPtr);
 
+   delete monPtr;
+
    return 0;
 }

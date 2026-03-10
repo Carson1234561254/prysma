@@ -10,12 +10,11 @@ struct ContextParseur
     IConstructeurArbre* constructeurArbreEquation;
     IConstructeurArbre* constructeurArbreInstruction;
     ParseurType* parseurType;
-    llvm::BumpPtrAllocator& arena;
     RegistreVariable* registreVariable;
     RegistreType* registreType;
     
-    ContextParseur(IConstructeurArbre* p_constructeurArbreEquation, IConstructeurArbre* p_constructeurArbreInstruction, ParseurType* p_parseurType, llvm::BumpPtrAllocator& p_arena,  RegistreVariable* p_registreVariable, RegistreType* p_registreType)
-        : constructeurArbreEquation(p_constructeurArbreEquation), constructeurArbreInstruction(p_constructeurArbreInstruction), parseurType(p_parseurType), arena(p_arena),  registreVariable(p_registreVariable), registreType(p_registreType)
+    ContextParseur(IConstructeurArbre* p_constructeurArbreEquation, IConstructeurArbre* p_constructeurArbreInstruction, ParseurType* p_parseurType,  RegistreVariable* p_registreVariable, RegistreType* p_registreType)
+        : constructeurArbreEquation(p_constructeurArbreEquation), constructeurArbreInstruction(p_constructeurArbreInstruction), parseurType(p_parseurType),  registreVariable(p_registreVariable), registreType(p_registreType)
     {
         if(p_constructeurArbreEquation == nullptr)
         {

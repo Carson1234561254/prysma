@@ -65,6 +65,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/AnalyseSyntaxique/Instruction/ParseurIf.cpp
     ../src/Compilateur/AnalyseSyntaxique/Instruction/ParseurWhile.cpp
     ../src/Compilateur/AnalyseSyntaxique/Instruction/ParseurInclude.cpp
+    ../src/Compilateur/AnalyseSyntaxique/Instruction/ParseurDelete.cpp
     # ConstructeurArbre
     ../src/Compilateur/AST/ConstructeurArbreEquation.cpp
     ../src/Compilateur/AST/ConstructeurArbreInstruction.cpp
@@ -127,6 +128,7 @@ set(MAIN_SOURCES
     ../src/Compilateur/Visiteur/CodeGen/VisiteurInstruction.cpp
     ../src/Compilateur/Visiteur/CodeGen/Condition/VisiteurNoeudIf.cpp
     ../src/Compilateur/Visiteur/CodeGen/New/VisiteurNew.cpp
+    ../src/Compilateur/Visiteur/CodeGen/Delete/VisiteurDelete.cpp
     # Tableau code gen
     ../src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurAffectationTableau.cpp
     ../src/Compilateur/Visiteur/CodeGen/Tableau/VisiteurLectureTableau.cpp

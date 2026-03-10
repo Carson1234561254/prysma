@@ -33,12 +33,12 @@ class GestionFonction
         // Appel de fonction
         void passArguments(NoeudAppelFonction* noeudAppelFonction);
         const SymboleFonctionLocale* obtenirFonctionLocale(const std::string& nomFonction);
-        void genererAppelFonction(const SymboleFonctionLocale* symboleFonction);
       
     public: 
 
         void declarerFonction();
         void genererAppelFonction(NoeudAppelFonction* noeudAppelFonction);
+        void genererAppelFonction(const SymboleFonctionLocale* symboleFonction);
         GestionFonction(ContextGenCode* _contextGenCode, NoeudDeclarationFonction* noeudDeclarationFonction, IVisiteur* visiteurGeneralCodeGen);
         ~GestionFonction();
 };

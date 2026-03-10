@@ -85,7 +85,6 @@ struct EnvironnementAST {
             constructeurEquation->recupererConstructeurArbre(),
             constructeurArbre,
             parseurType,
-            arena,
             registreVariable.get(),
             registreType.get()
         );
