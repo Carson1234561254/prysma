@@ -157,6 +157,9 @@ void Lexer::traiterDelimiteurs(char current, vector<Token>& tokens, int ligne, i
         case ']': 
             tokens.push_back({TOKEN_CROCHET_FERME, "]", ligne, colonne}); 
             break;
+        case '.':
+            tokens.push_back({TOKEN_POINT, ".", ligne, colonne});
+            break;
         case ';': 
             tokens.push_back({TOKEN_POINT_VIRGULE, ";", ligne, colonne}); 
             break;
@@ -231,7 +234,7 @@ void Lexer::traiterOperateursEtDelimiteurs(char current, const string& sourceCod
         traiterOperateursMathematiques(current, tokens, ligne, colonne);
     }
     else if (current == '(' || current == ')' || current == '{' || current == '}' || 
-             current == '[' || current == ']' || current == ';' || current == ',') {
+             current == '[' || current == ']' || current == '.' || current == ';' || current == ',') {
         traiterDelimiteurs(current, tokens, ligne, colonne);
     }
     else if (current == '=' || current == '<' || current == '>' || current == '!' || current == '&' || current == '|') {

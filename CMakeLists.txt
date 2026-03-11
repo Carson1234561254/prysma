@@ -45,6 +45,8 @@ set(SOURCES
     src/Compilateur/AnalyseSyntaxique/Fonction/ParseurArgFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Fonction/ParseurDeclarationFonction.cpp
     src/Compilateur/AnalyseSyntaxique/Fonction/ParseurRetour.cpp
+    src/Compilateur/AnalyseSyntaxique/objet/ParseurAppelCentral.cpp
+    src/Compilateur/AnalyseSyntaxique/objet/ParseurAppelObjet.cpp
     src/Compilateur/Registre/RegistreFichier.cpp
     src/Compilateur/AnalyseSyntaxique/Variable/ParseurAffectationVariable.cpp
     src/Compilateur/AnalyseSyntaxique/Variable/ParseurDeclarationVariable.cpp
@@ -71,6 +73,8 @@ set(SOURCES
     src/Compilateur/AST/Noeuds/Expression/Math/ExpressionLitteral.cpp
     src/Compilateur/AST/Noeuds/Expression/Math/ExpressionString.cpp
     src/Compilateur/AST/Noeuds/Expression/Instruction/ExpressionNew.cpp
+    src/Compilateur/AST/Noeuds/Expression/objet/ExpressionAppelCentral.cpp
+    src/Compilateur/AST/Noeuds/Expression/objet/ExpressionAppelObjet.cpp
     # Visiteur
     # Arbre syntaxique abstrait
     src/Compilateur/AST/Registre/RegistreArgument.cpp

@@ -85,6 +85,7 @@ constexpr bool estStructure(TokenType type) noexcept {
         case TOKEN_ACCOLADE_FERMEE:
         case TOKEN_CROCHET_OUVERT:
         case TOKEN_CROCHET_FERME:
+        case TOKEN_POINT:
         case TOKEN_POINT_VIRGULE:
         case TOKEN_VIRGULE:
             return true;

@@ -21,13 +21,13 @@
 #include "Compilateur/Math/ExpressionNegation.h"
 #include "Compilateur/Math/ExpressionString.h"
 #include "Compilateur/Tableau/ExpressionTableauInitialisation.h"
-#include "Compilateur/Fonction/ExpressionAppelFonction.h"
+#include "Compilateur/objet/ExpressionAppelCentral.h"
 #include "Compilateur/Instruction/ExpressionNew.h"
 
 // Parseurs d'instructions
 #include "Compilateur/Fonction/ParseurDeclarationFonction.h"
 #include "Compilateur/Variable/ParseurAffectationVariable.h"
-#include "Compilateur/Fonction/ParseurAppelFonction.h"
+#include "Compilateur/objet/ParseurAppelCentral.h"
 #include "Compilateur/Variable/ParseurDeclarationVariable.h"
 #include "Compilateur/Variable/ParseurRefVariable.h"
 #include "Compilateur/Variable/ParseurUnRefVariable.h"
@@ -256,7 +256,7 @@ void FacadeConfigurationEnvironnement::enregistrerExpressions()
     auto* exprTab = new (_arena.Allocate<ExpressionTableauInitialisation>()) ExpressionTableauInitialisation(*_contexteExpression);
     _registreExpression->enregistrer(TOKEN_CROCHET_OUVERT, exprTab);
 
-    auto* exprCall = new (_arena.Allocate<ExpressionAppelFonction>()) ExpressionAppelFonction(*_contexteExpression);
+    auto* exprCall = new (_arena.Allocate<ExpressionAppelCentral>()) ExpressionAppelCentral(*_contexteExpression);
     _registreExpression->enregistrer(TOKEN_CALL, exprCall);
 
     auto* exprNew = new (_arena.Allocate<ExpressionNew>()) ExpressionNew(*_contexteExpression);
@@ -275,7 +275,7 @@ void FacadeConfigurationEnvironnement::enregistrerInstructions()
     auto* parsDec = new (_arena.Allocate<ParseurDeclarationVariable>()) ParseurDeclarationVariable(*_contextParseur);
     _context->registreInstruction->enregistrer(TOKEN_DEC, parsDec);
 
-    auto* parsCall = new (_arena.Allocate<ParseurAppelFonction>()) ParseurAppelFonction(*_contextParseur);
+    auto* parsCall = new (_arena.Allocate<ParseurAppelCentral>()) ParseurAppelCentral(*_contextParseur);
     _context->registreInstruction->enregistrer(TOKEN_CALL, parsCall);
 
     auto* parsRet = new (_arena.Allocate<ParseurRetour>()) ParseurRetour(*_contextParseur);

@@ -67,7 +67,7 @@ Noeud:
 
   objet:
     Class:
-      moteur: [parseur, expression]
+      moteur: [parseur]
       champs: 
         Heritage: "std::vector<INoeud*>"
         listVariable: "std::vector<INoeud*>"
@@ -78,7 +78,13 @@ Noeud:
         listFonctionProtected: "std::vector<INoeud*>"
         constructeur: "std::vector<INoeud*>"
         nomClass: "Token"
-
+    AppelObjet:
+      moteur: [parseur, expression]
+      parent: "NoeudInstruction"
+      champs:
+        nomObjet: "Token"
+        nomMethode: "Token"
+        
   Instruction:
     If:
       moteur: [parseur]
