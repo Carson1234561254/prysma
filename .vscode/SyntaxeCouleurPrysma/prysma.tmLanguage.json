@@ -2,6 +2,7 @@
     "scopeName": "source.prysma",
     "patterns": [
         { "include": "#comments" },
+        { "include": "#block-end" },
         { "include": "#scope" },
         { "include": "#function-declaration" },
         { "include": "#keywords" },
@@ -18,6 +19,12 @@
                 "match": "//.*$"
             }]
         },
+        "block-end": {
+            "patterns": [{
+                "name": "keyword.control.block.end.prysma",
+                "match": "\\bfin\\b(?=\\s*;)"
+            }]
+        },
         "scope": {
             "patterns": [{
                 "name": "keyword.control.scope.prysma",
@@ -26,7 +33,7 @@
         },
         "function-declaration": {
             "patterns": [{
-                "match": "\\b(fn)\\s+(int|float|void|double)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                "match": "\\b(fn)\\s+(int32|int64|string|bool|class|float|void|double)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
                 "captures": {
                     "1": { "name": "constant.numeric.prysma" },
                     "2": { "name": "storage.type.prysma" },
@@ -37,13 +44,13 @@
         "keywords": {
             "patterns": [{
                 "name": "keyword.control.prysma",
-                "match": "\\b(if|else|for|while|return)\\b"
+                "match": "\\b(if|else|for|while|return|delete|new)\\b"
             }, {
                 "name": "storage.type.prysma",
-                "match": "\\b(int|float|void|double)\\b"
+                "match": "\\b(int32|int64|string|bool|class|float|void|double)\\b"
             }, {
                 "name": "constant.numeric.prysma",
-                "match": "\\b(fn|arg|dec|aff|call)\\b"
+                "match": "\\b(fn|arg|dec|aff|call|public|private|protected)\\b"
             }, {
                 "name": "keyword.operator.prysma",
                 "match": "\\b(and|or|not)\\b"

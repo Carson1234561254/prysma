@@ -13,13 +13,12 @@
     "languages": [{
       "id": "prysma",
       "aliases": ["Prysma", "prysma"],
-      "extensions": [".p"],
-      "configuration": "./language-configuration.json"
+      "extensions": [".p"]
     }],
     "grammars": [{
       "language": "prysma",
       "scopeName": "source.prysma",
-      "path": "./syntaxes/prysma.tmLanguage.json"
+      "path": "./prysma.tmLanguage.json"
     }]
   }
 }
