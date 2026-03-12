@@ -1,38 +1,57 @@
-class NomClasse 
+
+class animal
+{
+
+   public:
+
+      fn void animal()
+      {
+
+      }
+
+      fn void crier(string[] crie)
+      {
+         call print(crie);
+      }
+
+   fin;
+}
+
+class Chien 
 { 
    private: 
+      dec ptr animal = new animal();
+      
+      dec string[] crie = " ";
 
-      dec int64 attributPrive = 0;
-      dec string[] attributPrive2 = " ";
-
-      fn void methode(arg int64 parametre, arg string[] parametre2)
+      fn void crierPriv()
       {
-         aff attributPrive = parametre;
-         aff attributPrive2 = parametre2;
+         call print("Woof!");
       }
 
    fin;
 
    public:
 
-      fn void NomClasse(arg int64 parametre, arg string[] parametre2)
+      fn void Chien()
       {
-         aff attributPrive = parametre;
-         aff attributPrive2 = parametre2;
+         aff crie = "Woof!";
       }
 
-      fn void methode(arg int64 parametre, arg string[] parametre2)
+      fn void crier()
       {
-         aff attributPrive = parametre;
-         aff attributPrive2 = parametre2;
+         animal.crier(crie);
       }
-
    fin;
-
 }
+
+
 
 fn int32 main() 
 {
-  
+   dec NomClasse objet = new NomClasse(42, "Hello");
+
+   call objet.methodePrint();
+
    return 0;
 }

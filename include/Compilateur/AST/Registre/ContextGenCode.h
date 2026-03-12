@@ -9,6 +9,7 @@
 #include "RegistreFonction.h"
 #include "RegistreType.h"
 #include "RegistreArgument.h"
+#include "RegistreClass.h"
 #include "Pile/RetourContexteCompilation.h"
 #include "../../LLVM/LlvmBackend.h"
 #include "llvm/Support/Allocator.h"
@@ -25,6 +26,7 @@ struct ContextGenCode
     RegistreType* registreType;
     RetourContexteCompilation* returnContextCompilation;
     RegistreArgument* registreArgument;
+    RegistreClass* registreClass;
     llvm::BumpPtrAllocator* arena;
     std::string cheminFichierCourant;
 
@@ -38,6 +40,7 @@ struct ContextGenCode
         RegistreType* p_registreType,
         RetourContexteCompilation* p_returnContextCompilation,
         RegistreArgument* p_registreArgument,
+        RegistreClass* p_registreClass,
         Symbole p_valeurTemporaire,
         llvm::BumpPtrAllocator* p_arena,
         std::string p_cheminFichierCourant
@@ -78,6 +81,9 @@ struct ContextGenCode
             if (p_arena == nullptr) {
                 throw std::invalid_argument("L'arène ne peut pas être null");
             }
+            if (p_registreClass == nullptr) {
+                throw std::invalid_argument("Le registre de classe ne peut pas être null");
+            }
         } catch (const std::invalid_argument& e) {
             std::cerr << "Erreur lors de la création du contexte de génération de code : " << e.what() << std::endl;
             throw;
@@ -91,6 +97,7 @@ struct ContextGenCode
         this->registreType = p_registreType;
         this->returnContextCompilation = p_returnContextCompilation;
         this->registreArgument = p_registreArgument;
+        this->registreClass = p_registreClass;
         this->valeurTemporaire = p_valeurTemporaire;
         this->arena = p_arena;
     }

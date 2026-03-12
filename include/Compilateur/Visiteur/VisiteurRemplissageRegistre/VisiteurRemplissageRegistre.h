@@ -23,6 +23,7 @@ public:
     void visiter(NoeudDeclarationVariable* noeudDeclarationVariable) override;
     void visiter(NoeudDeclarationFonction* noeudDeclarationFonction) override;
     void visiter(NoeudInclude* noeudInclude) override;
+    void visiter(NoeudClass* noeudClass) override;
 };
 
 #endif /* E5CE13D3_6823_4DDE_BB20_5311A0E477B6 */

@@ -5,6 +5,7 @@
 #include "Compilateur/AST/Registre/ContexteExpression.h"
 #include "Compilateur/AST/Registre/ContextParseur.h"
 #include "Compilateur/AST/Registre/RegistreExpression.h"
+#include "Compilateur/AST/Registre/RegistreClass.h"
 #include "Compilateur/AST/ConstructeurArbreInstruction.h"
 #include "Compilateur/Builder/Equation/ConstructeurEquationFlottante.h"
 #include "Compilateur/AnalyseSyntaxique/ParseurType.h"
@@ -27,6 +28,7 @@ private:
     std::unique_ptr<RegistreType> _registreType;
     std::unique_ptr<RetourContexteCompilation> _returnContextCompilation;
     std::unique_ptr<RegistreArgument> _registreArgument;
+    std::unique_ptr<RegistreClass> _registreClass;
     std::unique_ptr<ContextGenCode> _context;
 
     RegistreExpression* _registreExpression;

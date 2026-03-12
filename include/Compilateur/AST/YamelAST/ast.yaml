@@ -84,6 +84,11 @@ Noeud:
       champs:
         nomObjet: "Token"
         nomMethode: "Token"
+    DeclarationObjet:
+      moteur: []
+      champs:
+        nomObjet: "Token"
+        typeObjet: "IType*"
         
   Instruction:
     If:
@@ -115,7 +120,6 @@ Noeud:
       champs:
         path: "std::string"
     
-        
   Math:
     Operation:
       moteur: []

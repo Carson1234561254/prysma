@@ -74,6 +74,7 @@ void FacadeConfigurationEnvironnement::creerRegistres()
     _registreType = std::make_unique<RegistreType>();
     _returnContextCompilation = std::make_unique<RetourContexteCompilation>();
     _registreArgument = std::make_unique<RegistreArgument>();
+    _registreClass = std::make_unique<RegistreClass>();
 }
 
 void FacadeConfigurationEnvironnement::creerContexte(const std::string& cheminFichier)
@@ -92,6 +93,7 @@ void FacadeConfigurationEnvironnement::creerContexte(const std::string& cheminFi
         _registreType.get(),
         _returnContextCompilation.get(),
         _registreArgument.get(),
+        _registreClass.get(),
         valeurTemporaire,
         &_arena,
         cheminFichier

@@ -100,6 +100,7 @@ set(SOURCES
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.cpp
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageFonction.cpp
     src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageInclude.cpp
+    src/Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageClass.cpp
     # Visiteur code gen
     src/Compilateur/Visiteur/CodeGen/Fonction/VisiteurAppelFonction.cpp
     src/Compilateur/Visiteur/CodeGen/Boucle/VisiteurNoeudWhile.cpp
