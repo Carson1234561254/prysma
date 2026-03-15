@@ -1,4 +1,3 @@
-
 fn bool testBoucleConditionExtern()
 {
     dec string[] fonctionnalite = "1.testBoucleConditionExtern : ";

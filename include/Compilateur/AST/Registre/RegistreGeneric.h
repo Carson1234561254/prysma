@@ -60,8 +60,6 @@ public:
         return cles;
     }
 
- 
-
 protected:
    virtual std::string genererMessageErreur(const TKey& cle) const {
         std::lock_guard<TLock> guard(_lock);
@@ -78,6 +76,5 @@ private:
         return stringStream.str();
     }
 };
-
 
 #endif
