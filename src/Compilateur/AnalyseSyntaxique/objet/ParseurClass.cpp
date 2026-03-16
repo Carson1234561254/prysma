@@ -11,8 +11,9 @@ namespace
 {
   void classerNoeudClasse(INoeud* noeud,
               const Token& nomClasseToken,
-              std::vector<INoeud*>& variables,
-              std::vector<INoeud*>& fonctions,
+              const Token& visibilite_courante,
+              ContextParseur& contextParseur,
+              std::vector<INoeud*>& listMembres,
               std::vector<INoeud*>& constructeurs)
   {
     if (noeud == nullptr) {
@@ -20,17 +21,37 @@ namespace
     }
 
     if (noeud->getTypeGenere() == NoeudTypeGenere::DeclarationVariable) {
-      variables.push_back(noeud);
+      auto* declarationVariable = static_cast<NoeudDeclarationVariable*>(noeud);
+      if (declarationVariable != nullptr) {
+        noeud = contextParseur.constructeurArbreInstruction->allouer<NoeudDeclarationVariable>(
+            visibilite_courante,
+            declarationVariable->getNom(),
+            declarationVariable->getType(),
+            declarationVariable->getExpression()
+        );
+      }
+      listMembres.push_back(noeud);
       return;
     }
 
     if (noeud->getTypeGenere() == NoeudTypeGenere::DeclarationFonction) {
-      auto* declarationFonction = dynamic_cast<NoeudDeclarationFonction*>(noeud);
-      if (declarationFonction != nullptr && declarationFonction->getNom() == nomClasseToken.value) {
+      auto* declarationFonction = static_cast<NoeudDeclarationFonction*>(noeud);
+      if (declarationFonction != nullptr) {
+        noeud = contextParseur.constructeurArbreInstruction->allouer<NoeudDeclarationFonction>(
+            visibilite_courante,
+            declarationFonction->getTypeRetour(),
+            declarationFonction->getNom(),
+            declarationFonction->getArguments(),
+            declarationFonction->getCorps()
+        );
+      }
+      
+      auto* newDeclarationFonction = static_cast<NoeudDeclarationFonction*>(noeud);
+      if (newDeclarationFonction != nullptr && newDeclarationFonction->getNom() == nomClasseToken.value) {
         constructeurs.push_back(noeud);
         return;
       }
-      fonctions.push_back(noeud);
+      listMembres.push_back(noeud);
       return;
     }
 
@@ -41,8 +62,8 @@ namespace
                int& index,
                const Token& nomClasseToken,
                ContextParseur& contextParseur,
-               std::vector<INoeud*>& variables,
-               std::vector<INoeud*>& fonctions,
+               const Token& visibilite_courante,
+               std::vector<INoeud*>& listMembres,
                std::vector<INoeud*>& constructeurs)
   {
     while (index < static_cast<int>(tokens.size())
@@ -51,7 +72,7 @@ namespace
       && tokens[static_cast<size_t>(index)].type != TOKEN_PROTECTED
       && tokens[static_cast<size_t>(index)].type != TOKEN_ACCOLADE_FERMEE) {
       INoeud* noeud = contextParseur.constructeurArbreInstruction->construire(tokens, index);
-      classerNoeudClasse(noeud, nomClasseToken, variables, fonctions, constructeurs);
+      classerNoeudClasse(noeud, nomClasseToken, visibilite_courante, contextParseur, listMembres, constructeurs);
     }
   }
 }
@@ -98,62 +119,47 @@ INoeud* ParseurClass::parser(std::vector<Token>& tokens, int& index)
     
     
     consommer(tokens, index, TOKEN_ACCOLADE_OUVERTE, "Attendu '{' après le nom de la classe.");
-    std::vector<INoeud*> listVariable;
-    std::vector<INoeud*> listFonction;
-    std::vector<INoeud*> listVariablePrive;
-    std::vector<INoeud*> listFonctionPrive;
-    std::vector<INoeud*> listVariableProtected;
-    std::vector<INoeud*> listFonctionProtected;
+    std::vector<INoeud*> listMembres;
     std::vector<INoeud*> constructeurs;
-
+    
     // Par défaut, on commence en section PRIVATE si pas de mot-clé de visibilité
-    std::vector<INoeud*>* currentListVariable = &listVariablePrive;
-    std::vector<INoeud*>* currentListFonction = &listFonctionPrive;
+    Token visibilite_courante;
+    visibilite_courante.type = TOKEN_PRIVATE;
+    visibilite_courante.value = "private";
 
     while (index < static_cast<int>(tokens.size()) && tokens[static_cast<size_t>(index)].type != TOKEN_ACCOLADE_FERMEE) {
         TokenType tokenType = tokens[static_cast<size_t>(index)].type;
 
         if (tokenType == TOKEN_PUBLIC) {
+            visibilite_courante = tokens[static_cast<size_t>(index)];
             consommer(tokens, index, TOKEN_PUBLIC, "Attendu 'public' pour la section publique de la classe.");
             consommer(tokens, index, TOKEN_DEUX_POINTS, "Attendu ':' après 'public'.");
-            parserSectionClasse(tokens, index, nomClasseToken, _contextParseur, listVariable, listFonction, constructeurs);
-            currentListVariable = &listVariable;
-            currentListFonction = &listFonction;
             continue;
         }
 
         if (tokenType == TOKEN_PRIVATE) {
+            visibilite_courante = tokens[static_cast<size_t>(index)];
             consommer(tokens, index, TOKEN_PRIVATE, "Attendu 'private' pour la section privée de la classe.");
             consommer(tokens, index, TOKEN_DEUX_POINTS, "Attendu ':' après 'private'.");
-            parserSectionClasse(tokens, index, nomClasseToken, _contextParseur, listVariablePrive, listFonctionPrive, constructeurs);
-            currentListVariable = &listVariablePrive;
-            currentListFonction = &listFonctionPrive;
             continue;
         }
 
         if (tokenType == TOKEN_PROTECTED) {
+          visibilite_courante = tokens[static_cast<size_t>(index)];
           consommer(tokens, index, TOKEN_PROTECTED, "Attendu 'protected' pour la section protégée de la classe.");
           consommer(tokens, index, TOKEN_DEUX_POINTS, "Attendu ':' après 'protected'.");
-          parserSectionClasse(tokens, index, nomClasseToken, _contextParseur, listVariableProtected, listFonctionProtected, constructeurs);
-          currentListVariable = &listVariableProtected;
-          currentListFonction = &listFonctionProtected;
           continue;
         }
 
         // Si aucun mot-clé de visibilité, on parse les membres dans la section courante (private par défaut)
         INoeud* noeud = _contextParseur.constructeurArbreInstruction->construire(tokens, index);
-        classerNoeudClasse(noeud, nomClasseToken, *currentListVariable, *currentListFonction, constructeurs);
+        classerNoeudClasse(noeud, nomClasseToken, visibilite_courante, _contextParseur, listMembres, constructeurs);
     }
 
     consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Attendu '}' à la fin de la déclaration de classe.");
 
     return _contextParseur.constructeurArbreInstruction->allouer<NoeudClass>(heritage,
-                                                                              listVariable,
-                                                                              listFonction,
-                                                                              listVariablePrive,
-                                                                              listFonctionPrive,
-                                                                              listVariableProtected,
-                                                                              listFonctionProtected,
+                                                                              listMembres,
                                                                               constructeurs,
                                                                               nomClasseToken);
 

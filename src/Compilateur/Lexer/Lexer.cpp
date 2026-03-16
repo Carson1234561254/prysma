@@ -163,9 +163,6 @@ void Lexer::traiterDelimiteurs(char current, vector<Token>& tokens, int ligne, i
         case ';': 
             tokens.push_back({TOKEN_POINT_VIRGULE, ";", ligne, colonne}); 
             break;
-        case ':':
-            tokens.push_back({TOKEN_DEUX_POINTS, ":", ligne, colonne});
-            break;
         case ',': 
             tokens.push_back({TOKEN_VIRGULE, ",", ligne, colonne}); 
             break;
@@ -229,6 +226,16 @@ void Lexer::traiterOperateursComplexes(char current, const string& sourceCode, s
                 colonne++;
             }
             break;
+
+        case ':':
+            if (pos + 1 < sourceCode.length() && sourceCode[pos + 1] == ':') {
+                tokens.push_back({TOKEN_DEUX_POINTS, "::", ligne, colonne});
+                pos++;
+                colonne++;
+            } else {
+                tokens.push_back({TOKEN_DEUX_POINTS, ":", ligne, colonne});
+            }
+            break;
     }
 }
 
@@ -240,7 +247,7 @@ void Lexer::traiterOperateursEtDelimiteurs(char current, const string& sourceCod
              current == '[' || current == ']' || current == '.' || current == ';' || current == ',') {
         traiterDelimiteurs(current, tokens, ligne, colonne);
     }
-    else if (current == '=' || current == '<' || current == '>' || current == '!' || current == '&' || current == '|') {
+    else if (current == '=' || current == '<' || current == '>' || current == '!' || current == '&' || current == '|' || current == ':') {
         traiterOperateursComplexes(current, sourceCode, pos, tokens, ligne, colonne);
     }
 }

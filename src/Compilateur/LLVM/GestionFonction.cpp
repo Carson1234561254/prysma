@@ -35,7 +35,8 @@ GestionFonction::ArgumentsCodeGen GestionFonction::chargerArguments()
 llvm::Function* GestionFonction::creerFonction()
 {
     // Récupérer la fonction LLVM depuis le registre local (thread-privé)
-    const auto& symbolePtr = _contextGenCode->registreFonctionLocale->recuperer(_noeudDeclarationFonction->getNom());
+    std::string nomFonction = _noeudDeclarationFonction->getNom();
+    const auto& symbolePtr = _contextGenCode->registreFonctionLocale->recuperer(nomFonction);
     const auto* symbole = static_cast<const SymboleFonctionLocale*>(symbolePtr.get());
     llvm::Function* function = symbole->fonction;
 

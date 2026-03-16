@@ -64,7 +64,7 @@ target_link_libraries(Prysma PRIVATE ${llvm_libs})
 # mes flags de compilation
 target_compile_options(Prysma PRIVATE
     # pas d'opti en Debug, max d'opti en Release
-    $<$<CONFIG:Debug>:-g;-O0;-fno-omit-frame-pointer>
+    $<$<CONFIG:Debug>:-g;-O0;-fno-omit-frame-pointer;-fstandalone-debug>
     $<$<NOT:$<CONFIG:Debug>>:-O2>
     
     # pour lire les erreurs sans avoir mal au crâne (couleurs, 3 erreurs max, petit curseur)

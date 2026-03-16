@@ -13,6 +13,7 @@ Noeud:
     DeclarationFonction:
       moteur: [parseur]
       champs:
+        visibilite: "Token"
         typeRetour: "IType*"
         nom: "std::string"
         arguments: "std::vector<INoeud*>"
@@ -32,6 +33,7 @@ Noeud:
     DeclarationVariable:
       moteur: [parseur]
       champs:
+        visibilite: "Token"
         nom: "std::string"
         type: "IType*"
         expression: "INoeud*"  
@@ -70,12 +72,7 @@ Noeud:
       moteur: [parseur]
       champs: 
         Heritage: "std::vector<INoeud*>"
-        listVariable: "std::vector<INoeud*>"
-        listFonction: "std::vector<INoeud*>"
-        listVariablePrive: "std::vector<INoeud*>"
-        listFonctionPrive: "std::vector<INoeud*>"
-        listVariableProtected: "std::vector<INoeud*>"
-        listFonctionProtected: "std::vector<INoeud*>"
+        listMembres: "std::vector<INoeud*>"
         constructeur: "std::vector<INoeud*>"
         nomClass: "Token"
     AppelObjet:

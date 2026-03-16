@@ -10,8 +10,6 @@ class Animal
       {
          call print(crie);
       }
-
-   fin;
 }
 
 class Chien 
@@ -41,9 +39,9 @@ class Chien
 
 fn int32 main() 
 {
-   dec ptr Chien = new Chien();
+   //dec ptr Chien = new Chien();
 
-  // call objet.methodePrint();
+   // call objet.methodePrint();
 
    return 0;
 }

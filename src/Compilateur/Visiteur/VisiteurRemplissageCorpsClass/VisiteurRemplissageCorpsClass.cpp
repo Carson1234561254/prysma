@@ -140,11 +140,11 @@ void VisiteurRemplissageCoprsClass::visiter(NoeudClass* noeudClass)
         for(INoeud* methodeParent : listMethodeParent)
         {
             bool trouve = false;
-            for(INoeud* methodeClasse : noeudClass->getListFonction())
+            for(INoeud* membreClasse : noeudClass->getListMembres())
             {
-                if(methodeClasse->getTypeGenere() == NoeudTypeGenere::DeclarationFonction)
+                if(membreClasse->getTypeGenere() == NoeudTypeGenere::DeclarationFonction)
                 {
-                    auto* declarationMethodeClasse = static_cast<NoeudDeclarationFonction*>(methodeClasse);
+                    auto* declarationMethodeClasse = static_cast<NoeudDeclarationFonction*>(membreClasse);
                     auto* declarationMethodeParent = static_cast<NoeudDeclarationFonction*>(methodeParent);
                     if(declarationMethodeClasse->getNom() == declarationMethodeParent->getNom())
                     {
@@ -170,9 +170,9 @@ void VisiteurRemplissageCoprsClass::visiter(NoeudClass* noeudClass)
     {
         // Classe sans parent : construire la VTable avec ses propres méthodes
         std::vector<INoeud*> listMethodes;
-        for (INoeud* methode : noeudClass->getListFonction()) {
-            if (methode->getTypeGenere() == NoeudTypeGenere::DeclarationFonction) {
-                listMethodes.push_back(methode);
+        for (INoeud* membre : noeudClass->getListMembres()) {
+            if (membre->getTypeGenere() == NoeudTypeGenere::DeclarationFonction) {
+                listMethodes.push_back(membre);
             }
         }
         construireVTable(classInfo, nomClass, listMethodes);
@@ -181,66 +181,20 @@ void VisiteurRemplissageCoprsClass::visiter(NoeudClass* noeudClass)
     // L'index commence à 1 car l'index 0 est réservé au vtable pointer
     unsigned int indexCourant = 1;
     
-    // Parcourir les variables publiques
-    for(INoeud* variable : noeudClass->getListVariable())
+    // Parcourir les membres pour récupérer les variables dans l'ordre de déclaration
+    for(INoeud* membre : noeudClass->getListMembres())
     {
-        if(variable->getTypeGenere() != NoeudTypeGenere::DeclarationVariable)
+        if(membre->getTypeGenere() == NoeudTypeGenere::DeclarationVariable)
         {
-            std::string errorMsg = "Tous les membres de la section variable d'une classe doivent être des déclarations de variable. ";
-            errorMsg += "Erreur dans la classe : " + nomClass;
-            throw std::runtime_error(errorMsg);
-        }
-
-        auto* declarationVariable = static_cast<NoeudDeclarationVariable*>(variable);
-        IType* itype = declarationVariable->getType();
-        llvm::Type* typeVariable = itype->genererTypeLLVM(_contextGenCode->backend->getContext());
-        if (typeVariable != nullptr) {
-            elementsCorpsClass.push_back(typeVariable);
-            // Enregistrer l'index pour la Passe 3
-            classInfo->memberIndices[declarationVariable->getNom()] = indexCourant;
-            indexCourant++;
-        }
-    }
-    
-    // Parcourir les variables privées
-    for(INoeud* variable : noeudClass->getListVariablePrive())
-    {
-        if(variable->getTypeGenere() != NoeudTypeGenere::DeclarationVariable)
-        {
-            std::string errorMsg = "Tous les membres de la section variable d'une classe doivent être des déclarations de variable. ";
-            errorMsg += "Erreur dans la classe : " + nomClass;
-            throw std::runtime_error(errorMsg);
-        }
-
-        auto* declarationVariable = static_cast<NoeudDeclarationVariable*>(variable);
-        IType* itype = declarationVariable->getType();
-        llvm::Type* typeVariable = itype->genererTypeLLVM(_contextGenCode->backend->getContext());
-        if (typeVariable != nullptr) {
-            elementsCorpsClass.push_back(typeVariable);
-            // Enregistrer l'index pour la Passe 3
-            classInfo->memberIndices[declarationVariable->getNom()] = indexCourant;
-            indexCourant++;
-        }
-    }
-    
-    // Parcourir les variables protégées
-    for(INoeud* variable : noeudClass->getListVariableProtected())
-    {
-        if(variable->getTypeGenere() != NoeudTypeGenere::DeclarationVariable)
-        {
-            std::string errorMsg = "Tous les membres de la section variable d'une classe doivent être des déclarations de variable. ";
-            errorMsg += "Erreur dans la classe : " + nomClass;
-            throw std::runtime_error(errorMsg);
-        }
-
-        auto* declarationVariable = static_cast<NoeudDeclarationVariable*>(variable);
-        IType* itype = declarationVariable->getType();
-        llvm::Type* typeVariable = itype->genererTypeLLVM(_contextGenCode->backend->getContext());
-        if (typeVariable != nullptr) {
-            elementsCorpsClass.push_back(typeVariable);
-            // Enregistrer l'index pour la Passe 3
-            classInfo->memberIndices[declarationVariable->getNom()] = indexCourant;
-            indexCourant++;
+            auto* declarationVariable = static_cast<NoeudDeclarationVariable*>(membre);
+            IType* itype = declarationVariable->getType();
+            llvm::Type* typeVariable = itype->genererTypeLLVM(_contextGenCode->backend->getContext());
+            if (typeVariable != nullptr) {
+                elementsCorpsClass.push_back(typeVariable);
+                // Enregistrer l'index pour la Passe 3
+                classInfo->memberIndices[declarationVariable->getNom()] = indexCourant;
+                indexCourant++;
+            }
         }
     }
 

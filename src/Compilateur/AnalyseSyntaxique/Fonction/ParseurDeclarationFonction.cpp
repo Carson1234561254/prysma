@@ -51,7 +51,7 @@ INoeud* ParseurDeclarationFonction::parser(std::vector<Token>& tokens, int& inde
   consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Erreur: ce n'est pas une accolade fermée '}'");
 
   auto* noeudFonction = 
-      _contextParseur.constructeurArbreInstruction->allouer<NoeudDeclarationFonction>(typeRetour, nomFonction, arguments, corps);
+      _contextParseur.constructeurArbreInstruction->allouer<NoeudDeclarationFonction>(Token{}, typeRetour, nomFonction, arguments, corps);
 
   return noeudFonction; 
 }
