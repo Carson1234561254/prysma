@@ -33,15 +33,15 @@ class Chien
 
       fn void crier()
       {
-         //animal.crier(crie);
+         //call animal.crier(crie);
       }
 }
 
 fn int32 main() 
 {
-   //dec ptr Chien = new Chien();
+   dec ptr chien = new Chien();
 
-   // call objet.methodePrint();
+   call chien.crier();
 
    return 0;
 }

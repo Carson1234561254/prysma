@@ -2,7 +2,9 @@
 #define BFF76A14_E9C5_4CB2_820B_010F0D0924A1
 
 #include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/Type.h>
+
 
 class IType {
 public:
@@ -15,7 +17,8 @@ public:
     virtual bool estBooleen() const = 0;
     virtual bool estChaine() const = 0;
     virtual bool estTableau() const = 0;
+    virtual bool estComplexe() const { return false; }
+    virtual ::llvm::Type* getVTableType(::llvm::LLVMContext& /*context*/) { return nullptr; }
 };
-
 
 #endif /* BFF76A14_E9C5_4CB2_820B_010F0D0924A1 */

@@ -7,8 +7,17 @@ void VisiteurGeneralGenCode::visiter(NoeudNew* noeudNew)
     auto& module = _contextGenCode->backend->getModule();
     auto& builder = _contextGenCode->backend->getBuilder();
 
-    // On va le chercher dans ton registre via le token stocké dans le noeud
-    llvm::Type* typeCible = _contextGenCode->registreType->recuperer(noeudNew->getNomType().type);
+    llvm::Type* typeCible = nullptr;
+    Class* infoClasse = nullptr;
+
+    if (noeudNew->getNomType().type == TOKEN_IDENTIFIANT) {
+        infoClasse = _contextGenCode->registreClass->recuperer(noeudNew->getNomType().value);
+        if (infoClasse != nullptr) {
+            typeCible = infoClasse->structType;
+        }
+    } else {
+        typeCible = _contextGenCode->registreType->recuperer(noeudNew->getNomType().type);
+    }
 
     if (typeCible == nullptr) {
         throw std::runtime_error("Erreur: le type cible n'existe pas! ");
@@ -28,6 +37,13 @@ void VisiteurGeneralGenCode::visiter(NoeudNew* noeudNew)
     }
 
     llvm::Value* adresseAllouee = builder.CreateCall(mallocFunc, {tailleLLVM}, "memoire_new");
+
+    if (infoClasse != nullptr && infoClasse->vtable != nullptr) {
+        // Initialiser le vptr à l'adresse 0 de l'objet alloué
+        llvm::Value* vptrAdresse = builder.CreateStructGEP(typeCible, adresseAllouee, 0, "vptr_adresse");
+        llvm::Value* vtablePtr = builder.CreateBitCast(infoClasse->vtable, builder.getPtrTy());
+        builder.CreateStore(vtablePtr, vptrAdresse);
+    }
 
     _contextGenCode->valeurTemporaire.adresse = adresseAllouee;
     _contextGenCode->valeurTemporaire.typePointeElement = typeCible;

@@ -54,6 +54,7 @@ constexpr bool estType(TokenType type) noexcept {
         case TOKEN_TYPE_INT64:
         case TOKEN_TYPE_INT32:
         case TOKEN_TYPE_PTR:
+        case TOKEN_IDENTIFIANT:
             return true;
         default:
             return false;

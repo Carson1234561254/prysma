@@ -2,6 +2,7 @@
 #include "Compilateur/AST/Interfaces/IConstructeurArbre.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/Registre/Types/TypeTableau.h"
+#include "Compilateur/AST/Registre/Types/TypeComplexe.h"
 #include "Compilateur/Lexer/TokenCategories.h"
 #include "Compilateur/GestionnaireErreur.h"
 #include "Compilateur/Lexer/TokenType.h"
@@ -18,9 +19,14 @@ IType* ParseurType::parser(std::vector<Token>& tokens, int& index)
         throw ErreurCompilation("Erreur : type attendu", tokens[static_cast<size_t>(index)].ligne, tokens[static_cast<size_t>(index)].colonne);
     }
 
-    // Récupérer le type LLVM depuis le registre et créer un TypeSimple
-    llvm::Type* typeLLVM = _registreType->recuperer(tokens[static_cast<size_t>(index)].type);
-    IType* type = _constructeurArbre->allouer<TypeSimple>(typeLLVM);
+    IType* type = nullptr;
+    
+    if (tokens[static_cast<size_t>(index)].type == TOKEN_IDENTIFIANT) {
+        type = _constructeurArbre->allouer<TypeComplexe>(tokens[static_cast<size_t>(index)].value);
+    } else {
+        llvm::Type* typeLLVM = _registreType->recuperer(tokens[static_cast<size_t>(index)].type);
+        type = _constructeurArbre->allouer<TypeSimple>(typeLLVM);
+    }
     index++;
 
     if (tokens[static_cast<size_t>(index)].type == TOKEN_CROCHET_OUVERT) {

@@ -34,8 +34,17 @@ INoeud* ExpressionNew::construire(std::vector<Token>& equation)
         nomType.type != TOKEN_TYPE_CHAR &&
         nomType.type != TOKEN_TYPE_STRING &&
         nomType.type != TOKEN_TYPE_VOID &&
-        nomType.type != TOKEN_TYPE_PTR) {
+        nomType.type != TOKEN_TYPE_PTR &&
+        nomType.type != TOKEN_IDENTIFIANT) {
         throw ErreurCompilation("Erreur: aucun type valide pour l'objet créé avec 'new'", nomType.ligne, nomType.colonne);
+    }
+
+    if (nomType.type == TOKEN_IDENTIFIANT) {
+        if (index + 2 < static_cast<int>(equation.size()) && 
+            equation[index + 1].type == TOKEN_PAREN_OUVERTE && 
+            equation[index + 2].type == TOKEN_PAREN_FERMEE) {
+            index += 2;
+        }
     }
 
     return new (_contexteExpression.arena.Allocate(sizeof(NoeudNew), alignof(NoeudNew))) NoeudNew(nomType);
