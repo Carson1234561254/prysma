@@ -3,7 +3,7 @@
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/LLVM/GestionVariable.h"
-#include <stdexcept> // Pour std::runtime_error
+#include <stdexcept> 
 
 void VisiteurGeneralGenCode::visiter(NoeudLitteral* noeudLitteral)
 {
