@@ -11,8 +11,8 @@ void VisiteurGeneralGenCode::visiter(NoeudLitteral* noeudLitteral)
     Token token = noeudLitteral->getToken();
 
     if (token.type == TOKEN_IDENTIFIANT) {
-        GestionVariable gestionVariable(_contextGenCode);
-        _contextGenCode->valeurTemporaire = gestionVariable.chargerVariable(token.value);
+        ChargeurVariable chargeur(_contextGenCode);
+        _contextGenCode->valeurTemporaire = chargeur.charger(token.value);
     }
     else if (token.type == TOKEN_VRAI || token.type == TOKEN_FAUX) {
         bool valeur = (token.type == TOKEN_VRAI);

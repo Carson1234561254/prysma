@@ -14,10 +14,10 @@ void VisiteurGeneralGenCode::visiter(NoeudAppelObjet* noeudAppelObjet)
     // Récupérer la méthode à appeler (ex: "crier")
     std::string nomMethode = noeudAppelObjet->getNomMethode().value;
 
-    GestionVariable gestionVariable(_contextGenCode);
+    ChargeurVariable chargeur(_contextGenCode);
     
     // Charger la variable objet (qui est un pointeur)
-    Symbole objetSymbole = gestionVariable.chargerVariable(nomObjet);
+    Symbole objetSymbole = chargeur.charger(nomObjet);
     llvm::Value* objet = objetSymbole.adresse;
 
     std::string nomClasse = "";

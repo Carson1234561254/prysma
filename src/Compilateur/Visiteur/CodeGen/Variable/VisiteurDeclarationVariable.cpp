@@ -8,7 +8,7 @@
 
 void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationVariable) 
 {
-    GestionVariable gestionVariable(_contextGenCode);
+    AllocateurVariable allocateur(_contextGenCode);
     INoeud* expression = noeudDeclarationVariable->getExpression();
        
     // Vérifier si l'expression est une initialisation de tableau
@@ -47,7 +47,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         }
         
         // Allouer et enregistrer le tableau
-        llvm::AllocaInst* allocaInstTableau = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
+        llvm::AllocaInst* allocaInstTableau = allocateur.allouer(typeVariable, noeudDeclarationVariable->getNom());
         
         allocaCree = allocaInstTableau;
 
@@ -68,7 +68,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
     } else {
         // Variable simple (non-tableau)
         llvm::Type* typeVariable = noeudDeclarationVariable->getType()->genererTypeLLVM(_contextGenCode->backend->getContext());
-        llvm::AllocaInst* allocaInst = gestionVariable.allouerVariable(typeVariable, noeudDeclarationVariable->getNom());
+        llvm::AllocaInst* allocaInst = allocateur.allouer(typeVariable, noeudDeclarationVariable->getNom());
         allocaCree = allocaInst;
         
         llvm::Value* valeurCalculee = evaluerExpression(expression).adresse;
@@ -77,7 +77,7 @@ void VisiteurGeneralGenCode::visiter(NoeudDeclarationVariable* noeudDeclarationV
         }
 
         llvm::Value* valeurCastee = _contextGenCode->backend->creerAutoCast(valeurCalculee, typeVariable);
-        gestionVariable.stockerVariable(valeurCastee, allocaInst);
+        allocateur.stocker(valeurCastee, allocaInst);
     }
     if (allocaCree != nullptr) {
         Token token;
