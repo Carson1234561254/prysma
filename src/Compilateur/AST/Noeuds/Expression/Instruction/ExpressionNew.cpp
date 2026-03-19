@@ -46,18 +46,18 @@ INoeud* ExpressionNew::construire(std::vector<Token>& equation)
     if (nomType.type == TOKEN_IDENTIFIANT) {
         index++; // Passer le nom du type
         
-        if (index < static_cast<int>(equation.size()) && equation[index].type == TOKEN_PAREN_OUVERTE) {
+        if (index < static_cast<int>(equation.size()) && equation[static_cast<size_t>(index)].type == TOKEN_PAREN_OUVERTE) {
             index++; // Passer '('
 
-            while(index < static_cast<int>(equation.size()) && equation[index].type != TOKEN_PAREN_FERMEE) {
+            while(index < static_cast<int>(equation.size()) && equation[static_cast<size_t>(index)].type != TOKEN_PAREN_FERMEE) {
                 
                 arguments.push_back(_contexteExpression.contextParseur->constructeurArbreEquation->construire(equation, index));
 
-                if (index < static_cast<int>(equation.size()) && equation[index].type == TOKEN_VIRGULE) {
+                if (index < static_cast<int>(equation.size()) && equation[static_cast<size_t>(index)].type == TOKEN_VIRGULE) {
                     index++; // Passer la virgule
                 }
             }
-            if (index < static_cast<int>(equation.size()) && equation[index].type == TOKEN_PAREN_FERMEE) {
+            if (index < static_cast<int>(equation.size()) && equation[static_cast<size_t>(index)].type == TOKEN_PAREN_FERMEE) {
                 index++; // Passer ')'
             }
         }

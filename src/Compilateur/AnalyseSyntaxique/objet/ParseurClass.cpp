@@ -57,24 +57,6 @@ namespace
 
     throw ErreurCompilation("Membre de classe invalide : '" + nomClasseToken.value + "'", nomClasseToken.ligne, nomClasseToken.colonne);
   }
-
-  void parserSectionClasse(std::vector<Token>& tokens,
-               int& index,
-               const Token& nomClasseToken,
-               ContextParseur& contextParseur,
-               const Token& visibilite_courante,
-               std::vector<INoeud*>& listMembres,
-               std::vector<INoeud*>& constructeurs)
-  {
-    while (index < static_cast<int>(tokens.size())
-      && tokens[static_cast<size_t>(index)].type != TOKEN_PUBLIC
-      && tokens[static_cast<size_t>(index)].type != TOKEN_PRIVATE
-      && tokens[static_cast<size_t>(index)].type != TOKEN_PROTECTED
-      && tokens[static_cast<size_t>(index)].type != TOKEN_ACCOLADE_FERMEE) {
-      INoeud* noeud = contextParseur.constructeurArbreInstruction->construire(tokens, index);
-      classerNoeudClasse(noeud, nomClasseToken, visibilite_courante, contextParseur, listMembres, constructeurs);
-    }
-  }
 }
 
 

@@ -110,7 +110,7 @@ void UniteCompilation::passe2() {
         std::filesystem::remove(pathGraphe + _nomFichier + ".dot");
     }
 
-    LlvmSerializer serializer(_context->backend->getContext(), _context->backend->getModule());
+    LlvmSerializer serializer(_context->backend->getModule());
     serializer.SauvegarderCodeLLVM(pathProgramme + _nomFichier + ".ll"); 
 
     // Restaurer le répertoire courant pour les includes au même niveau

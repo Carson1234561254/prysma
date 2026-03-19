@@ -39,7 +39,7 @@ void VisiteurRemplissageCoprsClass::construireVTable(Class* classInfo, const std
                 functionImpl,
                 llvm::PointerType::get(llvm::Type::getInt8Ty(_contextGenCode->backend->getContext()), 0)
             ));
-            classInfo->methodIndices[nomMethodeParent] = vtableElements.size() - 1;
+            classInfo->methodIndices[nomMethodeParent] = static_cast<unsigned int>(vtableElements.size() - 1);
         }
     }
     
@@ -66,7 +66,7 @@ void VisiteurRemplissageCoprsClass::construireVTable(Class* classInfo, const std
                     symboleLocal->fonction,
                     llvm::PointerType::get(llvm::Type::getInt8Ty(_contextGenCode->backend->getContext()), 0)
                 ));
-                classInfo->methodIndices[nomMethode] = vtableElements.size() - 1;
+                classInfo->methodIndices[nomMethode] = static_cast<unsigned int>(vtableElements.size() - 1);
             }
         }
     }

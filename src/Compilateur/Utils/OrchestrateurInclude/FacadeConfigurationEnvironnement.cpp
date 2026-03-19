@@ -211,7 +211,7 @@ void FacadeConfigurationEnvironnement::enregistrerExpressions()
     _registreExpression = new (_arena.Allocate<RegistreExpression>()) RegistreExpression();
 
     _constructeurEquation = new (_arena)
-        ConstructeurEquationFlottante(_constructeurArbreInstruction, _registreExpression, _arena);
+        ConstructeurEquationFlottante(_registreExpression, _arena);
 
     // Créer le ParseurType avec le registre
     _parseurType = new (_arena.Allocate<ParseurType>())

@@ -19,6 +19,7 @@ void VisiteurGeneralGraphViz::generer()
 {% for nom, label, traversables in methodes %}
 void VisiteurGeneralGraphViz::visiter(Noeud{{ nom }}* noeud)
 {
+    (void)noeud;
     int idNoeud = _sortieGrapheVisuel.ajouterNoeud({{ label }});
 {% for getter, type_champ in traversables %}
 {% if type_champ == 'std::vector<INoeud*>' %}

@@ -1,48 +1,53 @@
 ---
-# Configuration pour clangd
-
+# Configuration globale pour Prysma
 InlayHints:
   Enabled: true
   ParameterNames: true
   DeducedTypes: true
+  Designators: true       
+  TypeNameLimit: 25
+
+SemanticTokens:
+  Enabled: true
 
 CompileFlags:
   Add: 
+    - "-fno-rtti"
     - "-std=c++17"
     - "-Wall"
     - "-Wextra"
-    - "-Wpedantic"
-    - "-Wshadow"
-    - "-Wnon-virtual-dtor"
-    - "-Wnull-dereference"
-    - "-O0"
-    - "-g"
+    - "-fcolor-diagnostics"
   CompilationDatabase: build
-
----
-
-If:
-  PathMatch: Tests/.*
-CompileFlags:
-  CompilationDatabase: Tests/build
-
----
 
 Index:
   Background: Build
 
 Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+  Suppress: ["bugprone-narrowing-conversions"]
   ClangTidy:
-    Add:
-      - "modernize-*"
-      - "readability-*"
-      - "performance-*"
-    Remove:
-      - "modernize-use-trailing-return-type"
-      - "readability-magic-numbers"
+    Add: 
+      - bugprone-*
+      - cppcoreguidelines-*
+      - modernize-*
+      - performance-*
+      - readability-*
+    Remove: 
+      - readability-magic-numbers
+      - modernize-use-trailing-return-type
+    CheckOptions:
+      readability-identifier-naming.VariableCase: camelCase
 
 Hover:
   ShowAKA: true
 
 Completion:
   AllScopes: true
+
+---
+# Configuration spécifique pour les Tests
+If:
+  PathMatch: Tests/.*
+CompileFlags:
+  CompilationDatabase: Tests/build

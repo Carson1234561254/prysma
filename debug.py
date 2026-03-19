@@ -8,6 +8,7 @@ from generation.generateur_graphe_viz import GenerateurGrapheViz
 from generation.generateur_expression import GenerateurExpression
 from generation.generateur_parseur import GenerateurParseur
 
+
 def main():
     dossier_script = os.path.dirname(os.path.abspath(__file__))
     os.chdir(dossier_script)
@@ -19,29 +20,25 @@ def main():
     GenerateurExpression(dossier_script).generer()
     GenerateurParseur(dossier_script).generer()
 
-    cxxflags_list = [
-            "-O3",                  # Vitesse brute (optimisation maximale)
-            "-march=native",        # Exploitation totale des instructions de ton CPU
-            "-ffast-math",          # Calculs mathématiques agressifs
-            "-fno-rtti",            # Zéro métadonnée d'exécution (RTTI off)
-            "-fomit-frame-pointer", # Libération d'un registre CPU
-            "-flto",                # Fusion et optimisation globale au linkage (LTO)
-            "-DNDEBUG"              # Désactivation absolue des assertions
-    ]
-    
-    ldflags_list = [
-        "-flto",
-        "-Wl,--gc-sections",
-        "-Wl,-s",
-        "-fuse-ld=lld"
-    ]
+    cxxflags = (
+        "-fno-rtti -g3 -O0 " # Debug info max, aucune optimisation
+        "-fsanitize=address -fsanitize=undefined " # Les détecteurs de bugs mémoire
+        "-fstack-protector-all " # Ajout du protecteur de pile
+        "-fno-omit-frame-pointer " # Pour des backtraces propres
+        "-D_DEBUG -D_GLIBCXX_DEBUG " # Assertions et debug de la lib standard
+        "-Wall -Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor "
+        "-Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual "
+        "-Wconversion -Wsign-conversion -Wnull-dereference -Wformat=2 "
+        "-ffunction-sections -fdata-sections " # section pour le code mort 
+        "-Werror "
+    )
 
-    cxxflags = " ".join(cxxflags_list)
-    ldflags = " ".join(ldflags_list)
+    # 2. Les sanitizers doivent aussi être passés au Linker
+    ldflags = "-fsanitize=address -fsanitize=undefined"
 
     BuildManager.executer_commande([
         "cmake", "-S", ".", "-B", "build", 
-        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_BUILD_TYPE=Debug",
         f"-DCMAKE_CXX_FLAGS={cxxflags}",
         f"-DCMAKE_EXE_LINKER_FLAGS={ldflags}", 
         f"-DCMAKE_MODULE_LINKER_FLAGS={ldflags}",

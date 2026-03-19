@@ -7,7 +7,6 @@
 #include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/AnalyseSyntaxique/Equation/ChaineResponsabilite.h"
 #include "Compilateur/AnalyseSyntaxique/Equation/Interfaces/IGestionnaireParenthese.h"
-#include <memory>
 #include <vector>
 
 
@@ -18,7 +17,6 @@ private:
     RegistreSymbole* _registreSymbole;
     RegistreExpression* _registreExpression;
     IGestionnaireParenthese* _gestionnaireParenthese;
-    IConstructeurArbre* _instructionBuilder;
     llvm::BumpPtrAllocator& _arena;
     Token _dernierToken;
 
@@ -29,8 +27,7 @@ public:
         RegistreSymbole* registreSymbole,
     RegistreExpression* registreExpression,
         IGestionnaireParenthese* gestionnaireParenthese,
-        llvm::BumpPtrAllocator& arena,
-        IConstructeurArbre* instructionBuilder = nullptr
+        llvm::BumpPtrAllocator& arena
     );
     
     INoeud* construire(std::vector<Token> &equation) override;

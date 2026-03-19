@@ -32,7 +32,7 @@ void VisiteurGeneralGenCode::visiter(NoeudLitteral* noeudLitteral)
     else if (token.type == TOKEN_LIT_INT) { 
         int valeur = std::stoi(token.value); 
         llvmType = llvm::Type::getInt32Ty(context);
-        llvmValue = llvm::ConstantInt::get(llvmType, valeur, true);
+        llvmValue = llvm::ConstantInt::get(llvmType, static_cast<uint64_t>(valeur), true);
     }
     else if (token.type == TOKEN_LIT_FLOAT) { 
         float valeur = std::stof(token.value); 

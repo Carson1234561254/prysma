@@ -47,7 +47,7 @@ void VisiteurGeneralGenCode::visiter(NoeudNew* noeudNew)
         arg->accept(this);  // Évalue l'expression (ex: entier = 204)
         argsConstructeur.push_back(_contextGenCode->valeurTemporaire.adresse);
     }
-
+    
     if (infoClasse != nullptr && infoClasse->vtable != nullptr) {
         // Initialiser le vptr à l'adresse 0 de l'objet alloué
         llvm::Value* vptrAdresse = builder.CreateStructGEP(typeCible, adresseAllouee, 0, "vptr_adresse");

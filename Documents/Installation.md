@@ -17,6 +17,12 @@ sudo apt-get update && sudo apt-get install -y bear
 sudo apt install graphviz
 ```
 
+## installation du lld pour la compilation final
+
+```bash
+sudo apt install lld
+```
+
 ## 2. Environnement virtuel Python
 
 ```bash

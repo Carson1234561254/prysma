@@ -11,12 +11,11 @@ using namespace std;
 
 class LlvmSerializer {
     private: 
-        LLVMContext& _context;
         Module& _module;
         error_code errorCode;
             
     public: 
-        LlvmSerializer(LLVMContext& ctx, Module& mod) : _context(ctx), _module(mod) {}
+        LlvmSerializer(Module& mod) : _module(mod) {}
         void SauvegarderCodeLLVM(const string& path);
 };
 

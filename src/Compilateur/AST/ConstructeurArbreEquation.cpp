@@ -10,13 +10,11 @@ ConstructeurArbreEquation::ConstructeurArbreEquation(
     RegistreSymbole* registreSymbole,
     RegistreExpression* registreExpression,
     IGestionnaireParenthese* gestionnaireParenthese,
-    llvm::BumpPtrAllocator& arena,
-    IConstructeurArbre* instructionBuilder)
+    llvm::BumpPtrAllocator& arena)
     : _chaineResponsabilite(chaineResponsabilite), 
       _registreSymbole(registreSymbole), 
     _registreExpression(registreExpression),
       _gestionnaireParenthese(gestionnaireParenthese),
-      _instructionBuilder(instructionBuilder),
       _arena(arena),
       _dernierToken{TOKEN_EOF, "", 1, 1}
 {

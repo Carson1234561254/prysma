@@ -21,7 +21,7 @@ def main():
     GenerateurVisiteurBaseGenerale(racine).generer()
     GenerateurGrapheViz(racine).generer()
 
-    build_manager.BuildManager.executer_commande(["python3", "../build.py"])
+    build_manager.BuildManager.executer_commande(["python3", "../debug.py"])
 
     # Compilation des tests 
     build_manager.BuildManager.executer_commande(["cmake", "-S", ".", "-B", "build"])

@@ -37,7 +37,6 @@ private:
     std::unique_ptr<ChaineResponsabilite> _chaineResponsabilite;
         
     IConstructeurArbre* _constructeurArbre;
-    IConstructeurArbre* _instructionBuilder;
     llvm::BumpPtrAllocator& _arena;
 
     RegistreExpression* _registreExpression;
@@ -46,7 +45,7 @@ private:
 
 public: 
 
-    ConstructeurEquationFlottante(IConstructeurArbre* instructionBuilder, RegistreExpression* registreExpression, llvm::BumpPtrAllocator& arena);
+    ConstructeurEquationFlottante(RegistreExpression* registreExpression, llvm::BumpPtrAllocator& arena);
     
     ~ConstructeurEquationFlottante() = default;
 
