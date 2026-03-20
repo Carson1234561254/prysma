@@ -46,7 +46,7 @@ auto ExpressionString::construire(std::vector<Token>& equation) -> INoeud*
         token.value = std::to_string(ascii);
         token.ligne = chaine.ligne;
         token.colonne = chaine.colonne;
-        elementsString.push_back(new (_contexteExpression.getArena()->Allocate<NoeudLitteral>()) NoeudLitteral(token)); // NOLINT
+        elementsString.push_back(new (_contexteExpression.getArena()->Allocate<NoeudLitteral>()) NoeudLitteral(token)); // NOLINT(cppcoreguidelines-owning-memory)
     }
 
     Token tokenZero;
@@ -54,9 +54,9 @@ auto ExpressionString::construire(std::vector<Token>& equation) -> INoeud*
     tokenZero.value = "0";
     tokenZero.ligne = chaine.ligne;
     tokenZero.colonne = chaine.colonne;
-    elementsString.push_back(new (_contexteExpression.getArena()->Allocate<NoeudLitteral>()) NoeudLitteral(tokenZero)); // NOLINT
+    elementsString.push_back(new (_contexteExpression.getArena()->Allocate<NoeudLitteral>()) NoeudLitteral(tokenZero)); // NOLINT(cppcoreguidelines-owning-memory)
 
-    return new (_contexteExpression.getArena()->Allocate<NoeudTableauInitialisation>()) NoeudTableauInitialisation(elementsString); // NOLINT
+    return new (_contexteExpression.getArena()->Allocate<NoeudTableauInitialisation>()) NoeudTableauInitialisation(elementsString); // NOLINT(cppcoreguidelines-owning-memory)
 }
 
 #endif /* EXPRESSION_STRING_CPP */

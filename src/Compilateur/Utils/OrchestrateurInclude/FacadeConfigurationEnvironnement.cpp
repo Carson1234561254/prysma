@@ -230,13 +230,14 @@ void FacadeConfigurationEnvironnement::creerContextParseur()
         throw std::logic_error("ContextParseur ne peut pas être créé avant les constructeurs d'arbres et le parseur de type");
     }
 
-    _contextParseur = new (_arena.Allocate<ContextParseur>()) ContextParseur( // NOLINT(cppcoreguidelines-owning-memory)
+    ContextParseur::Dependencies deps = {
         _constructeurEquation->recupererConstructeurArbre(),
         _constructeurArbreInstruction,
         _parseurType,
         _registreVariable.get(),
         _registreType.get()
-    );
+    };
+    _contextParseur = new (_arena.Allocate<ContextParseur>()) ContextParseur(deps); // NOLINT(cppcoreguidelines-owning-memory)
 }
 
 void FacadeConfigurationEnvironnement::enregistrerExpressions()

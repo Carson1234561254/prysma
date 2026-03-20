@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include <filesystem>
+
 class ConstructeurSysteme
 {
 private:
@@ -11,10 +13,18 @@ private:
     std::string _buildDir;
     std::vector<std::string> _outputLL;
     std::string _executable;
-    static auto parcourirEtCollecterFichiers(const std::string& repertoire, const std::string& extension) -> std::vector<std::string>;
+    static auto parcourirEtCollecterFichiers(const std::filesystem::path& repertoire, const std::string& extension) -> std::vector<std::string>;
 
 public:
-    ConstructeurSysteme(std::string pathLib, std::string libObjDir, std::string buildDir, std::vector<std::string> outputLL, std::string executable);
+    struct ConstructeurParams {
+        std::string pathLib;
+        std::string libObjDir;
+        std::string buildDir;
+        std::vector<std::string> outputLL;
+        std::string executable;
+    };
+
+    explicit ConstructeurSysteme(ConstructeurParams params);
     ~ConstructeurSysteme();
 
     ConstructeurSysteme(const ConstructeurSysteme&) = default;

@@ -17,30 +17,42 @@ private:
     RegistreType* registreType;
 
 public:
-    ContextParseur(IConstructeurArbre* p_constructeurArbreEquation, IConstructeurArbre* p_constructeurArbreInstruction, ParseurType* p_parseurType,  RegistreVariable* p_registreVariable, RegistreType* p_registreType) // NOLINT(bugprone-easily-swappable-parameters)
-        : constructeurArbreEquation(p_constructeurArbreEquation), constructeurArbreInstruction(p_constructeurArbreInstruction), parseurType(p_parseurType),  registreVariable(p_registreVariable), registreType(p_registreType)
+    struct Dependencies {
+        IConstructeurArbre* constructeurArbreEquation;
+        IConstructeurArbre* constructeurArbreInstruction;
+        ParseurType* parseurType;
+        RegistreVariable* registreVariable;
+        RegistreType* registreType;
+    };
+
+    explicit ContextParseur(const Dependencies& deps)
+        : constructeurArbreEquation(deps.constructeurArbreEquation),
+          constructeurArbreInstruction(deps.constructeurArbreInstruction),
+          parseurType(deps.parseurType),
+          registreVariable(deps.registreVariable),
+          registreType(deps.registreType)
     {
-        if(p_constructeurArbreEquation == nullptr)
+        if(constructeurArbreEquation == nullptr)
         {
             throw std::invalid_argument("constructeurArbreEquation ne peut pas être nul");
         }
 
-        if(p_constructeurArbreInstruction == nullptr)
+        if(constructeurArbreInstruction == nullptr)
         {
             throw std::invalid_argument("constructeurArbreInstruction ne peut pas être nul");
         }
 
-        if(p_parseurType == nullptr)
+        if(parseurType == nullptr)
         {
             throw std::invalid_argument("parseurType ne peut pas être nul");
         }
 
-        if(p_registreVariable == nullptr)
+        if(registreVariable == nullptr)
         {
             throw std::invalid_argument("registreVariable ne peut pas être nul");
         }
 
-        if(p_registreType == nullptr)
+        if(registreType == nullptr)
         {
             throw std::invalid_argument("registreType ne peut pas être nul");
         }

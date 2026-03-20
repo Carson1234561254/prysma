@@ -1,8 +1,8 @@
-#include "Compilateur/GestionnaireErreur.h"
-#include <cstddef>
 #ifndef PARSEUR_CLASS_CPP
 #define PARSEUR_CLASS_CPP
 
+#include "Compilateur/GestionnaireErreur.h"
+#include <cstddef>
 #include "Compilateur/objet/ParseurClass.h"
 #include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
@@ -15,9 +15,24 @@
 
 namespace
 {
+  struct TokenNomClasse { Token t; };
+  struct TokenVisibilite { Token t; };
+
+  class ParametresClasse {
+  public:
+    ParametresClasse(const TokenNomClasse& nomClasseToken, const TokenVisibilite& visibiliteCourante)
+        : nomClasseToken_(nomClasseToken.t), visibilite_courante_(visibiliteCourante.t) {}
+
+    [[nodiscard]] auto nomClasseToken() const -> const Token& { return nomClasseToken_; }
+    [[nodiscard]] auto visibilite_courante() const -> const Token& { return visibilite_courante_; }
+
+  private:
+    Token nomClasseToken_;
+    Token visibilite_courante_;
+  };
+
   void classerNoeudClasse(INoeud* noeud,
-              const Token& nomClasseToken, // NOLINT(bugprone-easily-swappable-parameters)
-              const Token& visibilite_courante, // NOLINT(bugprone-easily-swappable-parameters)
+              const ParametresClasse& param, 
               ContextParseur& contextParseur,
               std::vector<INoeud*>& listMembres,
               std::vector<INoeud*>& constructeurs)
@@ -29,7 +44,7 @@ namespace
     if (auto* declarationVariable = prysma::dyn_cast<NoeudDeclarationVariable>(noeud)) {
       if (declarationVariable != nullptr) {
         noeud = contextParseur.getConstructeurArbreInstruction()->allouer<NoeudDeclarationVariable>(
-            visibilite_courante,
+            param.visibilite_courante(),
             declarationVariable->getNom(),
             declarationVariable->getType(),
             declarationVariable->getExpression()
@@ -42,7 +57,7 @@ namespace
     if (auto* declarationFonction = prysma::dyn_cast<NoeudDeclarationFonction>(noeud)) {
       if (declarationFonction != nullptr) {
         noeud = contextParseur.getConstructeurArbreInstruction()->allouer<NoeudDeclarationFonction>(
-            visibilite_courante,
+            param.visibilite_courante(),
             declarationFonction->getTypeRetour(),
             declarationFonction->getNom(),
             declarationFonction->getArguments(),
@@ -51,7 +66,7 @@ namespace
       }
       
       auto* newDeclarationFonction = prysma::cast<NoeudDeclarationFonction>(noeud);
-      if (newDeclarationFonction != nullptr && newDeclarationFonction->getNom() == nomClasseToken.value) {
+      if (newDeclarationFonction != nullptr && newDeclarationFonction->getNom() == param.nomClasseToken().value) {
         constructeurs.push_back(noeud);
         return;
       }
@@ -59,7 +74,7 @@ namespace
       return;
     }
 
-    throw ErreurCompilation("Membre de classe invalide : '" + nomClasseToken.value + "'", Ligne(nomClasseToken.ligne), Colonne(nomClasseToken.colonne));
+    throw ErreurCompilation("Membre de classe invalide : '" + param.nomClasseToken().value + "'", Ligne(param.nomClasseToken().ligne), Colonne(param.nomClasseToken().colonne));
   }
 }
 
@@ -139,7 +154,7 @@ INoeud* ParseurClass::parser(std::vector<Token>& tokens, int& index)
 
         // Si aucun mot-clé de visibilité, on parse les membres dans la section courante (private par défaut)
         INoeud* noeud = _contextParseur.getConstructeurArbreInstruction()->construire(tokens, index);
-        classerNoeudClasse(noeud, nomClasseToken, visibilite_courante, _contextParseur, listMembres, constructeurs);
+        classerNoeudClasse(noeud, ParametresClasse{TokenNomClasse{nomClasseToken}, TokenVisibilite{visibilite_courante}}, _contextParseur, listMembres, constructeurs);
     }
 
     consommer(tokens, index, TOKEN_ACCOLADE_FERMEE, "Attendu '}' à la fin de la déclaration de classe.");

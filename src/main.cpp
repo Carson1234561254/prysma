@@ -111,7 +111,14 @@ int main(int argc, char* argv[])
 
         std::string nomExecutable = std::filesystem::path(cheminFichier).stem().string();
 
-        ConstructeurSysteme constructeur(srcLib, objLib, buildDir.string(), registreFichiers->obtenirTousLesFichiers(), nomExecutable);
+        ConstructeurSysteme::ConstructeurParams params = {
+            srcLib,
+            objLib,
+            buildDir.string(),
+            registreFichiers->obtenirTousLesFichiers(),
+            nomExecutable
+        };
+        ConstructeurSysteme constructeur(params);
         constructeur.compilerLib();
         constructeur.lierLibExecutable();
     }

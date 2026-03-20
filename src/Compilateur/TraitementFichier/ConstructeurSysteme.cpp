@@ -3,24 +3,28 @@
 #include <filesystem>
 #include <cstdlib>
 #include <cstdio>
-#include <stdio.h>
+#include <stdlib.h>
 #include <string>
+#include <sys/types.h>
 #include <utility>
 #include <vector>
+#include <spawn.h>
+#include <sys/wait.h>
+
 
 namespace fs = std::filesystem;
 
-ConstructeurSysteme::ConstructeurSysteme(std::string pathLib, std::string libObjDir, std::string buildDir, std::vector<std::string> outputLL, std::string executable) 
-    : _pathLib(std::move(pathLib)), 
-      _libObjDir(std::move(libObjDir)),
-      _buildDir(std::move(buildDir)), 
-      _outputLL(std::move(outputLL)), 
-      _executable(std::move(executable)) 
+ConstructeurSysteme::ConstructeurSysteme(ConstructeurParams params)
+    : _pathLib(std::move(params.pathLib)), 
+      _libObjDir(std::move(params.libObjDir)),
+      _buildDir(std::move(params.buildDir)), 
+      _outputLL(std::move(params.outputLL)), 
+      _executable(std::move(params.executable)) 
 {}
 
 ConstructeurSysteme::~ConstructeurSysteme() = default;
 
-auto ConstructeurSysteme::parcourirEtCollecterFichiers(const std::string& repertoire, const std::string& extension) -> std::vector<std::string> // NOLINT(bugprone-easily-swappable-parameters)
+auto ConstructeurSysteme::parcourirEtCollecterFichiers(const std::filesystem::path& repertoire, const std::string& extension) -> std::vector<std::string>
 {
     std::vector<std::string> fichiers;
     if (!fs::exists(repertoire)) {
@@ -44,14 +48,24 @@ void ConstructeurSysteme::compilerLib()
     for (const auto& fichier : fichiersCpp) {
         const fs::path filePath(fichier);
         std::string objectFile = (fs::path(_libObjDir) / filePath.filename()).replace_extension(".o").string();
-        std::vector<std::string> args = {"clang++", "-c", fichier, "-o", objectFile};
-        std::string command;
-        for (const auto& arg : args) {
-            command += arg + " ";
+        
+        std::vector<std::string> cmdArgs = {"clang++", "-c", fichier, "-o", objectFile};
+        std::vector<char*> argv;
+        argv.reserve(cmdArgs.size() + 1);
+        for (auto& arg : cmdArgs) {
+            argv.push_back(arg.data());
         }
-        int ret = std::system(command.c_str()); // NOLINT(cert-env33-c, concurrency-mt-unsafe)
-        if (ret != 0) {
-            std::cerr << "Erreur lors de la compilation de la lib." << std::endl;
+        argv.push_back(nullptr);
+
+        pid_t pid = 0;
+        int status = 0;
+        if (posix_spawnp(&pid, "clang++", nullptr, nullptr, argv.data(), environ) == 0) {
+            waitpid(pid, &status, 0);
+            if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+                std::cerr << "Erreur lors de la compilation de la lib." << std::endl;
+            }
+        } else {
+            std::cerr << "Erreur lors de l'exécution de clang++." << std::endl;
         }
     }
 }
@@ -72,19 +86,23 @@ void ConstructeurSysteme::lierLibExecutable()
     if (!objectFiles.empty()) { args.push_back(objectFiles);}
     args.emplace_back("-o");
     args.push_back((fs::path(_buildDir) / _executable).string());
-    std::string command;
-    for (const auto& arg : args) {
-        command += arg + " ";
+    
+    std::vector<char*> argv;
+    argv.reserve(args.size() + 1);
+    for (auto& arg : args) {
+        argv.push_back(arg.data());
     }
+    argv.push_back(nullptr);
 
-    FILE* pipe = popen(command.c_str(), "r"); // NOLINT(cert-env33-c, concurrency-mt-unsafe)
-    if (pipe == nullptr) {
-        std::cerr << "Erreur lors de la liaison de la lib à l'exécutable." << std::endl;
-    } else {
-        int ret = pclose(pipe);
-        if (ret != 0) {
+    pid_t pid = 0;
+    int status = 0;
+    if (posix_spawnp(&pid, "clang++", nullptr, nullptr, argv.data(), environ) == 0) {
+        waitpid(pid, &status, 0);
+        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
             std::cerr << "Erreur lors de la liaison de la lib à l'exécutable." << std::endl;
         }
-        }
+    } else {
+        std::cerr << "Erreur lors de l'exécution de clang++." << std::endl;
+    }
     }
 }

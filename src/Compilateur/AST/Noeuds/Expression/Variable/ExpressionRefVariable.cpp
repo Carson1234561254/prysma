@@ -3,8 +3,12 @@
 
 #include "Compilateur/Variable/ExpressionRefVariable.h"
 #include "Compilateur/AST/AST_Genere.h"
+#include "Compilateur/AST/Noeuds/Interfaces/INoeud.h"
+#include "Compilateur/AST/Registre/ContexteExpression.h"
+#include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Lexer/TokenType.h"
 #include <stdexcept>
+#include <vector>
 
 ExpressionRefVariable::ExpressionRefVariable(ContexteExpression& contexteExpression)
     : _contexteExpression(contexteExpression)
