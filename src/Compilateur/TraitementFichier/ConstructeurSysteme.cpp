@@ -73,17 +73,15 @@ void ConstructeurSysteme::compilerLib()
 void ConstructeurSysteme::lierLibExecutable()
 {
     std::vector<std::string> objectFilesVec = ConstructeurSysteme::parcourirEtCollecterFichiers(_libObjDir, ".o");
-    std::string objectFiles;
-    for(const auto& file : objectFilesVec) {
-        objectFiles += " " + file;
-    }
 
-    std::string llFiles;
-    for (const auto& llFile : _outputLL) {
-        llFiles += " " + (fs::path(_buildDir) / llFile).string();
     std::vector<std::string> args = {"clang++"};
-    if (!llFiles.empty()) { args.push_back(llFiles);}
-    if (!objectFiles.empty()) { args.push_back(objectFiles);}
+    for (const auto& llFile : _outputLL) {
+        args.push_back((fs::path(_buildDir) / llFile).string());
+    }
+    for(const auto& file : objectFilesVec) {
+        args.push_back(file);
+    }
+    
     args.emplace_back("-o");
     args.push_back((fs::path(_buildDir) / _executable).string());
     
@@ -103,6 +101,5 @@ void ConstructeurSysteme::lierLibExecutable()
         }
     } else {
         std::cerr << "Erreur lors de l'exécution de clang++." << std::endl;
-    }
     }
 }
