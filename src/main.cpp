@@ -16,6 +16,7 @@
 #include <mutex>
 #include <llvm/Support/TargetSelect.h>
 #include <string>
+#include <vector>
 // llvm::ThreadPool
 
 // Prouver mathématiquement que mon système est infaillible pour la compilation comme Coq, Isabelle/HOL ou TLA+, reécrire le compilateur dans un langage mathématique
@@ -34,22 +35,9 @@
 // La Sharded Map pour les registre de fonction afin de retirer le golo d'étranglement du mutex pour les registres de fonction, chaque thread aura sa propre 
 // shard de la map pour les fonctions. Pour un gain d'environ 70 pourcents en vitesse d'exécution pour les projet avec beaucoup de fonction.
 
-// Actuellement j'ai un problème au niveau des threads si j'ai 20 000 fichier je vais avoir 20 000 thread ce qui 
-// Est un volume de thread énorme abusé, juste 2000 thread consomme 16 go de ram juste pour exister 
-// C'est un problème pour les gros projet car cela fera crash l'ordinateur, je vais devoir dans le future 
-// faire un système de pool de thread pour limiter le nombre de thread au nombre de coeur de la machine. 
-// Dans le context de mon ordinateur actuelle par exemple j'ai 32 coeurs ce qui serait optimal 32 thread pour compiler en 
-// parallèle les fichiers source. 
-// Une solution pourrait être d'avoir un pool de thread et envoyer une stack de fichier à compiler pour les threads 
-// Ce qui évite de faire planter le pc pour la compilation d'un gros projet avec beaucoup de fichier source. 
-// Une solution à implémenter dans le future 
-
-// Jinja2 pour la génération du code source 
-
 // FUTAMURA projection pour faire un compilateur qui se compile lui même
 
-
-int main(int argc, char* argv[])
+auto main(int argc, char* argv[]) -> int
 {
     if (argc < 2) {
         std::cerr << "Erreur: Aucun fichier spécifié" << std::endl;
@@ -60,8 +48,8 @@ int main(int argc, char* argv[])
     std::string cheminFichier;
     bool activerGraphViz = false;
 
-    for (int i = 1; i < argc; ++i) {
-        std::string arg = argv[i];
+    std::vector<std::string> arguments(argv + 1, argv + argc);
+    for (const auto& arg : arguments) {
         if (arg == "--graphviz") {
             activerGraphViz = true;
         } else {

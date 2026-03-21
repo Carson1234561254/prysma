@@ -1,3 +1,4 @@
+#include "Compilateur/Lexer/Lexer.h"
 #include "Compilateur/Visiteur/VisiteurRemplissageRegistre/VisiteurRemplissageRegistre.h"
 #include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/RegistreClass.h"
@@ -7,7 +8,9 @@
 #include "Compilateur/LLVM/LlvmBackend.h"
 
 #include <llvm-18/llvm/IR/DerivedTypes.h>
+#include <memory>
 #include <string>
+#include <utility>
 
 // Passe 1 : Enregistrement des types opaques de classes
 // On crée un StructType opaque (sans corps) pour chaque classe déclarée.
@@ -27,7 +30,7 @@ void VisiteurRemplissageRegistre::visiter(NoeudClass* noeudClass)
     );
 
     // 3. Créer l'instance de la structure "Class" qui contient les métadonnées
-    auto* infosClasse = new Class();
+    auto infosClasse = std::make_unique<Class>();
 
     // 4. Lier le type LLVM opaque à la structure
     infosClasse->setStructType(typeOpaqueLLVM);
@@ -48,7 +51,7 @@ void VisiteurRemplissageRegistre::visiter(NoeudClass* noeudClass)
     infosClasse->setVTable(nullptr);
 
     // 7. Enregistrer la classe dans le registre global du compilateur
-    _contextGenCode->getRegistreClass()->enregistrer(nomClasse, std::unique_ptr<Class>(infosClasse));
+    _contextGenCode->getRegistreClass()->enregistrer(nomClasse, std::move(infosClasse));
 
     // 8. Visiter le corps de la classe pour remplir ses registres (méthodes, etc.)
     std::string ancienneClasse = _contextGenCode->getNomClasseCourante();

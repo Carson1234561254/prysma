@@ -81,13 +81,13 @@ struct EnvironnementAST {
         parseurType = new (arena.Allocate<ParseurType>()) ParseurType(registreType.get(), constructeurEquation->recupererConstructeurArbre());
 
         // Créer le ContextParseur
-        contextParseur = new (arena.Allocate<ContextParseur>()) ContextParseur(
+        contextParseur = new (arena.Allocate<ContextParseur>()) ContextParseur(ContextParseur::Dependencies{
             constructeurEquation->recupererConstructeurArbre(),
             constructeurArbre,
             parseurType,
             registreVariable.get(),
             registreType.get()
-        );
+        });
 
         contexteExpression = new (arena.Allocate<ContexteExpression>()) ContexteExpression(
             constructeurEquation->recupererConstructeurArbre(),

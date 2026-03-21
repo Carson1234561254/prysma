@@ -9,6 +9,7 @@
 #include <vector>
 #include <set>
 #include <memory>
+#include <llvm-18/llvm/Support/ThreadPool.h>
 
 struct ContextGenCode;
 class INoeud;
@@ -21,7 +22,7 @@ private:
    std::mutex* _mutex;
    RegistreFonctionGlobale* _registreFonctionGlobale;
    RegistreFichier* _registreFichier;
-   std::vector<std::thread> _threads;
+   llvm::ThreadPool _threads;
    std::vector<std::unique_ptr<UniteCompilation>> _unitesCompilation;
    
    // Un registre dédié aux fichiers sources (.p)
@@ -44,7 +45,7 @@ public:
     
    void compilerProjet(const std::string& cheminFichier);
    void inclureFichier(const std::string& cheminAbsolu);
-   static void attendreFinPass(std::vector<std::thread>& threads);
+   static void attendreFinPass(llvm::ThreadPool& threads);
    [[nodiscard]] auto aDesErreurs() const -> bool;
    [[nodiscard]] auto estGraphVizActif() const -> bool;
 };

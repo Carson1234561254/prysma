@@ -23,7 +23,7 @@ VisiteurRemplissageCoprsClass::VisiteurRemplissageCoprsClass(ContextGenCode* con
 }
 
 VisiteurRemplissageCoprsClass::~VisiteurRemplissageCoprsClass()
-{}
+= default;
 
 void VisiteurRemplissageCoprsClass::construireVTable(Class* classInfo, const std::string& nomClass, 
                                                       const std::vector<NoeudDeclarationFonction*>& listMethodeParent)
