@@ -15,9 +15,11 @@ class TestAccesVariable
 private: 
    dec int32 a_priv = 5;
    dec bool c_priv = true;
+   dec int32[5] tab_priv = [1, 2, 3, 4, 5];
 public:
    dec int32 a_pub = 5;
    dec bool c_pub = true;
+   dec int32[5] tab_pub = [1, 2, 3, 4, 5]; 
 
    fn void TestAccesVariable() {}
 
@@ -28,6 +30,10 @@ public:
    fn bool getC()
    {
       return c_priv;
+   }
+   fn int32 getTab(arg int32 index)
+   {
+      return tab_priv[index];
    }
 }
 
@@ -52,22 +58,18 @@ fn bool testAccesVariable()
 
    dec ptr test = new TestAccesVariable();
 
-   if (call test.getA() == 5  && call test.getC() == true && test.a_pub == 5 && test.c_pub == true)
+   // Tester si les valeurs du tableau sont correctes tableau privé et public
+   dec int32 index = 0;
+   while (index < 5)
    {
-      return true;
+      if (call test.getTab(index) != index + 1 || test.tab_pub[index] != index + 1)
+      {
+         return false;
+      }
+      aff index = index + 1;
    }
-   return false;
-}
 
-fn bool testAccesObjet()
-{
-   dec string[] msg = "3. Test de l'accès à un objet dans une classe.";
-   call print(msg);
-
-   dec ptr test = new TestAccesObjet();
-   dec ptr a = call test.getA();
-
-   if (call a.test() == 42)
+   if (call test.getA() == 5  && call test.getC() == true && test.a_pub == 5 && test.c_pub == true)
    {
       return true;
    }

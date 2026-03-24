@@ -1,11 +1,16 @@
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
+#include "Compilateur/Lexer/Lexer.h"
+#include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/Types/TypeTableau.h"
+#include "Compilateur/LLVM/GestionVariable.h"
 #include "Compilateur/Utils/PrysmaCast.h"
+#include <cstddef>
 #include <llvm-18/llvm/IR/Value.h>
 #include <llvm/Support/Casting.h>
+#include <string>
 #include <vector>
 
 void VisiteurGeneralGenCode::visiter(NoeudAffectationTableau* noeudAffectationTableau)
@@ -17,8 +22,34 @@ void VisiteurGeneralGenCode::visiter(NoeudAffectationTableau* noeudAffectationTa
     llvm::Value* expressionResult = evaluerExpression(noeudAffectationTableau->getExpression()).getAdresse();
 
     // Récupérer le tableau
-    Symbole symbole = _contextGenCode->getRegistreVariable()->recupererVariables(noeudAffectationTableau->getToken());
-    llvm::Value* valeur = symbole.getAdresse();
+    std::string nomTableauStr = noeudAffectationTableau->getToken().value;
+    Symbole symbole;
+    llvm::Value* valeur = nullptr;
+
+    if (nomTableauStr.find('.') != std::string::npos) {
+        size_t pos = nomTableauStr.find('.');
+        std::string nomObjet = nomTableauStr.substr(0, pos);
+        std::string nomAttribut = nomTableauStr.substr(pos + 1);
+
+        ChargeurVariable chargeur(_contextGenCode);
+        Symbole objetSymbole = chargeur.charger(nomObjet);
+        llvm::Value* objet = objetSymbole.getAdresse();
+
+        std::string nomClasse = obtenirNomClasseDepuisSymbole(objetSymbole);
+        auto* classInfo = _contextGenCode->getRegistreClass()->recuperer(nomClasse).get();
+        auto iterator = classInfo->getMemberIndices().find(nomAttribut);
+        unsigned int indexObj = iterator->second;
+
+        Token tokenAttribut; tokenAttribut.value = nomAttribut; tokenAttribut.type = TOKEN_IDENTIFIANT;
+        symbole = classInfo->getRegistreVariable()->recupererVariables(tokenAttribut);
+        
+        llvm::Type* typeDuStruct = classInfo->getStructType();
+        valeur = _contextGenCode->getBackend()->getBuilder().CreateStructGEP(typeDuStruct, objet, indexObj, nomObjet + "_" + nomAttribut + "_ptr");
+    } else {
+        AdresseurVariable adresseur(_contextGenCode);
+        symbole = adresseur.recupererAdresse(nomTableauStr);
+        valeur = symbole.getAdresse();
+    }
 
     // Affectation à un élément du tableau avec l'index
     std::vector<llvm::Value*> indices = { 
@@ -28,8 +59,15 @@ void VisiteurGeneralGenCode::visiter(NoeudAffectationTableau* noeudAffectationTa
     
     // On ne peut pas récupérer la taille du tableau à la compilation si l'index est une variable.
     // On doit donc récupérer le type du tableau directement depuis l'instruction d'allocation.
-    auto* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(valeur);
-    llvm::Type* arrayType = allocaInst->getAllocatedType();
+    llvm::Type* arrayType = nullptr;
+    if (symbole.getType() != nullptr) {
+        arrayType = symbole.getType()->genererTypeLLVM(_contextGenCode->getBackend()->getContext());
+    } else {
+        auto* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(valeur);
+        if (allocaInst != nullptr) {
+            arrayType = allocaInst->getAllocatedType();
+        }
+    }
 
     llvm::Value* ptrCase = nullptr;
     llvm::Type* typeElement = nullptr;

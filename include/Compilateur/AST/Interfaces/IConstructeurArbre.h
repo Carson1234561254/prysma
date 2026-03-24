@@ -16,7 +16,7 @@ private:
         void (*destroy)(void*);
         void* pointeur;
     };
-    std::vector<Finalizer> finalizers;
+    std::vector<Finalizer> finalizers; // TODO : remplacer par une solutions llvm::StringRef vue car la destruction est temporaire actuellement, je veux utiliser la puissance du bump allocator
 public:
     IConstructeurArbre() = default;
     IConstructeurArbre(const IConstructeurArbre&) = delete;

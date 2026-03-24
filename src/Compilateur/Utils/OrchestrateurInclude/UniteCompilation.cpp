@@ -120,7 +120,7 @@ void UniteCompilation::passe2() {
     _repertoireCourant = _ancienRepertoire;
 }
 
-std::string UniteCompilation::getChemin() const
+auto UniteCompilation::getChemin() const -> std::string
 {
     return _cheminFichierOriginal;
 }

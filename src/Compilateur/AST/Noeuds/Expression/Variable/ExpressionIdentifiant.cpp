@@ -42,6 +42,14 @@ auto ExpressionIdentifiant::construire(std::vector<Token>& equation) -> INoeud*
         }
 
         INoeud* indexEquation = _contexteExpression.getConstructeurArbreEquation()->construire(equationIndex);
+
+        if (indexCrochet == 3 && equation[1].type == TOKEN_POINT) {
+            Token nomCombine;
+            nomCombine.value = equation[0].value + "." + equation[2].value;
+            nomCombine.type = TOKEN_IDENTIFIANT;
+            return _contexteExpression.getConstructeurArbreEquation()->allouer<NoeudLectureTableau>(indexEquation, nomCombine);
+        }
+
         return _contexteExpression.getConstructeurArbreEquation()->allouer<NoeudLectureTableau>(indexEquation, equation[0]);
     }
 

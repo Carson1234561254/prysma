@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 
+// Polyspace analyse static prouvé mathématiquement que l'execution d'une fonction ne cause pas de null pointer ou certaine catégorie de crash
 // Actuellement le compilateur utilise des noeuds contenant des objets de type std::string et std::vector pour stocker les informations de l'AST
 // Le problème est que les types std::string créer un objet dynamiquement avec un new caché 
 // et que les std::vector font la même chose. La destruction des objets std::string et std::vector n'est pas faite par 

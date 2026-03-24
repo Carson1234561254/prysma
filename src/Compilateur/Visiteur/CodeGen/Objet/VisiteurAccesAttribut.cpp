@@ -50,5 +50,5 @@ void VisiteurGeneralGenCode::visiter(NoeudAccesAttribut* noeudAccesAttribut)
         nomObjet + "_" + nomAttribut
     );
 
-    _contextGenCode->modifierValeurTemporaire(Symbole(valeurAttribut, symboleVar.getType(), builder.getPtrTy()));
+    _contextGenCode->modifierValeurTemporaire(Symbole(valeurAttribut, symboleVar.getType(), nullptr));
 }

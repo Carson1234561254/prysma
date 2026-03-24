@@ -67,7 +67,7 @@ public:
     void initialiser(const std::string& cheminFichier);
     
     [[nodiscard]] auto getContext() const -> ContextGenCode*;
-    llvm::BumpPtrAllocator& getArena();
+    auto getArena() -> llvm::BumpPtrAllocator&;
     [[nodiscard]] auto getConstructeurArbreInstruction() const -> ConstructeurArbreInstruction*;
     [[nodiscard]] auto getConstructeurEquation() const -> ConstructeurEquationFlottante*;
 };

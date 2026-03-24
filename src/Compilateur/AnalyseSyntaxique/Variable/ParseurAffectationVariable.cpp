@@ -25,6 +25,13 @@ auto ParseurAffectationVariable::parser(std::vector<Token>& tokens, int& index) 
     Token nomToken = consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur : nom variable attendu");
     std::string nomVariable = nomToken.value;
 
+    if (tokens[static_cast<size_t>(index)].type == TOKEN_POINT) {
+        consommer(tokens, index, TOKEN_POINT, "Erreur '.'");
+        Token attributToken = consommer(tokens, index, TOKEN_IDENTIFIANT, "Erreur : attribut attendu");
+        nomVariable += "." + attributToken.value;
+        nomToken.value = nomVariable;
+    }
+
     INoeud* expressionIndex = nullptr;
 
     if (tokens[static_cast<size_t>(index)].type == TOKEN_CROCHET_OUVERT) {

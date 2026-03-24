@@ -7,8 +7,11 @@
 #include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/Visiteur/CodeGen/Helper/ErrorHelper.h"
 #include "Compilateur/Utils/PrysmaCast.h"
+#include <cstddef>
 #include <cstdint>
 #include <llvm-18/llvm/IR/Value.h>
+#include <llvm/IR/DerivedTypes.h>
+#include <llvm/Support/Casting.h>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -67,19 +70,51 @@ void VisiteurGeneralGenCode::visiter(NoeudNew* noeudNew)
             INoeud* expressionInit = pair.second;
 
             if (expressionInit != nullptr) {
-                expressionInit->accept(this);
-                llvm::Value* valeurCalculee = _contextGenCode->getValeurTemporaire().getAdresse();
+                auto* tableauInit = prysma::dyn_cast<NoeudTableauInitialisation>(expressionInit);
+                
+                if (tableauInit != nullptr) {
+                    if (infoClasse->getMemberIndices().find(nomMembre) != infoClasse->getMemberIndices().end()) {
+                        unsigned int idx = infoClasse->getMemberIndices()[nomMembre];
+                        
+                        Token tokenMembre; tokenMembre.value = nomMembre;
+                        Symbole modele = infoClasse->getRegistreVariable()->recupererVariables(tokenMembre);
+                        llvm::Type* typeMembre = modele.getType()->genererTypeLLVM(_contextGenCode->getBackend()->getContext());
+                        auto* typeTableauLLVM = llvm::dyn_cast<llvm::ArrayType>(typeMembre);
+                        if (typeTableauLLVM != nullptr) {
+                            llvm::Type* typeElement = typeTableauLLVM->getElementType();
+                            llvm::Value* membrePtr = builder.CreateStructGEP(typeCible, adresseAllouee, idx, nomMembre + "_ptrinit");
+                            
+                            for (size_t i = 0; i < tableauInit->getElements().size(); ++i) {
+                                std::vector<llvm::Value*> indices = {
+                                    builder.getInt32(0),
+                                    builder.getInt32(static_cast<uint32_t>(i))
+                                }; 
+                                llvm::Value* ptrCase = builder.CreateGEP(typeTableauLLVM, membrePtr, indices, "ptr_case");
+                                
+                                INoeud* element = tableauInit->getElements()[i];
+                                element->accept(this);
+                                llvm::Value* expressionVal = _contextGenCode->getValeurTemporaire().getAdresse();
+                                
+                                llvm::Value* valeurCastee = _contextGenCode->getBackend()->creerAutoCast(expressionVal, typeElement);
+                                builder.CreateStore(valeurCastee, ptrCase);
+                            }
+                        }
+                    }
+                } else {
+                    expressionInit->accept(this);
+                    llvm::Value* valeurCalculee = _contextGenCode->getValeurTemporaire().getAdresse();
 
-                if (valeurCalculee != nullptr && infoClasse->getMemberIndices().find(nomMembre) != infoClasse->getMemberIndices().end()) {
-                    unsigned int idx = infoClasse->getMemberIndices()[nomMembre];
-                    
-                    Token tokenMembre; tokenMembre.value = nomMembre;
-                    Symbole modele = infoClasse->getRegistreVariable()->recupererVariables(tokenMembre);
-                    llvm::Type* typeMembre = modele.getType()->genererTypeLLVM(_contextGenCode->getBackend()->getContext());
+                    if (valeurCalculee != nullptr && infoClasse->getMemberIndices().find(nomMembre) != infoClasse->getMemberIndices().end()) {
+                        unsigned int idx = infoClasse->getMemberIndices()[nomMembre];
+                        
+                        Token tokenMembre; tokenMembre.value = nomMembre;
+                        Symbole modele = infoClasse->getRegistreVariable()->recupererVariables(tokenMembre);
+                        llvm::Type* typeMembre = modele.getType()->genererTypeLLVM(_contextGenCode->getBackend()->getContext());
 
-                    llvm::Value* valeurCastee = _contextGenCode->getBackend()->creerAutoCast(valeurCalculee, typeMembre);
-                    llvm::Value* membrePtr = builder.CreateStructGEP(typeCible, adresseAllouee, idx, nomMembre + "_ptrinit");
-                    builder.CreateStore(valeurCastee, membrePtr);
+                        llvm::Value* valeurCastee = _contextGenCode->getBackend()->creerAutoCast(valeurCalculee, typeMembre);
+                        llvm::Value* membrePtr = builder.CreateStructGEP(typeCible, adresseAllouee, idx, nomMembre + "_ptrinit");
+                        builder.CreateStore(valeurCastee, membrePtr);
+                    }
                 }
             }
         }

@@ -1,24 +1,58 @@
 #include "Compilateur/AST/Registre/Pile/RegistreVariable.h"
 #include "Compilateur/AST/Registre/Types/IType.h"
+#include "Compilateur/Lexer/Lexer.h"
+#include "Compilateur/Lexer/TokenType.h"
 #include "Compilateur/Visiteur/CodeGen/VisiteurGeneralGenCode.h"
 #include "Compilateur/AST/AST_Genere.h"
 #include "Compilateur/AST/Registre/Types/TypeSimple.h"
 #include "Compilateur/AST/Registre/Types/TypeTableau.h"
+#include "Compilateur/LLVM/GestionVariable.h"
 #include "Compilateur/Utils/PrysmaCast.h"
 #include "Compilateur/Visiteur/CodeGen/Helper/ErrorHelper.h"
+#include <cstddef>
 #include <llvm-18/llvm/IR/Instructions.h>
 #include <llvm-18/llvm/Support/Casting.h>
+#include <string>
 
 void VisiteurGeneralGenCode::visiter(NoeudLectureTableau* noeudLectureTableau)
 {
-    // Récupération de l'adresse de base du tableau 
-    Symbole symbole = _contextGenCode->getRegistreVariable()->recupererVariables(noeudLectureTableau->getNomTableau());
-    llvm::Value* adresseTableau = symbole.getAdresse();
+    std::string nomTableauStr = noeudLectureTableau->getNomTableau().value;
+    Symbole symbole;
+    llvm::Value* adresseTableau = nullptr;
 
-    // Faire une allocaInstance pour récupérer le type, on dyn cast le type llvm::Value 
-    auto* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(adresseTableau);
-    allocaInst = ErrorHelper::verifierNonNull(allocaInst, "L'adresse du tableau n'est pas une instruction d'allocation");
-    llvm::Type* typeTableau = allocaInst->getAllocatedType();
+    if (nomTableauStr.find('.') != std::string::npos) {
+        size_t pos = nomTableauStr.find('.');
+        std::string nomObjet = nomTableauStr.substr(0, pos);
+        std::string nomAttribut = nomTableauStr.substr(pos + 1);
+
+        ChargeurVariable chargeur(_contextGenCode);
+        Symbole objetSymbole = chargeur.charger(nomObjet);
+        llvm::Value* objet = objetSymbole.getAdresse();
+
+        std::string nomClasse = obtenirNomClasseDepuisSymbole(objetSymbole);
+        auto* classInfo = _contextGenCode->getRegistreClass()->recuperer(nomClasse).get();
+        auto iterator = classInfo->getMemberIndices().find(nomAttribut);
+        unsigned int indexObj = iterator->second;
+
+        Token tokenAttribut; tokenAttribut.value = nomAttribut; tokenAttribut.type = TOKEN_IDENTIFIANT;
+        symbole = classInfo->getRegistreVariable()->recupererVariables(tokenAttribut);
+        
+        llvm::Type* typeDuStruct = classInfo->getStructType();
+        adresseTableau = _contextGenCode->getBackend()->getBuilder().CreateStructGEP(typeDuStruct, objet, indexObj, nomObjet + "_" + nomAttribut + "_ptr");
+    } else {
+        AdresseurVariable adresseur(_contextGenCode);
+        symbole = adresseur.recupererAdresse(nomTableauStr);
+        adresseTableau = symbole.getAdresse();
+    }
+
+    llvm::Type* typeTableau = nullptr;
+    if (symbole.getType() != nullptr) {
+        typeTableau = symbole.getType()->genererTypeLLVM(_contextGenCode->getBackend()->getContext());
+    } else {
+        auto* allocaInst = llvm::dyn_cast<llvm::AllocaInst>(adresseTableau);
+        allocaInst = ErrorHelper::verifierNonNull(allocaInst, "L'adresse du tableau n'est pas une instruction d'allocation");
+        typeTableau = allocaInst->getAllocatedType();
+    }
     
     // Calculer l'index à partir de l'équation 
     noeudLectureTableau->getIndexEquation()->accept(this);
