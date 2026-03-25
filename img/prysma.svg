@@ -37,8 +37,6 @@
     </linearGradient>
   </defs>
 
-  <rect width="500" height="500" fill="#181A20" rx="20" />
-
   <g fill="none" stroke-width="2" stroke-linecap="round" opacity="0.4">
     <path d="M 50,100 L 80,100 M 50,115 L 100,115 M 60,130 L 90,130" stroke="#3B82F6" />
     <text x="60" y="80" fill="#A855F7" font-family="monospace" font-size="20" stroke="none">{ }</text>
@@ -76,5 +74,4 @@
   </g>
 
   <text x="250" y="475" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="44" fill="url(#textRainbow)" text-anchor="middle" letter-spacing="14">PRYSMA</text>
-  
 </svg>
