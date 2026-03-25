@@ -1,15 +1,48 @@
-# Prysma
+# Prysma Programming Language
 
-## Description du projet 
+Prysma est un langage de programmation système à hautes performances, compilé vers l'infrastructure **LLVM 18**. Le projet privilégie un contrôle déterministe des ressources et une architecture modulaire robuste.
 
-C'est un projet de développement d'un compilateur dont l'objectif sera de traduire un langage de programmation de haut niveau vers un langage intermédiaire LLVM. Le framework LLVM est largement utilisé dans l'industrie pour la compilation de code, notamment pour les langages comme le C et le C++ incluant Rust. LLVM sera la partie backend du compilateur, tandis que le frontend sera développé par moi. 
+## Capacités Techniques
 
-LLVM résout plusieurs problématiques liées au langage de bas niveau, comme l'assembleur. 
- - permet d'optimiser le code généré pour le rendre plus rapide et efficace en termes de mémoire.
- - Permet de cibler plusieurs architectures matérielles différentes sans avoir à réécrire le code assembleur généré pour chaque architecture. 
- - résout le problème de registres limités en utilisant une approche de registres virtuels illimités. Il gère d'ailleurs automatiquement l'allocation des registres physiques, leur stockage en mémoire RAM et les libère lorsqu'ils sont nécessaires.
- - Gère l'aspect privé de la mémoire en isolant les différentes sections, d'ailleurs on a accès à des fonctions générées par LLVM pour séparer la logique. 
+  * **Backend :** Génération de code intermédiaire (IR) via LLVM 18 en forme SSA (Single Static Assignment).
+  * **Modèle Objet :** Implémentation native des classes, de l'héritage et du polymorphisme dynamique via VTable.
+  * **Gestion Mémoire :** Contrôle manuel du tas (heap) via les opérateurs `new` et `delete`. Allocation interne optimisée par **Bump Pointer Allocator** (Arena).
+  * **Parallélisme :** Orchestration de la compilation multi-fichier via `llvm::ThreadPool`.
+  * **Analyse Statique :** Système de typage fort avec auto-casting sécurisé et détection des dépendances circulaires d'inclusion.
 
-En somme, le LLVM est un outil qui génère du code intermédiaire avec une syntaxe proche de l'assembleur, mais avec des fonctionnalités avancées qui facilitent la création du compilateur. 
+## Architecture du Compilateur
 
-Prysma est un langage de programmation qui inclura des fonctionnalités de base comme les variables, les fonctions, les conditions, les boucles, etc. Le compilateur devra être capable de gérer ces fonctionnalités et de générer du code LLVM correspondant. L'objectif est de créer un langage Turing-complet, il y aura donc l'écriture de bibliothèques standard comme la gestion de la mémoire, arbre binaire, liste chaînée, pile, file, graphe, dictionnaire, bibliothèque de manipulation de chaîne de caractères, etc. C'est un projet évolutif, donc les fonctionnalités ne sont pas en manque, nous pouvons toujours ajouter des fonctionnalités supplémentaires au langage et au compilateur, exemple : l'orienté-objet, faire un garbage collector, des lambdas, etc.
+Le pipeline de traitement suit une structure linéaire stricte :
+
+1.  **Frontend :** Analyse lexicale (Lexer) et syntaxique par descente récursive.
+2.  **Représentation Intermédiaire :** Construction d'un Arbre Syntaxique Abstrait (AST) basé sur le patron de conception **Composite**.
+3.  **Génération de Code :** Traduction de l'AST vers LLVM IR via le patron de conception **Visiteur**.
+4.  **Backend :** Optimisations et génération du binaire natif par l'infrastructure LLVM.
+
+## Aperçu de la Syntaxe
+
+```prysma
+fn int32 main() {
+    dec string message = "Système Prysma opérationnel";
+    call print(ref message);
+    return 0;
+}
+```
+
+## Programmation orienté objet
+
+ - Actuellement en phase expérimentale. Cette partie est incomplète et peut présenter des instabilités.
+
+## Documentation
+
+Conformément à la structure modulaire du projet, l'intégralité de la documentation technique et des procédures de configuration est isolée dans le répertoire `/docs`.
+
+  * **Configuration et Installation :** [Docs/Fr/Installation/SETUP_UBUNTU.md](Docs/Fr/Installation/SETUP_UBUNTU.md)
+  * **Analyse de l'Architecture :** [Docs/Fr/ARCHITECTURE.md](Docs/Fr/ARCHITECTURE.md)
+  * **Analyse de Robustesse et Sécurité :** [Docs/Fr/ROBUSTNESS.md](Docs/Fr/ROBUSTNESS.md)
+  * **Spécifications du Langage :** [Docs/Fr/PRYSMA.md](Docs/Fr/PRYSMA.md)
+  * **Rapport d'Analyse Technique :** [Docs/Fr/Analyse/CHOIX_TECHNOLOGIQUES.md](Docs/Fr/Analyse/CHOIX_TECHNOLOGIQUES.md)
+
+## Licence
+
+Ce projet est distribué sous licence **MIT**. Consulter le fichier `LICENSE` pour les détails juridiques.

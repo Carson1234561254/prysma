@@ -1,4 +1,4 @@
-# Des explications de configuration sont spécifique à la version bleu de VsCode 
+# NOTE : Des explications de configuration sont spécifique à la version bleu de VsCode 
 
 ## 1. Prérequis système
 
@@ -17,7 +17,7 @@ sudo apt-get update && sudo apt-get install -y bear
 sudo apt install graphviz
 ```
 
-## installation du lld pour la compilation final
+## Installation du lld pour la compilation final
 
 ```bash
 sudo apt install lld

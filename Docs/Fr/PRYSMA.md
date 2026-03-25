@@ -29,7 +29,7 @@ Prysma est un langage système compilé via LLVM, offrant un contrôle de bas ni
 
 ## Gestion de la mémoire
 
-Prysma utilise une gestion **manuelle** de la mémoire sur le tas (*Heap*). L'allocation interne du compilateur repose sur un *Arena Allocator* pour maximiser les performances.
+Prysma utilise une gestion **manuelle** de la mémoire sur le tas (*Heap*).
 
 ### Allocation et Libération
 
