@@ -1,6 +1,6 @@
 # Prysma Programming Language
 
-![Prysma Logo](img/prysma.svg)
+![Prysma Logo](Img/prysma.svg)
 
 [![CI](https://github.com/Zyphorah/Prysma/actions/workflows/ci.yml/badge.svg)](https://github.com/Zyphorah/Prysma/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

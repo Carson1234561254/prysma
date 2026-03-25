@@ -1,7 +1,7 @@
 # Prysma Programming Language
 <div align="center">
 
-  <img src="img/prysma.svg" alt="Prysma Logo" width="250"/>
+  <img src="Img/prysma.svg" alt="Prysma Logo" width="250"/>
 
 <br>
 
