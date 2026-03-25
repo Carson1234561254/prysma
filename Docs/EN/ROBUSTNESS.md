@@ -12,7 +12,7 @@ This document details the security and robustness measures implemented in the Pr
 ### Edge Case 1: Empty or Asymmetric Parentheses
 
 **Scenario:** 
-```prysma
+```rust
 dec int x = ();
 dec int y = (5 + );
 dec int z = ((5 + 3);
@@ -37,7 +37,7 @@ if (equation.empty()) {
 ### Edge Case 2: Consecutive Operators without Operand
 
 **Scenario:**
-```prysma
+```rust
 dec int result = 5 + * 3;
 dec int bad = 10 / / 2;
 ```
@@ -58,7 +58,7 @@ Expected expression, got operator '*'
 ### Edge Case 3: Stack Overflow on Complex Expressions
 
 **Scenario:**
-```prysma
+```rust
 // Very deeply nested expression
 dec int x = ((((((((((a + b) + c) + d) + e) + f) + g) + h) + i) + j)));
 ```

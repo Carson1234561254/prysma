@@ -26,7 +26,7 @@ Le pipeline de traitement suit une structure linéaire stricte :
 
 ## Aperçu de la Syntaxe
 
-```prysma
+```rust
 fn int32 main() {
     dec string message = "Système Prysma opérationnel";
     call print(ref message);

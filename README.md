@@ -26,7 +26,7 @@ The processing pipeline follows a strict linear structure:
 
 ## Syntax Overview
 
-```prysma
+```rust
 fn int32 main() {
     dec string message = "Prysma system operational";
     call print(ref message);

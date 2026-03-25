@@ -38,7 +38,7 @@ Prysma utilise une gestion **manuelle** de la mémoire sur le tas (*Heap*).
 
 <!-- end list -->
 
-```prysma
+```rust
 // Allocation d'un objet
 dec MaClasse instance = new MaClasse();
 
@@ -57,7 +57,7 @@ Déclarées avec `fn` et appelées via `call`.
 
 ### Récursivité (Correction Factorielle)
 
-```prysma
+```rust
 fn int32 factorielle(arg int32 n) {
     if (n <= 1) {
         return 1;
@@ -73,7 +73,7 @@ fn int32 factorielle(arg int32 n) {
 
 ### Conditionnelle `if...else`
 
-```prysma
+```rust
 if (a > b) {
     // bloc vrai
 } else {
@@ -85,7 +85,7 @@ if (a > b) {
 
 La condition est évaluée avant chaque itération.
 
-```prysma
+```rust
 dec int32 i = 0;
 while (i < 10) {
     aff i = i + 1;
@@ -110,7 +110,7 @@ while (i < 10) {
 
 ### Création et manipulation d'un tableau dynamique
 
-```prysma
+```rust
 fn void test_tableau() {
     // Déclaration d'un tableau de 5 entiers sur la pile
     dec int32[5] notes = [10, 15, 20, 12, 18];
@@ -124,7 +124,7 @@ fn void test_tableau() {
 
 ### Utilisation d'une classe et polymorphisme
 
-```prysma
+```rust
 fn void main() {
     // Allocation sur le tas
     dec Chien mon_chien = new Chien();

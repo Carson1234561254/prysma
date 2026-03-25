@@ -12,7 +12,7 @@ Ce document détaille les mesures de sécurité et de robustesse implémentées 
 ### Cas Limite 1 : Parenthèses Vides ou Asymétriques
 
 **Scenario :** 
-```prysma
+```rust
 dec int x = ();
 dec int y = (5 + );
 dec int z = ((5 + 3);
@@ -37,7 +37,7 @@ if (equation.empty()) {
 ### Cas Limite 2 : Opérateurs Consécutifs sans Opérande
 
 **Scenario :**
-```prysma
+```rust
 dec int result = 5 + * 3;
 dec int bad = 10 / / 2;
 ```
@@ -58,7 +58,7 @@ Expected expression, got operator '*'
 ### Cas Limite 3 : Débordement de Pile (Stack Overflow) sur Expressions Complexes
 
 **Scenario :**
-```prysma
+```rust
 // Expression très profondément imbriquée
 dec int x = ((((((((((a + b) + c) + d) + e) + f) + g) + h) + i) + j)));
 ```
@@ -224,7 +224,7 @@ std::vector<Token> Lexer::tokenizer(const std::string& source) {
 ### Cas Limite 2 : Chaîne de Caractères Non Fermée en Fin de Fichier
 
 **Scenario :**
-```prysma
+```rust
 main {
     dec string message = "Hello World
 }  ← Fin de fichier sans guillemet fermant
@@ -340,7 +340,7 @@ llvm::Value* ContextGenCode::creerAutoCast(
 ### Cas Limite : Appels Imbriqués avec Registre Partagé
 
 **Scenario :**
-```prysma
+```rust
 dec int testArgDanIf(int param) {
     if (param > 0) {
         return call testArgDanIf(param - 1);

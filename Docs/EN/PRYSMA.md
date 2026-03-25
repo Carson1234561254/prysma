@@ -38,7 +38,7 @@ Prysma uses **manual** memory management on the heap.
 
 <!-- end list -->
 
-```prysma
+```rust
 // Allocating an object
 dec MaClasse instance = new MaClasse();
 
@@ -57,7 +57,7 @@ Declared with `fn` and called via `call`.
 
 ### Recursion (Factorial Correction)
 
-```prysma
+```rust
 fn int32 factorielle(arg int32 n) {
     if (n <= 1) {
         return 1;
@@ -73,7 +73,7 @@ fn int32 factorielle(arg int32 n) {
 
 ### Conditional `if...else`
 
-```prysma
+```rust
 if (a > b) {
     // true block
 } else {
@@ -85,7 +85,7 @@ if (a > b) {
 
 The condition is evaluated before each iteration.
 
-```prysma
+```rust
 dec int32 i = 0;
 while (i < 10) {
     aff i = i + 1;
@@ -110,7 +110,7 @@ while (i < 10) {
 
 ### Creating and Manipulating a Dynamic Array
 
-```prysma
+```rust
 fn void test_tableau() {
     // Declaration of a 5-integer array on the stack
     dec int32[5] notes = [10, 15, 20, 12, 18];
@@ -124,7 +124,7 @@ fn void test_tableau() {
 
 ### Using a Class and Polymorphism
 
-```prysma
+```rust
 fn void main() {
     // Heap allocation
     dec Chien mon_chien = new Chien();
