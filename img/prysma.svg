@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="500" height="500">
+  <defs>
+    <linearGradient id="leftGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" /> <stop offset="100%" stop-color="#3B82F6" /> </linearGradient>
+    
+    <linearGradient id="rightGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" /> <stop offset="100%" stop-color="#8B5CF6" /> </linearGradient>
+
+    <linearGradient id="coreTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="100%" stop-color="#EAB308" /> </linearGradient>
+
+    <linearGradient id="coreMid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#67E8F9" />
+      <stop offset="100%" stop-color="#06B6D4" /> </linearGradient>
+
+    <linearGradient id="coreBot" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F9A8D4" />
+      <stop offset="100%" stop-color="#DB2777" /> </linearGradient>
+  </defs>
+
+  <g stroke="none">
+    
+    <path d="M 93 15 L 93 55 L 73 55 Z" fill="url(#leftGrad)" />
+    <path d="M 107 15 L 127 55 L 107 55 Z" fill="url(#rightGrad)" />
+    
+    <path d="M 93 15 L 93 55 L 88 55 Z" fill="#FFFFFF" opacity="0.15" />
+    <path d="M 107 15 L 107 55 L 112 55 Z" fill="#000000" opacity="0.15" />
+
+    <path d="M 93 70 L 65.5 70 L 45.5 110 L 93 110 Z" fill="url(#leftGrad)" />
+    <path d="M 107 70 L 134.5 70 L 154.5 110 L 107 110 Z" fill="url(#rightGrad)" />
+    
+    <path d="M 93 70 L 93 110 L 88 110 L 88 70 Z" fill="#FFFFFF" opacity="0.15" />
+    <path d="M 107 70 L 107 110 L 112 110 L 112 70 Z" fill="#000000" opacity="0.15" />
+
+    <path d="M 93 125 L 38 125 L 18 165 L 93 165 Z" fill="url(#leftGrad)" />
+    <path d="M 107 125 L 162 125 L 182 165 L 107 165 Z" fill="url(#rightGrad)" />
+    
+    <path d="M 93 125 L 93 165 L 88 165 L 88 125 Z" fill="#FFFFFF" opacity="0.15" />
+    <path d="M 107 125 L 107 165 L 112 165 L 112 125 Z" fill="#000000" opacity="0.15" />
+
+  </g>
+
+  <g stroke="none">
+    <path d="M 100 15 L 106 35 L 100 55 L 94 35 Z" fill="url(#coreTop)" />
+    <path d="M 100 70 L 106 90 L 100 110 L 94 90 Z" fill="url(#coreMid)" />
+    <path d="M 100 125 L 106 145 L 100 165 L 94 145 Z" fill="url(#coreBot)" />
+  </g>
+</svg>
