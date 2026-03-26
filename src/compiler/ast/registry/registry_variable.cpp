@@ -1,0 +1,89 @@
+#include "compiler/ast/registry/stack/registry_variable.h"
+#include "compiler/lexer/lexer.h"
+#include "compiler/manager_error.h"
+#include <llvm-18/llvm/IR/Instructions.h>
+#include <map>
+#include <stack>
+#include <string>
+#include <utility>
+
+RegistryVariable::RegistryVariable()
+{
+    _variables.emplace();
+}
+
+RegistryVariable::~RegistryVariable()
+= default;
+
+// Register a variable, throws if already declared in the current scope
+void RegistryVariable::registerVariable(const Token& token, Symbol symbol)
+{
+    if(!_variables.empty())
+    {
+        auto it = _variables.top().find(token.value);
+        if (it != _variables.top().end())
+        {
+            throw CompilationError("Variable '" + token.value + "' already declared", Line(token.line), Column(token.column));
+        }
+        _variables.top()[token.value] = symbol;
+    }
+}
+
+// Retrieve a variable, throws if not found
+Symbol RegistryVariable::getVariable(const Token& token)
+{
+    if(_variables.empty())
+    {
+        throw CompilationError("The variable stack is empty! Variable not available: '" + token.value + "'", Line(token.line), Column(token.column));
+    }
+
+    std::stack<std::map<std::string, Symbol>> tempStack = _variables;
+    while(!tempStack.empty())
+    {
+        auto it = tempStack.top().find(token.value);
+        if (it != tempStack.top().end())
+        {
+            return it->second;
+        }
+        tempStack.pop();
+    }
+    throw CompilationError("Variable '" + token.value + "' not declared", Line(token.line), Column(token.column));
+}
+
+// Push a new variable scope
+void RegistryVariable::push()
+{
+    _variables.emplace();
+}
+
+// Pop the current variable scope
+void RegistryVariable::pop()
+{
+    if (_variables.size() > 1)
+    {
+        _variables.pop();
+    }
+}
+
+// Clear the top variable scope
+void RegistryVariable::clearTop()
+{
+    if (!_variables.empty()) {
+        _variables.top().clear();
+    }
+}
+
+// Check if a variable exists in any scope
+bool RegistryVariable::variableExists(const std::string& name)
+{
+    if(_variables.empty()) { return false;}
+    
+    std::stack<std::map<std::string, Symbol>> tempStack = _variables;
+    while(!tempStack.empty())
+    {
+        auto it = tempStack.top().find(name);
+        if (it != tempStack.top().end()) { return true;}
+        tempStack.pop();
+    }
+    return false;
+}

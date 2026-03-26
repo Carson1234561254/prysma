@@ -1,13 +1,13 @@
 import os
 import shutil
-from Tests.Orchestration.build_manager import BuildManager
-from Generation.generator_ast import GenerateurAST
-from Generation.generator_interface_visitor import GenerateurInterfaceVisitor
-from Generation.generator_visitor_base_general import GenerateurVisitorBaseGenerale
-from Generation.generator_visitor_destruction import GenerateurVisitorDestruction
-from Generation.generator_graphe_viz import GenerateurGraphViz
-from Generation.generator_expression import GenerateurExpression
-from Generation.generator_parser import GenerateurParser
+from tests.orchestration.build_manager import BuildManager
+from generation.generator_ast import GenerateurAST
+from generation.generator_interface_visitor import GenerateurInterfaceVisitor
+from generation.generator_visitor_base_general import GenerateurVisitorBaseGenerale
+from generation.generator_visitor_destruction import GenerateurVisitorDestruction
+from generation.generator_graphe_viz import GenerateurGraphViz
+from generation.generator_expression import GenerateurExpression
+from generation.generator_parser import GenerateurParser
 
 def main():
     dossier_script = os.path.dirname(os.path.abspath(__file__))

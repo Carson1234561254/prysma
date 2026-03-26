@@ -1,0 +1,60 @@
+#include "compiler/visitor/code_gen/visitor_general_gen_code.h"
+#include "compiler/ast/nodes/interfaces/i_node.h"
+#include "compiler/ast/nodes/node_instruction.h"
+#include "compiler/ast/registry/context_gen_code.h"
+#include "compiler/ast/registry/stack/registry_variable.h"
+#include "compiler/ast/registry/types/type_complex.h"
+#include "compiler/utils/prysma_cast.h"
+#include <cstddef>
+#include <llvm/ADT/StringRef.h>
+#include <llvm/IR/Constants.h>
+#include <llvm/IR/DerivedTypes.h>
+#include <llvm/Support/Casting.h>
+#include <string>
+
+GeneralVisitorGenCode::GeneralVisitorGenCode(ContextGenCode* contextGenCode, OrchestratorInclude* orchestratorInclude) 
+: _contextGenCode(contextGenCode), _orchestratorInclude(orchestratorInclude)
+{}
+
+GeneralVisitorGenCode::~GeneralVisitorGenCode()
+= default;
+
+void GeneralVisitorGenCode::traverseChild(NodeInstruction* node)
+{
+    for (const auto& child : node->getChildren()) {
+        child->accept(this);
+    }
+}
+
+auto GeneralVisitorGenCode::evaluateExpression(INode* expression) -> Symbol {
+    if (expression != nullptr) {
+        expression->accept(this);
+        return _contextGenCode->getTemporaryValue();
+    }
+    Symbol empty;
+    empty = Symbol(nullptr, nullptr, nullptr);
+    return empty;
+}
+
+auto GeneralVisitorGenCode::getClassNameFromSymbol(const Symbol& objectSymbol) -> std::string {
+    std::string className;
+    if (objectSymbol.getType() != nullptr) {
+        if (auto* typeComplex = prysma::dyn_cast<TypeComplex>(objectSymbol.getType())) {
+            className = typeComplex->getClassName();
+        }
+    }
+
+    constexpr size_t CLASS_PREFIX_LENGTH = 6;
+    if (className.empty() && objectSymbol.getPointedElementType() != nullptr) {
+        if (auto* structType = llvm::dyn_cast<llvm::StructType>(objectSymbol.getPointedElementType())) {
+            llvm::StringRef structName = structType->getName();
+            if (structName.starts_with("Class_")) {
+                className = structName.drop_front(CLASS_PREFIX_LENGTH).str();
+            } else {
+                className = structName.str();
+            }
+        }
+    }
+    return className;
+}
+

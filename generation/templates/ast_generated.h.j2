@@ -1,0 +1,71 @@
+#ifndef AST_GENERE_H
+#define AST_GENERE_H
+
+#include "compiler/ast/nodes/interfaces/i_node.h"
+#include "compiler/ast/nodes/interfaces/i_expression.h"
+#include "compiler/ast/nodes/node_instruction.h"
+#include "compiler/visitor/interfaces/i_visitor.h"
+#include "compiler/lexer/lexer.h"
+#include <string>
+#include <vector>
+#include <utility>
+#include "compiler/ast/registry/types/i_type.h"
+
+// Enum généré dynamiquement pour tous les nodes AST
+enum class NodeTypeGenerated {
+{%- for classe in classes %}
+    {{ classe.nom }},
+{%- endfor %}
+};
+
+{% for nom in nodes_noms %}
+class Node{{ nom }};
+{% endfor %}
+
+{% for classe in classes %}
+class Node{{ classe.nom }} : public {{ classe.parent }} {
+private:
+    NodeTypeGenerated _nodeTypeGenerated = NodeTypeGenerated::{{ classe.nom }};
+{% for nom_champ, type_champ in classe.champs.items() %}
+    {{ type_champ }} _{{ nom_champ }};
+{% endfor %}
+
+public:
+    Node{{ classe.nom }}() = default;
+{%- if classe.champs %}
+    Node{{ classe.nom }}({{ classe.params_builder }}) : {{ classe.inits_builder }} {}
+{%- endif %}
+    ~Node{{ classe.nom }}() override = default;
+
+    void accept(IVisitor* visitor) override {
+        visitor->visiter(this);
+    }
+
+    [[nodiscard]] NodeTypeGenerated getGeneratedType() const override {
+        return _nodeTypeGenerated;
+    }
+
+    [[nodiscard]] static bool classof(const INode* node) {
+        return node->getGeneratedType() == NodeTypeGenerated::{{ classe.nom }};
+    }
+
+{%- if classe.parent == 'IExpression' %}
+
+    IExpression* addExpression(INode* left, INode* right) override {
+{%- if 'gauche' in classe.champs %}
+        _gauche = left;
+{%- endif %}
+{%- if 'droite' in classe.champs %}
+        _droite = right;
+{%- endif %}
+        return this;
+    }
+{%- endif %}
+
+{% for nom_champ, type_champ in classe.champs.items() %}
+    [[nodiscard]] {{ classe.getters[nom_champ] }} get{{ nom_champ[0]|upper }}{{ nom_champ[1:] }}() const { return _{{ nom_champ }}; }
+{% endfor %}
+};
+
+{% endfor %}
+#endif
