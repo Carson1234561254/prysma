@@ -1,20 +1,21 @@
 ---
-name: Functionnalité
-about: Functionnalité souhaitée pour ce project
-title: "[FONCTIONNALITÉ]"
+name: Feature
+about: Desired feature for this project
+title: "[FEATURE]"
 labels: ''
 assignees: ''
 
 ---
 
-**Décrire le problème à solutionner (si nécessaire)**
-Écrire une description claire et concise du problème.
+**Describe the problem to be solved (if necessary)**
+Write a clear and concise description of the problem.
 
-**Description de la solution souhaitée**
-Écrire une description claire et concise de la solution souhaitée.
+**Description of the desired solution**
+Write a clear and concise description of the desired solution.
 
-**Description des alternatives à considérer**
-Écrire une description claire et concise des solutions alternatives à considérer.
+**Description of alternative solutions to consider**
+Write a clear and concise description of alternative solutions to consider.
 
-**Informations sur le contexte**
-Ajouter des informations sur le contexte ici.
+**Context information**
+Add context information here.
+

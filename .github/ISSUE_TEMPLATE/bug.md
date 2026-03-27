@@ -1,26 +1,27 @@
 ---
 name: Bug
-about: Rapporter un bug à corriger
-title: "[BOGUE]"
+about: Report a bug to be fixed
+title: "[BUG]"
 labels: ''
 assignees: ''
 
 ---
 
-**Description du bug**
-Description claire et concise du bug.
+**Bug Description**
+A clear and concise description of the bug.
 
-**Étapes pour le reproduire**
-1. Aller à "..."
-2. Cliquer sur '...'
-3. Descendre jusqu'à "..."
-4. Constater l'erreur
+**Steps to Reproduce**
+1. Go to "..."
+2. Click on '...'
+3. Scroll down to "..."
+4. Observe the error
 
-**Résultat attendu**
-Description claire et concise du comportement attendu.
+**Expected Result**
+A clear and concise description of the expected behavior.
 
-**Captures d'écran**
-Joindre une(des) capture(s) d'écran avec le problème.
+**Screenshots**
+Attach screenshot(s) showing the issue.
 
 **Context**
-Ajouter ici les éléments contextuels.
+Add any relevant contextual information here.
+
