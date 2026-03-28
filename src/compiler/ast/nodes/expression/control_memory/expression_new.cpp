@@ -1,7 +1,7 @@
 #ifndef EXPRESSION_NEW_CPP
 #define EXPRESSION_NEW_CPP
 
-#include "compiler/instruction/expression_new.h"
+#include "compiler/control_memory/expression_new.h"
 #include "compiler/ast/ast_genere.h"
 #include "compiler/ast/nodes/interfaces/i_node.h"
 #include "compiler/ast/registry/context_expression.h"

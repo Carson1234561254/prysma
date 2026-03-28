@@ -29,7 +29,7 @@
 #include "compiler/math/expression_string.h"
 #include "compiler/array/expression_array_initialization.h"
 #include "compiler/object/expression_call_central.h"
-#include "compiler/instruction/expression_new.h"
+#include "compiler/control_memory/expression_new.h"
 
 // Parsers d'instructions
 #include "compiler/function/parser_declaration_function.h"
