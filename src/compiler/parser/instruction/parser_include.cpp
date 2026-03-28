@@ -26,7 +26,7 @@ auto ParserInclude::parse(std::vector<Token>& tokens, int& index) -> INode*
     consume(tokens, index, TOKEN_QUOTE, "Error: Include instruction must be followed by a string in quotes");
     consume(tokens, index, TOKEN_SEMICOLON, "Error: Include instruction must end with a semicolon");
 
-    return _contextParser.getBuilderTreeEquation()->allocate<NodeInclude>(tokenPath.value);
+    return _contextParser.getBuilderTreeEquation()->allocate<NodeInclude>(tokenPath);
 }
 
 #endif /* PARSER_INCLUDE_CPP */

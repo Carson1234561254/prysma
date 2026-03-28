@@ -7,7 +7,7 @@
 void GeneralVisitorGenCode::visiter(NodeRefVariable* nodeRefVariable) 
 {
     Token variableToken;
-    variableToken.value = nodeRefVariable->getNomVariable();
+    variableToken = nodeRefVariable->getNomVariable();
     Symbol symbol = _contextGenCode->getRegistryVariable()->getVariable(variableToken);
     llvm::Value* variable = symbol.getAddress();
     _contextGenCode->setTemporaryValue(Symbol(variable, _contextGenCode->getTemporaryValue().getType(), _contextGenCode->getTemporaryValue().getPointedElementType()));

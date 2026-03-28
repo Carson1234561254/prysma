@@ -45,7 +45,7 @@ def main():
         f"-DCMAKE_MODULE_LINKER_FLAGS={ldflags}",
         f"-DCMAKE_SHARED_LINKER_FLAGS={ldflags}",
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
-    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    ], check=True)
 
     os.makedirs("build", exist_ok=True)
     shutil.rmtree(os.path.join("build", "obj"), ignore_errors=True)
@@ -54,7 +54,7 @@ def main():
 
     subprocess.run([
         "cmake", "--build", "build", "--parallel", nb_coeurs
-    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    ], check=True)
     
 if __name__ == "__main__":
     main()

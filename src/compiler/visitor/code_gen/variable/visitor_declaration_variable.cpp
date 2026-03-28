@@ -52,7 +52,7 @@ void GeneralVisitorGenCode::visiter(NodeDeclarationVariable* nodeDeclarationVari
         }
         
         // Allocate and register the array
-        llvm::AllocaInst* allocaInstArray = allocator.allocate(variableType, nodeDeclarationVariable->getNom());
+        llvm::AllocaInst* allocaInstArray = allocator.allocate(variableType, nodeDeclarationVariable->getNom().value);
         createdAlloca = allocaInstArray;
 
         // Initialize each element of the array
@@ -72,7 +72,7 @@ void GeneralVisitorGenCode::visiter(NodeDeclarationVariable* nodeDeclarationVari
     } else {
         // Simple (non-array) variable
         llvm::Type* variableType = nodeDeclarationVariable->getType()->generateLLVMType(_contextGenCode->getBackend()->getContext());
-        llvm::AllocaInst* allocaInst = allocator.allocate(variableType, nodeDeclarationVariable->getNom());
+        llvm::AllocaInst* allocaInst = allocator.allocate(variableType, nodeDeclarationVariable->getNom().value);
         createdAlloca = allocaInst;
         
         llvm::Value* calculatedValue = evaluateExpression(expression).getAddress();
@@ -85,7 +85,7 @@ void GeneralVisitorGenCode::visiter(NodeDeclarationVariable* nodeDeclarationVari
     }
     if (createdAlloca != nullptr) {
         Token token;
-        token.value = nodeDeclarationVariable->getNom();
+        token.value = nodeDeclarationVariable->getNom().value;
         
         // Create the symbol with the pointed type if it's a pointer
         llvm::Type* variableType = nodeDeclarationVariable->getType()->generateLLVMType(_contextGenCode->getBackend()->getContext());

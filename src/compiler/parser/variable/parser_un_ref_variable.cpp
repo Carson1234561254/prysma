@@ -24,9 +24,8 @@ INode* ParserUnRefVariable::parse(std::vector<Token>& tokens, int& index)
     consume(tokens, index, TOKEN_UNREF, "Error: 'unref' expected");
     
     Token nameToken = consume(tokens, index, TOKEN_IDENTIFIER, "Error: variable name expected after 'unref'");
-    std::string variableName = nameToken.value;
     
-    return _contextParser.getBuilderTreeEquation()->allocate<NodeUnRefVariable>(variableName);
+    return _contextParser.getBuilderTreeEquation()->allocate<NodeUnRefVariable>(nameToken);
 }
 
 #endif /* PARSER_UNREFVARIABLE_CPP */

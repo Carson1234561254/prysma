@@ -64,7 +64,7 @@ namespace
               declarationFunction->getBody()
           );
         }      auto* newDeclarationFunction = prysma::cast<NodeDeclarationFunction>(node);
-      if (newDeclarationFunction != nullptr && newDeclarationFunction->getNom() == param.classNameToken().value) {
+      if (newDeclarationFunction != nullptr && newDeclarationFunction->getNom().value == param.classNameToken().value) {
         builders.push_back(node);
         return;
       }

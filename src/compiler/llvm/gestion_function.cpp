@@ -40,9 +40,9 @@ FunctionDeclarationGenerator::FunctionDeclarationGenerator(ContextGenCode* conte
 {
 }
 
-llvm::Function* StandardFunctionDeclarationGenerator::createFunction()
+auto StandardFunctionDeclarationGenerator::createFunction() -> llvm::Function*
 {
-    std::string functionName = getNodeDeclarationFunction()->getNom();
+    std::string functionName = getNodeDeclarationFunction()->getNom().value;
     
     const auto& symbolPtr = getContextGenCode()->getRegistryFunctionLocal()->get(functionName);
     if (!prysma::isa<SymbolFunctionLocal>(symbolPtr.get())) {
@@ -58,9 +58,9 @@ llvm::Function* StandardFunctionDeclarationGenerator::createFunction()
     return function;
 }
 
-llvm::Function* MethodFunctionDeclarationGenerator::createFunction()
+auto MethodFunctionDeclarationGenerator::createFunction() -> llvm::Function*
 {
-    std::string functionName = getNodeDeclarationFunction()->getNom();
+    std::string functionName = getNodeDeclarationFunction()->getNom().value;
     std::string className = getContextGenCode()->getCurrentClassName();
     auto const& classInfo = getContextGenCode()->getRegistryClass()->get(className);
     const auto& symbolPtr = classInfo->getRegistryFunctionLocal()->get(functionName);
@@ -103,14 +103,14 @@ void MethodFunctionDeclarationGenerator::handleConstructedArguments(llvm::Functi
 
     for (auto* nodeArg : args.arguments) {
         llvm::Argument* arg = function->getArg(static_cast<unsigned int>(argIndex));
-        arg->setName(nodeArg->getNom());
+        arg->setName(nodeArg->getNom().value);
         
         llvm::Type* argType = arg->getType();
         llvm::AllocaInst* alloca = getContextGenCode()->getBackend()->getBuilder().CreateAlloca(argType);
         getContextGenCode()->getBackend()->getBuilder().CreateStore(arg, alloca);
         
         Token argumentToken;
-        argumentToken.value = nodeArg->getNom();
+        argumentToken.value = nodeArg->getNom().value;
         argumentToken.type = TOKEN_IDENTIFIER;
         
         Symbol symbole;
@@ -128,14 +128,14 @@ void StandardFunctionDeclarationGenerator::handleConstructedArguments(llvm::Func
 
     for (auto* nodeArg : args.arguments) {
         llvm::Argument* arg = function->getArg(static_cast<unsigned int>(argIndex));
-        arg->setName(nodeArg->getNom());
+        arg->setName(nodeArg->getNom().value);
         
         llvm::Type* argType = arg->getType();
         llvm::AllocaInst* alloca = getContextGenCode()->getBackend()->getBuilder().CreateAlloca(argType);
         getContextGenCode()->getBackend()->getBuilder().CreateStore(arg, alloca);
         
         Token argumentToken;
-        argumentToken.value = nodeArg->getNom();
+        argumentToken.value = nodeArg->getNom().value;
         argumentToken.type = TOKEN_IDENTIFIER;
         
         Symbol symbole;

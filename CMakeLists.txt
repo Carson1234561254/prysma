@@ -1,26 +1,26 @@
 cmake_minimum_required(VERSION 3.12)
 
-# faut absolument forcer clang ICI avant le project() 
+# absolutely force clang HERE before project()
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_C_COMPILER clang)
 
 project(Prysma)
 
-# setup du C++17
+# setup C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# pour que mon éditeur comprenne le code et souligne les erreurs direct 
+# so my editor understands the code and underlines errors directly
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# par défaut on compile en Debug pour voir ce qu'on fait
+# by default, compile in Debug to see what we're doing
 if(NOT CMAKE_BUILD_TYPE)
-    message(STATUS "CMAKE_BUILD_TYPE non défini -> configuration par défaut: Debug")
+    message(STATUS "CMAKE_BUILD_TYPE not set -> default configuration: Debug")
     set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
 endif()
 
-# LLVM 
-# on laisse cmake se débrouiller pour trouver llvm et ses paths tout seul
+# LLVM
+# let cmake handle finding llvm and its paths automatically
 find_package(LLVM REQUIRED CONFIG)
 llvm_map_components_to_libnames(llvm_libs 
     core 
@@ -30,50 +30,50 @@ llvm_map_components_to_libnames(llvm_libs
     ${LLVM_TARGETS_TO_BUILD}
 )
 
-# mes fichiers source 
-# on récupère tous mes .cpp (le CONFIGURE_DEPENDS c'est pour plus devoir raser le dossier build quand j'ajoute un fichier)
+# my source files
+# get all my .cpp files (CONFIGURE_DEPENDS avoids having to wipe the build folder when adding a file)
 file(GLOB_RECURSE SOURCES_LOCALES CONFIGURE_DEPENDS "src/*.cpp")
 file(GLOB_RECURSE SOURCES_GENEREES CONFIGURE_DEPENDS "build/generationCode/src/*.cpp")
 
-# on fusionne tout ça 
+# merge everything
 set(SOURCES ${SOURCES_LOCALES} ${SOURCES_GENEREES})
 
-# au cas où le main.cpp passe à la trappe
+# in case main.cpp is missed
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
     list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 endif()
 
-# on crée l'exécutable
+# create the executable
 add_executable(Prysma ${SOURCES})
 
-# on balance les définitions llvm
+# add llvm definitions
 target_compile_definitions(Prysma PRIVATE ${LLVM_DEFINITIONS})
 
-# mes dossiers include
+# my include directories
 target_include_directories(Prysma PRIVATE 
     ${CMAKE_SOURCE_DIR}/include 
     ${CMAKE_SOURCE_DIR}/build/generationCode/include
 )
 
-# on inclut llvm en SYSTEM pour que clang arrête de crier sur leurs 1000 warnings
+# include llvm as SYSTEM so clang stops complaining about their 1000 warnings
 target_include_directories(Prysma SYSTEM PRIVATE ${LLVM_INCLUDE_DIRS})
 
-# on lie les libs llvm
+# link llvm libs
 target_link_libraries(Prysma PRIVATE ${llvm_libs})
 
-# mes flags de compilation
+# my compile flags
 target_compile_options(Prysma PRIVATE
-    # pas d'opti en Debug, max d'opti en Release
+    # no optimization in Debug, max optimization in Release
     $<$<CONFIG:Debug>:-g;-O0;-fno-omit-frame-pointer;-fstandalone-debug>
     $<$<NOT:$<CONFIG:Debug>>:-O2>
     
-    # pour lire les erreurs sans avoir mal au crâne (couleurs, 3 erreurs max, petit curseur)
+    # to read errors without a headache (colors, 3 errors max, small caret)
     -fcolor-diagnostics     
     -ferror-limit=3        
     -fshow-column            
     -fcaret-diagnostics    
     
-    # analyse stricte pour coder proprement
+    # strict analysis for clean code
     -Wall -Wextra -Wpedantic 
     -Wshadow                
     -Wnon-virtual-dtor      

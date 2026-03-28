@@ -29,7 +29,6 @@ auto ParserAssignmentVariable::parse(std::vector<Token>& tokens, int& index) -> 
         consume(tokens, index, TOKEN_DOT, "Error '.'");
         Token attributeToken = consume(tokens, index, TOKEN_IDENTIFIER, "Error: attribute expected");
         variableName += "." + attributeToken.value;
-        nameToken.value = variableName;
     }
 
     INode* indexExpression = nullptr;
@@ -44,11 +43,13 @@ auto ParserAssignmentVariable::parse(std::vector<Token>& tokens, int& index) -> 
     INode* expression = _contextParser.getBuilderTreeEquation()->build(tokens, index);
     consume(tokens, index, TOKEN_SEMICOLON, "Error: ';' expected");
 
+    Token constructedToken = nameToken;
+
     if (indexExpression != nullptr) {
-        return _contextParser.getBuilderTreeEquation()->allocate<NodeAssignmentArray>(variableName, indexExpression, expression, nameToken);
+        return _contextParser.getBuilderTreeEquation()->allocate<NodeAssignmentArray>(constructedToken, indexExpression, expression, nameToken);
     }
     
-    return _contextParser.getBuilderTreeEquation()->allocate<NodeAssignmentVariable>(variableName, expression, nameToken);
+    return _contextParser.getBuilderTreeEquation()->allocate<NodeAssignmentVariable>(constructedToken, expression, nameToken);
 }
 
 #endif /* PARSER_ASSIGNMENTVARIABLE_CPP */

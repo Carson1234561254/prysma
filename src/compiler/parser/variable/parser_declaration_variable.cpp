@@ -27,7 +27,6 @@ auto ParserDeclarationVariable::parse(std::vector<Token>& tokens, int& index) ->
     IType* type = _contextParser.getTypeParser()->parse(tokens, index);
     
     Token nameToken = consume(tokens, index, TOKEN_IDENTIFIER, "Error: variable name expected");
-    std::string variableName = nameToken.value;
     
     consume(tokens, index, TOKEN_EQUAL, "Error: '=' expected after variable name");
     
@@ -37,7 +36,7 @@ auto ParserDeclarationVariable::parse(std::vector<Token>& tokens, int& index) ->
 
     return _contextParser.getBuilderTreeEquation()->allocate<NodeDeclarationVariable>(
         Token{},
-        variableName,
+        nameToken,
         type,
         expression
     );

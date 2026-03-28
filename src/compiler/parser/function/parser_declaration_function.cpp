@@ -20,7 +20,7 @@ ParserDeclarationFunction::ParserDeclarationFunction(ContextParser& contextParse
 
 ParserDeclarationFunction::~ParserDeclarationFunction() = default;
 
-INode* ParserDeclarationFunction::parse(std::vector<Token>& tokens, int& index)
+auto ParserDeclarationFunction::parse(std::vector<Token>& tokens, int& index) -> INode*
 {
   consume(tokens, index, TOKEN_FUNCTION, "Error: not the correct token! 'fn'");
 
@@ -28,7 +28,6 @@ INode* ParserDeclarationFunction::parse(std::vector<Token>& tokens, int& index)
   IType* typeReturn = _contextParser.getTypeParser()->parse(tokens, index);
   
   Token tokenFunctionName = tokens[static_cast<size_t>(index)];
-  std::string functionName = tokenFunctionName.value;
   consume(tokens, index, TOKEN_IDENTIFIER, "Error: invalid identifier, must be a function name");
 
   // Parse arguments inside parentheses
@@ -58,7 +57,7 @@ INode* ParserDeclarationFunction::parse(std::vector<Token>& tokens, int& index)
   consume(tokens, index, TOKEN_BRACE_CLOSE, "Error: not a closing brace '}'");
 
   auto* nodeFunction = 
-      _contextParser.getBuilderTreeInstruction()->allocate<NodeDeclarationFunction>(Token{}, typeReturn, functionName, arguments, body);
+      _contextParser.getBuilderTreeInstruction()->allocate<NodeDeclarationFunction>(Token{}, typeReturn, tokenFunctionName, arguments, body);
 
   return nodeFunction; 
 }

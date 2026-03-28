@@ -7,7 +7,7 @@ void FillingVisitorRegistry::visiter(NodeInclude* nodeInclude)
 {
     std::filesystem::path parentFilePath(_contextGenCode->getCurrentFilePath());
     std::filesystem::path parentDirectory = parentFilePath.parent_path();
-    std::filesystem::path absolutePath = parentDirectory / nodeInclude->getPath();
+    std::filesystem::path absolutePath = parentDirectory / nodeInclude->getPath().value;
     _orchestrator->includeFile(absolutePath.string());
 }
 

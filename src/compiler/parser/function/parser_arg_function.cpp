@@ -26,7 +26,7 @@ auto ParserArgFunction::parse(std::vector<Token>& tokens, int& index) -> INode*
 
   Token name = consume(tokens, index, TOKEN_IDENTIFIER, "Error: not an identifier!");
 
-  return _contextParser.getBuilderTreeEquation()->allocate<NodeArgFunction>(type, name.value);
+  return _contextParser.getBuilderTreeEquation()->allocate<NodeArgFunction>(type, name);
 }
 
 #endif /* PARSER_ARGFUNCTION_CPP */

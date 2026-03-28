@@ -90,7 +90,7 @@ void FillingVisitorBodyClass::visiter(NodeClass* nodeClass)
             bool found = false;
             for(NodeDeclarationFunction* classMethod : classExtractor.getMethods())
             {
-                if(classMethod->getNom() == parentMethod->getNom())
+                if(classMethod->getNom().value == parentMethod->getNom().value)
                 {
                     found = true;
                     break;
@@ -100,7 +100,7 @@ void FillingVisitorBodyClass::visiter(NodeClass* nodeClass)
             if(!found)
             {
                 std::string errorMsg = "Class " + className + " must implement the method ";
-                errorMsg += parentMethod->getNom();
+                errorMsg += parentMethod->getNom().value;
                 errorMsg += " inherited from " + parentName;
                 throw std::runtime_error(errorMsg);
             }
@@ -119,7 +119,7 @@ void FillingVisitorBodyClass::visiter(NodeClass* nodeClass)
         if (variableType != nullptr) {
             classBodyElements.push_back(variableType);
             // Register the index for Pass 3
-            classInfo->getMemberIndices()[declarationVariable->getNom()] = currentIndex;
+            classInfo->getMemberIndices()[declarationVariable->getNom().value] = currentIndex;
             currentIndex++;
         }
     }

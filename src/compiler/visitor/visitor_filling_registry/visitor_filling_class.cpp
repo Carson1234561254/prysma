@@ -65,11 +65,11 @@ void FillingVisitorRegistry::visiter(NodeClass* nodeClass)
         }
         else if (auto* declVar = prysma::dyn_cast<NodeDeclarationVariable>(member)) {
             Token token;
-            token.value = declVar->getNom();
+            token.value = declVar->getNom().value;
             classInfoPtr->getRegistryVariable()->registerVariable(token, Symbol(nullptr, declVar->getType()));
             
             if (declVar->getExpression() != nullptr) {
-                classInfoPtr->getMemberInitializers()[declVar->getNom()] = declVar->getExpression();
+                classInfoPtr->getMemberInitializers()[declVar->getNom().value] = declVar->getExpression();
             }
         }
     }

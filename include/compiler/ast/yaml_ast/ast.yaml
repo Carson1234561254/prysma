@@ -9,13 +9,13 @@ Node:
       engine: [parser]
       champs:
         type: "IType*"
-        nom: "std::string"
+        nom: "Token"
     DeclarationFunction:
       engine: [parser]
       champs:
         visibilite: "Token"
         typeReturn: "IType*"
-        nom: "std::string"
+        nom: "Token"
         arguments: "std::vector<INode*>"
         body: "INode*"
     Return:
@@ -27,24 +27,24 @@ Node:
     AssignmentVariable:
       engine: [parser]
       champs:
-        nom: "std::string"
+        nom: "Token"
         expression: "INode*"
         token: "Token"
     DeclarationVariable:
       engine: [parser]
       champs:
         visibilite: "Token"
-        nom: "std::string"
+        nom: "Token"
         type: "IType*"
         expression: "INode*"  
     RefVariable:
       engine: [parser, expression]
       champs:
-        nomVariable: "std::string"
+        nomVariable: "Token"
     UnRefVariable:
       engine: [parser, expression]
       champs:
-        nomVariable: "std::string"
+        nomVariable: "Token"
     Identifiant:
       engine: [expression]
       champs: {}
@@ -53,7 +53,7 @@ Node:
     AssignmentArray:
       engine: []
       champs:
-        nom: "std::string"
+        nom: "Token"
         expressionIndex: "INode*"
         expression: "INode*"
         token: "Token"
@@ -121,7 +121,7 @@ Node:
     Include:
       engine: [parser]
       champs:
-        path: "std::string"
+        path: "Token"
     
   Math:
     Operation:

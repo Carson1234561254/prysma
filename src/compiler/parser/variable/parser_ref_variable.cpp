@@ -24,9 +24,8 @@ auto ParserRefVariable::parse(std::vector<Token>& tokens, int& index) -> INode*
     consume(tokens, index, TOKEN_REF, "Error: 'ref' expected");
     
     Token nameToken = consume(tokens, index, TOKEN_IDENTIFIER, "Error: variable name expected after 'ref'");
-    std::string variableName = nameToken.value;
     
-    return _contextParser.getBuilderTreeEquation()->allocate<NodeRefVariable>(variableName);
+    return _contextParser.getBuilderTreeEquation()->allocate<NodeRefVariable>(nameToken);
 }
 
 #endif /* PARSER_REFVARIABLE_CPP */

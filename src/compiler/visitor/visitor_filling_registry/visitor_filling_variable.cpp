@@ -11,7 +11,7 @@ void FillingVisitorRegistry::visiter(NodeDeclarationVariable* nodeDeclarationVar
 {
     Token token; 
     IType* type = nodeDeclarationVariable->getType();
-    token.value = nodeDeclarationVariable->getNom();
+    token.value = nodeDeclarationVariable->getNom().value;
    
     _contextGenCode->getRegistryVariable()->registerVariable(token, Symbol(nullptr, type));
 }
