@@ -9,14 +9,15 @@
 #include "compiler/parser/equation/manager_operator.h"
 #include "compiler/parser/equation/service_parenthesis.h"
 #include "compiler/lexer/token_type.h"
+#include <llvm/ADT/SmallVector.h>
 #include <llvm/Support/Allocator.h>
 #include <memory>
 #include <utility>
 #include <vector>
 
 // Floating-point equation builder
-BuilderFloatEquation::BuilderFloatEquation(RegistryExpression* registryExpression, llvm::BumpPtrAllocator& arena)
-    : _expressionRegistry(registryExpression), _arena(arena)
+BuilderFloatEquation::BuilderFloatEquation(RegistryExpression* expressionRegistry, llvm::BumpPtrAllocator& arena)
+    : _expressionRegistry(expressionRegistry), _arena(arena)
 {
     _symbolRegistry = std::make_unique<RegistrySymbol>();
 
@@ -36,7 +37,7 @@ BuilderFloatEquation::BuilderFloatEquation(RegistryExpression* registryExpressio
     _andManager = std::make_unique<OperatorManager>(TOKEN_AND);
     _orManager = std::make_unique<OperatorManager>(TOKEN_OR);
 
-    std::vector<OperatorManager*> operators = {
+    llvm::SmallVector<OperatorManager*, MAX_OPERATORS> operators = {
         _orManager.get(),
         _andManager.get(),
         _equalManager.get(),

@@ -3,12 +3,13 @@
 #include "compiler/parser/equation/interfaces/i_manager_parenthesis.h"
 #include "compiler/lexer/lexer.h"
 #include <cstddef>
+#include <llvm/ADT/SmallVector.h>
 #include <utility>
 #include <vector>
 
 ChainOfResponsibility::ChainOfResponsibility(
     IManagerParenthesis* parenthesisManager, 
-    std::vector<OperatorManager*> operators)
+    llvm::SmallVector<OperatorManager*, MAX_OPERATORS> operators)
     : _start(nullptr), _parenthesisManager(parenthesisManager), _operators(std::move(operators)) {
     
     // Chain the managers

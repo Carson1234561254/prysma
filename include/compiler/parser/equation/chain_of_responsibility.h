@@ -4,9 +4,13 @@
 #include "compiler/parser/equation/interfaces/i_manager_operator.h"
 #include "compiler/parser/equation/interfaces/i_manager_parenthesis.h"
 #include "compiler/lexer/lexer.h"
+#include <cstddef>
+#include <llvm/ADT/SmallVector.h>
 #include <vector>
 
 class OperatorManager;
+
+constexpr size_t MAX_OPERATORS = 16;
 
 /**
  * @class ChainOfResponsibility
@@ -17,7 +21,7 @@ class ChainOfResponsibility {
 private:
     IOperatorManager* _start;
     IManagerParenthesis* _parenthesisManager;
-    std::vector<OperatorManager*> _operators;
+    llvm::SmallVector<OperatorManager*, MAX_OPERATORS> _operators;
 
 public:
     /**
@@ -27,7 +31,7 @@ public:
      */
     ChainOfResponsibility(
         IManagerParenthesis* parenthesisManager, 
-        std::vector<OperatorManager*> operators
+        llvm::SmallVector<OperatorManager*, MAX_OPERATORS> operators
     );
     
     /**
