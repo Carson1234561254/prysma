@@ -8,6 +8,8 @@ from generation.generator_graphe_viz import GeneratorGraphViz
 from generation.generator_expression import GeneratorExpression
 from generation.generator_parser import GeneratorParser
 
+from generation.generator_class_test import generate_class_files
+
 def main():
     dossier_script = os.path.dirname(os.path.abspath(__file__))
     os.chdir(dossier_script)
@@ -18,6 +20,8 @@ def main():
     GeneratorGraphViz(dossier_script).generate()
     GeneratorExpression(dossier_script).generate()
     GeneratorParser(dossier_script).generate()
+
+    #generate_class_files() #for testing
 
     cxxflags = (
         "-fno-rtti -g3 -O0 " # Debug info max, aucune optimisation
