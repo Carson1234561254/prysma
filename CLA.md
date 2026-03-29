@@ -36,3 +36,5 @@ Changing the license to a copyleft license (such as GPL, AGPL, or LGPL) requires
   c) Written notice to all Contributors at least 14 days prior to the vote.
 
 The Maintainer shall never change the license of the Program or Contributions to any proprietary, closed-source, or non-OSI-approved license.
+
+Program" shall mean the Prysma software, compiler, and associated tools managed by the Maintainer.
