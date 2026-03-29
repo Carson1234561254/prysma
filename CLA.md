@@ -28,11 +28,6 @@ You are providing Your Contributions on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 
 ## 6. Future Licensing and Evolution
 
-The Maintainer has the explicit right to change the license of the Program and all Contributions to any permissive open source license approved by the Open Source Initiative (OSI) (such as MIT, Apache 2.0, or BSD) without requiring additional consent from Contributors.
-
-Changing the license to a copyleft license (such as GPL, AGPL, or LGPL) requires:
-  a) A public vote open to all Contributors for a period of 30 days;
-  b) An affirmative approval by Contributors representing at least two-thirds (66%) of the non-trivial code contributions (defined as >100 lines of substantive code) merged in the preceding 24 months;
-  c) Written notice to all Contributors at least 14 days prior to the vote.
+The Maintainer has the explicit right to change the license of the Program and all Contributions to any license approved by the Open Source Initiative (OSI) (including both permissive licenses like MIT and copyleft licenses like GPL) without requiring additional consent from Contributors.
 
 The Maintainer shall never change the license of the Program or Contributions to any proprietary, closed-source, or non-OSI-approved license.

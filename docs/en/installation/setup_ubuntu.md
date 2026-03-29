@@ -41,7 +41,7 @@ uv pip install -r requirements.txt
 
 ### Project Compilation
  ```bash
- python3 build.py
+ python3 debug.py
  ```
  
 ## 5. VS Code Configuration (tasks.json)

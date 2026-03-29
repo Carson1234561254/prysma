@@ -29,5 +29,5 @@ The core of the compiler is written in C++17. The following rules are non-negoti
 3. The code must compile without any warnings.
 4. **Mandatory validation:** You must run the entire test suite (unit and load tests) via the orchestrator before any submission.
    ```bash
-   python3 build.py
+   python3 debug.py
    ```

@@ -29,4 +29,4 @@ Le cœur du compiler est écrit en C++17. Les règles suivantes sont non négoci
 3. Le code doit compiler sans aucun avertissement (*warning*).
 4. **Validation obligatoire :** Vous devez exécuter l'intégralité de la suite de tests (unitaires et de load) via l'orchestrator avant toute soumission.
    ```bash
-   python3 build.py
+   python3 debug.py

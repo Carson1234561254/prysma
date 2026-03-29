@@ -47,7 +47,7 @@
             "name": "Build Python",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/build.py",
+            "program": "${workspaceFolder}/debug.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
         },
