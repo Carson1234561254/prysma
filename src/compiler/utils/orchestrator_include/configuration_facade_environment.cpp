@@ -112,6 +112,7 @@ void ConfigurationFacadeEnvironment::createRegistries()
     _returnContextCompilation = std::make_unique<ReturnContextCompilation>();
     _registryArgument = std::make_unique<RegistryArgument>();
     _registryClass = std::make_unique<RegistryClass>();
+    _nodeComponentRegistry = std::make_unique<NodeComponentRegistry>();
 }
 
 void ConfigurationFacadeEnvironment::createContext(const std::string& filePath)
@@ -123,6 +124,7 @@ void ConfigurationFacadeEnvironment::createContext(const std::string& filePath)
     _context = std::make_unique<ContextGenCode>(
         _registryType.get(),
         _backend.get(),
+        _nodeComponentRegistry.get(),
         _registryInstruction.get(),
         _registryVariable.get(),
         _registryFunctionGlobal,

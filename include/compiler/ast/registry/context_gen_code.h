@@ -7,7 +7,8 @@
 #include <utility>
 #include "compiler/ast/registry/registry_type.h"
 #include "registry_instruction.h"
-#include "stack/registry_variable.h"
+#include "registry_instruction.h"
+#include "node_component_registry.h"
 #include "registry_function.h"
 #include "registry_type.h"
 #include "registry_argument.h"
@@ -22,6 +23,7 @@ private:
     RegistryType* registryType;
     Symbol temporaryValue;
     LlvmBackend* backend;
+    NodeComponentRegistry* nodeComponentRegistry;
     RegistryInstruction* registryInstruction;
     RegistryVariable* registryVariable;
     RegistryFunctionGlobal* registryFunctionGlobal;
@@ -37,6 +39,7 @@ public:
     ContextGenCode(
         RegistryType* p_registryType,
         LlvmBackend* p_backend,
+        NodeComponentRegistry* p_nodeComponentRegistry,
         RegistryInstruction* p_registryInstruction,
         RegistryVariable* p_registryVariable,
         RegistryFunctionGlobal* p_registryFunctionGlobal,
@@ -59,6 +62,9 @@ public:
             }
             if (p_backend == nullptr) {
                 throw std::invalid_argument("The LLVM backend cannot be null");
+            }
+            if (p_nodeComponentRegistry == nullptr) {
+                throw std::invalid_argument("The node component registry cannot be null");
             }
             if (p_registryInstruction == nullptr) {
                 throw std::invalid_argument("The instruction registry cannot be null");
@@ -94,6 +100,7 @@ public:
         this->registryType = p_registryType;
         this->currentFilePath = std::move(p_currentFilePath);
         this->backend = p_backend;
+        this->nodeComponentRegistry = p_nodeComponentRegistry;
         this->registryInstruction = p_registryInstruction;
         this->registryVariable = p_registryVariable;
         this->registryFunctionGlobal = p_registryFunctionGlobal;
@@ -114,6 +121,7 @@ public:
     [[nodiscard]] auto getRegistryType() const -> RegistryType* { return registryType; }
     [[nodiscard]] auto getTemporaryValue() const -> Symbol { return temporaryValue; }
     [[nodiscard]] auto getBackend() const -> LlvmBackend* { return backend; }
+    [[nodiscard]] auto getNodeComponentRegistry() const -> NodeComponentRegistry* { return nodeComponentRegistry; }
     [[nodiscard]] auto getRegistryInstruction() const -> RegistryInstruction* { return registryInstruction; }
     [[nodiscard]] auto getRegistryVariable() const -> RegistryVariable* { return registryVariable; }
     [[nodiscard]] auto getRegistryFunctionGlobal() const -> RegistryFunctionGlobal* { return registryFunctionGlobal; }

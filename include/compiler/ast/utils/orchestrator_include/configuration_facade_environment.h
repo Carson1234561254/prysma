@@ -30,6 +30,8 @@ private:
 
     llvm::BumpPtrAllocator _arena;
 
+    std::unique_ptr<NodeComponentRegistry> _nodeComponentRegistry;
+
     std::unique_ptr<LlvmBackend> _backend;
     std::unique_ptr<RegistryInstruction> _registryInstruction;
     std::unique_ptr<RegistryVariable> _registryVariable;

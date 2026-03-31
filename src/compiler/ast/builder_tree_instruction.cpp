@@ -28,7 +28,7 @@ auto BuilderTreeInstruction::build(std::vector<Token>& tokens, int& index) -> IN
     }
     IParser* parentNode = _registryInstructions->get(tokens[static_cast<size_t>(index)].type);
     INode* child = parentNode->parse(tokens, index);
-   
+                                                                                                                                                                                                                                                                                                         
     return child;
 }
 
