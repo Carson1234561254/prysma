@@ -1,3 +1,11 @@
+//===-- registry_function.h - Brief description of the file -------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef F2141F07_2C85_4ADB_9BC9_A909EBD34394
 #define F2141F07_2C85_4ADB_9BC9_A909EBD34394
 

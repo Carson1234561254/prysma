@@ -1,3 +1,11 @@
+//===-- file_writing.h - Brief description of the file -------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef D554AA27_6112_4847_8679_9DF99DA76B4A
 #define D554AA27_6112_4847_8679_9DF99DA76B4A
 #include "interfaces/i_output.h"

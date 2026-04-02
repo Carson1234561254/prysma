@@ -1,3 +1,11 @@
+//===-- context_gen_code.h - Brief description of the file -------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef C2537ED8_1CCF_4242_BDB0_B5ED5F2AD08F
 #define C2537ED8_1CCF_4242_BDB0_B5ED5F2AD08F
 

@@ -1,12 +1,10 @@
-from encodings import utf_8
-import os
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 template_path = Path(__file__).parent 
 template_name = "license.txt.jinja"
 base_path = Path(__file__).parents[2]
-extensions = {'.h','.cpp'}
+extensions = {'.h','.cpp', '.jinja'}
 
 
 def check_license_file(path: Path):
@@ -29,8 +27,15 @@ def update_license(path : Path, lignes):
     if check_license_file(path) is not True:      
         with open(path, 'w') as f:
             header = template.render(**context)
-            f.write(header + lignes)
-    
+            f.write(header + "\n\n" + lignes)
+    else:
+        header = template.render(**context)
+        
+        for i in range(header.len()):
+            lignes[i] = header[i]
+        with open(path,'w') as f: 
+            f.write(header + "\n\n" + lignes)
+            
 def main():
 
     for path in base_path.rglob('*'):

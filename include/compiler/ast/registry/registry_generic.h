@@ -1,3 +1,11 @@
+//===-- registry_generic.h - Brief description of the file -------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef E962F97C_7F79_445E_9F65_097981CC00B4
 #define E962F97C_7F79_445E_9F65_097981CC00B4
 

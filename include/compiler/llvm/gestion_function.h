@@ -1,3 +1,11 @@
+//===-- gestion_function.h - Brief description of the file -------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef D2944365_C1DD_41F8_A211_BFF33402A958
 #define D2944365_C1DD_41F8_A211_BFF33402A958
 
