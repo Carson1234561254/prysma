@@ -40,8 +40,8 @@ INode* ParserCallFunction::parse(std::vector<Token>& tokens, int& index)
   NodeComponentRegistry* registry = _contextParser.getNodeComponentRegistry();
   auto* nodeCall = _contextParser.getBuilderTreeEquation()->allocate<NodeCallFunction>(registry->getNextId());
 
-  registry->insert<NAME_COMPONENT_TAG>(nodeCall->getNodeId(), functionName);
-  registry->insert<CHILD_COMPONENT_TAG>(nodeCall->getNodeId(), children);
+  registry->insert<AST_NAME_COMPONENT>(nodeCall->getNodeId(), functionName);
+  registry->insert<AST_CHILD_COMPONENT>(nodeCall->getNodeId(), children);       
 
   //NodeCallFunction(Token nomFunction, llvm::ArrayRef<INode*> children = nullptr) : _nomFunction(std::move(nomFunction)), _children(children) {}
 
@@ -57,7 +57,3 @@ INode* ParserCallFunction::parse(std::vector<Token>& tokens, int& index)
 }
 
 #endif /* PARSER_CALLFUNCTION_CPP */
-
-
-
-

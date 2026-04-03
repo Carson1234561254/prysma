@@ -14,6 +14,10 @@ struct NODEGEN_TYPE_COMPONENT_TAG;
 struct NAME_COMPONENT_TAG;
 struct CHILD_COMPONENT_TAG;
 
+struct AST_NAME_COMPONENT;
+struct AST_CHILD_COMPONENT;
+struct AST_NODEGEN_TYPE_COMPONENT;
+
 using of_names = Token;
 using of_children = llvm::ArrayRef<INode*>;
 using of_nodegen_types = NodeTypeGenerated;
@@ -52,17 +56,17 @@ private:
 
 
 template<>
-struct NodeComponentRegistry::mapper<NODEGEN_TYPE_COMPONENT_TAG> {
+struct NodeComponentRegistry::mapper<AST_NODEGEN_TYPE_COMPONENT> {
     PRYSMA_NODISCARD static sparse_set<of_nodegen_types>& get(NodeComponentRegistry& reg);
 };
 
 template<>
-struct NodeComponentRegistry::mapper<NAME_COMPONENT_TAG> {
+struct NodeComponentRegistry::mapper<AST_NAME_COMPONENT> {
     PRYSMA_NODISCARD static sparse_set<of_names>& get(NodeComponentRegistry& reg);
 };
 
 template<>
-struct NodeComponentRegistry::mapper<CHILD_COMPONENT_TAG> {
+struct NodeComponentRegistry::mapper<AST_CHILD_COMPONENT> {
     PRYSMA_NODISCARD static sparse_set<of_children>& get(NodeComponentRegistry& reg);
 };
 

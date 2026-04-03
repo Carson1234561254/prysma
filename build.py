@@ -14,8 +14,8 @@ def main():
 
     #GeneratorAST(script_dir).generate() # pour tester les maquettes des noeuds, il faudra modifier les scripts Jinja2
     GeneratorInterfaceVisitor(script_dir).generate()
-    GeneratorVisitorBaseGeneral(script_dir).generate()
-    GeneratorGraphViz(script_dir).generate()
+    #GeneratorVisitorBaseGeneral(script_dir).generate() # pour tester les maquettes des noeuds, il faudra modifier les scripts Jinja2
+    #GeneratorGraphViz(script_dir).generate() # pour tester les maquettes des noeuds, il faudra modifier les scripts Jinja2
     GeneratorExpression(script_dir).generate()
     GeneratorParser(script_dir).generate()
 

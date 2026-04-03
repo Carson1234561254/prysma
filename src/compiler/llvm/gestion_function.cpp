@@ -247,7 +247,7 @@ auto StandardFunctionCallGenerator::getLocalFunction(llvm::StringRef functionNam
 
 void FunctionCallGenerator::generateCallFunction(NodeCallFunction* nodeCallFunction)
 {
-    llvm::StringRef functionName = _contextGenCode->getNodeComponentRegistry()->get<NAME_COMPONENT_TAG>(nodeCallFunction->getNodeId())->value;
+    llvm::StringRef functionName = _contextGenCode->getNodeComponentRegistry()->get<AST_NAME_COMPONENT>(nodeCallFunction->getNodeId())->value;
 
     if (RegistryBuiltIns::isBuiltIn(functionName)) {
         RegistryBuiltIns::generateCall(functionName, nodeCallFunction, getContextGenCode(), _visitorGeneralCodeGen);
@@ -260,7 +260,7 @@ void FunctionCallGenerator::generateCallFunction(NodeCallFunction* nodeCallFunct
     llvm::Function* targetFunction = symbolFunction->function;
     llvm::FunctionType* functionType = targetFunction->getFunctionType();
 
-    decltype(auto) nodeChildren = *_contextGenCode->getNodeComponentRegistry()->get<CHILD_COMPONENT_TAG>(nodeCallFunction->getNodeId());
+    decltype(auto) nodeChildren = *_contextGenCode->getNodeComponentRegistry()->get<AST_CHILD_COMPONENT>(nodeCallFunction->getNodeId());
     
     unsigned int paramIndex = 0; 
     for (INode* argumentChild : nodeChildren) 
@@ -309,7 +309,7 @@ bool RegistryBuiltIns::isBuiltIn(llvm::StringRef name) {
 }
 
 void RegistryBuiltIns::generateCall(llvm::StringRef name, NodeCallFunction* nodeCallFunction, ContextGenCode* context, IVisitor* visitor) {
-    decltype(auto) nodeChildren = *context->getNodeComponentRegistry()->get<CHILD_COMPONENT_TAG>(nodeCallFunction->getNodeId());
+    decltype(auto) nodeChildren = *context->getNodeComponentRegistry()->get<AST_CHILD_COMPONENT>(nodeCallFunction->getNodeId());
 
     if (name == "print") {
         if (nodeChildren.empty()) {

@@ -5,16 +5,16 @@ auto NodeComponentRegistry::getNextId() noexcept -> node_id_t {
 }
 
 sparse_set<of_nodegen_types>&
-NodeComponentRegistry::mapper<NODEGEN_TYPE_COMPONENT_TAG>::get(NodeComponentRegistry& reg) {
+NodeComponentRegistry::mapper<AST_NODEGEN_TYPE_COMPONENT>::get(NodeComponentRegistry& reg) {
     return reg.nodegen_types;
 }
 
 sparse_set<of_names>&
-NodeComponentRegistry::mapper<NAME_COMPONENT_TAG>::get(NodeComponentRegistry& reg) {
+NodeComponentRegistry::mapper<AST_NAME_COMPONENT>::get(NodeComponentRegistry& reg) {
     return reg.names;
 }
 
 sparse_set<of_children>&
-NodeComponentRegistry::mapper<CHILD_COMPONENT_TAG>::get(NodeComponentRegistry& reg) {
+NodeComponentRegistry::mapper<AST_CHILD_COMPONENT>::get(NodeComponentRegistry& reg) {
     return reg.children;
 }
