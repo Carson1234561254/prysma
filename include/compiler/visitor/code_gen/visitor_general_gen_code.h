@@ -1,3 +1,11 @@
+//===-- visitor_general_gen_code.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef FDDB5968_6DEF_49B0_AD11_8791D523278A
 #define FDDB5968_6DEF_49B0_AD11_8791D523278A
 

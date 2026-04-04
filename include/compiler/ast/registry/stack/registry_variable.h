@@ -1,3 +1,11 @@
+//===-- registry_variable.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef F7F44FF6_77D4_456C_A897_1A52149FDE53
 #define F7F44FF6_77D4_456C_A897_1A52149FDE53
 

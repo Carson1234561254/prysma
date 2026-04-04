@@ -1,3 +1,11 @@
+//===-- unit_compilation.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef DB7C496D_6A43_4B78_B490_52A0C21C5224
 #define DB7C496D_6A43_4B78_B490_52A0C21C5224
 

@@ -1,3 +1,11 @@
+//===-- builder_systeme.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef B7A1B053_311E_4DDE_9808_6B5699644912
 #define B7A1B053_311E_4DDE_9808_6B5699644912
 #include <string>

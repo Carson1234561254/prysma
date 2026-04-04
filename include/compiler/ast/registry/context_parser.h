@@ -1,3 +1,11 @@
+//===-- context_parser.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef F4099BCE_4896_40B4_B34C_93B4827706C3
 #define F4099BCE_4896_40B4_B34C_93B4827706C3
 

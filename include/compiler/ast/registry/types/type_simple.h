@@ -1,3 +1,11 @@
+//===-- type_simple.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef D3CF3339_1CBC_4EEE_9EE7_B2E99140A4CB
 #define D3CF3339_1CBC_4EEE_9EE7_B2E99140A4CB
 

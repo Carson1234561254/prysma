@@ -1,3 +1,11 @@
+//===-- chain_of_responsibility.h -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
+
 #ifndef A58A7095_E8A1_4CAC_A3A8_3136BE3D2B27
 #define A58A7095_E8A1_4CAC_A3A8_3136BE3D2B27
 

@@ -1,4 +1,10 @@
-#include "compiler/ast/registry/registry_function.h"
+//===-- main.cpp -------------------------------------------*- C++ -*-===//
+//
+// Part of the Prysma Project, under the GNU GPL v3.0 or later.
+// See LICENSE at the project root for license information.
+// SPDX-License-Identifier: GPL-3.0-or-later WITH Prysma-exception-1.0
+//
+//===----------------------------------------------------------------------===//
 #include "compiler/ast/utils/orchestrator_include/configuration_facade_environment.h"
 #include "compiler/ast/utils/orchestrator_include/orchestrator_include.h"
 #include "compiler/file_processing/builder_systeme.h"
@@ -61,6 +67,15 @@
 // Il utilise cette technique pour les peformances et pour résoudre un problème spécifique de type pour réduire la complexité de la logique de leur arbre syntaxique 
 // Abstrait. 
 // Par contre, le coup c'est que le code est plus entrelacé donc plus rigide et plus difficile à maintenir. 
+
+// un registre de nœuds contigus avec un dispatch par ID, essayer de ne plus utiliser le accept du visiteur pour la génération du code llvm 
+// Clang utilise un énorme switch case pour faire du static dispatch il saute directement sur le bon noeud au lieu d'utiliser le accept 
+// Ce qui est beaucoup plus rapide. Le problème c'est le couplage, c'est pour ça qu'il utilise cette technique mais aussi la visite traditionnel 
+// Actuellement j'utilise un flut de contrôle par méthode accepte ce qui est beaucoup plus lent pour la génération du code, c'est une solution qui pourrais être 
+// Envisagé pour augmenter la vitesse de compilation, mais risqué car c'est couplé et difficile modifier. noeud->accept() à un coup d'indirection alors 
+// Qu'un simple switch case c'est seulement un jump à un déterminé précis donc c'est parfait pour le prédict branchement du cpu.
+// Vitesse de flux de contrôle par switch case, hypothèse à analyser. 
+
 
 auto main(int argc, char* argv[]) -> int
 {
