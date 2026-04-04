@@ -12,7 +12,14 @@ def check_license_file(path: Path):
     lignes = path.read_text(encoding="utf-8").splitlines()
     if not lignes:
         return False
-    return " - Brief description of the file -------*- C++ -*-===//" in lignes[0]
+    return "C++ -*-===//" in lignes[0]
+
+
+def calculate_dashes(filename: str) -> int:
+    total_length = 76
+    fixed_length = 18  # //===-- ... ---*- C++ -*-===//
+    available_for_dashes = total_length - fixed_length - len(filename) - 2 
+    return max(available_for_dashes, 1)  
 
 
 def update_license(path : Path, current_content):
@@ -21,8 +28,10 @@ def update_license(path : Path, current_content):
     template = env.get_template(template_name)
     file_lines = current_content.splitlines()
 
+    num_dashes = calculate_dashes(path.name)
     context = {
-        "path_file": path.name
+        "path_file": path.name,
+        "num_dashes": num_dashes
     }
     header = template.render(**context)
     new_header_lines = header.splitlines()

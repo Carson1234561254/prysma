@@ -1,4 +1,4 @@
-//===-- builder_environment_registry_function.cpp -------------------------------------------*- C++ -*-===//
+//===-- builder_environment_registry_function.cpp ---------------*- C++ -*-===//
 //
 // Part of the Prysma Project, under the GNU GPL v3.0 or later.
 // See LICENSE at the project root for license information.

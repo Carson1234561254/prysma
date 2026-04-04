@@ -72,5 +72,5 @@
     // ===== Hover Information =====
     "editor.hover.enabled": true,
     "editor.hover.delay": 300,
-    "chat.disableAIFeatures": true
+    "chat.disableAIFeatures": false
 }
