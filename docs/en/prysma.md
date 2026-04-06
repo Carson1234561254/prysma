@@ -40,7 +40,7 @@ Prysma uses **manual** memory management on the heap.
 
 ```rust
 // Allocating an object
-dec MaClasse instance = new MaClasse(); // This 'dec' is equavilent of a 'let' or similar in other languages. 
+dec MaClasse instance = new MaClasse(); // 'dec' stands for declaration. 
 
 // Release
 delete instance;
@@ -64,7 +64,7 @@ fn int32 factorielle(arg int32 n) {
     if (n <= 1) {
         return 1;
     }
-    dec int32 suivant = n - 1; // This 'dec' is equavilent of a 'let' or similar in other languages. 
+    dec int32 suivant = n - 1; // 'dec' stands for declaration. 
     return n * call factorielle(suivant);
 }
 ```
@@ -88,7 +88,7 @@ if (a > b) {
 The condition is evaluated before each iteration.
 
 ```rust
-dec int32 i = 0; // This 'dec' is equavilent of a 'let' or similar in other languages. 
+dec int32 i = 0; // 'dec' stands for declaration. 
 while (i < 10) {
     aff i = i + 1;
 }
@@ -115,7 +115,7 @@ while (i < 10) {
 ```rust
 fn void test_array() {
     // Declaration of a 5-integer array on the stack
-    dec int32[5] notes = [10, 15, 20, 12, 18]; // This 'dec' is equavilent of a 'let' or similar in other languages. 
+    dec int32[5] notes = [10, 15, 20, 12, 18]; // 'dec' stands for declaration. 
     
     // Modification
     aff notes[0] = 20;
@@ -129,7 +129,7 @@ fn void test_array() {
 ```rust
 fn void main() {
     // Heap allocation
-    dec Chien mon_chien = new Chien(); // This 'dec' is equavilent of a 'let' or similar in other languages. 
+    dec Chien mon_chien = new Chien(); // 'dec' stands for declaration. 
     
     call mon_chien.set_nom("Rex");
     call mon_chien.aboyer();
