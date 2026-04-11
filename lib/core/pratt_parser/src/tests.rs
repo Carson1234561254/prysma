@@ -1,5 +1,5 @@
 use crate::ffi::*;
-use crate::lib::*;
+use crate::*;
 
 #[cfg(test)]
 mod tests {
