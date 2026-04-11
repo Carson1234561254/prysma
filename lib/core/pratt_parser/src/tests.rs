@@ -1,3 +1,6 @@
+use crate::ffi::*;
+use crate::lib::*;
+
 #[cfg(test)]
 mod tests {
     use alloc::vec;
