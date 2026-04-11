@@ -8,7 +8,7 @@ use alloc::vec::Vec;
 use alloc::boxed::Box;
 use ryu;
 
-use lib::*;
+use crate::lib::*;
 
 ///INPUT: A math string (ex, "2 + 3 * 4").
 ///RETURNS: `mut c_char`, showing solved steps.
